@@ -1,0 +1,598 @@
+﻿<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fisión Nuclear — La Ruptura del Átomo | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#DC2626', accentLight: '#F87171', accentDark: '#991B1B',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #DC2626; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #DC2626; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #DC2626; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(220, 38, 38, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #DC2626, #F87171); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(220,38,38,0.12); border-bottom: 2px solid #DC2626; font-family: 'Inter', sans-serif; font-weight: 600; color: #F87171; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(220,38,38,0.04); border-left: 3px solid #DC2626; font-size: 1.1rem; color: #F87171; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #DC2626; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #DC2626; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(220,38,38,0.12); color: #F87171; border: 1px solid rgba(220,38,38,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.04); }
+    .sibling-link-fusion { border-color: rgba(59,130,246,0.15); }
+    .sibling-link-fusion:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.04); }
+    .glow-red { box-shadow: 0 0 40px rgba(220,38,38,0.4), inset 0 0 20px rgba(220,38,38,0.2); }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-silverDark">/</span>
+        <a href="../index.html#conceptos" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-silverDark">/</span>
+        <span class="text-nucleo-accent font-semibold">Fisión</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="fusion.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-colors hidden sm:flex items-center gap-1">
+          <span>Fusión</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #DC2626 1px, transparent 1px), radial-gradient(circle at 70% 30%, #DC2626 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(220,38,38,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Reacción Nuclear</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Fisión Nuclear —<br>
+        <span class="text-nucleo-accent">la ruptura del núcleo</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Es el proceso por el cual un núcleo pesado se divide en dos núcleos más pequeños, liberando una cantidad enorme de energía y varios neutrones que pueden provocar nuevas fisiones. Es la base de los reactores de potencia actuales.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Uranio-235</span>
+        <span class="chip">Neutrones</span>
+        <span class="chip">Reacción en cadena</span>
+        <span class="chip">200 MeV por evento</span>
+        <span class="chip chip-yellow">Tecnología madura</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
+  <main class="max-w-4xl mx-auto">
+
+    <section class="reveal mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué ocurre exactamente?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cuando un neutrón lento (térmico) choca contra el núcleo de un átomo pesado e inestable —como el <span class="inline-stat"><span class="val">²³⁵U</span></span> (uranio-235)—, el núcleo se deforma, vibra y se <strong class="text-nucleo-accent">divide en dos fragmentos</strong>. Cada fisión libera además <span class="inline-stat"><span class="val">2–3 neutrones</span></span> nuevos y alrededor de <span class="inline-stat"><span class="val">200 MeV</span></span> de energía.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La energía cinética de los fragmentos se transforma rápidamente en calor al chocar con los átomos del combustible y del refrigerante. Ese calor es el que hierve agua, mueve turbinas y genera electricidad.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La masa total de los productos es <strong class="text-nucleo-accent">ligeramente menor</strong> que la del núcleo original más el neutrón incidente. Esa diferencia se convierte en energía según \(E = mc^2\). Un kilogramo de uranio libera la misma energía que <span class="inline-stat"><span class="val">2.700.000 kg</span></span> de carbón.
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Reacción típica de fisión del U-235</span>
+        \(^{1}_{0}\text{n} + \, ^{235}_{92}\text{U} \;\longrightarrow\; ^{141}_{56}\text{Ba} + \, ^{92}_{36}\text{Kr} + 3\,^{1}_{0}\text{n} + 200\,\text{MeV}\)
+      </div>
+    </section>
+
+    <section class="reveal mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">La reacción en cadena</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-3">
+        Cada fisión produce 2 o 3 neutrones. Si esos neutrones golpean otros núcleos de U-235, producen nuevas fisiones, que a su vez liberan más neutrones, y así sucesivamente. Esto se llama <strong class="text-nucleo-accent">reacción en cadena</strong>.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        Para mantener una reacción estable y controlada, de cada fisión solo <strong class="text-nucleo-accentLight">uno de los neutrones</strong> en promedio debe provocar otra fisión. Esto se mide con el <strong>factor de multiplicación \(k\)</strong>:
+      </p>
+      <div class="grid sm:grid-cols-3 gap-3 mb-8">
+        <div class="px-4 py-3 border-l-2 border-nucleo-accent">
+          <div class="font-heading text-2xl font-bold text-nucleo-accent">k &lt; 1</div>
+          <div class="text-xs text-nucleo-silverDark uppercase tracking-wider mt-1" style="font-family:'Inter',sans-serif;">Subcrítico</div>
+        </div>
+        <div class="px-4 py-3 border-l-2 border-nucleo-warning">
+          <div class="font-heading text-2xl font-bold text-nucleo-warning">k = 1</div>
+          <div class="text-xs text-nucleo-silverDark uppercase tracking-wider mt-1" style="font-family:'Inter',sans-serif;">Crítico</div>
+        </div>
+        <div class="px-4 py-3 border-l-2 border-nucleo-accentLight">
+          <div class="font-heading text-2xl font-bold text-nucleo-accentLight">k &gt; 1</div>
+          <div class="text-xs text-nucleo-silverDark uppercase tracking-wider mt-1" style="font-family:'Inter',sans-serif;">Supercrítico</div>
+        </div>
+      </div>
+
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:flask-conical" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Diagrama animado · Reacción en cadena del U-235</span>
+        </div>
+
+        <svg viewBox="0 0 900 620" class="w-full" role="img" aria-label="Reacción en cadena">
+          <defs>
+            <radialGradient id="nucleo235" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FCA5A5"/>
+              <stop offset="55%" stop-color="#DC2626"/>
+              <stop offset="100%" stop-color="#7F1D1D"/>
+            </radialGradient>
+            <radialGradient id="baGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FEF3C7"/>
+              <stop offset="50%" stop-color="#FCD34D"/>
+              <stop offset="100%" stop-color="#92400E"/>
+            </radialGradient>
+            <radialGradient id="krGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FED7AA"/>
+              <stop offset="50%" stop-color="#F97316"/>
+              <stop offset="100%" stop-color="#7C2D12"/>
+            </radialGradient>
+            <radialGradient id="xeGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#CFFAFE"/>
+              <stop offset="50%" stop-color="#06B6D4"/>
+              <stop offset="100%" stop-color="#0E7490"/>
+            </radialGradient>
+            <radialGradient id="srGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#D1FAE5"/>
+              <stop offset="50%" stop-color="#10B981"/>
+              <stop offset="100%" stop-color="#065F46"/>
+            </radialGradient>
+            <radialGradient id="neutronGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="55%" stop-color="#E5E7EB"/>
+              <stop offset="100%" stop-color="#9CA3AF"/>
+            </radialGradient>
+            <radialGradient id="flashGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+              <stop offset="35%" stop-color="#FCD34D" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#DC2626" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <text x="450" y="32" fill="#DC2626" font-size="15" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">REACCIÓN EN CADENA · FISIÓN DEL U-235</text>
+          <text x="450" y="50" fill="#5A6B72" font-size="10" font-family="Inter,sans-serif" text-anchor="middle">cada neutrón que choca rompe un núcleo y libera 2–3 neutrones · la cascada crece exponencialmente</text>
+
+          <text x="60" y="100" fill="#5A6B72" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">GEN 0</text>
+          <text x="280" y="100" fill="#5A6B72" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">GEN 1</text>
+          <text x="500" y="100" fill="#5A6B72" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">GEN 2</text>
+          <text x="740" y="100" fill="#5A6B72" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">GEN 3</text>
+
+          <!-- U-235 #1 GEN 0 - t=2s - 141Ba + 92Kr -->
+          <g id="u235_1">
+            <circle cx="60" cy="320" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;90;30;30" keyTimes="0;0.155;0.17;0.21;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0.9;0;0" keyTimes="0;0.155;0.17;0.21;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="60" cy="320" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.16;0.168;0.175;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.16;0.168;0.175;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="60" y="324" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.16;0.168;0.175;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.16;0.17;0.18;0.55;0.6" dur="14s" repeatCount="indefinite"/>
+              <circle r="17" fill="url(#baGrad)" stroke="#92400E" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.17;0.55;0.6;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -10 -16 L -20 -32 L -32 -50 L -32 -50"/>
+              </circle>
+              <text fill="#FCD34D" font-size="8" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹⁴¹Ba<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.17;0.18;0.2;0.5;0.55" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.17;0.55;0.6;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -28 -50 L -28 -50 L -28 -50 L -28 -50"/></text>
+              <circle r="11" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="0.5">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.17;0.55;0.6;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 10 16 L 20 32 L 32 50 L 32 50"/>
+              </circle>
+              <text fill="#F97316" font-size="8" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁹²Kr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.17;0.18;0.2;0.5;0.55" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.17;0.55;0.6;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 28 50 L 28 50 L 28 50 L 28 50"/></text>
+            </g>
+          </g>
+
+          <circle r="7" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.143;0.167;1" calcMode="linear" path="M 10 320 L 60 320 L 60 320 L 60 320"/>
+            <animate attributeName="opacity" values="0;1;0;0;0;0" keyTimes="0;0.05;0.143;0.15;0.95;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.167;0.285;0.3;1" calcMode="linear" path="M 60 320 L 60 320 L 220 180 L 220 180 L 220 180"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.16;0.17;0.286;0.3;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.167;0.285;0.3;1" calcMode="linear" path="M 60 320 L 60 320 L 130 500 L 130 500 L 130 500"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.16;0.17;0.286;0.3;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4" opacity="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.167;0.4;1" calcMode="linear" path="M 60 320 L 60 320 L 880 600 L 880 600"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.16;0.18;0.4;0.45;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #2 GEN 1 - t=4s - 144Ba + 89Kr -->
+          <g id="u235_2">
+            <circle cx="220" cy="180" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.275;0.285;0.305;0.35;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.275;0.285;0.305;0.35;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="220" cy="180" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.28;0.288;0.295;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.28;0.288;0.295;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="220" y="184" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.28;0.288;0.295;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.28;0.29;0.3;0.7;0.75" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#baGrad)" stroke="#92400E" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -6 -12 L -12 -24 L -22 -42 L -22 -42"/>
+              </circle>
+              <text fill="#FCD34D" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹⁴⁴Ba<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.29;0.3;0.32;0.65;0.7" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -18 -40 L -18 -40 L -18 -40 L -18 -40"/></text>
+              <circle r="14" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 8 11 L 15 22 L 26 38 L 26 38"/>
+              </circle>
+              <text fill="#F97316" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁸⁹Kr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.29;0.3;0.32;0.65;0.7" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 22 37 L 22 37 L 22 37 L 22 37"/></text>
+            </g>
+          </g>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.288;0.43;0.45;1" calcMode="linear" path="M 220 180 L 220 180 L 440 220 L 440 220 L 440 220"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.28;0.3;0.43;0.45;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.288;0.43;0.45;1" calcMode="linear" path="M 220 180 L 220 180 L 360 460 L 360 460 L 360 460"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.28;0.3;0.43;0.45;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4" opacity="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.288;0.55;1" calcMode="linear" path="M 220 180 L 220 180 L 20 30 L 20 30"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.28;0.3;0.55;0.6;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #6 GEN 1 - t=4s - 138Ba + 95Kr -->
+          <g id="u235_6">
+            <circle cx="130" cy="500" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.275;0.285;0.305;0.35;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.275;0.285;0.305;0.35;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="130" cy="500" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.28;0.288;0.295;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.28;0.288;0.295;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="130" y="504" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.28;0.288;0.295;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.28;0.29;0.3;0.7;0.75" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#baGrad)" stroke="#92400E" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -5 -10 L -11 -20 L -20 -36 L -20 -36"/>
+              </circle>
+              <text fill="#FCD34D" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹³⁸Ba<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.29;0.3;0.32;0.65;0.7" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -16 -35 L -16 -35 L -16 -35 L -16 -35"/></text>
+              <circle r="14" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 7 9 L 14 19 L 24 33 L 24 33"/>
+              </circle>
+              <text fill="#F97316" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁹⁵Kr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.29;0.3;0.32;0.65;0.7" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.29;0.7;0.75;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 20 33 L 20 33 L 20 33 L 20 33"/></text>
+            </g>
+          </g>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.288;0.43;0.45;1" calcMode="linear" path="M 130 500 L 130 500 L 280 100 L 280 100 L 280 100"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.28;0.3;0.43;0.45;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.288;0.43;0.45;1" calcMode="linear" path="M 130 500 L 130 500 L 40 580 L 40 580 L 40 580"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.28;0.3;0.43;0.45;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #3 GEN 2 - t=6s - 140Ba + 93Kr -->
+          <g id="u235_3">
+            <circle cx="440" cy="220" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.42;0.43;0.45;0.49;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.42;0.43;0.45;0.49;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="440" cy="220" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="440" y="224" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.425;0.435;0.445;0.85;0.9" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#baGrad)" stroke="#92400E" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 7 -11 L 14 -22 L 24 -38 L 24 -38"/>
+              </circle>
+              <text fill="#FCD34D" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹⁴⁰Ba<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.435;0.445;0.465;0.8;0.85" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 20 -37 L 20 -37 L 20 -37 L 20 -37"/></text>
+              <circle r="14" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -8 10 L -17 20 L -29 35 L -29 35"/>
+              </circle>
+              <text fill="#F97316" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁹³Kr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.435;0.445;0.465;0.8;0.85" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -25 35 L -25 35 L -25 35 L -25 35"/></text>
+            </g>
+          </g>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.433;0.57;0.59;1" calcMode="linear" path="M 440 220 L 440 220 L 720 130 L 720 130 L 720 130"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.43;0.45;0.57;0.59;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.433;0.57;0.59;1" calcMode="linear" path="M 440 220 L 440 220 L 800 500 L 800 500 L 800 500"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.43;0.45;0.57;0.59;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #4 GEN 2 - t=6s - 140Xe + 94Sr (CYAN + VERDE) -->
+          <g id="u235_4">
+            <circle cx="360" cy="460" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.42;0.43;0.45;0.49;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.42;0.43;0.45;0.49;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="360" cy="460" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="360" y="464" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.425;0.435;0.445;0.85;0.9" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#xeGrad)" stroke="#0E7490" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 7 -8 L 15 -17 L 26 -30 L 26 -30"/>
+              </circle>
+              <text fill="#67E8F9" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹⁴⁰Xe<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.435;0.445;0.465;0.8;0.85" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 22 -30 L 22 -30 L 22 -30 L 22 -30"/></text>
+              <circle r="14" fill="url(#srGrad)" stroke="#065F46" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -8 8 L -17 16 L -29 28 L -29 28"/>
+              </circle>
+              <text fill="#6EE7B7" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁹⁴Sr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.435;0.445;0.465;0.8;0.85" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -25 29 L -25 29 L -25 29 L -25 29"/></text>
+            </g>
+          </g>
+          <circle r="6" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.433;0.57;0.59;1" calcMode="linear" path="M 360 460 L 360 460 L 560 500 L 560 500 L 560 500"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.43;0.45;0.57;0.59;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4" opacity="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.433;0.7;1" calcMode="linear" path="M 360 460 L 360 460 L 320 610 L 320 610"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.43;0.45;0.7;0.75;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #5 GEN 2 - t=6s - 138Xe + 95Sr (CYAN + VERDE) -->
+          <g id="u235_5">
+            <circle cx="280" cy="100" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.42;0.43;0.45;0.49;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.42;0.43;0.45;0.49;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="280" cy="100" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="280" y="104" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.425;0.433;0.44;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.425;0.435;0.445;0.85;0.9" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#xeGrad)" stroke="#0E7490" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -6 -10 L -12 -20 L -22 -36 L -22 -36"/>
+              </circle>
+              <text fill="#67E8F9" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹³⁸Xe<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.435;0.445;0.465;0.8;0.85" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -6 -12 L -12 -24 L -22 -42 L -22 -42"/></text>
+              <circle r="14" fill="url(#srGrad)" stroke="#065F46" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 7 9 L 15 19 L 26 33 L 26 33"/>
+              </circle>
+              <text fill="#6EE7B7" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁹⁵Sr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.435;0.445;0.465;0.8;0.85" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.435;0.85;0.9;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 22 33 L 22 33 L 22 33 L 22 33"/></text>
+            </g>
+          </g>
+          <circle r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4" opacity="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.433;0.7;1" calcMode="linear" path="M 280 100 L 280 100 L 320 20 L 320 20"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.43;0.45;0.7;0.75;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #7 GEN 3 - t=8s - 146Ba + 87Kr -->
+          <g id="u235_7">
+            <circle cx="720" cy="130" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.56;0.57;0.59;0.63;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.56;0.57;0.59;0.63;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="720" cy="130" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.565;0.573;0.58;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.565;0.573;0.58;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="720" y="134" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.565;0.573;0.58;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.565;0.575;0.585;0.92;0.95" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#baGrad)" stroke="#92400E" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 6 -11 L 12 -22 L 22 -38 L 22 -38"/>
+              </circle>
+              <text fill="#FCD34D" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹⁴⁶Ba<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.575;0.585;0.605;0.88;0.92" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 18 -37 L 18 -37 L 18 -37 L 18 -37"/></text>
+              <circle r="14" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -7 10 L -14 20 L -23 35 L -23 35"/>
+              </circle>
+              <text fill="#F97316" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁸⁷Kr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.575;0.585;0.605;0.88;0.92" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -20 35 L -20 35 L -20 35 L -20 35"/></text>
+            </g>
+          </g>
+          <circle r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4" opacity="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.573;0.78;1" calcMode="linear" path="M 720 130 L 720 130 L 880 80 L 880 80"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.57;0.59;0.78;0.83;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- U-235 #8 GEN 3 - t=8s - 136Ba + 97Kr -->
+          <g id="u235_8">
+            <circle cx="800" cy="500" r="30" fill="url(#flashGrad)" opacity="0">
+              <animate attributeName="r" values="30;30;30;90;30;30" keyTimes="0;0.56;0.57;0.59;0.63;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;0;0;0.9;0;0" keyTimes="0;0.56;0.57;0.59;0.63;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="800" cy="500" r="20" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1.5">
+              <animate attributeName="r" values="20;20;50;0;0" keyTimes="0;0.565;0.573;0.58;1" dur="14s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.565;0.573;0.58;1" dur="14s" repeatCount="indefinite"/>
+            </circle>
+            <text x="800" y="504" fill="#FFFFFF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">²³⁵U<animate attributeName="opacity" values="1;1;1;0;0" keyTimes="0;0.565;0.573;0.58;1" dur="14s" repeatCount="indefinite"/></text>
+            <g opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.565;0.575;0.585;0.92;0.95" dur="14s" repeatCount="indefinite"/>
+              <circle r="16" fill="url(#baGrad)" stroke="#92400E" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -7 -9 L -14 -18 L -23 -31 L -23 -31"/>
+              </circle>
+              <text fill="#FCD34D" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">¹³⁶Ba<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.575;0.585;0.605;0.88;0.92" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L -20 -31 L -20 -31 L -20 -31 L -20 -31"/></text>
+              <circle r="14" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="1.2">
+                <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 8 8 L 16 16 L 26 26 L 26 26"/>
+              </circle>
+              <text fill="#F97316" font-size="7" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">⁹⁷Kr<animate attributeName="opacity" values="0;0;1;1;1;0" keyTimes="0;0.575;0.585;0.605;0.88;0.92" dur="14s" repeatCount="indefinite"/><animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.575;0.92;0.95;1" calcMode="spline" keySplines="0.2 0.8 0.2 1; 0.5 0 0.5 1; 0 0 1 1; 0 0 1 1" path="M 0 0 L 22 27 L 22 27 L 22 27 L 22 27"/></text>
+            </g>
+          </g>
+          <circle r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4" opacity="0.5">
+            <animateMotion dur="14s" repeatCount="indefinite" keyTimes="0;0.573;0.78;1" calcMode="linear" path="M 800 500 L 800 500 L 870 600 L 870 600"/>
+            <animate attributeName="opacity" values="0;0;1;0;0;0" keyTimes="0;0.57;0.59;0.78;0.83;1" dur="14s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- LEYENDA -->
+          <g transform="translate(60 580)">
+            <circle r="9" fill="url(#nucleo235)" stroke="#7F1D1D" stroke-width="1"/>
+            <text x="18" y="4" fill="#A8B5BD" font-size="11" font-family="Inter,sans-serif">U-235</text>
+            <circle cx="90" r="6" fill="url(#baGrad)" stroke="#92400E" stroke-width="0.5"/>
+            <text x="103" y="4" fill="#A8B5BD" font-size="11" font-family="Inter,sans-serif">Ba</text>
+            <circle cx="170" r="6" fill="url(#krGrad)" stroke="#7C2D12" stroke-width="0.5"/>
+            <text x="183" y="4" fill="#A8B5BD" font-size="11" font-family="Inter,sans-serif">Kr</text>
+            <circle cx="250" r="6" fill="url(#xeGrad)" stroke="#0E7490" stroke-width="0.5"/>
+            <text x="263" y="4" fill="#A8B5BD" font-size="11" font-family="Inter,sans-serif">Xe</text>
+            <circle cx="330" r="6" fill="url(#srGrad)" stroke="#065F46" stroke-width="0.5"/>
+            <text x="343" y="4" fill="#A8B5BD" font-size="11" font-family="Inter,sans-serif">Sr</text>
+            <circle cx="410" r="5" fill="url(#neutronGrad)" stroke="#374151" stroke-width="0.4"/>
+            <text x="423" y="4" fill="#A8B5BD" font-size="11" font-family="Inter,sans-serif">Neutrón</text>
+          </g>
+        </svg>
+
+        <p class="px-5 py-4 text-base text-nucleo-silver leading-relaxed border-t border-white/5">
+          Cuando un neutrón golpea un núcleo de U-235, ese núcleo <strong class="text-nucleo-accentLight">estalla y se rompe en dos fragmentos</strong> (Bario + Kriptón, o Xenón + Estroncio según el canal de fisión), liberando 2–3 neutrones que salen disparados. La clave de un reactor es <strong class="text-nucleo-accent">mantener exactamente uno de esos neutrones productivo</strong>: los otros se absorben en barras de control o escapan del combustible. Eso es el estado <em>crítico</em> (\(k = 1\)), donde la reacción se mantiene estable.
+        </p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Moderación y control</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El U-235 fisiona con mayor probabilidad cuando es golpeado por un neutrón <strong class="text-nucleo-accent">lento</strong> (neutrón térmico). Sin embargo, los neutrones que salen de una fisión son <strong class="text-nucleo-accent">rápidos</strong>. Hay que <strong class="text-nucleo-accent">frenarlos</strong> con un moderador (agua pesada en los reactores argentinos).
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        Las <strong class="text-nucleo-accent">barras de control</strong> (boro, cadmio, hafnio) absorben neutrones: al insertarlas en el núcleo, bajan \(k\) por debajo de 1 y detienen la reacción.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">En Argentina</span>
+        <p>Las centrales Atucha I, Atucha II y Embalse usan <strong>agua pesada</strong> como moderador y refrigerante, lo que les permite quemar <strong>uranio natural</strong> sin enriquecimiento.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Productos de fisión</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los dos fragmentos suelen ser <strong class="text-nucleo-accent">asimétricos</strong>: uno de masa ~90–100 u y otro ~130–145 u. La distribución es bimodal — la fisión tiende a dar un fragmento pesado (Ba, Xe, La) y uno liviano (Kr, Sr, Br).
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Estos fragmentos son <strong class="text-nucleo-accent">radiactivos</strong> y se desexcitan emitiendo partículas beta y gamma. Algunos, como el <strong class="text-nucleo-accentLight">yodo-131</strong>, el <strong class="text-nucleo-accentLight">cesio-137</strong> y el <strong class="text-nucleo-accentLight">molibdeno-99</strong>, tienen aplicaciones en medicina e industria.
+      </p>
+    </section>
+
+    <section class="reveal mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Tipos de reactores</h2>
+      </div>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">PWR</strong> — Agua presurizada. El más usado (~70%). Combustible: uranio enriquecido. Argentina tiene el prototipo CAREM.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">BWR</strong> — Agua hirviente. El agua hierve dentro del núcleo.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">PHWR</strong> — Agua pesada presurizada. Usa D₂O. Permite uranio natural. <strong class="text-white">Diseño de Atucha I, Atucha II y Embalse</strong>.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">MSR</strong> — Sales fundidas. Combustible disuelto en sales de fluoruro líquido.</li>
+      </ul>
+    </section>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">Energía Nuclear · Inicio</div>
+        </div>
+      </a>
+      <a href="fusion.html" class="sibling-link sibling-link-fusion text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-blue-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Fusión Nuclear →</div>
+        </div>
+        <span class="iconify text-blue-400" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-red">
+          <span class="iconify text-white" data-icon="lucide:split" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Fisión</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="fusion.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-blue-400 transition-colors">Fusión</a>
+        <a href="../index.html#centrales" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Centrales AR</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+</body>
+</html>
