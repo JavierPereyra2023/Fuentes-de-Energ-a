@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rayos Cósmicos y Detectores — Partículas que llegan del espacio profundo | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#7C4DFF', accentLight: '#B388FF', accentDark: '#4A148C',
+              warning: '#FFB300', warningDark: '#C77F00',
+              isotope: '#26A69A', reactor: '#FF6E40', neutron: '#7C4DFF',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #7C4DFF; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #7C4DFF; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #7C4DFF; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(124, 77, 255, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #4A148C, #7C4DFF, #B388FF); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(124,77,255,0.12); border-bottom: 2px solid #7C4DFF; font-family: 'Inter', sans-serif; font-weight: 600; color: #B388FF; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(124,77,255,0.04); border-left: 3px solid #7C4DFF; font-size: 1.1rem; color: #B388FF; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #7C4DFF; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #7C4DFF; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(124,77,255,0.12); color: #B388FF; border: 1px solid rgba(124,77,255,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(124,77,255,0.3); background: rgba(124,77,255,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(124,77,255,0.15); }
+    .glow-purple { box-shadow: 0 0 40px rgba(124,77,255,0.4), inset 0 0 20px rgba(124,77,255,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(124,77,255,0.3); }
+    .toc-inner a.active { color: #B388FF; border-left-color: #7C4DFF; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #7C4DFF; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #7C4DFF; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(124,77,255,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #B388FF; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(124,77,255,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Rayos Cósmicos</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="../index.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Inicio</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #7C4DFF 1px, transparent 1px), radial-gradient(circle at 70% 30%, #7C4DFF 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Astrofísica de Partículas</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Rayos Cósmicos y Detectores —<br>
+        <span class="text-nucleo-accent">partículas que llegan del espacio profundo</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Cada segundo, partículas de altísima energía bombardean la Tierra desde el espacio. Algunas llevan más energía que cualquier acelerador humano puede generar. Detectarlas y estudiarlas es una ventana única a los fenómenos más violentos del universo —y Argentina juega un papel central con el Observatorio Pierre Auger.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Rayos Cósmicos</span>
+        <span class="chip">Pierre Auger</span>
+        <span class="chip">Cascada Atmosférica</span>
+        <span class="chip">Detectores Cherenkov</span>
+        <span class="chip chip-yellow">Neutrinos</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué son los rayos cósmicos?</a>
+        <a href="#sec02"><span class="num">02</span> La cascada atmosférica</a>
+        <a href="#sec03"><span class="num">03</span> El Observatorio Pierre Auger</a>
+        <a href="#sec04"><span class="num">04</span> ¿Qué hemos aprendido?</a>
+        <a href="#sec05"><span class="num">05</span> Otros detectores y el futuro</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué son los rayos cósmicos?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · La cascada atmosférica</a>
+      <a href="#sec03" class="toc-mobile-link">03 · El Observatorio Pierre Auger</a>
+      <a href="#sec04" class="toc-mobile-link">04 · ¿Qué hemos aprendido?</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Otros detectores y el futuro</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué son los rayos cósmicos?</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los <strong class="text-nucleo-accent">rayos cósmicos</strong> son partículas de altísima energía que viajan por el espacio interestelar y bombardean constantemente la atmósfera terrestre. Están compuestos principalmente por <strong class="text-nucleo-accentLight">protones (~90%)</strong>, núcleos de helio o partículas alfa (~9%), núcleos más pesados (~1%), más una pequeña fracción de electrones, positrones y antiprotones.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Fueron descubiertos por <strong class="text-nucleo-accent">Victor Hess</strong> en 1912, quien ascendió en globo aerostático hasta los 5.300 metros y midió que la radiación <em>aumentaba</em> con la altura en lugar de disminuir —demostrando que provenía del espacio y no de la Tierra. Por este descubrimiento recibió el Premio Nobel de Física en 1936.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        Las energías de los rayos cósmicos abarcan un rango asombroso: desde <span class="inline-stat"><span class="val">~10⁹ eV</span></span> hasta los <strong class="text-nucleo-accent">rayos cósmicos de ultra-alta energía</strong> (UHECR) que superan los <span class="inline-stat"><span class="val">10²⁰ eV</span></span>. Para ponerlo en perspectiva: 10²⁰ eV es la energía cinética de una pelota de tenis bien golpeada... ¡concentrada en una <strong>sola</strong> partícula subatómica! Estas son las partículas más energéticas jamás detectadas.
+      </p>
+
+      <div class="equation-block">
+        <span class="eq-label">Energía relativista de una partícula</span>
+        \(E^2 = (pc)^2 + (mc^2)^2\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El origen de los rayos cósmicos de mayor energía es uno de los grandes misterios sin resolver de la astrofísica. Los candidatos incluyen <strong class="text-nucleo-accentLight">núcleos activos de galaxias</strong> (AGN) —agujeros negros supermasivos que expulsan chorros de materia a velocidades relativistas—, <strong class="text-nucleo-accentLight">estallidos de rayos gamma</strong> (GRB), <strong class="text-nucleo-accentLight">fusiones de estrellas de neutrones</strong> y posibles fuentes exóticas como defectos topológicos remanentes del Big Bang.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La dificultad para identificar sus fuentes radica en que los rayos cósmicos son <strong class="text-nucleo-accent">partículas cargadas</strong>: al viajar por el espacio, los campos magnéticos galácticos e intergalácticos curvan sus trayectorias. Cuando llegan a la Tierra, su dirección de arribo no apunta directamente a su origen. Por eso los astrónomos de rayos cósmicos buscan correlaciones estadísticas con catálogos de objetos astrofísicos conocidos.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">La cascada atmosférica</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cuando un rayo cósmico primario —generalmente un protón— ingresa a la atmósfera terrestre, colisiona con los núcleos de nitrógeno y oxígeno del aire a altitudes de 20-40 km. Esta primera colisión produce una <strong class="text-nucleo-accent">cascada de partículas secundarias</strong> que se multiplican en generaciones sucesivas: piones (π⁺, π⁻, π⁰), kaones, muones, electrones, positrones, fotones y neutrinos.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Este fenómeno se llama <span class="glosario" data-tip="Cascada de partículas generada cuando un rayo cósmico de alta energía colisiona con la atmósfera. Puede contener miles de millones de partículas secundarias cubriendo varios km² al nivel del suelo." style="color:#B388FF;border-bottom-color:#B388FF;">lluvia atmosférica extensa</span> (Extensive Air Shower, EAS). Un solo protón de 10²⁰ eV puede generar <strong class="text-nucleo-accentLight">miles de millones de partículas secundarias</strong> que se extienden sobre varios kilómetros cuadrados al llegar al suelo. El frente de la cascada viaja a velocidades cercanas a la de la luz y tiene un espesor de apenas unos metros.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Entre las partículas que llegan al nivel del suelo, los <strong class="text-nucleo-accent">muones</strong> (μ) son las más abundantes. Son primos pesados del electrón (unas 200 veces más masivos) y, como interactúan débilmente con la materia, pueden atravesar la atmósfera sin ser absorbidos. Aproximadamente <strong class="text-nucleo-accentLight">1 muón atraviesa tu uña del pulgar cada minuto</strong>. Los neutrinos generados en estas cascadas son aún más esquivos: atraviesan toda la Tierra casi sin interactuar.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los piones —las partículas más abundantes en las primeras etapas de la cascada— se desintegran rápidamente. Los piones cargados (π⁺, π⁻) decaen en muones y neutrinos; los piones neutros (π⁰) decaen en dos fotones gamma casi instantáneamente, alimentando la componente electromagnética de la cascada (electrones, positrones y fotones). Las ecuaciones de desintegración son:
+      </p>
+
+      <div class="equation-block">
+        <span class="eq-label">Desintegración de piones en la cascada atmosférica</span>
+        \(\pi^{+} \rightarrow \mu^{+} + \nu_{\mu} \qquad \pi^{-} \rightarrow \mu^{-} + \bar{\nu}_{\mu} \qquad \pi^{0} \rightarrow \gamma + \gamma\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        El perfil de la cascada —cuántas partículas hay a cada profundidad atmosférica— depende de la energía y del tipo de partícula primaria. Los detectores en la superficie miden la distribución espacial y temporal de las partículas para reconstruir la energía y la dirección del rayo cósmico original. Esta es la técnica del Observatorio Pierre Auger.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El Observatorio Pierre Auger (Argentina)</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">Observatorio Pierre Auger</strong>, ubicado en Malargüe, provincia de Mendoza, es el detector de rayos cósmicos más grande del mundo. Cubre un área de <span class="inline-stat"><span class="val">3.000 km²</span></span> —aproximadamente el tamaño de la provincia de Rhode Island (EE.UU.) o tres veces la superficie de la Ciudad de Buenos Aires— en la meseta patagónica a unos 1.400 metros sobre el nivel del mar.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Auger utiliza un <strong class="text-nucleo-accent">sistema de detección híbrido</strong>, una combinación única de dos técnicas complementarias:
+      </p>
+
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">1.660 detectores de superficie:</strong> tanques de agua de 12.000 litros cada uno, espaciados 1,5 km entre sí formando una grilla triangular. Cuando las partículas de la cascada atraviesan el agua a velocidades mayores que la velocidad de la luz en el agua, emiten <span class="glosario" data-tip="Radiación electromagnética emitida cuando una partícula cargada viaja en un medio a una velocidad mayor que la velocidad de la luz en ese medio. Es el equivalente óptico de un boom sónico." style="color:#B388FF;border-bottom-color:#B388FF;">luz Cherenkov</span>, que es detectada por fotomultiplicadores dentro de cada tanque.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">27 telescopios de fluorescencia:</strong> ubicados en cuatro edificios en los bordes del arreglo. En noches claras y sin luna, estos telescopios observan la tenue luz ultravioleta que emiten las moléculas de nitrógeno del aire al ser excitadas por el paso de la cascada. Esto permite ver la cascada "de costado" y reconstruir su desarrollo longitudinal.
+        </li>
+      </ul>
+
+      <div class="dato-box">
+        <span class="dato-label">El Observatorio Pierre Auger</span>
+        <p>El Observatorio Pierre Auger en Malargüe, Mendoza, cubre un área de 3.000 km². Sus 1.660 tanques detectores de agua registran los muones, electrones y fotones de las cascadas atmosféricas iniciadas por rayos cósmicos de ultra-alta energía. Es una colaboración internacional de ~500 científicos de 17 países. Argentina fue elegida por sus cielos despejados, gran altitud y terreno llano.</p>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La combinación de ambas técnicas —los tanques midiendo el perfil lateral de la cascada en el suelo y los telescopios midiendo su desarrollo en la atmósfera— permite una <strong class="text-nucleo-accentLight">reconstrucción mucho más precisa</strong> de la energía y composición del rayo cósmico primario que cualquiera de las técnicas por separado. Solo un pequeño porcentaje de eventos (~13%) se detecta con ambos sistemas simultáneamente, pero esos eventos híbridos son extremadamente valiosos para calibrar el detector completo.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Argentina fue elegida como sede del observatorio por varias razones: <strong class="text-nucleo-accent">cielos excepcionalmente despejados</strong> (necesarios para los telescopios de fluorescencia), gran altitud de la meseta (que reduce la absorción atmosférica de la luz de fluorescencia), terreno muy plano (ideal para el espaciado regular de los detectores) y baja contaminación lumínica en la región de Malargüe. El observatorio representa una de las contribuciones argentinas más significativas a la ciencia fundamental internacional.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué hemos aprendido?</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En casi dos décadas de operación, el Observatorio Pierre Auger ha revolucionado nuestra comprensión de los rayos cósmicos de ultra-alta energía. Entre sus descubrimientos más importantes:
+      </p>
+
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Composición:</strong> los UHECRs son predominantemente protones y núcleos más pesados (como hierro), no fotones ni neutrinos. La composición parece volverse más pesada a las energías más altas.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Anisotropía:</strong> las direcciones de arribo no son completamente isotrópicas. Hay una correlación estadísticamente significativa con galaxias activas cercanas (starburst galaxies, AGN) dentro de ~200 Mpc (megapársecs).
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Corte GZK:</strong> se confirmó la supresión del flujo a las energías más altas (el "tobillo" o "ankle"), predicha por Greisen, Zatsepin y Kuzmin. Los protones por encima de ~5×10¹⁹ eV interactúan con los fotones del fondo cósmico de microondas, perdiendo energía y limitando su alcance a ~100-200 Mpc.
+        </li>
+      </ul>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        El <strong class="text-nucleo-accent">corte GZK</strong> es fundamental: significa que los UHECRs que detectamos deben provenir de fuentes relativamente cercanas (en términos cosmológicos). Si viajaran distancias mayores, habrían perdido tanta energía que ya no serían UHECRs. Esto restringe las posibles fuentes a galaxias y objetos dentro de nuestro supercúmulo local.
+      </p>
+
+      <div class="pull-quote">
+        "Cada rayo cósmico de ultra-alta energía es un mensajero de los fenómenos más violentos del universo. Detectarlo es como encontrar una aguja en un pajar de 3.000 km²."
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La próxima generación: <strong class="text-nucleo-accent">AugerPrime</strong> es la actualización en curso del observatorio. Se están instalando centelladores plásticos sobre cada tanque Cherenkov para medir por separado la componente muónica y electromagnética de cada evento, lo que permitirá distinguir mejor entre rayos cósmicos primarios ligeros (protones) y pesados (hierro). Esto es clave para identificar fuentes, porque los núcleos pesados se desvían más en los campos magnéticos galácticos que los protones.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Otros detectores y el futuro</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El Observatorio Pierre Auger no está solo. Existe una red global de detectores que estudian diferentes aspectos de los rayos cósmicos y la astrofísica de partículas:
+      </p>
+
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">IceCube (Polo Sur):</strong> enterrado en el hielo antártico a profundidades de 1.450 a 2.450 metros, es el detector de neutrinos más grande del mundo. Detecta la luz Cherenkov emitida por partículas secundarias cuando un neutrino interactúa con el hielo. Descubrió neutrinos astrofísicos de alta energía provenientes de fuera de nuestra galaxia.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Telescope Array (Utah, EE.UU.):</strong> similar a Auger, combina detectores de superficie y telescopios de fluorescencia en el hemisferio norte. Cubre ~700 km².
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">HAWC (México):</strong> observatorio Cherenkov de agua a gran altitud (4.100 m) en el volcán Sierra Negra. Detecta rayos gamma y rayos cósmicos mediante 300 tanques de agua.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">AMS-02:</strong> el Espectrómetro Magnético Alfa, instalado en la Estación Espacial Internacional, mide directamente los rayos cósmicos antes de que interactúen con la atmósfera. Ha detectado millones de partículas de antimateria (positrones y antiprotones).
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Futuro — CTA y SWGO:</strong> el Cherenkov Telescope Array (CTA) será el observatorio de rayos gamma más grande del mundo. SWGO (Southern Wide-field Gamma-ray Observatory) se propone para Sudamérica como complemento austral de HAWC.
+        </li>
+      </ul>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los rayos cósmicos conectan dos mundos científicos que suelen estar separados: la <strong class="text-nucleo-accent">física de partículas</strong> y la <strong class="text-nucleo-accentLight">astrofísica</strong>. Nos ofrecen una ventana a energías imposibles de alcanzar en aceleradores terrestres: el LHC alcanza ~14 TeV (1,4×10¹³ eV) en el centro de masa, mientras que los UHECRs llegan a ~10²⁰ eV en el sistema laboratorio —equivalente a ~400 TeV en el centro de masa, más de 25 veces la energía del LHC.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        El futuro de esta ciencia es brillante. Con AugerPrime mejorando la sensibilidad del observatorio argentino, con IceCube-Gen2 expandiendo el detector antártico, y con nuevos observatorios como CTA y SWGO en el horizonte, la próxima década promete resolver muchas de las preguntas abiertas: ¿de dónde vienen exactamente los UHECRs? ¿Qué los acelera a energías tan extremas? ¿Hay nueva física más allá del Modelo Estándar esperando ser descubierta en estas partículas?
+      </p>
+    </section>
+
+    <div class="reveal mb-10" style="background: rgba(124,77,255,0.04); border: 1px solid rgba(124,77,255,0.15); border-left: 3px solid #7C4DFF; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los <strong class="text-nucleo-accentLight">rayos cósmicos</strong> son partículas de altísima energía (principalmente protones) que viajan por el espacio y chocan con la atmósfera terrestre. Fueron descubiertos por Victor Hess en 1912.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Una partícula de <strong class="text-nucleo-accentLight">10²⁰ eV</strong> genera una cascada atmosférica de miles de millones de partículas secundarias al chocar con la atmósfera. Los muones y neutrinos llegan hasta la superficie.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">Observatorio Pierre Auger</strong> en Malargüe (Mendoza) es el detector de rayos cósmicos más grande del mundo: 3.000 km², 1.660 tanques Cherenkov, 27 telescopios de fluorescencia.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los rayos cósmicos de mayor energía vienen de <strong class="text-nucleo-accentLight">galaxias activas cercanas</strong>. La barrera GZK limita su alcance a ~200 Mpc porque pierden energía con el fondo cósmico de microondas.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La <strong class="text-nucleo-accentLight">astronomía de rayos cósmicos</strong> conecta la física de partículas con la astrofísica, revelando los procesos más energéticos del universo a energías imposibles en aceleradores terrestres.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="aceleradores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Aceleradores de Partículas</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cómo producimos partículas de alta energía en la Tierra</p>
+        </a>
+        <a href="fuerzas.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fuerzas de la Naturaleza</span>
+          <p class="text-sm text-nucleo-silver mt-1">Las interacciones que gobiernan las partículas en el espacio</p>
+        </a>
+        <a href="atomos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Estructura de los Átomos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los componentes fundamentales de la materia que detectamos</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="atomos.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-amber-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Estructura de los Átomos</div>
+        </div>
+      </a>
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">Energía Nuclear · Inicio →</div>
+        </div>
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-purple">
+          <span class="iconify text-white" data-icon="lucide:particles" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Rayos Cósmicos</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="atomos.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-amber-400 transition-colors">Estructura de los Átomos</a>
+        <a href="fuerzas.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-cyan-400 transition-colors">Fuerzas</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

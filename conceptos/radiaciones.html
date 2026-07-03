@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radiaciones — alfa, beta, gamma, neutrones y cómo nos relacionamos con ellas | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#FF6E40', accentLight: '#FF8A65', accentDark: '#D84315',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #FF6E40; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #FF6E40; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #FF6E40; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(255, 110, 64, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #D84315, #FF6E40, #FF8A65); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(255,110,64,0.12); border-bottom: 2px solid #FF6E40; font-family: 'Inter', sans-serif; font-weight: 600; color: #FF8A65; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(255,110,64,0.04); border-left: 3px solid #FF6E40; font-size: 1.1rem; color: #FF8A65; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #FF6E40; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #FF6E40; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(255,110,64,0.12); color: #FF8A65; border: 1px solid rgba(255,110,64,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(255,110,64,0.3); background: rgba(255,110,64,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,110,64,0.15); }
+    .glow-orange { box-shadow: 0 0 40px rgba(255,110,64,0.4), inset 0 0 20px rgba(255,110,64,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(255,110,64,0.3); }
+    .toc-inner a.active { color: #FF8A65; border-left-color: #FF6E40; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #FF6E40; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #FF6E40; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(255,110,64,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #FF8A65; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(255,110,64,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Radiaciones</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="../index.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Inicio</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #FF6E40 1px, transparent 1px), radial-gradient(circle at 70% 30%, #FF6E40 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(255,110,64,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Física de Radiaciones</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Radiaciones —<br>
+        <span class="text-nucleo-accent">alfa, beta, gamma, neutrones</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        La radiación es energía que viaja en forma de partículas u ondas electromagnéticas. La radiación ionizante —alfa, beta, gamma, neutrones— interactúa con la materia de formas distintas, y entender esas diferencias es clave para la protección, la medicina y la tecnología.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Alfa α</span>
+        <span class="chip">Beta β</span>
+        <span class="chip">Gamma γ</span>
+        <span class="chip">Neutrones</span>
+        <span class="chip chip-yellow">Rayos X</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> Tipos de radiación nuclear</a>
+        <a href="#sec02"><span class="num">02</span> Origen y fuentes</a>
+        <a href="#sec03"><span class="num">03</span> Efectos biológicos</a>
+        <a href="#sec04"><span class="num">04</span> Detección y medición</a>
+        <a href="#sec05"><span class="num">05</span> Protección radiológica</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · Tipos de radiación nuclear</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Origen y fuentes</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Efectos biológicos</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Detección y medición</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Protección radiológica</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Tipos de radiación nuclear</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        De los procesos nucleares surgen cuatro tipos principales de radiación, cada uno con propiedades muy distintas que determinan cómo interactúan con la materia y cómo debemos protegernos:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Alfa (α):</strong> un núcleo de helio-4 —dos protones y dos neutrones— con carga +2e. Es pesada y muy ionizante, pero de <strong class="text-nucleo-accent">bajo poder de penetración</strong>: una hoja de papel o la piel la detienen. Es emitida por núcleos pesados como el U-238 o el Pu-239. Peligrosa solo si el emisor alfa entra al cuerpo por inhalación o ingestión.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Beta menos (β⁻):</strong> un electrón emitido cuando un neutrón se convierte en protón dentro del núcleo. El número atómico aumenta en 1. <strong class="text-nucleo-accent">Penetración media</strong>: las detiene una lámina de aluminio o unos milímetros de plástico.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Beta más (β⁺):</strong> un positrón —la antipartícula del electrón— emitido cuando un protón se convierte en neutrón. Al encontrarse con un electrón se aniquilan y producen dos fotones de 511 keV, base del PET.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Gamma (γ):</strong> radiación electromagnética de muy alta energía (fotones), sin masa ni carga. <strong class="text-nucleo-accent">Alto poder de penetración</strong>: se necesita plomo o concreto grueso para atenuarla. Acompaña a la mayoría de las desintegraciones alfa y beta.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Neutrones:</strong> partículas neutras, muy penetrantes. No son detenidos por materiales densos como el plomo —se necesita <strong class="text-nucleo-accent">agua, concreto o materiales ricos en hidrógeno</strong> para frenarlos mediante colisiones elásticas.
+        </li>
+      </ul>
+      <div class="equation-block">
+        <span class="eq-label">Desintegración beta menos (ejemplo: C-14 → N-14)</span>
+        \(^{14}_{6}\text{C} \;\longrightarrow\; ^{14}_{7}\text{N} + e^{-} + \bar{\nu}_e \qquad (n \;\to\; p + e^{-} + \bar{\nu}_e)\)
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Un resumen comparativo del poder de penetración de cada tipo de radiación:
+      </p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 my-6">
+        <div class="px-4 py-3 border-l-2" style="border-color: rgba(255,110,64,0.6); background: rgba(255,110,64,0.04);">
+          <div class="font-heading text-lg font-bold text-nucleo-accentLight">Alfa α</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Detenida por: papel, piel<br>Carga: +2 · Masa: 4 u</div>
+        </div>
+        <div class="px-4 py-3 border-l-2" style="border-color: rgba(255,179,0,0.6); background: rgba(255,179,0,0.04);">
+          <div class="font-heading text-lg font-bold text-nucleo-warning">Beta β</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Detenida por: aluminio, plástico<br>Carga: ±1 · Masa: electrón</div>
+        </div>
+        <div class="px-4 py-3 border-l-2" style="border-color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.04);">
+          <div class="font-heading text-lg font-bold text-nucleo-cyan">Gamma γ</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Atenuada por: plomo, concreto<br>Carga: 0 · Masa: 0 (fotón)</div>
+        </div>
+        <div class="px-4 py-3 border-l-2" style="border-color: rgba(168,85,247,0.6); background: rgba(168,85,247,0.04);">
+          <div class="font-heading text-lg font-bold" style="color: #C084FC;">Neutrón n</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Frenado por: agua, concreto<br>Carga: 0 · Masa: 1 u</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Origen y fuentes de radiación</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Aproximadamente el <span class="inline-stat"><span class="val">80%</span></span> de la radiación que recibe una persona proviene de fuentes <strong class="text-nucleo-accent">naturales</strong>: radiación cósmica (dependiente de la altitud —a mayor altura, mayor exposición), radiación terrestre (uranio, torio, potasio-40 en suelos y rocas), gas radón (producto de la desintegración del uranio que se acumula en sótanos), y fuentes internas (K-40 y C-14 dentro de nuestro propio cuerpo).
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <span class="inline-stat"><span class="val">~20%</span></span> restante proviene de fuentes <strong class="text-nucleo-accentLight">artificiales</strong>: usos médicos (radiografías, tomografías, medicina nuclear, radioterapia), aplicaciones industriales, y una fracción ínfima de la energía nuclear en operación normal. También persiste una pequeña contribución residual de las pruebas nucleares atmosféricas realizadas entre 1945 y 1963.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">Dosis comparativas</span>
+        <p>Una persona recibe en promedio <strong>2,4 mSv por año</strong> de radiación natural. Un vuelo Buenos Aires-Miami agrega ~0,03 mSv por la altitud. Una radiografía de tórax: ~0,1 mSv. Una tomografía computada de tórax: <strong>~7 mSv</strong>. El límite anual para público general establecido por la ARN es de 1 mSv (adicional al fondo natural).</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Efectos biológicos de la radiación</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La radiación ionizante daña el tejido biológico creando <strong class="text-nucleo-accent">radicales libres</strong> que rompen enlaces químicos. El blanco más crítico es el <strong class="text-nucleo-accent">ADN</strong>: si el daño es intenso puede causar muerte celular, y si es subletal puede provocar mutaciones que deriven en cáncer. Los efectos se clasifican en dos categorías:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Efectos determinísticos (reacciones tisulares):</strong> ocurren por encima de una dosis umbral. Ejemplos: quemaduras en la piel, cataratas, síndrome de radiación aguda (náuseas, pérdida de cabello, daño a la médula ósea por encima de ~1 Sv). La severidad aumenta con la dosis.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-warning/40">
+          <strong class="text-nucleo-warning">Efectos estocásticos:</strong> no tienen umbral conocido —la probabilidad aumenta con la dosis pero la severidad no depende de ella. El principal riesgo es el cáncer y los efectos hereditarios. El modelo <span class="glosario" data-tip="Linear No-Threshold: modelo de protección radiológica que asume que el riesgo es proporcional a la dosis incluso para dosis muy bajas, sin umbral de seguridad. Es un modelo conservador para la protección." style="color:#FF8A65;border-bottom-color:#FF8A65;">LNT (Linear No-Threshold)</span> —que asume que no hay dosis totalmente segura— guía las normas internacionales de protección por precaución.
+        </li>
+      </ul>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:bar-chart-3" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Tabla comparativa de dosis</span>
+        </div>
+        <div class="p-5">
+          <table class="w-full text-sm font-body">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <th class="text-left py-2 text-[10px] uppercase tracking-wider text-nucleo-silverDark" style="font-family:'Inter',sans-serif;">Situación</th>
+                <th class="text-right py-2 text-[10px] uppercase tracking-wider text-nucleo-silverDark" style="font-family:'Inter',sans-serif;">Dosis aproximada</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Fondo natural anual (promedio mundial)</td><td class="text-right py-2 text-white font-semibold" style="font-family:'Inter',sans-serif;">~2,4 mSv</td></tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Radiografía de tórax</td><td class="text-right py-2 text-white font-semibold" style="font-family:'Inter',sans-serif;">~0,1 mSv</td></tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Vuelo Buenos Aires-Miami</td><td class="text-right py-2 text-white font-semibold" style="font-family:'Inter',sans-serif;">~0,03 mSv</td></tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Tomografía computada (tórax)</td><td class="text-right py-2 text-white font-semibold" style="font-family:'Inter',sans-serif;">~7 mSv</td></tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Límite ocupacional (promedio 5 años)</td><td class="text-right py-2 text-warning font-semibold" style="font-family:'Inter',sans-serif;">20 mSv/año</td></tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Límite público general (ARN)</td><td class="text-right py-2 text-white font-semibold" style="font-family:'Inter',sans-serif;">1 mSv/año</td></tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);"><td class="py-2 text-nucleo-silver">Síndrome de radiación aguda (umbral)</td><td class="text-right py-2 text-nucleo-accent font-semibold" style="font-family:'Inter',sans-serif;">~1 Sv</td></tr>
+              <tr><td class="py-2 text-nucleo-silver">DL50/60 sin tratamiento</td><td class="text-right py-2 text-nucleo-accent font-semibold" style="font-family:'Inter',sans-serif;">4–5 Sv</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Detección y medición</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Como la radiación no se ve ni se siente, necesitamos instrumentos para detectarla y medirla. Los principales tipos de detectores son:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Contador Geiger-Müller:</strong> el clásico detector que hace "click". Un tubo lleno de gas donde la radiación provoca una ionización en cascada que produce un pulso eléctrico. Simple, portátil y económico, aunque no distingue energías.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Detectores de centelleo:</strong> usan cristales como el NaI(Tl) que emiten luz al ser atravesados por radiación. La luz se convierte en señal eléctrica y su intensidad es proporcional a la energía depositada. Se usan en gammacámaras y espectroscopía gamma.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Detectores semiconductores:</strong> ofrecen la mayor resolución en energía. La radiación crea pares electrón-hueco en un cristal de germanio o silicio. Son el estándar para mediciones de precisión en laboratorio.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Dosímetros personales:</strong> los trabajadores los usan para monitorear su exposición acumulada. Existen de película fotográfica, termoluminiscentes (TLD) y de luminiscencia ópticamente estimulada (OSL).
+        </li>
+      </ul>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Las unidades de medición son fundamentales para entender y comparar exposiciones:
+      </p>
+      <div class="grid sm:grid-cols-3 gap-3 my-6">
+        <div class="px-4 py-3 border-l-2 border-nucleo-accent/60 bg-nucleo-dark/30">
+          <div class="font-heading text-lg font-bold text-nucleo-accentLight">Gray (Gy)</div>
+          <div class="text-xs text-nucleo-silver mt-1">Dosis absorbida<br>1 Gy = 1 J/kg</div>
+        </div>
+        <div class="px-4 py-3 border-l-2 border-nucleo-warning/60 bg-nucleo-dark/30">
+          <div class="font-heading text-lg font-bold text-nucleo-warning">Sievert (Sv)</div>
+          <div class="text-xs text-nucleo-silver mt-1">Dosis equivalente<br>Sv = Gy × factor de peso</div>
+        </div>
+        <div class="px-4 py-3 border-l-2 border-nucleo-cyan/60 bg-nucleo-dark/30">
+          <div class="font-heading text-lg font-bold text-nucleo-cyan">Becquerel (Bq)</div>
+          <div class="text-xs text-nucleo-silver mt-1">Actividad<br>1 Bq = 1 desintegración/s</div>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        El <strong class="text-nucleo-accent">factor de ponderación</strong> de la radiación refleja la efectividad biológica de cada tipo: para alfa es 20 (muy dañina por unidad de energía), para beta y gamma es 1, y para neutrones varía con la energía (entre 5 y 20).
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Protección radiológica</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La protección contra la radiación se basa en tres principios fundamentales que todo trabajador del área conoce:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Tiempo:</strong> minimizar el tiempo de exposición. Cuanto menos tiempo se está cerca de una fuente, menor es la dosis acumulada.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Distancia:</strong> mantenerse lo más lejos posible. La dosis sigue la <strong class="text-nucleo-accent">ley del inverso del cuadrado</strong>: \( \text{dosis} \propto 1/r^2 \). Duplicar la distancia reduce la exposición a un cuarto.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Blindaje:</strong> interponer materiales adecuados. Alfa: nada (papel). Beta: plástico o acrílico. Gamma y X: plomo o concreto. Neutrones: agua, parafina, concreto con boro.
+        </li>
+      </ul>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        El principio <strong class="text-nucleo-accent">ALARA</strong> (As Low As Reasonably Achievable — "tan bajo como sea razonablemente posible") guía toda la protección radiológica: cada exposición debe justificarse (el beneficio debe superar el riesgo), optimizarse (usar la dosis mínima necesaria) y limitarse (no exceder los límites legales).
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        En Argentina, la <strong class="text-nucleo-accentLight">Autoridad Regulatoria Nuclear (ARN)</strong> establece los límites de dosis: 1 mSv/año para el público general, 20 mSv/año promediado en 5 años para trabajadores ocupacionalmente expuestos (con un máximo de 50 mSv en cualquier año individual). Estos valores siguen las recomendaciones de la Comisión Internacional de Protección Radiológica (ICRP) y del OIEA.
+      </p>
+      <div class="pull-quote">
+        "La radiación no se ve, no se huele, no se siente. Por eso medirla y respetarla es el corazón de la protección radiológica."
+      </div>
+    </section>
+
+    <div class="reveal mb-10" style="background: rgba(255,110,64,0.04); border: 1px solid rgba(255,110,64,0.15); border-left: 3px solid #FF6E40; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Cuatro tipos de radiación nuclear: <strong class="text-nucleo-accentLight">alfa</strong> (poco penetrante), <strong class="text-nucleo-accentLight">beta</strong> (media), <strong class="text-nucleo-accentLight">gamma</strong> (alta penetración, necesita plomo), <strong class="text-nucleo-accentLight">neutrones</strong> (muy penetrantes, necesitan agua/concreto).</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">80% de la radiación</strong> que recibimos es natural (cósmica, terrestre, radón). El resto proviene principalmente de usos médicos.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La radiación ionizante daña el ADN. Efectos <strong class="text-nucleo-accentLight">determinísticos</strong> (umbral) y <strong class="text-nucleo-accentLight">estocásticos</strong> (probabilísticos, como el cáncer). El modelo LNT asume que no hay dosis segura.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Se mide en <strong class="text-nucleo-accentLight">Gray</strong> (absorción) y <strong class="text-nucleo-accentLight">Sievert</strong> (efecto biológico). Los trabajadores usan dosímetros para monitorear su exposición.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Protección: <strong class="text-nucleo-accentLight">tiempo, distancia, blindaje</strong>. Principio ALARA: dosis tan baja como sea razonablemente posible.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="radioisotopos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioisótopos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los átomos inestables que emiten estas radiaciones</p>
+        </a>
+        <a href="atomos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Estructura de los Átomos</span>
+          <p class="text-sm text-nucleo-silver mt-1">De dónde viene la inestabilidad que produce la radiación</p>
+        </a>
+        <a href="aplicaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Aplicaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cómo usamos la radiación en medicina, industria e investigación</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="radioisotopos.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-teal-400" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-teal-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Radioisótopos</div>
+        </div>
+      </a>
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">Fuerzas de la Naturaleza →</div>
+        </div>
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-orange">
+          <span class="iconify text-white" data-icon="lucide:radio" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Radiaciones</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="radioisotopos.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-teal-400 transition-colors">Radioisótopos</a>
+        <a href="../index.html#centrales" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Centrales AR</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

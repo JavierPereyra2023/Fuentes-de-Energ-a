@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radioisótopos — átomos que diagnostican, curan e investigan | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#26A69A', accentLight: '#4DB6AC', accentDark: '#00897B',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #26A69A; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #26A69A; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #26A69A; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(38, 166, 154, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #00897B, #26A69A, #4DB6AC); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(38,166,154,0.12); border-bottom: 2px solid #26A69A; font-family: 'Inter', sans-serif; font-weight: 600; color: #4DB6AC; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(38,166,154,0.04); border-left: 3px solid #26A69A; font-size: 1.1rem; color: #4DB6AC; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #26A69A; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #26A69A; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(38,166,154,0.12); color: #4DB6AC; border: 1px solid rgba(38,166,154,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(38,166,154,0.3); background: rgba(38,166,154,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(38,166,154,0.15); }
+    .glow-teal { box-shadow: 0 0 40px rgba(38,166,154,0.4), inset 0 0 20px rgba(38,166,154,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(38,166,154,0.3); }
+    .toc-inner a.active { color: #4DB6AC; border-left-color: #26A69A; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #26A69A; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #26A69A; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(38,166,154,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #4DB6AC; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(38,166,154,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Radioisótopos</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="radiaciones.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Radiaciones</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #26A69A 1px, transparent 1px), radial-gradient(circle at 70% 30%, #26A69A 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(38,166,154,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Aplicaciones Nucleares</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Radioisótopos —<br>
+        <span class="text-nucleo-accent">átomos que diagnostican, curan e investigan</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Son isótopos inestables de elementos químicos que emiten radiación al desintegrarse. Se producen en reactores nucleares o aceleradores y se usan en medicina (diagnóstico y terapia), industria, agricultura e investigación científica.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Tc-99m</span>
+        <span class="chip">I-131</span>
+        <span class="chip">Co-60</span>
+        <span class="chip">F-18</span>
+        <span class="chip chip-yellow">Mo-99</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué es un radioisótopo?</a>
+        <a href="#sec02"><span class="num">02</span> Producción de radioisótopos</a>
+        <a href="#sec03"><span class="num">03</span> Radioisótopos en diagnóstico</a>
+        <a href="#sec04"><span class="num">04</span> Radioisótopos en terapia</a>
+        <a href="#sec05"><span class="num">05</span> Seguridad y gestión</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué es un radioisótopo?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Producción de radioisótopos</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Radioisótopos en diagnóstico</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Radioisótopos en terapia</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Seguridad y gestión</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué es un radioisótopo?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Un <strong class="text-nucleo-accent">radioisótopo</strong> (o radionucleido) es un isótopo inestable de un elemento químico que se desintegra espontáneamente emitiendo radiación. Cada elemento de la tabla periódica puede tener isótopos estables y radiactivos. Por ejemplo: el <span class="inline-stat"><span class="val">C-12</span></span> es estable, mientras que el <span class="inline-stat"><span class="val">C-14</span></span> es radiactivo y tiene una vida media de 5730 años —por eso se usa para datar restos arqueológicos.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La desintegración radiactiva sigue una <strong class="text-nucleo-accent">ley exponencial</strong>: \( N(t) = N_0 \, e^{-\lambda t} \), donde \( N_0 \) es el número inicial de núcleos, \( \lambda \) es la constante de desintegración, y la <span class="glosario" data-tip="Tiempo que tarda en desintegrarse la mitad de los núcleos de una muestra radiactiva. Cada radioisótopo tiene su T₁/₂ característica: va desde microsegundos hasta miles de millones de años." style="color:#4DB6AC;border-bottom-color:#4DB6AC;">vida media</span> se calcula como \( T_{1/2} = \ln(2) / \lambda \).
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Ley de desintegración radiactiva</span>
+        \(N(t) = N_0 \, e^{-\lambda t} \qquad T_{1/2} = \frac{\ln 2}{\lambda} \qquad A = \lambda N\)
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Algunos radioisótopos existen en la naturaleza desde la formación de la Tierra —como el <strong class="text-nucleo-accentLight">U-238</strong> (vida media de 4.500 millones de años) o el <strong class="text-nucleo-accentLight">K-40</strong>— y otros son <strong class="text-nucleo-accent">artificiales</strong>, producidos en reactores nucleares o aceleradores de partículas. La <span class="glosario" data-tip="Actividad radiactiva: número de desintegraciones por segundo. Se mide en becquerels (Bq). 1 Bq = 1 desintegración/segundo. Unidades mayores: kBq, MBq, GBq." style="color:#4DB6AC;border-bottom-color:#4DB6AC;">actividad</span> se mide en <span class="inline-stat"><span class="val">becquerels (Bq)</span></span>: 1 Bq equivale a una desintegración por segundo.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Producción de radioisótopos</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Hay tres métodos principales para producir radioisótopos, cada uno con sus ventajas según el tipo de núcleo que se busca:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">1. Reactores nucleares — bombardeo con neutrones.</strong> El Mo-99 se obtiene de la fisión del U-235 en reactores como el RA-3 en Ezeiza. El Co-60 se produce por captura neutrónica del Co-59 en reactores tipo CANDU como Embalse. El I-131 se produce por irradiación de Te-130.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">2. Ciclotrones y aceleradores — bombardeo con partículas cargadas.</strong> El F-18 se produce bombardeando O-18 con protones. El Ga-68 se obtiene de Zn-68 + protón. Estos radioisótopos tienen vidas medias cortas y se producen cerca de los hospitales.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">3. Generadores — sistema padre-hija.</strong> El generador de <span class="glosario" data-tip="Generador Mo-99 / Tc-99m: sistema donde el molibdeno-99 (vida media 66 h) se desintegra a tecnecio-99m (vida media 6 h). Se extrae el Tc-99m por elución con solución salina y se usa directamente en el paciente." style="color:#4DB6AC;border-bottom-color:#4DB6AC;">Mo-99/Tc-99m</span> —conocido como "vaca de tecnecio"— permite que el Tc-99m se extraiga periódicamente en el hospital, sin necesidad de tener un reactor o ciclotrón en el lugar.
+        </li>
+      </ul>
+      <div class="dato-box">
+        <span class="dato-label">Dato clave</span>
+        <p>El Mo-99 es el radioisótopo más importante del mundo —de él se obtiene el Tc-99m que se usa en el <strong>80% de los procedimientos de medicina nuclear</strong>. Argentina lo produce en el reactor RA-3 desde 1985, y el nuevo reactor RA-10 (en construcción en Ezeiza) multiplicará su capacidad de producción para el mercado regional y global.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Radioisótopos en medicina — diagnóstico</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">Tc-99m</strong> es el caballo de batalla de la medicina nuclear. Emite rayos gamma de <span class="inline-stat"><span class="val">140 keV</span></span> —ideales para las gammacámaras— y su vida media de 6 horas es lo suficientemente corta para minimizar la dosis al paciente y lo suficientemente larga para completar los procedimientos. Se usa en centellogramas óseos, perfusiones cardíacas (isquemia miocárdica), estudios de función renal y tiroidea.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">F-18</strong> —unido a la FDG, un análogo de la glucosa— es la base del <span class="glosario" data-tip="Tomografía por Emisión de Positrones: técnica de imagen que detecta los fotones de 511 keV producidos cuando un positrón (β⁺) se aniquila con un electrón. Muestra el metabolismo de los tejidos, no solo su anatomía." style="color:#4DB6AC;border-bottom-color:#4DB6AC;">PET</span>. La FDG se acumula en tejidos de alto metabolismo como tumores, cerebro y corazón. El escáner PET detecta los fotones de aniquilación de 511 keV y genera imágenes tridimensionales del metabolismo celular, complementando la información anatómica del CT o la resonancia magnética.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Otros radioisótopos diagnósticos incluyen: <strong class="text-nucleo-accentLight">I-123</strong> para imagen tiroidea, <strong class="text-nucleo-accentLight">Ga-67</strong> para detección de infecciones y tumores, y <strong class="text-nucleo-accentLight">Tl-201</strong> para pruebas de estrés cardíaco. En total, más de 40 millones de procedimientos de medicina nuclear se realizan anualmente en el mundo.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Radioisótopos en medicina — terapia y otros usos</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">I-131</strong> es uno de los radioisótopos terapéuticos más exitosos. Al ser absorbido selectivamente por la tiroides, las partículas beta que emite destruyen el tejido tiroideo y las células cancerosas desde adentro. También emite rayos gamma que sirven para obtener imágenes simultáneamente —un concepto llamado <span class="glosario" data-tip="Teragnosis: enfoque que combina diagnóstico y terapia con el mismo radiofármaco o molécula. 'Tratar lo que se ve y ver lo que se trata'." style="color:#4DB6AC;border-bottom-color:#4DB6AC;">teragnosis</span> ("ver y tratar").
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">Co-60</strong> se usa en radioterapia externa —los equipos de cobaltoterapia— y en braquiterapia interna. También es fundamental para la <strong class="text-nucleo-accentLight">esterilización</strong> de equipos médicos, jeringas, suturas y prótesis mediante rayos gamma. Otros radioisótopos terapéuticos incluyen <strong>Lu-177</strong> e <strong>Y-90</strong> para terapia dirigida de tumores neuroendocrinos.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Más allá de la medicina, los radioisótopos tienen incontables aplicaciones: <strong class="text-nucleo-accentLight">trazadores industriales</strong> (detección de fugas, medición de caudales y desgaste), <strong class="text-nucleo-accentLight">Am-241</strong> en detectores de humo, fuentes de <strong class="text-nucleo-accentLight">Ir-192 y Co-60</strong> para radiografía industrial de soldaduras, <strong class="text-nucleo-accentLight">C-14</strong> para datación arqueológica y geológica, y la <span class="glosario" data-tip="Técnica del Insecto Estéril: se crían insectos macho, se esterilizan con radiación gamma y se liberan masivamente. Al aparearse con hembras salvajes no producen descendencia, reduciendo la población de plagas." style="color:#4DB6AC;border-bottom-color:#4DB6AC;">técnica del insecto estéril (TIE)</span> para el control de plagas agrícolas.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Seguridad y gestión de radioisótopos</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los radioisótopos son materiales peligrosos que requieren protocolos estrictos. Los tres principios de la protección radiológica son <strong class="text-nucleo-accent">tiempo, distancia y blindaje</strong>: minimizar el tiempo de exposición, maximizar la distancia (la dosis sigue la ley del inverso del cuadrado: \( \text{dosis} \propto 1/r^2 \)) y usar blindajes adecuados al tipo de radiación.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En Argentina, la <strong class="text-nucleo-accentLight">Autoridad Regulatoria Nuclear (ARN)</strong> controla todas las instalaciones que producen, manipulan o almacenan radioisótopos. A nivel internacional, el <strong>OIEA</strong> establece las normas de seguridad y promueve el uso pacífico de la tecnología nuclear.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La gestión de residuos radiactivos depende de la vida media del isótopo. Los de <strong class="text-nucleo-accentLight">vida corta</strong> (horas o días), como el Tc-99m o el F-18, se almacenan hasta que su actividad decae a niveles seguros. Los de <strong class="text-nucleo-accentLight">vida larga</strong> (años o siglos), como el Co-60 o el Cs-137, requieren almacenamiento seguro a largo plazo y disposición final controlada. El reactor <strong>RA-10</strong> en construcción en Ezeiza no solo aumentará la producción de Mo-99 para Argentina y la región, sino que incorporará estándares modernos de seguridad y gestión de residuos.
+      </p>
+    </section>
+
+    <div class="reveal mb-10" style="background: rgba(38,166,154,0.04); border: 1px solid rgba(38,166,154,0.15); border-left: 3px solid #26A69A; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Un radioisótopo es un átomo inestable que emite radiación al desintegrarse. Su actividad sigue una ley exponencial con una <strong class="text-nucleo-accentLight">vida media característica</strong>.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Se producen en <strong class="text-nucleo-accentLight">reactores nucleares</strong> (Mo-99, Co-60, I-131) y en <strong class="text-nucleo-accentLight">ciclotrones</strong> (F-18 para PET). Los generadores permiten extraer radioisótopos de vida corta en hospitales.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">Tc-99m</strong> es el más usado en diagnóstico (80% de procedimientos). Se obtiene del Mo-99 producido en el reactor RA-3 argentino.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">I-131</strong> trata el cáncer de tiroides y el <strong class="text-nucleo-accentLight">Co-60</strong> se usa en radioterapia externa y esterilización de equipos médicos.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La seguridad se basa en <strong class="text-nucleo-accentLight">tiempo, distancia y blindaje</strong>. La ARN regula todas las instalaciones que usan radioisótopos en Argentina.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="aplicaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Aplicaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Todas las formas en que la tecnología nuclear impacta la vida cotidiana</p>
+        </a>
+        <a href="radiaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radiaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Alfa, beta, gamma: los tipos de emisión que caracterizan a cada radioisótopo</p>
+        </a>
+        <a href="reactores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Reactores Nucleares</span>
+          <p class="text-sm text-nucleo-silver mt-1">Donde se producen los radioisótopos más importantes del mundo</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="aceleradores.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-purple-400" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-purple-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Aceleradores</div>
+        </div>
+      </a>
+      <a href="radiaciones.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-orange-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Radiaciones →</div>
+        </div>
+        <span class="iconify text-orange-400" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-teal">
+          <span class="iconify text-white" data-icon="lucide:flask-conical" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Radioisótopos</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="radiaciones.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-orange-400 transition-colors">Radiaciones</a>
+        <a href="../index.html#centrales" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Centrales AR</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

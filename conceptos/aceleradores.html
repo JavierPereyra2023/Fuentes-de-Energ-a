@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aceleradores de Partículas — la herramienta para mirar lo invisible | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#7C4DFF', accentLight: '#B388FF', accentDark: '#5E35B1',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #7C4DFF; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #7C4DFF; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #7C4DFF; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(124, 77, 255, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #5E35B1, #7C4DFF, #B388FF); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(124,77,255,0.12); border-bottom: 2px solid #7C4DFF; font-family: 'Inter', sans-serif; font-weight: 600; color: #B388FF; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(124,77,255,0.04); border-left: 3px solid #7C4DFF; font-size: 1.1rem; color: #B388FF; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #7C4DFF; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #7C4DFF; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(124,77,255,0.12); color: #B388FF; border: 1px solid rgba(124,77,255,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(124,77,255,0.3); background: rgba(124,77,255,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(124,77,255,0.15); }
+    .glow-purple { box-shadow: 0 0 40px rgba(124,77,255,0.4), inset 0 0 20px rgba(124,77,255,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(124,77,255,0.3); }
+    .toc-inner a.active { color: #B388FF; border-left-color: #7C4DFF; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #7C4DFF; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #7C4DFF; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(124,77,255,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #B388FF; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(124,77,255,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Aceleradores</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="radioisotopos.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Radioisótopos</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #7C4DFF 1px, transparent 1px), radial-gradient(circle at 70% 30%, #7C4DFF 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Física de Partículas</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Aceleradores de Partículas —<br>
+        <span class="text-nucleo-accent">la herramienta para mirar lo invisible</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Son máquinas que usan campos eléctricos y magnéticos para llevar partículas cargadas a velocidades cercanas a la de la luz. Permiten estudiar la estructura íntima de la materia, producir radioisótopos para medicina y recrear las condiciones del universo primitivo.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Ciclotrón</span>
+        <span class="chip">Sincrotrón</span>
+        <span class="chip">LINAC</span>
+        <span class="chip">LHC</span>
+        <span class="chip chip-yellow">TANDAR</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué es un acelerador?</a>
+        <a href="#sec02"><span class="num">02</span> Tipos de aceleradores</a>
+        <a href="#sec03"><span class="num">03</span> Aceleradores en medicina</a>
+        <a href="#sec04"><span class="num">04</span> Aceleradores en investigación</a>
+        <a href="#sec05"><span class="num">05</span> Aceleradores en Argentina</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué es un acelerador?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Tipos de aceleradores</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Aceleradores en medicina</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Aceleradores en investigación</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Aceleradores en Argentina</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué es un acelerador de partículas?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Un acelerador de partículas es un dispositivo que usa <strong class="text-nucleo-accent">campos electromagnéticos</strong> para impulsar partículas cargadas —electrones, protones, iones— a energías altísimas. Es el equivalente a un <span class="inline-stat"><span class="val">microscopio superpotente</span></span>: para ver objetos cada vez más pequeños, necesitamos longitudes de onda cada vez menores, y por lo tanto partículas de mayor energía. Esto lo resume la relación de <span class="glosario" data-tip="Relación de De Broglie: toda partícula en movimiento tiene asociada una onda de longitud λ = h/p, donde h es la constante de Planck y p es el momento lineal." style="color:#B388FF;border-bottom-color:#B388FF;">De Broglie</span>: \( \lambda = h / p \), donde \( \lambda \) es la longitud de onda, \( h \) la constante de Planck y \( p \) el momento de la partícula.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los aceleradores sirven a dos grandes propósitos: la <strong class="text-nucleo-accent">investigación básica</strong> —entender de qué está hecha la materia y cómo se comporta— y las <strong class="text-nucleo-accentLight">aplicaciones prácticas</strong> en medicina, industria y producción de radioisótopos. El primer acelerador de la historia fue el <span class="inline-stat"><span class="val">Cockcroft-Walton</span></span> en 1932, con el que John Cockcroft y Ernest Walton consiguieron dividir átomos de litio, confirmando experimentalmente la equivalencia masa-energía de Einstein.
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Longitud de onda de De Broglie</span>
+        \(\lambda = \frac{h}{p} = \frac{h}{mv} = \frac{h}{\sqrt{2mE}}\)
+      </div>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">Cuanto más pequeña es la escala que queremos estudiar, más energía necesitan nuestras partículas-sonda. Para ver un núcleo atómico necesitamos energías de MeV; para ver quarks dentro de protones necesitamos GeV. El LHC alcanza energías de 13 TeV, equivalente a concentrar la energía de un mosquito volando en un espacio un billón de veces más chico que un grano de arena.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Tipos de aceleradores</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Existen tres grandes familias de aceleradores, cada una con su principio de funcionamiento y aplicaciones:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Aceleradores lineales (LINAC):</strong> las partículas viajan en línea recta a través de cavidades aceleradoras que las impulsan con campos eléctricos alternos. Son los más usados en radioterapia y también sirven como inyectores para máquinas más grandes. No tienen límite teórico de energía: simplemente se agregan más cavidades.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Ciclotrones:</strong> las partículas viajan en espiral. Un campo magnético las curva y un campo eléctrico alterno las acelera cada media vuelta. La frecuencia del ciclotrón clásico es \(f = qB/(2\pi m)\). Se usan para protonterapia y producción de radioisótopos para PET.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Sincrotrones:</strong> las partículas circulan en un anillo fijo, y tanto el campo magnético como la radiofrecuencia aumentan sincrónicamente con la energía de las partículas. El <span class="glosario" data-tip="Large Hadron Collider: el mayor acelerador del mundo, ubicado en el CERN, Ginebra. Tiene 27 km de circunferencia y acelera protones a 6.5 TeV." style="color:#B388FF;border-bottom-color:#B388FF;">LHC</span> del CERN es un sincrotrón de 27 km de circunferencia que acelera protones a 6.5 TeV. Las fuentes de luz sincrotrón —como el LNLS en Brasil— usan electrones para generar rayos X intensos.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Aceleradores electrostáticos:</strong> usan una diferencia de potencial fija (millones de voltios) para acelerar partículas en una sola etapa. El <strong>TANDAR</strong> argentino, de 20 MV, es un acelerador tandem de tipo Van de Graaff, usado para investigación nuclear y análisis de materiales.
+        </li>
+      </ul>
+      <div class="dato-box">
+        <span class="dato-label">Dato asombroso</span>
+        <p>El Gran Colisionador de Hadrones (LHC) acelera protones al <strong>99,999999%</strong> de la velocidad de la luz. En cada colisión se recrean condiciones similares a las del universo una billonésima de segundo después del Big Bang.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Aceleradores en medicina</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los aceleradores tienen un impacto directo en la salud de millones de personas. Más de <span class="inline-stat"><span class="val">10.000 LINACs</span></span> en todo el mundo tratan a pacientes con cáncer mediante radioterapia. Estos aceleradores producen haces de electrones o rayos X —por <span class="glosario" data-tip="Radiación de frenado: rayos X producidos cuando electrones de alta energía son frenados al chocar contra un blanco metálico. Cuanto mayor la energía del electrón, más penetrantes los rayos X resultantes." style="color:#B388FF;border-bottom-color:#B388FF;">bremsstrahlung</span>— que se dirigen con precisión milimétrica al tumor.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">protonterapia</strong> —que usa ciclotrones o sincrotrones— ofrece una ventaja única: el <span class="glosario" data-tip="Pico de Bragg: la mayor parte de la energía de un protón se deposita justo al final de su recorrido, en una zona estrecha. Permite irradiar el tumor con precisión y dañar poco el tejido sano que lo rodea." style="color:#B388FF;border-bottom-color:#B388FF;">pico de Bragg</span> permite depositar la dosis máxima de radiación exactamente en el tumor, con un daño mínimo al tejido sano circundante. También está en desarrollo la <strong class="text-nucleo-accentLight">hadronterapia</strong> con iones de carbono.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Otra aplicación crucial es la <strong class="text-nucleo-accent">producción de radioisótopos para diagnóstico</strong>. Los ciclotrones producen F-18 —base de la <span class="glosario" data-tip="Fluorodesoxiglucosa: análogo de la glucosa marcado con flúor-18 radiactivo. Se acumula en tejidos de alto metabolismo (tumores, cerebro, corazón). Es el radiofármaco más usado en PET." style="color:#B388FF;border-bottom-color:#B388FF;">FDG</span> para PET—, Ga-68, I-123 y muchos otros. Como estos radioisótopos tienen vidas medias cortas (F-18: 110 minutos), deben producirse cerca del hospital. Argentina cuenta con ciclotrones para PET en Buenos Aires, Mendoza y otras ciudades.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Aceleradores en investigación</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">Gran Colisionador de Hadrones (LHC)</strong> en el CERN, cerca de Ginebra, es el instrumento científico más grande jamás construido. En su anillo de 27 km, los protones circulan en sentidos opuestos y colisionan en cuatro puntos donde se ubican detectores gigantes: <span class="inline-stat"><span class="val">ATLAS</span></span>, <span class="inline-stat"><span class="val">CMS</span></span>, <span class="inline-stat"><span class="val">ALICE</span></span> y <span class="inline-stat"><span class="val">LHCb</span></span>.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El descubrimiento más emblemático del LHC fue el <strong class="text-nucleo-accent">bosón de Higgs</strong> en 2012 —la partícula que explica por qué las demás partículas tienen masa—, completando así el Modelo Estándar de la física de partículas. François Englert y Peter Higgs recibieron el Nobel de Física en 2013 por esta predicción teórica de 1964.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Más allá de la física de partículas, las <strong class="text-nucleo-accentLight">fuentes de luz sincrotrón</strong> —aceleradores donde los electrones emiten rayos X intensos al ser curvados por imanes— son herramientas fundamentales para la ciencia de materiales, la biología estructural y la nanotecnología. El <strong>LNLS</strong> en Brasil y su nueva fuente <strong>Sirius</strong> —una de las más avanzadas del mundo— permiten estudiar proteínas, catalizadores y nuevos materiales con resolución atómica.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Otro tipo son las <strong class="text-nucleo-accent">fuentes de espalación de neutrones</strong>: un haz de protones acelerados choca contra un blanco pesado (mercurio, tungsteno) y arranca neutrones que se usan para estudiar la estructura de materiales, desde baterías hasta medicamentos.
+      </p>
+      <div class="pull-quote">
+        "Los aceleradores son ventanas a escalas cada vez más pequeñas. Ver más chico requiere más energía."
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Aceleradores en Argentina</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Argentina opera el <strong class="text-nucleo-accent">TANDAR</strong> (<em>Tandem Argentino</em>) en el Centro Atómico Constituyentes de la CNEA, un acelerador electrostático tandem de <span class="inline-stat"><span class="val">20 MV</span></span> de tipo Van de Graaff, en funcionamiento desde 1985. Se usa para investigación en estructura nuclear, análisis de materiales por haces de iones, y aplicaciones interdisciplinarias: muestras ambientales, autenticación de obras de arte, y análisis forense.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Para la medicina nuclear, Argentina cuenta con varios <strong class="text-nucleo-accentLight">ciclotrones para producción de PET</strong>: los principales están en Buenos Aires (Fundación Escuela de Medicina Nuclear de Mendoza —con sede en Buenos Aires—, CNEA Ezeiza) y en la ciudad de Mendoza. Estos producen F-18 FDG, el radiofármaco más usado en diagnóstico oncológico por PET, que se distribuye a centros de diagnóstico de todo el país.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        En el plano internacional, científicos argentinos participan activamente en colaboraciones del <strong>CERN</strong> (como el experimento ATLAS del LHC), en el desarrollo de instrumentación para fuentes de luz sincrotrón, y en redes latinoamericanas de física nuclear y aplicaciones de aceleradores.
+      </p>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">El TANDAR es el acelerador electrostático más grande de América Latina. Su nombre viene de "tandem" porque acelera los iones en dos etapas: primero iones negativos hacia el terminal positivo de 20 MV, donde se les arrancan electrones y se convierten en positivos, y después son repelidos de vuelta hacia tierra, duplicando la energía efectiva.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="reveal mb-10" style="background: rgba(124,77,255,0.04); border: 1px solid rgba(124,77,255,0.15); border-left: 3px solid #7C4DFF; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los aceleradores usan campos electromagnéticos para llevar partículas cargadas a altas energías. Cuanto más energía, más chico se puede "ver".</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Tipos principales: <strong class="text-nucleo-accentLight">LINAC</strong> (lineal), <strong class="text-nucleo-accentLight">ciclotrón</strong> (espiral), <strong class="text-nucleo-accentLight">sincrotrón</strong> (anillo). El LHC es el sincrotrón más grande del mundo.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>En medicina: LINACs para radioterapia, ciclotrones para producción de radioisótopos PET (F-18) y protonterapia.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">TANDAR</strong> en Buenos Aires es un acelerador electrostático tandem de 20 MV usado para investigación nuclear y aplicaciones.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El descubrimiento del <strong class="text-nucleo-accentLight">bosón de Higgs</strong> (2012) en el LHC completó el Modelo Estándar de la física de partículas.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="fuerzas.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fuerzas de la Naturaleza</span>
+          <p class="text-sm text-nucleo-silver mt-1">Las fuerzas fundamentales que los aceleradores nos ayudan a entender</p>
+        </a>
+        <a href="atomos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Estructura de los Átomos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Lo que los aceleradores nos permiten explorar a fondo</p>
+        </a>
+        <a href="cosmicos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Rayos Cósmicos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los aceleradores naturales del universo</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">← Reactores Nucleares</div>
+        </div>
+      </a>
+      <a href="radioisotopos.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-teal-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Radioisótopos →</div>
+        </div>
+        <span class="iconify text-teal-400" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-purple">
+          <span class="iconify text-white" data-icon="lucide:zap" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Aceleradores</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="radioisotopos.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-teal-400 transition-colors">Radioisótopos</a>
+        <a href="../index.html#centrales" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Centrales AR</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

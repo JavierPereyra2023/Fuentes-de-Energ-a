@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fukushima (2011) — Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#FF6E40', accentLight: '#FF8A65',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #FF6E40; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #FF6E40; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #FF6E40; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #FF8A65; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #FF8A65; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #FF6E40; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #FF8A65; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span style="color:rgba(255,110,64,0.5);">/</span>
+        <span style="color:#FF8A65; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">Fukushima</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(255,110,64,0.15); color:#FF8A65; font-family:'Inter',sans-serif;">Accidente · INES 7</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1 ml-3" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~10 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="revista-articulo" style="padding-top:5rem;">
+  <h2>Terremoto, tsunami y fusión en Fukushima Daiichi</h2>
+
+  <p class="fecha">
+    Fuente histórica: <em>The Japan Times</em>, 11 de marzo de 2011.
+  </p>
+
+  <p>
+    El 11 de marzo de 2011, a las 14:46 hora local, un terremoto de magnitud 9,0 —el más potente jamás registrado en Japón— sacudió la costa este del país. El epicentro se ubicó a 130 km de la costa de Sendai, y el sismo duró seis minutos. Pero lo peor no fue el temblor: fue lo que vino del mar.
+  </p>
+
+  <p>
+    El terremoto generó un <strong>tsunami con olas de hasta 14 metros</strong> de altura que golpeó la costa aproximadamente 40 minutos después. La central nuclear de <strong>Fukushima Daiichi</strong>, operada por la compañía Tokyo Electric Power Company (TEPCO), estaba preparada para resistir sismos, pero no para un tsunami de esa magnitud. El muro de contención medía apenas 5,7 metros.
+  </p>
+
+  <p>
+    El agua de mar inundó los sótanos donde estaban los generadores diésel de emergencia. Los seis reactores de la central —tres de ellos en operación en ese momento— se quedaron sin alimentación eléctrica. En términos nucleares: ocurrió un <strong>station blackout</strong>, un apagón total de estación, el peor escenario posible. Sin electricidad, las bombas de refrigeración dejaron de funcionar.
+  </p>
+
+  <p>
+    En las horas y días siguientes, los núcleos de los reactores 1, 2 y 3 se sobrecalentaron hasta que el combustible nuclear se <strong>fundió parcialmente</strong>. La reacción entre el vapor de agua y el revestimiento de circonio de las barras de combustible generó hidrógeno, que se acumuló en los edificios y provocó explosiones que volaron los techos de los reactores 1, 3 y 4.
+  </p>
+
+  <p>
+    Las explosiones <strong>no fueron nucleares</strong>: fueron explosiones químicas de hidrógeno, similares a las del accidente de Three Mile Island en 1979. Pero esparcieron material radiactivo que había escapado del núcleo y forzaron la evacuación de unas 154.000 personas en un radio de 20 km. La zona de exclusión de Fukushima sigue parcialmente vigente hoy.
+  </p>
+
+  <p>
+    Fukushima fue el segundo accidente en alcanzar el <strong>nivel 7 de la escala INES</strong>, después de Chernobyl. Sin embargo, las diferencias entre ambos son enormes: en Chernobyl el reactor explotó con el núcleo expuesto; en Fukushima la contención resistió parcialmente y la mayor parte de la radiactividad quedó confinada. No se registraron muertes directas por radiación, aunque el terremoto y el tsunami causaron más de 18.000 víctimas.
+  </p>
+
+  <p>
+    Las consecuencias más duraderas de Fukushima no fueron radiológicas sino <strong>políticas y sociales</strong>. Japón apagó todos sus reactores nucleares (54 en ese momento) y el mundo reevaluó la seguridad de sus centrales. Alemania aceleró su plan de abandono nuclear, Italia canceló sus proyectos, y países como Argentina reforzaron los requisitos de seguridad sísmica para sus centrales.
+  </p>
+
+  <p>
+    La lección más importante de Fukushima es que <strong>los accidentes nucleares no siempre empiezan en el reactor</strong>. Pueden empezar con un terremoto, un tsunami, una falla humana o una combinación de todo. La seguridad nuclear, entonces, no depende solo de proteger el núcleo: depende de anticipar lo que nadie imaginó que podía pasar.
+  </p>
+
+  <div style="background: rgba(255,110,64,0.04); border: 1px solid rgba(255,110,64,0.15); border-left: 3px solid #FF6E40; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#FF6E40;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Fukushima Daiichi (2011) fue provocado por un terremoto de magnitud 9 y un tsunami con olas de 14 metros.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ El agua de mar inundó los generadores diésel de emergencia, provocando un apagón total de estación (station blackout).</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ La fusión parcial de los núcleos 1, 2 y 3 generó hidrógeno que explotó en los edificios de los reactores.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ A diferencia de Chernobyl, las explosiones fueron químicas (no nucleares) y la mayor parte de la radiactividad quedó contenida.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Consecuencias: Japón apagó sus 54 reactores. Alemania aceleró el abandono nuclear. El mundo reforzó la seguridad sísmica.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#F59E0B;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="chernobyl.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Chernobyl (1986)</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="propulsion.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Propulsión nuclear espacial</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="balseiro.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">José Balseiro</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    Fukushima no fue Chernobyl. Pero enseñó que incluso en el país más preparado del mundo para los terremotos, la naturaleza puede encontrar un punto débil. La seguridad nuclear nunca está terminada: es un trabajo que se revisa todos los días.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>

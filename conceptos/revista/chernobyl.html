@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chernobyl (1986) — Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#DC2626', accentLight: '#F87171',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #DC2626; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #DC2626; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #DC2626; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #F87171; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #F87171; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #DC2626; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #F87171; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span style="color:rgba(220,38,38,0.5);">/</span>
+        <span style="color:#F87171; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">Chernobyl</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(220,38,38,0.15); color:#F87171; font-family:'Inter',sans-serif;">Accidente · INES 7</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1 ml-3" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~10 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="revista-articulo" style="padding-top:5rem;">
+  <h2>Explosión en la central nuclear de Chernobyl</h2>
+
+  <p class="fecha">
+    Fuente histórica: <em>Pravda</em>, 28 de abril de 1986.
+  </p>
+
+  <p>
+    La madrugada del 26 de abril de 1986, durante una prueba de seguridad mal planificada, el reactor Nº 4 de la central nuclear Vladímir Ilich Lenin —cerca de la ciudad de Prípiat, en la entonces Unión Soviética (hoy Ucrania)— sufrió un aumento descontrolado de potencia. En segundos, dos explosiones volaron la tapa de 2000 toneladas del reactor y dejaron el núcleo expuesto al aire libre.
+  </p>
+
+  <p>
+    La prueba consistía en simular un apagón eléctrico para verificar si la inercia de la turbina podía mantener las bombas de refrigeración funcionando el tiempo suficiente hasta que arrancaran los generadores diésel de emergencia. Pero el reactor RBMK-1000 tenía un defecto de diseño conocido como <strong>coeficiente de vacío positivo</strong>: cuando el agua se convertía en vapor, la reacción nuclear se aceleraba en lugar de frenarse.
+  </p>
+
+  <p>
+    A ese defecto se sumaron <strong>múltiples violaciones de los protocolos de seguridad</strong> por parte de los operadores: desactivaron sistemas de parada automática, extrajeron más barras de control de las permitidas y operaron el reactor en un rango de potencia inestable. Cuando intentaron insertar las barras de control para detener la reacción —el famoso botón AZ-5— ya era tarde. Las puntas de grafito de las barras, en lugar de frenar la reacción, la aceleraron momentáneamente y provocaron la explosión.
+  </p>
+
+  <p>
+    El incendio del grafito del núcleo —el reactor RBMK usaba grafito como moderador— lanzó a la atmósfera una nube de material radiactivo que se extendió sobre Bielorrusia, Ucrania, Rusia y gran parte de Europa. Los bomberos que acudieron a apagar el incendio, sin protección adecuada, recibieron dosis letales de radiación. Muchos murieron en las semanas siguientes.
+  </p>
+
+  <p>
+    La ciudad de Prípiat, construida para albergar a los trabajadores de la central y sus familias —unas 49.000 personas—, fue evacuada 36 horas después del accidente. Nadie volvió a vivir allí. En total, unas 350.000 personas fueron reubicadas desde la zona de exclusión de 30 kilómetros que se estableció alrededor de la central.
+  </p>
+
+  <p>
+    En los meses siguientes, los liquidadores —600.000 trabajadores movilizados— construyeron un <strong>sarcófago de hormigón y acero</strong> para contener los restos del reactor. Esa estructura original, el "sarcófago", se fue deteriorando con los años, y en 2016 se completó el <strong>Nuevo Sarcófago de Seguridad</strong>, un arco metálico de 36.000 toneladas que cubre el viejo sarcófago y debería durar al menos 100 años.
+  </p>
+
+  <p>
+    Chernobyl fue clasificado como nivel 7 —el máximo— en la Escala Internacional de Eventos Nucleares (INES), el único junto a Fukushima en 2011. Las estimaciones de víctimas varían enormemente: desde 31 muertes directas (entre bomberos y operarios) hasta los miles de casos de cáncer de tiroides que la OMS atribuye al accidente, sobre todo en niños expuestos al yodo-131.
+  </p>
+
+  <p>
+    El accidente de Chernobyl cambió para siempre la industria nuclear. Obligó a rediseñar protocolos de seguridad en todo el mundo, aceleró el cierre de reactores con diseños similares y puso en el centro del debate público la relación entre energía nuclear, seguridad y transparencia informativa. La Unión Soviética tardó días en admitir el accidente, y la noticia se conoció primero en Suecia, cuando una central detectó radiación anómala en sus propios sensores.
+  </p>
+
+  <div style="background: rgba(220,38,38,0.04); border: 1px solid rgba(220,38,38,0.15); border-left: 3px solid #DC2626; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#DC2626;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Chernobyl (1986) fue el peor accidente nuclear de la historia, clasificado como INES 7.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ El reactor RBMK-1000 tenía un coeficiente de vacío positivo: cuando el agua se convertía en vapor, la reacción se aceleraba en lugar de frenarse.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Violaciones de protocolos de seguridad + error de diseño = explosión del núcleo con exposición al aire libre.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ 600.000 liquidadores construyeron un sarcófago de contención, reemplazado en 2016 por el Nuevo Sarcófago de Seguridad.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ El accidente cambió la industria nuclear mundial: nuevos protocolos, cierre de reactores inseguros y cultura de transparencia.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#F59E0B;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="fukushima.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Fukushima (2011)</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="curie.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Marie Curie</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="oklo.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">El reactor de Oklo</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    Chernobyl fue un accidente que no debería haber ocurrido. Combinó un diseño deficiente con errores humanos encadenados, en un contexto donde la cultura de la seguridad no era prioridad. Es el ejemplo más extremo de lo que sucede cuando se subestima la energía contenida en el núcleo de un átomo.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>

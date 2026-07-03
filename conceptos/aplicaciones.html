@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplicaciones de la Energía Nuclear — Tecnología que Cura, Alimenta e Investiga | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#DC2626', accentLight: '#F87171', accentDark: '#991B1B',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #DC2626; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #DC2626; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #DC2626; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(220, 38, 38, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #DC2626, #F87171); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(220,38,38,0.12); border-bottom: 2px solid #DC2626; font-family: 'Inter', sans-serif; font-weight: 600; color: #F87171; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(220,38,38,0.04); border-left: 3px solid #DC2626; font-size: 1.1rem; color: #F87171; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #DC2626; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #DC2626; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(220,38,38,0.12); color: #F87171; border: 1px solid rgba(220,38,38,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(220,38,38,0.15); }
+    .sibling-link-radioisotopos { border-color: rgba(38,166,154,0.15); }
+    .sibling-link-radioisotopos:hover { border-color: rgba(38,166,154,0.4); background: rgba(38,166,154,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(38,166,154,0.15); }
+    .glow-red { box-shadow: 0 0 40px rgba(220,38,38,0.4), inset 0 0 20px rgba(220,38,38,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(220,38,38,0.3); }
+    .toc-inner a.active { color: #F87171; border-left-color: #DC2626; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #DC2626; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #DC2626; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(220,38,38,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #F87171; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(220,38,38,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Aplicaciones</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Aplicado</span>
+        <a href="argentina.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Argentina</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #DC2626 1px, transparent 1px), radial-gradient(circle at 70% 30%, #DC2626 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(220,38,38,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Tecnología Aplicada</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Aplicaciones de la<br>
+        <span class="text-nucleo-accent">Energía Nuclear</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Tecnología que cura, alimenta e investiga. La energía nuclear va mucho más allá de las centrales eléctricas: desde diagnosticar un cáncer hasta esterilizar instrumental quirúrgico, pasando por datar fósiles milenarios y alimentar sondas espaciales.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Medicina Nuclear</span>
+        <span class="chip">Esterilización</span>
+        <span class="chip">Trazadores</span>
+        <span class="chip">Carbono-14</span>
+        <span class="chip chip-yellow">RTG</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué es la medicina nuclear?</a>
+        <a href="#sec02"><span class="num">02</span> Diagnóstico por imágenes</a>
+        <a href="#sec03"><span class="num">03</span> Terapia con radiación</a>
+        <a href="#sec04"><span class="num">04</span> Industria y agricultura</a>
+        <a href="#sec05"><span class="num">05</span> Datación, arte y espacio</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué es la medicina nuclear?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Diagnóstico por imágenes</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Terapia con radiación</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Industria y agricultura</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Datación, arte y espacio</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué es la medicina nuclear?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">medicina nuclear</strong> utiliza pequeñas cantidades de materiales radiactivos —llamados <span class="glosario" data-tip="Radiofármaco: compuesto que contiene un isótopo radiactivo diseñado para dirigirse a un órgano o tejido específico. Se administra por vía intravenosa, oral o inhalatoria." style="color:#F87171;border-bottom-color:#F87171;">radiofármacos</span>— para diagnosticar y tratar enfermedades. A diferencia de la radiología convencional (rayos X), donde la radiación proviene de una fuente externa y atraviesa al paciente, en medicina nuclear la <strong class="text-nucleo-accentLight">radiación se origina dentro del cuerpo</strong>: el radiofármaco se acumula en el órgano o tejido que se quiere estudiar y emite radiación que se detecta desde afuera.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los radioisótopos más usados emiten radiación <span class="inline-stat"><span class="val">gamma</span></span>, que es penetrante y detectable con cámaras especiales como las <strong class="text-nucleo-accent">SPECT</strong> y las <strong class="text-nucleo-accent">PET</strong>. Esto permite crear imágenes que muestran no solo la anatomía sino el <strong class="text-nucleo-accentLight">funcionamiento metabólico</strong> de los órganos.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Argentina tiene una <strong class="text-nucleo-accent">larga tradición en medicina nuclear</strong>. La CNEA, a través del reactor RA-3 en el Centro Atómico Ezeiza, produce <span class="inline-stat"><span class="val">Mo-99</span></span>, que decae a <span class="inline-stat"><span class="val">Tc-99m</span></span>, el radioisótopo más utilizado en diagnóstico por imágenes a nivel mundial. Argentina abastece al mercado local e incluso exporta a la región.
+      </p>
+
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">Más del 80% de los procedimientos de medicina nuclear en el mundo usan Tc-99m, un isótopo que se obtiene del decaimiento del Mo-99. Y el Mo-99 se produce en reactores de investigación — una tecnología que Argentina domina completamente. Sin reactores nucleares, la medicina nuclear moderna no existiría.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Diagnóstico por imágenes (PET y SPECT)</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">SPECT</strong> (tomografía computarizada por emisión de fotón único) usa radiofármacos que emiten un solo fotón gamma, como el <span class="inline-stat"><span class="val">Tc-99m</span></span>. Una cámara gamma gira alrededor del paciente y reconstruye una imagen tridimensional que muestra cómo se distribuye el radiofármaco. Se usa para estudiar el corazón (perfusión miocárdica), los huesos (metástasis) y el cerebro.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">PET</strong> (tomografía por emisión de positrones) es más avanzada. Usa radiofármacos que emiten <span class="glosario" data-tip="Positrón o antielectrón (e⁺): antipartícula del electrón, con la misma masa pero carga positiva. Al encontrarse con un electrón se aniquilan mutuamente." style="color:#F87171;border-bottom-color:#F87171;">positrones</span> (e⁺), como la <span class="inline-stat"><span class="val">F-18 FDG</span></span> (fluorodesoxiglucosa). El F-18 decae emitiendo un positrón que, al encontrarse con un electrón del tejido, se aniquila produciendo <strong class="text-nucleo-accentLight">dos fotones gamma de 511 keV que salen en direcciones opuestas</strong>. Detectores opuestos registran la coincidencia y permiten localizar el punto exacto de la aniquilación.
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Aniquilación positrón-electrón</span>
+        \(e^{+} + e^{-} \;\longrightarrow\; 2\gamma\;(511\;\text{keV cada uno})\)
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La gran ventaja de SPECT y PET es que muestran <strong class="text-nucleo-accent">función, no solo anatomía</strong>. Un tumor consume más glucosa que el tejido sano, por lo que acumula más FDG y "brilla" en la imagen PET. Esto permite detectar cáncer en etapas muy tempranas, evaluar respuesta a tratamientos y estudiar enfermedades neurológicas como el Alzheimer.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Argentina produce <span class="inline-stat"><span class="val">Tc-99m</span></span> a partir de <span class="inline-stat"><span class="val">Mo-99</span></span> generado en el reactor <strong class="text-nucleo-accentLight">RA-3</strong> del Centro Atómico Ezeiza. El Mo-99 tiene una vida media de 66 horas, por lo que la producción debe ser continua — y la logística, impecable. La CNEA abastece a más de <span class="inline-stat"><span class="val">400 centros</span></span> de medicina nuclear en todo el país.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Terapia con radiación</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">radioterapia</strong> es una de las tres grandes armas contra el cáncer, junto con la cirugía y la quimioterapia. Consiste en dirigir radiación ionizante hacia el tumor para destruir las células cancerosas o impedir que se dividan. Existen dos variantes principales: teleterapia (fuente externa) y braquiterapia (fuente interna).
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En <strong class="text-nucleo-accentLight">teleterapia</strong>, la fuente radiactiva está fuera del paciente. El equipo más emblemático es la unidad de <span class="inline-stat"><span class="val">Cobalto-60</span></span> (⁶⁰Co), que emite dos rayos gamma de alta energía (1.17 y 1.33 MeV). Aunque en países desarrollados muchos equipos de Co-60 fueron reemplazados por aceleradores lineales, siguen siendo vitales en hospitales de América Latina por su robustez, bajo costo y mantenimiento sencillo.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En <strong class="text-nucleo-accentLight">terapia interna</strong> o radioterapia metabólica, el radiofármaco se administra al paciente y se acumula naturalmente en el tejido enfermo. El ejemplo clásico es el <span class="inline-stat"><span class="val">Iodo-131</span></span> (¹³¹I) para tratar el <strong class="text-nucleo-accent">cáncer de tiroides</strong>: la glándula tiroides absorbe yodo de forma natural, así que al administrar ¹³¹I, la radiación se concentra exactamente donde se necesita. También se usa <span class="inline-stat"><span class="val">Lu-177</span></span> para tumores neuroendocrinos y <span class="inline-stat"><span class="val">Sm-153</span></span> para metástasis óseas.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La <strong class="text-nucleo-accentLight">braquiterapia</strong> coloca pequeñas semillas o fuentes radiactivas (I-125, Ir-192) <strong class="text-nucleo-accent">directamente dentro del tumor</strong> o muy cerca de él. Esto permite entregar dosis altas al tumor con mínimo daño a los tejidos sanos circundantes. Se usa principalmente en cáncer de próstata, cuello uterino y mama.
+      </p>
+
+      <div class="dato-box">
+        <span class="dato-label">Dato argentino</span>
+        <p>El <strong>Cobalto-60</strong> que se usa en Argentina para radioterapia y esterilización se produce en la central nuclear <strong>Embalse</strong> (Córdoba). La CNEA fabrica las fuentes selladas y las distribuye a hospitales de Argentina y de toda América Latina. Es uno de los pocos países del mundo con capacidad de producir Co-60 de uso médico.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Industria, agricultura y medioambiente</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La tecnología nuclear tiene aplicaciones industriales masivas que pasan desapercibidas. La <strong class="text-nucleo-accent">gammagrafía industrial</strong> funciona como una radiografía de soldaduras, cañerías y estructuras metálicas: una fuente de Ir-192 o Co-60 se coloca de un lado de la pieza y del otro lado se coloca una placa radiográfica. Cualquier grieta, porosidad o defecto aparece como una sombra. Esta técnica es <strong class="text-nucleo-accentLight">clave en la construcción de reactores nucleares</strong>, puentes, gasoductos y aeronaves.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los <strong class="text-nucleo-accent">trazadores radiactivos</strong> permiten seguir el recorrido de fluidos en cañerías industriales, detectar fugas en represas, medir el desgaste de motores y mezclar eficientemente productos en la industria petroquímica. Se inyecta una cantidad ínfima de un radioisótopo de vida corta y se sigue su trayecto con detectores externos — sin detener la producción.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">irradiación de alimentos</strong> expone frutas, carnes, especias y granos a radiación gamma (Co-60) o a haces de electrones para <strong class="text-nucleo-accentLight">eliminar bacterias, parásitos e insectos</strong>, extendiendo su vida útil sin usar productos químicos ni alterar el valor nutricional. Es un proceso frío — no eleva la temperatura del alimento. Argentina irradia especias, frutas secas y productos para pacientes inmunodeprimidos.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La <strong class="text-nucleo-accent">Técnica del Insecto Estéril</strong> (TIE) es una de las aplicaciones más ingeniosas: se crían millones de machos de una plaga (como la <span class="inline-stat"><span class="val">mosca de la fruta</span></span>), se esterilizan con radiación gamma de Co-60 y se liberan en la zona afectada. Los machos estériles compiten con los salvajes por las hembras, pero los apareamientos no producen descendencia. La población colapsa en pocas generaciones. <strong class="text-nucleo-accentLight">Argentina emplea la TIE en Mendoza</strong> para proteger sus viñedos y frutales, reduciendo drásticamente el uso de insecticidas.
+      </p>
+
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">El Co-60 producido en Embalse también se usa para esterilizar equipamiento médico: jeringas, guantes, suturas, implantes, prótesis. La radiación atraviesa el envase sellado y esteriliza sin calor, lo que permite procesar materiales termosensibles. Un solo lote de Co-60 puede esterilizar millones de unidades.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Datación, arte y exploración espacial</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La datación por <strong class="text-nucleo-accent">Carbono-14</strong> (¹⁴C) es una de las herramientas más poderosas de la arqueología y la paleontología. El ¹⁴C se forma en la atmósfera por la interacción de rayos cósmicos con el nitrógeno. Los seres vivos lo incorporan mientras están vivos; al morir, dejan de absorberlo y el ¹⁴C decae con una vida media de <span class="inline-stat"><span class="val">5.730 años</span></span>. Midiendo cuánto ¹⁴C queda en un resto orgánico, se puede determinar su antigüedad hasta unos <span class="inline-stat"><span class="val">50.000 años</span></span> atrás. Con esta técnica se dataron los Rollos del Mar Muerto, Ötzi (el hombre de hielo) y las pinturas rupestres de la Cueva de las Manos.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accentLight">termoluminiscencia</strong> permite datar cerámicas y material mineral calentado (hogueras antiguas, ladrillos). Cuando un material cristalino se calienta, libera la energía acumulada por la radiación ambiental en forma de luz. Midiendo esa luz, se estima cuánto tiempo pasó desde la última cocción. Complementa al C-14 donde no hay material orgánico.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">análisis por activación neutrónica</strong> (NAA) bombardea una muestra con neutrones en un reactor. Los átomos de la muestra se activan y emiten rayos gamma característicos que revelan <strong class="text-nucleo-accentLight">exactamente qué elementos químicos contiene</strong> y en qué proporción, sin destruir la muestra. Es ideal para autenticar obras de arte, identificar la procedencia de cerámicas arqueológicas y detectar fraudes (por ejemplo, pigmentos modernos en una supuesta pintura renacentista).
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En el espacio profundo, donde la luz solar es demasiado débil para alimentar paneles, la energía nuclear es la única opción viable. Los <strong class="text-nucleo-accent">RTG</strong> (<span class="glosario" data-tip="Radioisotope Thermoelectric Generator: generador que convierte el calor de la desintegración radiactiva en electricidad usando termopares. Sin partes móviles." style="color:#F87171;border-bottom-color:#F87171;">Generadores Termoeléctricos de Radioisótopos</span>) convierten el calor del decaimiento de <span class="inline-stat"><span class="val">Pu-238</span></span> (plutonio-238, vida media 87.7 años) en electricidad mediante termopares. No tienen partes móviles: son robustos, confiables y duran décadas.
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Decaimiento del Pu-238</span>
+        \(^{238}_{94}\text{Pu} \;\xrightarrow{\alpha,\;87.7\,\text{años}}\; ^{234}_{92}\text{U} + \text{calor}\;(0.57\;\text{W/g})\)
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Los RTG han alimentado algunas de las misiones más extraordinarias de la exploración espacial: las sondas <strong class="text-nucleo-accentLight">Voyager 1 y 2</strong> (lanzadas en 1977, aún transmitiendo desde el espacio interestelar), las misiones a Marte <strong class="text-nucleo-accentLight">Curiosity</strong> y <strong class="text-nucleo-accentLight">Perseverance</strong>, la sonda <strong class="text-nucleo-accentLight">New Horizons</strong> que sobrevoló Plutón, y la misión Cassini a Saturno. Sin la energía nuclear, ninguna de estas proezas habría sido posible.
+      </p>
+
+      <div class="dato-box">
+        <span class="dato-label">Dato espacial</span>
+        <p>La Voyager 1, lanzada en 1977, se encuentra actualmente a más de <strong>24.000 millones de kilómetros</strong> de la Tierra. Su RTG de Pu-238 le proporcionó ~470 W al lanzamiento y hoy aún genera ~250 W — suficiente para que siga enviando datos desde el espacio interestelar casi 50 años después. Ninguna batería química o panel solar podría igualar esa longevidad.</p>
+      </div>
+    </section>
+
+    <!-- CONCEPTOS CLAVE -->
+    <div class="reveal mb-10" style="background: rgba(220,38,38,0.04); border: 1px solid rgba(220,38,38,0.15); border-left: 3px solid #DC2626; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La medicina nuclear diagnostica con <strong class="text-nucleo-accentLight">SPECT/PET</strong> y trata con <strong class="text-nucleo-accentLight">I-131</strong> y <strong class="text-nucleo-accentLight">Co-60</strong>. Argentina produce <strong class="text-nucleo-accentLight">Mo-99/Tc-99m</strong> en el RA-3.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La <strong class="text-nucleo-accentLight">gammagrafía industrial</strong> inspecciona soldaduras sin destruirlas — clave en construcción de reactores.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La técnica del insecto estéril (<strong class="text-nucleo-accentLight">TIE</strong>) usa Co-60 para controlar plagas sin pesticidas — Argentina la aplica en Mendoza.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">C-14</strong> permite datar restos orgánicos de hasta 50.000 años por desintegración radiactiva.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los <strong class="text-nucleo-accentLight">RTG de Pu-238</strong> alimentan sondas espaciales — Voyager, Perseverance y Curiosity dependen de la energía nuclear.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TEMAS RELACIONADOS -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="radioisotopos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioisótopos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los átomos inestables que hacen posible el diagnóstico y la terapia</p>
+        </a>
+        <a href="radiaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radiaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Alfa, beta, gamma: los tipos de emisión radiactiva</p>
+        </a>
+        <a href="reactores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Reactores Nucleares</span>
+          <p class="text-sm text-nucleo-silver mt-1">Dónde se producen los radioisótopos y el Co-60</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">Energía Nuclear · Inicio</div>
+        </div>
+      </a>
+      <a href="radioisotopos.html" class="sibling-link sibling-link-radioisotopos text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#26A69A;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Radioisótopos →</div>
+        </div>
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="20" style="color:#26A69A;"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-red">
+          <span class="iconify text-white" data-icon="lucide:stethoscope" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Aplicaciones</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="argentina.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-[#75AADB] transition-colors">Argentina</a>
+        <a href="reactores.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Reactores</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal, div.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

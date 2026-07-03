@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituciones Nucleares Argentinas | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#75AADB', accentLight: '#A3C6E8',
+              cyan: '#00E5FF', oro: '#F59E0B',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #75AADB; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #75AADB; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #75AADB; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #75AADB, #A3C6E8); }
+    .inst-card { background: #0B1014; border: 1px solid rgba(255,255,255,0.05); border-left: 3px solid #75AADB; padding: 2rem; transition: all 0.3s ease; }
+    .inst-card:hover { border-color: rgba(117,170,219,0.3); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(117,170,219,0.1); }
+    .inst-card h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; line-height: 1.3; }
+    .inst-card .subtitulo { font-size: 11px; color: #5A6B72; margin-bottom: 1rem; font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; }
+    .inst-card p { font-size: 14px; color: #A8B5BD; line-height: 1.6; margin-bottom: 1.25rem; }
+    .inst-link { display: flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.6rem 0.9rem; border: 1px solid rgba(255,255,255,0.06); text-decoration: none; transition: all 0.2s ease; margin-bottom: 0.5rem; }
+    .inst-link:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.03); }
+    .inst-link.yt:hover { border-color: rgba(255,0,0,0.3); }
+    .inst-link.web:hover { border-color: rgba(117,170,219,0.3); }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #A3C6E8; }
+    @media (max-width: 640px) { .inst-card { padding: 1.25rem; } .inst-card h3 { font-size: 1.15rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs">
+        <a href="../index.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/50">/</span>
+        <span class="text-nucleo-accent font-semibold">Instituciones</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1">Argentina</span>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-28 pb-12 md:pt-36 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 40% 50%, #75AADB 1px, transparent 1px), radial-gradient(circle at 70% 30%, #75AADB 1px, transparent 1px); background-size: 50px 50px, 70px 70px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(117,170,219,0.12) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 text-center">
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <div class="accent-line"></div>
+      <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Ciencia y Tecnología Nacional</span>
+      <div class="accent-line"></div>
+    </div>
+    <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">Instituciones Nucleares <span class="text-nucleo-accent">Argentinas</span></h1>
+    <p class="text-lg md:text-xl text-nucleo-silver max-w-2xl mx-auto leading-relaxed">Los institutos, empresas y organismos que forman científicos, diseñan reactores, operan centrales y exportan tecnología nuclear argentina al mundo.</p>
+  </div>
+</section>
+
+<section class="relative py-12 md:py-16 bg-nucleo-black">
+  <div class="max-w-5xl mx-auto px-4 md:px-6">
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- INSTITUTO BALSEIRO -->
+      <div class="inst-card">
+        <h3>Instituto Balseiro</h3>
+        <p class="subtitulo">San Carlos de Bariloche · CNEA — UNCuyo</p>
+        <p>Fundado en 1955 por José Antonio Balseiro, es la institución de formación de físicos e ingenieros nucleares más prestigiosa de América Latina. Sus egresados diseñan reactores, investigan en el CONICET y lideran proyectos como el CAREM y los satélites argentinos. Ingresan ~60 estudiantes por año, becados y con dedicación exclusiva.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@InstitutoBalseiro" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.ib.edu.ar" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">ib.edu.ar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- INSTITUTO DAN BENINSON -->
+      <div class="inst-card">
+        <h3>Instituto de Tecnología Nuclear Dan Beninson</h3>
+        <p class="subtitulo">Centro Atómico Ezeiza · CNEA — UNSAM</p>
+        <p>Forma ingenieros y técnicos especializados en tecnología nuclear con un perfil práctico orientado a la operación de reactores y aplicaciones industriales. Funciona dentro del Centro Atómico Ezeiza y tiene acceso directo al reactor RA-3 y al futuro RA-10. Lleva el nombre de Dan Beninson, pionero de la protección radiológica en Argentina.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@CNEAArgentina" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube (CNEA)</span>
+          </a>
+          <a href="https://www.argentina.gob.ar/cnea" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">argentina.gob.ar/cnea</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- INSTITUTO SABATO -->
+      <div class="inst-card">
+        <h3>Instituto Sabato</h3>
+        <p class="subtitulo">Centro Atómico Constituyentes · CNEA — UNSAM</p>
+        <p>Creado en 1993, forma ingenieros y doctores en ciencia y tecnología de materiales, un área crítica para la industria nuclear y aeroespacial. Sus investigaciones abarcan desde la metalurgia de los combustibles nucleares hasta materiales para implantes médicos y sensores. Lleva el nombre de Jorge Sábato, referente del pensamiento tecnológico latinoamericano.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@InstitutoSabato" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.isabato.edu.ar" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">isabato.edu.ar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- INVAP -->
+      <div class="inst-card">
+        <h3>INVAP S.E.</h3>
+        <p class="subtitulo">San Carlos de Bariloche · Empresa Estatal Rionegrina</p>
+        <p>Empresa argentina de tecnología de punta que diseña, construye y exporta reactores nucleares de investigación, satélites y radares. Vendió reactores a Australia, Países Bajos, Egipto, Arabia Saudita y Brasil. Construyó los satélites SAOCOM y ARSAT. Es una de las pocas empresas en el mundo que domina todo el ciclo de un reactor nuclear.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@INVAP" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.invap.com.ar" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">invap.com.ar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- NUCLEOELÉCTRICA ARGENTINA -->
+      <div class="inst-card">
+        <h3>Nucleoeléctrica Argentina S.A. (NA-SA)</h3>
+        <p class="subtitulo">Lima, Buenos Aires · Empresa Estatal Nacional</p>
+        <p>Opera las tres centrales nucleares argentinas: Atucha I (362 MW), Atucha II (745 MW) y Embalse (656 MW). Juntas generan aproximadamente el 7% de la electricidad del país. Es responsable de la operación, el mantenimiento y la extensión de vida de los reactores. Participa en el desarrollo del CAREM y en los estudios para una cuarta central.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@NucleoelectricaArgentina" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.na-sa.com.ar" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">na-sa.com.ar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- OBSERVATORIO PIERRE AUGER -->
+      <div class="inst-card">
+        <h3>Observatorio Pierre Auger</h3>
+        <p class="subtitulo">Malargüe, Mendoza · Colaboración Internacional</p>
+        <p>El detector de rayos cósmicos más grande del mundo. Ocupa 3000 km² en la precordillera mendocina con 1660 tanques detectores y 27 telescopios de fluorescencia. Científicos de 17 países estudian partículas que llegan del espacio profundo con energías millones de veces mayores que las del LHC. Argentina es sede y miembro fundador del proyecto.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@ThePierreAugerObservatory" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.auger.org.ar" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">auger.org.ar</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- CNEA -->
+      <div class="inst-card">
+        <h3>Comisión Nacional de Energía Atómica (CNEA)</h3>
+        <p class="subtitulo">Buenos Aires · Organismo Nacional</p>
+        <p>Creada en 1950, es el organismo rector de la actividad nuclear argentina. Investiga, desarrolla y regula todo el ciclo del combustible nuclear: desde la minería del uranio hasta la gestión de residuos radiactivos. Tiene centros atómicos en Constituyentes, Ezeiza y Bariloche. Impulsa el reactor CAREM y el reactor multipropósito RA-10.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@CNEAArgentina" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.argentina.gob.ar/cnea" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">argentina.gob.ar/cnea</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ARN (Autoridad Regulatoria Nuclear) -->
+      <div class="inst-card">
+        <h3>Autoridad Regulatoria Nuclear (ARN)</h3>
+        <p class="subtitulo">Buenos Aires · Organismo Nacional de Control</p>
+        <p>Es el organismo independiente que regula y fiscaliza la seguridad nuclear, la protección radiológica y las salvaguardias en toda la Argentina. Controla que las centrales, los reactores de investigación y las instalaciones médicas e industriales que usan radiación operen dentro de estándares internacionales de seguridad.</p>
+        <div class="flex flex-col">
+          <a href="https://www.youtube.com/@ARNArgentina" target="_blank" rel="noopener" class="inst-link yt">
+            <span class="iconify" data-icon="lucide:youtube" data-width="16" style="color:#FF0000;"></span>
+            <span style="color:#fff;">Canal de YouTube</span>
+          </a>
+          <a href="https://www.argentina.gob.ar/arn" target="_blank" rel="noopener" class="inst-link web">
+            <span class="iconify" data-icon="lucide:globe" data-width="16" style="color:#75AADB;"></span>
+            <span style="color:#A3C6E8;">argentina.gob.ar/arn</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="relative py-10 bg-nucleo-black border-t border-white/5 mt-8">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 bg-nucleo-accent flex items-center justify-center rounded-sm">
+          <span class="iconify text-nucleo-black" data-icon="lucide:landmark" data-width="16"></span>
+        </div>
+        <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-nucleo-silverDark">
+          <span>Prof. Pereyra, Javier</span>
+          <span style="color:#5A6B72;">·</span>
+          <span>© 2026 — Material Educativo</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="../index.html#temas" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Temas</a>
+        <a href="../revista.html" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Revista</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.inst-card');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  els.forEach(function(el){
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

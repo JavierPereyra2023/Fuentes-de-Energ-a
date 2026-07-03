@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Einstein y la mecánica cuántica — Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#F59E0B', accentLight: '#FCD34D',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #F59E0B; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #F59E0B; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    @keyframes heroZoom { from { transform: scale(1.1); } to { transform: scale(1); } }
+    .hero-img-animate { animation: heroZoom 8s ease-out forwards; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #FCD34D; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #FCD34D; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #F59E0B; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #FCD34D; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span class="text-nucleo-oro/50">/</span>
+        <span style="color:#FCD34D; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">Einstein</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(245,158,11,0.15); color:#FCD34D; font-family:'Inter',sans-serif;">Artículo Destacado · Física Cuántica</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~12 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="relative bg-nucleo-black overflow-hidden" style="min-height:70vh;">
+  <div class="absolute inset-0">
+    <img src="../../assets/revista/Einstein_portada.jpg" alt="Albert Einstein" class="hero-img-animate w-full h-full object-cover" style="object-position: center 15%; filter: brightness(0.3) contrast(1.1) saturate(0.4);">
+    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(6,9,12,0.8) 0%, rgba(6,9,12,0.3) 35%, rgba(6,9,12,0.3) 65%, rgba(6,9,12,0.85) 100%);"></div>
+  </div>
+  <div class="absolute inset-0 flex items-end justify-center pb-16 md:pb-20 z-10">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:#fff; margin-bottom:0.75rem; line-height:1.2;">Einstein cuestiona la mecánica cuántica: el debate que definió la física moderna</h2>
+      <p class="fecha" style="font-family:'Inter',sans-serif; font-size:12px; color:rgba(255,255,255,0.5); display:inline-block; padding-bottom:0.75rem; border-bottom:1px solid rgba(255,255,255,0.12);">Fuente histórica: <em style="color:#FCD34D; font-style:normal;">Berkeley Daily Gazette</em>, 6 de mayo de 1935.</p>
+    </div>
+  </div>
+</section>
+
+<section class="revista-articulo" style="padding-top:2rem;">
+  <p>
+    En mayo de 1935, el diario estadounidense <em>Berkeley Daily Gazette</em> publicó una noticia con un título llamativo: <strong>"Einstein Opens Attack on Quantum Mechanics Theory in New Report"</strong> ("Einstein abre un ataque contra la teoría de la mecánica cuántica en un nuevo informe"). La nota informaba sobre un artículo científico —conocido hoy como el artículo EPR, por las iniciales de sus autores: Einstein, Podolsky y Rosen— que había sido enviado a la revista <em>Physical Review</em> y que pondría en jaque uno de los pilares de la física del siglo XX.
+  </p>
+
+  <p>
+    El artículo EPR, titulado <strong>"¿Puede considerarse completa la descripción mecánico-cuántica de la realidad física?"</strong>, no era una crítica superficial. Era una objeción profunda, cuidadosamente argumentada, que partía de una pregunta que todavía hoy los físicos discuten: ¿la mecánica cuántica describe todo lo que existe en el mundo microscópico, o hay algo que se nos escapa?
+  </p>
+
+  <p>
+    Para entender la objeción de Einstein, hay que entender qué dice la mecánica cuántica. Según esta teoría, una partícula —un electrón, por ejemplo— no tiene una posición y una velocidad definidas hasta que alguien la mide. Antes de la medición, la partícula está en una <strong>superposición de estados</strong>: una mezcla de todas las posiciones y velocidades posibles, cada una con una cierta probabilidad.     La herramienta matemática que describe esta situación es la <strong>función de onda</strong>, representada con la letra griega ψ (psi).
+  </p>
+
+  <figure style="margin: 2.5rem 0; border: 1px solid rgba(255,255,255,0.06); padding: 0.75rem; background: rgba(255,255,255,0.02);">
+    <img src="../../assets/revista/ecuacion.png" alt="Ecuaciones de la mecánica cuántica" style="width:100%; height:auto; display:block; filter: brightness(1.05) contrast(1.05);">
+    <figcaption style="font-family:'Inter',sans-serif; font-size:10px; color: #5A6B72; text-align: center; margin-top: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;">Ecuaciones fundamentales de la mecánica cuántica que describen el comportamiento de la función de onda ψ</figcaption>
+  </figure>
+
+  <p>
+    La función de onda permite calcular, con enorme precisión, dónde es más probable encontrar una partícula cuando se realice una medición. Y funciona. Las predicciones de la mecánica cuántica coinciden con los experimentos con una exactitud asombrosa: algunas de sus predicciones han sido verificadas con precisiones de una parte en mil millones. Ninguna otra teoría física tiene ese nivel de corroboración experimental.
+  </p>
+
+  <p>
+    Pero Einstein no estaba conforme. Para él, una teoría física completa debía cumplir dos condiciones: primero, sus predicciones debían coincidir con los experimentos (eso lo cumplía); segundo, <strong>a cada elemento de la realidad física debía corresponderle un elemento en la teoría</strong>. Y ahí estaba el problema.
+  </p>
+
+  <p>
+    El argumento EPR proponía un experimento mental (un <em>Gedankenexperiment</em>) con dos partículas que habían interactuado y luego se separaban. Según la mecánica cuántica, medir una propiedad de una partícula —por ejemplo, su posición— determinaba instantáneamente la propiedad correspondiente de la otra partícula, sin importar qué tan lejos estuvieran. Einstein llamó a esto <strong>"espeluznante acción a distancia"</strong> (<em>spukhafte Fernwirkung</em>). Si la información no puede viajar más rápido que la luz, ¿cómo "sabe" la segunda partícula que la primera fue medida?
+  </p>
+
+  <p>
+    La conclusión de EPR era que la mecánica cuántica, aunque correcta en sus predicciones, debía ser <strong>incompleta</strong>. Debían existir lo que Einstein llamaba "variables ocultas": propiedades de las partículas que la teoría no describía pero que determinaban los resultados de las mediciones. Si esas variables existieran, no habría necesidad de probabilidades ni de "acción a distancia": todo estaría predeterminado desde el comienzo.
+  </p>
+
+  <p>
+    La respuesta no tardó en llegar. <strong>Niels Bohr</strong>, el gran físico danés y principal arquitecto de la interpretación estándar de la mecánica cuántica (la llamada <strong>interpretación de Copenhague</strong>), respondió unas semanas después. Su argumento —complejo y todavía debatido— era que Einstein estaba pidiéndole a la física algo que la física no puede dar: una descripción de la realidad independiente del observador. Para Bohr, las propiedades de una partícula no existen antes de ser medidas. La medición no revela una propiedad preexistente: <strong>la crea</strong>.
+  </p>
+
+  <p>
+    Durante décadas, el debate EPR fue considerado puramente filosófico. ¿Cómo se podía resolver experimentalmente si existían variables ocultas o no? La respuesta llegó en 1964, cuando el físico norirlandés <strong>John Bell</strong> demostró que era posible diseñar un experimento para distinguir entre la mecánica cuántica y cualquier teoría de variables ocultas. Los experimentos realizados a partir de los años 70 —por Alain Aspect y otros— le dieron la razón a la mecánica cuántica: las variables ocultas locales no existen. La "espeluznante acción a distancia" de Einstein es real. Hoy la llamamos <strong>entrelazamiento cuántico</strong>, y es la base de tecnologías como la computación cuántica y la criptografía cuántica.
+  </p>
+
+  <p>
+    Pero si bien Einstein "perdió" el debate en el sentido técnico, su pregunta sigue viva. ¿Qué significa realmente la función de onda? ¿Describe la realidad o solo nuestro conocimiento de ella? ¿Existe el mundo cuando nadie lo mira? Estas preguntas no tienen respuesta definitiva, y son las mismas que los físicos y filósofos se hacen hoy, casi un siglo después.
+  </p>
+
+  <p>
+    ¿Y qué tiene que ver todo esto con la energía nuclear? Mucho, y de manera directa. La física nuclear —el estudio del núcleo atómico, de la radiactividad, de la fisión y la fusión— <strong>depende completamente de la mecánica cuántica</strong>. Sin la función de onda, sin el principio de incertidumbre, sin el efecto túnel (otro fenómeno cuántico), no podríamos explicar por qué un núcleo de uranio se rompe, por qué los neutrones lentos son más efectivos que los rápidos, ni cómo funcionan los reactores.     Cada central nuclear del mundo es, en cierto sentido, una máquina cuántica.
+  </p>
+
+  <div style="background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.15); border-left: 3px solid #F59E0B; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#F59E0B;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#F59E0B;">✦</span> La mecánica cuántica describe partículas con <strong style="color:#FCD34D;">probabilidades</strong>, no con certezas. La función de onda ψ codifica esas probabilidades.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#F59E0B;">✦</span> Einstein argumentó (artículo EPR, 1935) que la teoría era incompleta: debían existir <strong style="color:#FCD34D;">variables ocultas</strong>.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#F59E0B;">✦</span> Bohr respondió que las propiedades cuánticas <strong style="color:#FCD34D;">no existen antes de ser medidas</strong>. La medición las crea.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#F59E0B;">✦</span> El teorema de Bell (1964) y los experimentos de Aspect probaron que el <strong style="color:#FCD34D;">entrelazamiento cuántico</strong> es real y las variables ocultas locales no existen.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; line-height:1.5;"><span style="color:#F59E0B;">✦</span> Toda la física nuclear —fisión, reactores, medicina nuclear— <strong style="color:#FCD34D;">depende de la mecánica cuántica</strong>.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#F59E0B;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="curie.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Marie Curie</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="meitner.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Lise Meitner</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="fermi.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Enrico Fermi</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    La mecánica cuántica permitió comprender el mundo microscópico, pero también abrió una de las preguntas más profundas de la física: ¿qué significa describir la realidad? Einstein no rechazaba la teoría: buscaba algo más profundo. Y aunque el experimento le dio la razón a Bohr, la pregunta de Einstein —¿es la mecánica cuántica una descripción completa del mundo?— todavía no tiene respuesta.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>

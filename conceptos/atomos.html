@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estructura de los Átomos — Del modelo de Bohr a los orbitales cuánticos | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#F59E0B', accentLight: '#FCD34D', accentDark: '#B45309',
+              warning: '#FFB300', warningDark: '#C77F00',
+              isotope: '#26A69A', reactor: '#FF6E40', neutron: '#7C4DFF',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #F59E0B; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #F59E0B; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(245, 158, 11, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #B45309, #F59E0B, #FCD34D); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(245,158,11,0.12); border-bottom: 2px solid #F59E0B; font-family: 'Inter', sans-serif; font-weight: 600; color: #FCD34D; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(245,158,11,0.04); border-left: 3px solid #F59E0B; font-size: 1.1rem; color: #FCD34D; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #F59E0B; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #F59E0B; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(245,158,11,0.12); color: #FCD34D; border: 1px solid rgba(245,158,11,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(245,158,11,0.15); }
+    .sibling-link-purple { border-color: rgba(124,77,255,0.15); }
+    .sibling-link-purple:hover { border-color: rgba(124,77,255,0.4); background: rgba(124,77,255,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(124,77,255,0.15); }
+    .glow-gold { box-shadow: 0 0 40px rgba(245,158,11,0.4), inset 0 0 20px rgba(245,158,11,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(245,158,11,0.3); }
+    .toc-inner a.active { color: #FCD34D; border-left-color: #F59E0B; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #F59E0B; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #F59E0B; color: #06090C; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(245,158,11,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #FCD34D; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(245,158,11,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Estructura de los Átomos</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="cosmicos.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Rayos Cósmicos</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #F59E0B 1px, transparent 1px), radial-gradient(circle at 70% 30%, #F59E0B 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(245,158,11,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Física Atómica</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Estructura de los Átomos —<br>
+        <span class="text-nucleo-accent">del modelo de Bohr a los orbitales cuánticos</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        El átomo es la unidad fundamental de la materia. Su estructura —un núcleo denso rodeado por electrones en nubes de probabilidad— determina todas las propiedades químicas y es la base de la energía nuclear. Desde Demócrito hasta los orbitales cuánticos, este viaje recorre 2500 años de ciencia.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Protones</span>
+        <span class="chip">Neutrones</span>
+        <span class="chip">Electrones</span>
+        <span class="chip">Orbitales</span>
+        <span class="chip chip-yellow">Números Cuánticos</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> El átomo a través de la historia</a>
+        <a href="#sec02"><span class="num">02</span> El modelo cuántico actual</a>
+        <a href="#sec03"><span class="num">03</span> El núcleo atómico</a>
+        <a href="#sec04"><span class="num">04</span> Isótopos, peso atómico y tabla periódica</a>
+        <a href="#sec05"><span class="num">05</span> Del átomo a la energía nuclear</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · El átomo a través de la historia</a>
+      <a href="#sec02" class="toc-mobile-link">02 · El modelo cuántico actual</a>
+      <a href="#sec03" class="toc-mobile-link">03 · El núcleo atómico</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Isótopos, peso atómico y tabla periódica</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Del átomo a la energía nuclear</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El átomo a través de la historia</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La idea de que la materia está compuesta por partículas indivisibles se remonta a la antigua Grecia. <strong class="text-nucleo-accent">Demócrito</strong> (400 a.C.) acuñó la palabra <em>átomos</em>, que significa "indivisible". Pero tuvieron que pasar más de dos mil años para que la ciencia pudiera demostrar no solo que los átomos existen, sino que tienen una estructura interna compleja.
+      </p>
+
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Dalton (1808):</strong> propuso que cada elemento químico está formado por átomos idénticos con un peso atómico característico. Los átomos eran esferas sólidas e indivisibles que se combinaban en proporciones fijas para formar compuestos.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Thomson (1897):</strong> descubrió el electrón —la primera partícula subatómica—. Propuso el modelo del "budín de pasas": electrones negativos incrustados en una esfera de carga positiva, como pasas en un budín.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Rutherford (1911):</strong> su famoso experimento de la lámina de oro cambió todo. Disparó partículas alfa contra una fina lámina de oro. La mayoría atravesaban sin desviarse, pero algunas —muy pocas— rebotaban hacia atrás. Conclusión: el átomo es <strong class="text-nucleo-accent">mayormente espacio vacío</strong> con un núcleo diminuto, denso y de carga positiva donde se concentra casi toda la masa.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Bohr (1913):</strong> propuso que los electrones orbitan el núcleo en <strong class="text-nucleo-accent">niveles de energía fijos y cuantizados</strong>. Los electrones solo pueden ocupar ciertas órbitas, y saltan entre ellas absorbiendo o emitiendo fotones de energía precisa. Esto explicó por primera vez las líneas espectrales de los elementos.
+        </li>
+      </ul>
+
+      <div class="equation-block">
+        <span class="eq-label">Niveles de energía de Bohr para el hidrógeno</span>
+        \(E_n = -\frac{13{,}6\ \text{eV}}{n^2}, \quad n = 1, 2, 3, \ldots\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        El modelo de Bohr fue revolucionario, pero solo funcionaba bien para el hidrógeno. Para átomos con más electrones, las predicciones fallaban. Era necesario un nuevo marco teórico: la <strong class="text-nucleo-accent">mecánica cuántica</strong>.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El modelo cuántico actual</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Entre 1925 y 1930, la mecánica cuántica —desarrollada por Schrödinger, Heisenberg, Dirac y otros— reemplazó el modelo planetario de Bohr. En el modelo cuántico, los electrones no siguen órbitas definidas: existen en <strong class="text-nucleo-accent">orbitales</strong>, regiones del espacio donde la probabilidad de encontrar al electrón es alta. La forma de estos orbitales está determinada por la <span class="glosario" data-tip="Función matemática compleja que describe el estado cuántico de una partícula. Su cuadrado |ψ|² da la densidad de probabilidad de encontrar la partícula en cada punto del espacio." style="color:#FCD34D;border-bottom-color:#FCD34D;">función de onda</span> ψ.
+      </p>
+
+      <div class="equation-block">
+        <span class="eq-label">Ecuación de Schrödinger (independiente del tiempo)</span>
+        \(\hat{H}\psi = E\psi, \quad \hat{H} = -\frac{\hbar^2}{2m}\nabla^2 + V(\vec{r})\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cada electrón en un átomo está caracterizado por <strong class="text-nucleo-accent">cuatro números cuánticos</strong> que definen completamente su estado:
+      </p>
+
+      <div class="grid sm:grid-cols-2 gap-4 my-8">
+        <div class="px-5 py-4 border-l-2 border-nucleo-accent bg-nucleo-dark/40">
+          <div class="font-heading text-lg font-bold text-nucleo-accent mb-1">n — Número cuántico principal</div>
+          <div class="text-sm text-nucleo-silver leading-relaxed">Define el nivel de energía y el tamaño del orbital. Valores: n = 1, 2, 3, ... (capas K, L, M, N...). A mayor n, mayor energía y mayor distancia promedio al núcleo.</div>
+        </div>
+        <div class="px-5 py-4 border-l-2 border-nucleo-accent bg-nucleo-dark/40">
+          <div class="font-heading text-lg font-bold text-nucleo-accent mb-1">l — Número cuántico angular</div>
+          <div class="text-sm text-nucleo-silver leading-relaxed">Define la forma del orbital (subcapa). Valores: l = 0, 1, 2, ..., n-1. l=0 es s (esférico), l=1 es p (dos lóbulos), l=2 es d, l=3 es f.</div>
+        </div>
+        <div class="px-5 py-4 border-l-2 border-nucleo-accent bg-nucleo-dark/40">
+          <div class="font-heading text-lg font-bold text-nucleo-accent mb-1">mₗ — Número cuántico magnético</div>
+          <div class="text-sm text-nucleo-silver leading-relaxed">Define la orientación espacial del orbital. Valores: mₗ = -l, ..., 0, ..., +l. Por ejemplo, para l=1 (orbital p) hay 3 orientaciones: pₓ, pᵧ, p𝓏.</div>
+        </div>
+        <div class="px-5 py-4 border-l-2 border-nucleo-accent bg-nucleo-dark/40">
+          <div class="font-heading text-lg font-bold text-nucleo-accent mb-1">mₛ — Número cuántico de espín</div>
+          <div class="text-sm text-nucleo-silver leading-relaxed">Define el momento angular intrínseco del electrón. Solo dos valores: mₛ = +½ (↑) o mₛ = -½ (↓). Es una propiedad puramente cuántica sin análogo clásico.</div>
+        </div>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        El <strong class="text-nucleo-accent">principio de exclusión de Pauli</strong> establece que dos electrones en un mismo átomo no pueden tener los cuatro números cuánticos idénticos. Este principio es el que organiza la tabla periódica: los electrones van llenando orbitales de menor a mayor energía, y cada orbital puede albergar como máximo dos electrones (con espines opuestos).
+      </p>
+
+      <div class="dato-box">
+        <span class="dato-label">El principio que evita el colapso de la materia</span>
+        <p>El principio de exclusión de Pauli explica por qué la materia no colapsa: los electrones no pueden ocupar todos el mismo estado cuántico. Sin él, todos los átomos se derrumbarían. Es la razón por la que ocupamos volumen, por la que los objetos son sólidos y por la que existe la química.</p>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Gracias a los números cuánticos y al principio de Pauli, la mecánica cuántica explica la estructura electrónica de todos los elementos, las propiedades periódicas, el enlace químico y el comportamiento de los materiales. Es uno de los logros más extraordinarios de la física del siglo XX.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El núcleo atómico</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El núcleo atómico contiene <strong class="text-nucleo-accent">protones</strong> (carga positiva) y <strong class="text-nucleo-accentLight">neutrones</strong> (sin carga eléctrica), llamados colectivamente <strong class="text-nucleo-accent">nucleones</strong>. Rutherford descubrió el núcleo en 1911; Chadwick descubrió el neutrón en 1932, completando la imagen básica de la estructura atómica.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El número de protones (<span class="inline-stat"><span class="val">Z</span></span>) define qué elemento es. El número de neutrones (<span class="inline-stat"><span class="val">N</span></span>) puede variar, dando lugar a distintos isótopos del mismo elemento. El número másico es <span class="inline-stat"><span class="val">A = Z + N</span></span>. La notación estándar para un núcleo es <strong class="text-nucleo-accentLight">ᴬX</strong> (por ejemplo, ²³⁵U, ²³⁸U).
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El tamaño del núcleo sigue una relación sencilla con el número másico:
+      </p>
+
+      <div class="equation-block">
+        <span class="eq-label">Radio nuclear</span>
+        \(R \approx R_0 \times A^{1/3}, \quad R_0 \approx 1{,}2\ \text{fm} = 1{,}2 \times 10^{-15}\ \text{m}\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El núcleo es <strong class="text-nucleo-accent">~10.000 veces más pequeño</strong> que el átomo. Si el átomo tuviera el tamaño de un estadio de fútbol, el núcleo sería una pequeña arveja en el centro. Casi toda la masa del átomo está en el núcleo, pero este ocupa una fracción ínfima del volumen. La densidad nuclear es asombrosa:
+      </p>
+
+      <div class="equation-block">
+        <span class="eq-label">Densidad nuclear (constante para todos los núcleos)</span>
+        \(\rho_{\text{nuclear}} \approx 2{,}3 \times 10^{17}\ \text{kg/m}^3\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        Una cucharadita de materia nuclear pesaría aproximadamente <strong class="text-nucleo-accentLight">lo mismo que una montaña</strong>. Esta densidad colosal es posible porque los nucleones están empaquetados por la fuerza nuclear fuerte, que es ~100 veces más intensa que la repulsión electromagnética entre protones.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">estabilidad nuclear</strong> depende críticamente de la relación neutrón-protón (N/Z). Los núcleos ligeros estables tienen N ≈ Z. A medida que Z aumenta, se necesitan más neutrones para diluir la repulsión electrostática entre protones. Para el uranio (Z=92), la relación N/Z es ~1.5. Los núcleos que se desvían de esta proporción óptima —el <strong class="text-nucleo-accentLight">valle de estabilidad</strong>— son radiactivos y eventualmente decaen.
+      </p>
+
+      <div class="dato-box">
+        <span class="dato-label">El valle de estabilidad</span>
+        <p>En un gráfico de N vs Z, los núcleos estables forman una banda angosta llamada "valle de estabilidad". Los núcleos por encima de la banda (exceso de neutrones) decaen por emisión beta-negativa (β⁻). Los que están por debajo (exceso de protones) decaen por emisión beta-positiva (β⁺) o captura electrónica. Los núcleos muy pesados (Z > 82) pueden decaer por emisión alfa o fisión espontánea.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Isótopos, peso atómico y tabla periódica</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los <strong class="text-nucleo-accent">isótopos</strong> son átomos de un mismo elemento (mismo Z) que difieren en el número de neutrones (distinto N). Químicamente son casi idénticos —tienen los mismos electrones y las mismas propiedades químicas— pero nuclearmente pueden ser muy diferentes: algunos son estables, otros radiactivos.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El ejemplo más sencillo es el <strong class="text-nucleo-accentLight">hidrógeno</strong>, que tiene tres isótopos:
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-3 mb-8">
+        <div class="px-4 py-3 border-l-2 border-nucleo-accent">
+          <div class="font-heading text-2xl font-bold text-nucleo-accent">¹H</div>
+          <div class="text-sm text-nucleo-silver mt-1">Protio — 1 protón, 0 neutrones. Es el 99,98% del hidrógeno natural.</div>
+        </div>
+        <div class="px-4 py-3 border-l-2 border-nucleo-accentLight">
+          <div class="font-heading text-2xl font-bold text-nucleo-accentLight">²H</div>
+          <div class="text-sm text-nucleo-silver mt-1">Deuterio — 1 protón, 1 neutrón. Estable. Se usa como moderador en reactores (D₂O, agua pesada).</div>
+        </div>
+        <div class="px-4 py-3 border-l-2 border-nucleo-warning">
+          <div class="font-heading text-2xl font-bold text-nucleo-warning">³H</div>
+          <div class="text-sm text-nucleo-silver mt-1">Tritio — 1 protón, 2 neutrones. Radiactivo (vida media 12,3 años). Combustible de fusión nuclear.</div>
+        </div>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">peso atómico</strong> que aparece en la tabla periódica no es la masa de un átomo individual, sino el <strong class="text-nucleo-accentLight">promedio ponderado</strong> de las masas de todos los isótopos naturales de ese elemento. Por ejemplo, el carbono natural es 98,9% ¹²C y 1,1% ¹³C, por lo que su peso atómico es ~12,011 u.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Algunos elementos tienen muchos isótopos estables: el <strong class="text-nucleo-accentLight">estaño (Sn)</strong> tiene 10, el récord. Otros, como el sodio o el aluminio, tienen uno solo. Los elementos <strong class="text-nucleo-accent">transuránicos</strong> (Z > 92) son todos radiactivos y en su mayoría sintéticos —se producen en reactores nucleares o aceleradores de partículas y no existen en la naturaleza (salvo trazas mínimas de plutonio-244).
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Los isótopos radiactivos tienen aplicaciones fundamentales: el <strong class="text-nucleo-accentLight">carbono-14</strong> para datación arqueológica, el <strong class="text-nucleo-accentLight">cobalto-60</strong> para esterilización y radioterapia, el <strong class="text-nucleo-accentLight">tecnecio-99m</strong> para diagnóstico médico por imágenes, y el <strong class="text-nucleo-accentLight">yodo-131</strong> para tratar el cáncer de tiroides.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Del átomo a la energía nuclear</h2>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La estructura del átomo es el fundamento de la <strong class="text-nucleo-accent">energía nuclear</strong>. Todo se reduce a la estabilidad del núcleo y a la competencia entre dos fuerzas: la <strong class="text-nucleo-accentLight">fuerza nuclear fuerte</strong> (que une a los nucleones) y la <strong class="text-nucleo-accentLight">fuerza electrostática</strong> (que repele a los protones entre sí).
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">fisión nuclear</strong> ocurre porque los núcleos pesados como el U-235 son apenas estables: la fuerza fuerte, de cortísimo alcance, apenas logra contener la repulsión entre 92 protones. Una pequeña perturbación —como la absorción de un neutrón— basta para romper el equilibrio. El núcleo se deforma, la repulsión electrostática vence a la fuerza fuerte, y el núcleo se parte en dos fragmentos, liberando ~200 MeV.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">fusión nuclear</strong> es el proceso inverso: dos núcleos ligeros deben vencer su repulsión electrostática mutua para acercarse lo suficiente (~10⁻¹⁵ m) y que la fuerza fuerte los una. Esto solo ocurre a temperaturas de millones de grados, donde los núcleos tienen suficiente energía cinética para superar la barrera coulombiana.
+      </p>
+
+      <div class="equation-block">
+        <span class="eq-label">Energía de enlace nuclear: la fuente de la energía nuclear</span>
+        \(E_B = \left[Z \cdot m_p + N \cdot m_n - M(A,Z)\right] \times c^2\)
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        La energía liberada tanto en fisión como en fusión es <strong class="text-nucleo-accent">millones de veces mayor</strong> que en cualquier reacción química. Mientras que una reacción química típica libera unos pocos eV (electronvoltios), una reacción nuclear libera cientos de MeV (megaelectronvoltios). La razón es simple: las fuerzas nucleares son muchísimo más intensas que las electromagnéticas que gobiernan los enlaces químicos.
+      </p>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        La equivalencia masa-energía de Einstein, \(E = mc^2\), cuantifica esta conversión: en toda reacción nuclear, la masa total de los productos es <strong class="text-nucleo-accentLight">ligeramente menor</strong> que la masa de los reactivos. Esa diferencia de masa (el "defecto de masa") se multiplica por \(c^2\) —una cantidad enorme— y se libera como energía cinética de los productos. Un gramo de materia convertido íntegramente en energía equivale a ~25 millones de kWh, suficiente para abastecer una ciudad durante meses.
+      </p>
+    </section>
+
+    <div class="reveal mb-10" style="background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.15); border-left: 3px solid #F59E0B; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El átomo tiene un núcleo denso (protones + neutrones) rodeado por electrones en <strong class="text-nucleo-accentLight">orbitales probabilísticos</strong>, no órbitas fijas. La mecánica cuántica describe su comportamiento.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Cuatro números cuánticos (n, l, mₗ, mₛ) definen cada electrón. El <strong class="text-nucleo-accentLight">principio de exclusión de Pauli</strong> organiza la tabla periódica y explica las propiedades químicas.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los <strong class="text-nucleo-accentLight">isótopos</strong> comparten Z pero difieren en N. Algunos son estables, otros radiactivos. El peso atómico es el promedio ponderado de los isótopos naturales.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El núcleo tiene una <strong class="text-nucleo-accentLight">densidad enorme (~2,3×10¹⁷ kg/m³)</strong>. Su estabilidad depende de la relación N/Z. Los núcleos fuera del valle de estabilidad son radiactivos.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La <strong class="text-nucleo-accentLight">energía nuclear</strong> (fisión y fusión) libera energía de enlace nuclear, millones de veces mayor que la energía química. Todo se explica con E = mc² y la curva de energía de enlace por nucleón.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="fuerzas.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fuerzas de la Naturaleza</span>
+          <p class="text-sm text-nucleo-silver mt-1">Las interacciones que gobiernan el núcleo atómico</p>
+        </a>
+        <a href="fision.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fisión Nuclear</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cuando un núcleo pesado se rompe y libera energía</p>
+        </a>
+        <a href="radiaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radiaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Lo que emiten los núcleos inestables al desintegrarse</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="fuerzas.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Fuerzas de la Naturaleza</div>
+        </div>
+      </a>
+      <a href="cosmicos.html" class="sibling-link sibling-link-purple text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-violet-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Rayos Cósmicos →</div>
+        </div>
+        <span class="iconify text-violet-400" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-gold">
+          <span class="iconify text-nucleo-black" data-icon="lucide:atom" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Estructura de los Átomos</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="fuerzas.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-cyan-400 transition-colors">Fuerzas</a>
+        <a href="fision.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Fisión</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

@@ -109,11 +109,31 @@
       transition: all 0.3s ease;
       text-decoration: none;
     }
-    .sibling-link:hover { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.04); }
+    .sibling-link:hover { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(59,130,246,0.15); }
     .sibling-link-fision { border-color: rgba(220,38,38,0.15); }
-    .sibling-link-fision:hover { border-color: rgba(220,38,38,0.4); background: rgba(220,38,38,0.04); }
+    .sibling-link-fision:hover { border-color: rgba(220,38,38,0.4); background: rgba(220,38,38,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(220,38,38,0.15); }
 
     .glow-blue { box-shadow: 0 0 40px rgba(59,130,246,0.4), inset 0 0 20px rgba(59,130,246,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(59,130,246,0.3); }
+    .toc-inner a.active { color: #93C5FD; border-left-color: #3B82F6; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #3B82F6; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #3B82F6; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(59,130,246,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #93C5FD; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(59,130,246,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
 
     @media print { body { background: white; color: black; } }
   </style>
@@ -131,14 +151,14 @@
           <span class="iconify" data-icon="lucide:home" data-width="14"></span>
           <span class="hidden sm:inline">Inicio</span>
         </a>
-        <span class="text-nucleo-silverDark">/</span>
-        <a href="../index.html#conceptos" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
-        <span class="text-nucleo-silverDark">/</span>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
         <span class="text-nucleo-accent font-semibold">Fusión</span>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
-        <a href="fision.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-colors hidden sm:flex items-center gap-1">
+        <a href="fision.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
           <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
           <span>Fisión</span>
         </a>
@@ -206,17 +226,46 @@
         <span class="chip">17,6 MeV por evento</span>
         <span class="chip-warm">El Sol y las estrellas</span>
         <span class="chip-plasma">ITER · Tokamak</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- MAIN CONTENT -->
-<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-  <main class="max-w-4xl mx-auto">
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué ocurre exactamente?</a>
+        <a href="#sec02"><span class="num">02</span> El plasma</a>
+        <a href="#sec03"><span class="num">03</span> Por qué funciona</a>
+        <a href="#sec04"><span class="num">04</span> Ventajas y desafíos</a>
+        <a href="#sec05"><span class="num">05</span> Argentina y el mundo</a>
+        <a href="#sec06"><span class="num">06</span> Para pensar y discutir</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué ocurre exactamente?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · El plasma</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Por qué funciona</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Ventajas y desafíos</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Argentina y el mundo</a>
+      <a href="#sec06" class="toc-mobile-link">06 · Para pensar y discutir</a>
+    </div>
 
     <!-- 01 - ¿QUÉ ES? -->
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec01">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">01</span>
         <div class="accent-line"></div>
@@ -232,8 +281,18 @@
       </p>
 
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
-        A esa temperatura, la materia ya no existe como gas, líquido o sólido: es un <strong class="text-nucleo-accentLight">plasma</strong>, un estado donde los electrones se separan de los núcleos y todo se comporta como una sopa electromagnética conductora. Contener un plasma a esa temperatura es el gran desafío tecnológico de la fusión.
+        A esa temperatura, la materia ya no existe como gas, líquido o sólido: es un <span class="glosario" data-tip="Cuarto estado de la materia: gas ionizado donde los electrones se separan de los núcleos. Conduce electricidad y responde a campos magnéticos." style="color:#93C5FD;border-bottom-color:#93C5FD;">plasma</span>, un estado donde los electrones se separan de los núcleos y todo se comporta como una sopa electromagnética conductora. Contener un plasma a esa temperatura es el gran desafío tecnológico de la fusión.
       </p>
+
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">El núcleo del Sol tiene una temperatura de 'apenas' 15 millones de grados. ¿Por qué entonces brilla si la temperatura es menor? Porque la densidad en el centro solar es 150 veces la del agua: los núcleos están tan apretados que chocan constantemente. En un tokamak terrestre, la densidad es mucho menor y por eso necesitamos temperaturas diez veces más altas.</p>
+          </div>
+        </div>
+      </div>
 
       <div class="equation-block">
         <span class="eq-label">Reacción de fusión D-T (la más accesible)</span>
@@ -252,7 +311,7 @@
     </section>
 
     <!-- 02 - SVG ANIMADO: PROCESO DE FUSIÓN -->
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec02">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">02</span>
         <div class="accent-line"></div>
@@ -260,11 +319,11 @@
       </div>
 
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-3">
-        Para que la fusión ocurra a escala útil, hay que confinar el plasma durante el tiempo suficiente y a la densidad suficiente. Esto se resume en el <strong class="text-nucleo-accent">criterio de Lawson</strong>, un producto \(n \tau T\) (densidad × tiempo de confinamiento × temperatura) que debe superar un umbral para que las reacciones compensen las pérdidas.
+        Para que la fusión ocurra a escala útil, hay que confinar el plasma durante el tiempo suficiente y a la densidad suficiente. Esto se resume en el <span class="glosario" data-tip="Producto nτT (densidad × tiempo de confinamiento × temperatura) que debe superar ~3×10²¹ keV·s/m³ para que la fusión sea viable." style="color:#93C5FD;border-bottom-color:#93C5FD;">criterio de Lawson</span>, un producto \(n \tau T\) (densidad × tiempo de confinamiento × temperatura) que debe superar un umbral para que las reacciones compensen las pérdidas.
       </p>
 
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-8">
-        Los dos grandes enfoques para lograrlo son el <strong class="text-nucleo-accent">confinamiento magnético</strong> (tokamak, stellarator) y el <strong class="text-nucleo-accent">confinamiento inercial</strong> (láseres ultrarrápidos que comprimen pastillas de combustible).
+        Los dos grandes enfoques para lograrlo son el <span class="glosario" data-tip="Técnica que usa campos magnéticos intensos para suspender y contener el plasma sin que toque las paredes del reactor." style="color:#93C5FD;border-bottom-color:#93C5FD;">confinamiento magnético</span> (tokamak, stellarator) y el <span class="glosario" data-tip="Técnica que usa láseres o haces de partículas para comprimir micro-pastillas de combustible hasta lograr fusión durante nanosegundos." style="color:#93C5FD;border-bottom-color:#93C5FD;">confinamiento inercial</span> (láseres ultrarrápidos que comprimen pastillas de combustible).
       </p>
 
       <!-- SVG PROFESIONAL: PLASMA EN TOKAMAK -->
@@ -422,17 +481,27 @@
         </svg>
 
         <p class="px-5 py-4 text-base text-nucleo-silver leading-relaxed border-t border-white/5">
-          El <strong class="text-nucleo-accentLight">tokamak</strong> es una cámara con forma de anillo (toro) donde campos magnéticos muy intensos — generados por bobinas superconductoras — confinan el plasma sin que toque las paredes. Los <strong class="text-nucleo-accent">deuterones</strong> (azules) y <strong class="text-nucleo-accent">tritones</strong> (violetas) circulan en espirales dentro del toro y, al chocar, se fusionan para formar helio y un neutrón energético (amarillo). El neutrón escapa del campo magnético, sale del plasma y deposita su energía en el <strong>manto</strong> que rodea al reactor — donde también se genera nuevo tritio a partir del litio.
+          El <span class="glosario" data-tip="Cámara toroidal con bobinas magnéticas que confinan plasma a 100+ millones de °C. Diseño soviético de los años 50. ITER es el más grande del mundo." style="color:#93C5FD;border-bottom-color:#93C5FD;">tokamak</span> es una cámara con forma de anillo (toro) donde campos magnéticos muy intensos — generados por bobinas superconductoras — confinan el plasma sin que toque las paredes. Los <strong class="text-nucleo-accent">deuterones</strong> (azules) y <strong class="text-nucleo-accent">tritones</strong> (violetas) circulan en espirales dentro del toro y, al chocar, se fusionan para formar helio y un neutrón energético (amarillo). El neutrón escapa del campo magnético, sale del plasma y deposita su energía en el <strong>manto</strong> que rodea al reactor — donde también se genera nuevo tritio a partir del litio.
         </p>
       </div>
 
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">Un tokamak como ITER pesará 23.000 toneladas (tres veces la Torre Eiffel) y su imán central —el solenoide— generará un campo magnético de 13 teslas, 280.000 veces el campo magnético terrestre. Para lograrlo usa superconductores enfriados a -269 °C con helio líquido.</p>
+          </div>
+        </div>
+      </div>
+
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
-        Hay dos grandes líneas de investigación: los <strong class="text-nucleo-accent">tokamaks</strong> (como <strong>ITER</strong> en Francia, el proyecto internacional más grande de la historia) y los <strong class="text-nucleo-accent">stellarators</strong> (más complejos geométricamente pero con operación potencialmente más estable, como el <strong>Wendelstein 7-X</strong> en Alemania). También existen alternativas como el <strong class="text-nucleo-accent">confinamiento inercial</strong>, donde láseres comprimnen micro-pastillas de combustible hasta lograr la fusión durante nanosegundos.
+        Hay dos grandes líneas de investigación: los <strong class="text-nucleo-accent">tokamaks</strong> (como <strong>ITER</strong> en Francia, el proyecto internacional más grande de la historia) y los <span class="glosario" data-tip="Similar al tokamak pero con geometría retorcida y compleja que permite operación continua más estable sin corriente interna de plasma." style="color:#93C5FD;border-bottom-color:#93C5FD;">stellarators</span> (más complejos geométricamente pero con operación potencialmente más estable, como el <strong>Wendelstein 7-X</strong> en Alemania). También existen alternativas como el <strong class="text-nucleo-accent">confinamiento inercial</strong>, donde láseres comprimnen micro-pastillas de combustible hasta lograr la fusión durante nanosegundos.
       </p>
     </section>
 
     <!-- 03 - EL SOL Y LA CURVA DE ENERGÍA DE ENLACE -->
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec03">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">03</span>
         <div class="accent-line"></div>
@@ -462,7 +531,7 @@
     </section>
 
     <!-- 04 - VENTAJAS Y DESAFÍOS -->
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec04">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">04</span>
         <div class="accent-line"></div>
@@ -504,10 +573,19 @@
         <span class="dato-label">Cifras clave</span>
         <p>Para que la fusión sea energéticamente positiva, debe cumplirse el llamado <strong class="text-nucleo-accentLight">criterio de Lawson</strong>: \(n \tau T \gtrsim 3 \times 10^{21} \, \text{keV·s/m³}\). En ITER se busca un factor \(Q \geq 10\), es decir, producir <strong>10 veces más energía</strong> que la invertida en calentar el plasma. En experimentos recientes, el tokamak europeo <strong>JET</strong> ya alcanzó \(Q = 0{,}33\) en 1997 y \(Q = 0{,}67\) en 2022.</p>
       </div>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">El récord de energía de fusión lo tiene el JET europeo: en 1997 produjo 16 MW durante menos de un segundo. Pero para lograrlo consumió 24 MW en calentar el plasma. El santo grial de la fusión es Q ≥ 1: sacar más energía de la que se invierte. ITER busca Q ≥ 10.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 05 - FUSIÓN EN ARGENTINA Y EN EL MUNDO -->
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec05">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">05</span>
         <div class="accent-line"></div>
@@ -523,7 +601,7 @@
       </p>
 
       <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
-        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">ITER (Francia):</strong> el proyecto internacional más grande. Siete socios (UE, EE.UU., China, Rusia, Japón, India, Corea del Sur). Primer plasma previsto para 2035.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><span class="glosario" data-tip="International Thermonuclear Experimental Reactor: proyecto de fusión en Cadarache, Francia. 7 socios (UE, EE.UU., China, Rusia, Japón, India, Corea del Sur). Plasma en 2035." style="color:#93C5FD;border-bottom-color:#93C5FD;">ITER (Francia):</span> el proyecto internacional más grande. Siete socios (UE, EE.UU., China, Rusia, Japón, India, Corea del Sur). Primer plasma previsto para 2035.</li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">DEMO (a definir):</strong> la primera planta de demostración que produciría electricidad a la red. Vendría después de ITER, hacia 2050–2060.</li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">National Ignition Facility (EE.UU.):</strong> en 2022 logró por primera vez la ignición por fusión inercial, con \(Q \approx 1{,}5\).</li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">EAST (China):</strong> tokamak experimental que en 2023 sostuvo plasma a 70 millones de °C durante 403 segundos.</li>
@@ -538,7 +616,7 @@
     </section>
 
     <!-- 06 - PARA PENSAR -->
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec06">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">06</span>
         <div class="accent-line"></div>
@@ -563,6 +641,58 @@
         "Construir una estrella en la Tierra es, literalmente, el trabajo de la fusión nuclear."
       </div>
     </section>
+
+    <!-- CONCEPTOS CLAVE -->
+    <div class="reveal mb-10" style="background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.15); border-left: 3px solid #3B82F6; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La fusión une dos núcleos ligeros (deuterio + tritio) en uno más pesado (helio), liberando <strong class="text-nucleo-accentLight">17,6 MeV</strong> y un neutrón.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Para vencer la repulsión eléctrica entre los núcleos se necesitan temperaturas de <strong class="text-nucleo-accentLight">100–200 millones de °C</strong>. La materia se convierte en plasma.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El plasma se confina con <strong class="text-nucleo-accentLight">campos magnéticos</strong> (tokamak, stellarator) o por <strong class="text-nucleo-accentLight">confinamiento inercial</strong> (láseres). El criterio de Lawson mide la viabilidad.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Ventajas: combustible casi ilimitado (deuterio del agua de mar), sin CO₂, residuos mínimos, seguridad intrínseca (el plasma se apaga solo).</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span><strong class="text-nucleo-accentLight">ITER</strong> (Francia) busca demostrar Q≥10 hacia 2039. La primera planta comercial (DEMO) no llegaría antes de 2050. Startups privadas exploran caminos alternativos.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TEMAS RELACIONADOS -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="fision.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fisión Nuclear</span>
+          <p class="text-sm text-nucleo-silver mt-1">El otro camino: romper núcleos pesados para liberar energía</p>
+        </a>
+        <a href="fuerzas.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fuerzas de la Naturaleza</span>
+          <p class="text-sm text-nucleo-silver mt-1">La fuerza nuclear fuerte: la que mantiene unido al núcleo</p>
+        </a>
+        <a href="atomos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Estructura de los Átomos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Isótopos del hidrógeno: deuterio y tritio, el combustible de la fusión</p>
+        </a>
+      </div>
+    </div>
 
     <!-- NAVEGACIÓN -->
     <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
@@ -619,6 +749,44 @@
     });
   }, { threshold: 0.12 });
   els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+// TOC: mobile toggle
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+// TOC: scroll-based active section
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
 })();
 </script>
 </body>

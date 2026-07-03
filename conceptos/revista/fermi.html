@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enrico Fermi — Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#F59E0B', accentLight: '#FCD34D',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #F59E0B; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #F59E0B; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #FCD34D; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #FCD34D; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #F59E0B; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #FCD34D; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span style="color:rgba(245,158,11,0.5);">/</span>
+        <span style="color:#FCD34D; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">Enrico Fermi</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(245,158,11,0.15); color:#FCD34D; font-family:'Inter',sans-serif;">Biografía · Nobel 1938</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1 ml-3" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~10 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="revista-articulo" style="padding-top:5rem;">
+  <h2>Enrico Fermi y el primer reactor nuclear de la historia</h2>
+
+  <p class="fecha">
+    Fuente histórica: <em>Chicago Daily Tribune</em>, 3 de diciembre de 1942.
+  </p>
+
+  <p>
+    Enrico Fermi nació en Roma en 1901. A los 17 años ya sabía más física que la mayoría de los profesores universitarios: había aprendido solo, leyendo libros en latín y resolviendo problemas que encontraba en los mercados de segunda mano. A los 21 publicó su primer trabajo importante y a los 26 era catedrático en la Universidad de Roma.
+  </p>
+
+  <p>
+    En la década de 1930, Fermi realizó los experimentos que lo harían famoso: bombardeó elemento tras elemento con <strong>neutrones</strong>, descubriendo que los neutrones lentos —frenados por parafina o agua— eran mucho más efectivos para provocar reacciones nucleares que los neutrones rápidos. Este descubrimiento le valió el <strong>Premio Nobel de Física en 1938</strong>.
+  </p>
+
+  <p>
+    Pero 1938 era un año terrible para estar en Italia si tu esposa era judía. Fermi aprovechó el viaje a Estocolmo para recibir el Nobel y, en lugar de volver, emigró con su familia a Estados Unidos. Allí se sumó al esfuerzo científico que terminaría en el <strong>Proyecto Manhattan</strong>.
+  </p>
+
+  <p>
+    El 2 de diciembre de 1942, bajo las gradas del estadio de fútbol americano de la Universidad de Chicago —en una cancha de squash abandonada—, Fermi encendió el <strong>Chicago Pile-1 (CP-1)</strong>. Era una pila de 45.000 ladrillos de grafito y 50 toneladas de óxido de uranio. No tenía blindaje, no tenía refrigeración, no tenía nada que se pareciera a un reactor moderno. Pero funcionó: a las 15:25 de esa tarde, el CP-1 alcanzó la criticidad y la humanidad controló por primera vez una reacción nuclear en cadena.
+  </p>
+
+  <p>
+    El mensaje cifrado que los científicos enviaron a Washington para informar del éxito fue: <strong>"El navegante italiano ha desembarcado en el Nuevo Mundo"</strong>. La respuesta: "¿Cómo estaban los nativos?". "Muy amigables", contestaron. La era nuclear había comenzado en secreto, en un sótano, bajo tribunas vacías.
+  </p>
+
+  <p>
+    Fermi no solo fue un experimentador genial; también fue un teórico excepcional. En 1934 formuló la teoría de la <strong>desintegración beta</strong> (la fuerza nuclear débil), introduciendo el concepto de una nueva partícula que llamó "neutrino". También dio nombre a los <strong>fermiones</strong>, la clase de partículas que obedecen el principio de exclusión de Pauli y que incluye a los electrones, protones y neutrones.
+  </p>
+
+  <p>
+    Su nombre quedó grabado en la ciencia de muchas maneras: el laboratorio <strong>Fermilab</strong> en Chicago, el elemento 100 (<strong>fermio</strong>), el nivel de Fermi en física de sólidos, y la célebre <strong>paradoja de Fermi</strong>: "si hay tantas civilizaciones en el universo, ¿dónde está todo el mundo?". Murió en 1954, a los 53 años, de cáncer de estómago.
+  </p>
+
+  <div style="background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.15); border-left: 3px solid #F59E0B; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#F59E0B;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Enrico Fermi encendió el Chicago Pile-1 el 2 de diciembre de 1942: el primer reactor nuclear de la historia, bajo las gradas de un estadio.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Descubrió que los neutrones lentos son mucho más efectivos para provocar reacciones nucleares, hallazgo que le valió el Nobel de Física en 1938.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Emigró a EE.UU. para escapar de las leyes raciales italianas que afectaban a su esposa judía.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Formuló la teoría de la desintegración beta y predijo la existencia del neutrino.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Su nombre perdura en los fermiones, el Fermilab, el elemento fermio y la paradoja de Fermi.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#F59E0B;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="meitner.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Lise Meitner</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="balseiro.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">José Balseiro</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="oklo.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">El reactor de Oklo</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    Fermi personificó la rara combinación de teórico y experimental. Podía derivar ecuaciones en el pizarrón y después bajar al laboratorio a construir lo que había calculado. Sin él, el Proyecto Manhattan no habría existido, y sin el CP-1, la energía nuclear civil —Atucha, Embalse, CAREM— no sería lo que es hoy.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>

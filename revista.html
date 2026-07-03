@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revista — Más Allá del Currículum | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              oro: '#F59E0B', oroLight: '#FCD34D',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #F59E0B; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #F59E0B; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #F59E0B, #FCD34D); }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #F59E0B; transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .card-revista { background: #0B1014; border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; transition: all 0.3s ease; position: relative; }
+    .card-revista:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,158,11,0.1); }
+    .card-revista h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; line-height: 1.3; }
+    .card-revista .fuente { font-size: 11px; color: #5A6B72; margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; font-style: italic; }
+    .card-revista .fuente em { color: #F59E0B; font-style: normal; }
+    .card-revista p { font-size: 14px; color: #A8B5BD; line-height: 1.6; margin-bottom: 0.75rem; font-family: 'Cormorant Garamond', serif; }
+    .card-revista .ver-fuente { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #F59E0B; text-decoration: none; transition: color 0.2s; }
+    .card-revista .ver-fuente:hover { color: #fff; }
+    .card-revista-destacado { background: #0B1014; border: 1px solid rgba(245,158,11,0.2); padding: 2rem; transition: all 0.3s ease; position: relative; display: block; text-decoration: none; }
+    .card-revista-destacado:hover { border-color: rgba(245,158,11,0.4); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,158,11,0.15); }
+    .card-revista-destacado h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; line-height: 1.3; }
+    .card-revista-destacado .fuente { font-size: 11px; color: #5A6B72; margin-bottom: 1rem; font-family: 'Inter', sans-serif; }
+    .card-revista-destacado .fuente em { color: #F59E0B; font-style: normal; }
+    .card-revista-destacado .cita-preview { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; line-height: 1.5; color: #C8D4DC; padding-left: 1rem; border-left: 3px solid rgba(245,158,11,0.4); margin: 1rem 0 1.25rem 0; }
+    .card-revista-destacado p { font-size: 14px; color: #A8B5BD; line-height: 1.6; margin-bottom: 0.75rem; font-family: 'Cormorant Garamond', serif; }
+    .card-revista-destacado .ver-fuente { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #F59E0B; text-decoration: none; transition: color 0.2s; }
+    .card-revista-destacado .ver-fuente:hover { color: #fff; }
+    @media print { body { background: white; color: black; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs">
+        <a href="index.html" class="text-nucleo-silverDark hover:text-nucleo-oro transition-colors flex items-center gap-1">
+          <span class="iconify" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-oro/60">/</span>
+        <span class="text-nucleo-oro font-semibold">Revista</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="index.html#temas" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-colors hidden sm:flex items-center gap-1">
+          <span>Temas</span>
+        </a>
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-oro/15 text-nucleo-oro px-2.5 py-1">Más Allá del Currículum</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-28 pb-12 md:pt-36 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 40% 50%, #F59E0B 1px, transparent 1px), radial-gradient(circle at 70% 30%, #F59E0B 1px, transparent 1px); background-size: 50px 50px, 70px 70px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.12) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 text-center">
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <div class="accent-line"></div>
+      <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-oro">Revista · Más Allá del Currículum</span>
+      <div class="accent-line"></div>
+    </div>
+    <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">Historias que el átomo <span class="text-nucleo-oro">nos cuenta</span></h1>
+    <p class="text-lg md:text-xl text-nucleo-silver max-w-2xl mx-auto leading-relaxed">Accidentes que marcaron la historia, biografías de científicas y científicos, y curiosidades que amplían la mirada más allá del programa.</p>
+  </div>
+</section>
+
+<section class="relative py-12 md:py-16 bg-nucleo-black">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+
+    <!-- Artículo Destacado -->
+    <div class="max-w-7xl mx-auto mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-nucleo-oro px-2 py-0.5" style="background:rgba(245,158,11,0.1); font-family:'Inter',sans-serif;">Artículo Destacado</span>
+        <div style="flex:1; height:1px; background: linear-gradient(90deg, rgba(245,158,11,0.2), transparent);"></div>
+      </div>
+      <a href="conceptos/revista/einstein.html" class="card-revista-destacado">
+        <div class="grid md:grid-cols-3 gap-6 items-start">
+          <div class="md:col-span-2">
+            <h3>Einstein cuestiona la mecánica cuántica</h3>
+            <p class="fuente">Fuente histórica: <em>Berkeley Daily Gazette</em>, 6 de mayo de 1935.</p>
+            <p>En 1935, Albert Einstein, Boris Podolsky y Nathan Rosen publicaron una crítica a la mecánica cuántica —el célebre artículo EPR— que cuestionaba si la teoría describía completamente la realidad física o solo ofrecía una herramienta de cálculo. El debate no era si la mecánica cuántica funcionaba: funcionaba. La pregunta era si era una descripción completa del mundo microscópico.</p>
+            <p>Este debate filosófico-científico es la base de todo lo que sigue: sin la mecánica cuántica no hay física nuclear, no hay fisión, no hay reactores, no hay medicina nuclear. Einstein no rechazaba la teoría: buscaba entender si detrás de las probabilidades había una realidad más profunda.</p>
+            <span class="ver-fuente">Leer artículo completo →</span>
+          </div>
+          <div class="hidden md:block">
+            <div class="cita-preview">"La mecánica cuántica permitió comprender el mundo microscópico, pero también abrió una de las preguntas más profundas de la física: ¿qué significa describir la realidad?"</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- 1. Chernobyl -->
+      <a href="conceptos/revista/chernobyl.html" class="card-revista no-underline block">
+        <h3>Explosión en la central nuclear de Chernobyl</h3>
+        <p class="fuente">Fuente: <em>Pravda</em>, 28 de abril de 1986.</p>
+        <p>La noche del 26 de abril de 1986, durante una prueba de seguridad mal diseñada, el reactor Nº 4 de la central Vladímir Ilich Lenin explotó. El accidente liberó material radiactivo sobre gran parte de Europa y forzó la evacuación permanente de Prípiat.</p>
+        <p>Fue el peor accidente nuclear de la historia, clasificado como nivel 7 en la escala INES. Las causas combinaron errores de diseño del reactor RBMK con graves violaciones de los protocolos de seguridad.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 2. Fukushima -->
+      <a href="conceptos/revista/fukushima.html" class="card-revista no-underline block">
+        <h3>Terremoto y tsunami golpean la central de Fukushima Daiichi</h3>
+        <p class="fuente">Fuente: <em>The Japan Times</em>, 11 de marzo de 2011.</p>
+        <p>El 11 de marzo de 2011, un terremoto de magnitud 9 sacudió la costa este de Japón. El tsunami que le siguió, con olas de hasta 14 metros, inundó la central nuclear de Fukushima Daiichi y dejó sin electricidad a los sistemas de refrigeración de tres reactores.</p>
+        <p>El sobrecalentamiento provocó la fusión parcial de los núcleos y explosiones de hidrógeno en los edificios. A diferencia de Chernobyl, las emisiones fueron contenidas en su mayor parte, y no se registraron muertes directas por radiación.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 3. Marie Curie -->
+      <a href="conceptos/revista/curie.html" class="card-revista no-underline block">
+        <h3>Marie Curie, dos veces Nobel y pionera de la radiactividad</h3>
+        <p class="fuente">Fuente: <em>Le Petit Parisien</em>, 11 de diciembre de 1903.</p>
+        <p>Marie Curie recibió el Premio Nobel de Física en 1903 junto a Pierre Curie y Henri Becquerel por sus investigaciones sobre la radiación. En 1911 obtuvo un segundo Nobel, esta vez en Química, por el descubrimiento del radio y del polonio.</p>
+        <p>Fue la primera mujer en ganar un Nobel, la primera persona en ganar dos y la única en recibirlos en dos campos científicos distintos. Sus cuadernos de laboratorio todavía son radiactivos y se conservan en cajas de plomo en París.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 4. Lise Meitner -->
+      <a href="conceptos/revista/meitner.html" class="card-revista no-underline block">
+        <h3>Lise Meitner y el descubrimiento de la fisión nuclear</h3>
+        <p class="fuente">Fuente: <em>Nature</em>, 11 de febrero de 1939.</p>
+        <p>Junto a su sobrino Otto Frisch, Meitner fue la primera en interpretar correctamente los experimentos de Otto Hahn: el núcleo de uranio se había partido en dos. Acuñó el término "fisión nuclear" y explicó el fenómeno usando el modelo de la gota líquida.</p>
+        <p>A pesar de que su trabajo fue clave, el Nobel de Química de 1944 fue otorgado únicamente a Hahn. Meitner, que era judía y escapó de la Alemania nazi a Suecia, fue ignorada. Hoy el elemento 109 —meitnerio— lleva su nombre.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 5. Enrico Fermi -->
+      <a href="conceptos/revista/fermi.html" class="card-revista no-underline block">
+        <h3>Enrico Fermi y el primer reactor nuclear de la historia</h3>
+        <p class="fuente">Fuente: <em>Chicago Daily Tribune</em>, 3 de diciembre de 1942.</p>
+        <p>El 2 de diciembre de 1942, bajo las gradas del estadio de la Universidad de Chicago, Enrico Fermi encendió el Chicago Pile-1: el primer reactor nuclear construido por el ser humano. El experimento demostró que una reacción en cadena controlada era posible.</p>
+        <p>Fermi ya había ganado el Nobel de Física en 1938 por sus trabajos con neutrones lentos. Su nombre quedó grabado en los fermiones, el laboratorio Fermilab, y la célebre paradoja de Fermi: "si hay tantas civilizaciones, ¿dónde está todo el mundo?".</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 6. José Balseiro -->
+      <a href="conceptos/revista/balseiro.html" class="card-revista no-underline block">
+        <h3>José Antonio Balseiro y la física nuclear argentina</h3>
+        <p class="fuente">Fuente: <em>La Nación</em>, 5 de agosto de 1955.</p>
+        <p>José Balseiro fue un físico argentino que, con apenas 36 años, fundó el Instituto de Física de Bariloche —hoy Instituto Balseiro—, una de las instituciones científicas más prestigiosas de América Latina. Formó a generaciones de físicos e ingenieros nucleares.</p>
+        <p>Su legado está presente en cada reactor diseñado en Argentina, en cada investigador formado en el IB, y en el desarrollo del reactor CAREM. Falleció trágicamente a los 42 años, pero su visión de una ciencia argentina de excelencia perdura.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 7. Oklo -->
+      <a href="conceptos/revista/oklo.html" class="card-revista no-underline block">
+        <h3>El reactor nuclear natural de Oklo: la fisión sin humanos</h3>
+        <p class="fuente">Fuente: <em>Comptes Rendus de l'Académie des Sciences</em>, 1972.</p>
+        <p>En 1972, científicos franceses descubrieron algo extraordinario en una mina de uranio en Oklo, Gabón: un reactor nuclear natural que funcionó hace aproximadamente 2000 millones de años. Durante cientos de miles de años, la fisión se sostuvo sola, moderada por agua subterránea.</p>
+        <p>El hallazgo fue clave porque demostró que la naturaleza ya había logrado lo que Fermi logró en Chicago en 1942. Oklo también sirvió para medir si las constantes fundamentales de la física han cambiado a lo largo del tiempo cósmico.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+      <!-- 8. Propulsión Nuclear Espacial -->
+      <a href="conceptos/revista/propulsion.html" class="card-revista no-underline block">
+        <h3>Viajar a Marte con un reactor nuclear: la apuesta de la NASA</h3>
+        <p class="fuente">Fuente: <em>NASA Press Release</em>, 26 de julio de 2023.</p>
+        <p>En 2023, la NASA y DARPA anunciaron el proyecto DRACO: un motor nuclear térmico que usará un reactor de fisión para calentar hidrógeno líquido y generar empuje. El objetivo es probarlo en órbita en 2027 y usarlo en futuras misiones tripuladas a Marte.</p>
+        <p>No es un concepto nuevo: el programa NERVA ya probó motores nucleares en los años 60. Hoy, con la experiencia de décadas y la necesidad de viajar más lejos y más rápido, la propulsión nuclear vuelve a ser la gran esperanza de la exploración espacial.</p>
+        <span class="ver-fuente">Leer artículo completo →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="relative py-10 bg-nucleo-black border-t border-white/5 mt-8">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 bg-nucleo-oro flex items-center justify-center rounded-sm">
+          <span class="iconify text-nucleo-black" data-icon="lucide:book-open" data-width="16"></span>
+        </div>
+        <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-nucleo-silverDark">
+          <span>Prof. Pereyra, Javier</span>
+          <span class="text-nucleo-silverDark">·</span>
+          <span>© 2026 — Material Educativo</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-oro transition-colors">Inicio</a>
+        <a href="index.html#temas" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-oro transition-colors">Temas</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.card-revista, .card-revista-destacado');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  els.forEach(function(el){
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

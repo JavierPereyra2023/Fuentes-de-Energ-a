@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lise Meitner — Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#7C4DFF', accentLight: '#B388FF',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #7C4DFF; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #7C4DFF; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #7C4DFF; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #B388FF; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #B388FF; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #7C4DFF; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #B388FF; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span style="color:rgba(124,77,255,0.5);">/</span>
+        <span style="color:#B388FF; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">Lise Meitner</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(124,77,255,0.15); color:#B388FF; font-family:'Inter',sans-serif;">Biografía · Descubridora de la fisión</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1 ml-3" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~11 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="revista-articulo" style="padding-top:5rem;">
+  <h2>Lise Meitner y el descubrimiento que cambió el mundo</h2>
+
+  <p class="fecha">
+    Fuente histórica: <em>Nature</em>, 11 de febrero de 1939.
+  </p>
+
+  <p>
+    Elise Meitner nació en Viena en 1878, en una familia judía de clase media. Fue la segunda mujer en obtener un doctorado en física en la Universidad de Viena. En 1907 se mudó a Berlín para trabajar con nada menos que <strong>Max Planck</strong>, el padre de la teoría cuántica. Pero por ser mujer, al principio ni siquiera le permitían entrar al laboratorio: trabajaba en un sótano, sin sueldo, y debía usar una entrada separada.
+  </p>
+
+  <p>
+    En Berlín conoció a <strong>Otto Hahn</strong>, un químico con quien formó una de las colaboraciones científicas más productivas de la historia. Meitner aportaba la física; Hahn, la química. Juntos descubrieron varios isótopos radiactivos y allanaron el camino hacia lo que sería el mayor descubrimiento de sus carreras.
+  </p>
+
+  <p>
+    Pero en 1938 la situación cambió drásticamente. Con la anexión de Austria por la Alemania nazi, Meitner —que se había convertido al protestantismo pero era judía de nacimiento— perdió la protección de su pasaporte austríaco. Tuvo que huir. Escapó a Suecia con dos valijas y 10 marcos en el bolsillo, ayudada por colegas que arriesgaron sus carreras para salvarla.
+  </p>
+
+  <p>
+    Desde Suecia, Meitner siguió en contacto con Hahn por carta. A fines de 1938, Hahn le escribió perplejo: al bombardear uranio con neutrones, en lugar de obtener elementos más pesados —como todos esperaban— obtenía bario, un elemento mucho más liviano. <strong>No tenía explicación.</strong>
+  </p>
+
+  <p>
+    Durante una caminata en la nieve cerca de Estocolmo, en la Navidad de 1938, Meitner y su sobrino Otto Frisch —también físico— encontraron la respuesta. Usando el modelo de la gota líquida del núcleo (propuesto por Bohr), Meitner comprendió que el núcleo de uranio <strong>se había partido en dos</strong>. Calculó la energía liberada usando la fórmula de Einstein \(E = mc^2\): ~200 MeV por evento. Frisch acuñó el término <strong>"fisión nuclear"</strong>, tomando prestada la palabra que usan los biólogos para describir la división celular.
+  </p>
+
+  <p>
+    En enero de 1939, Meitner y Frisch publicaron su interpretación en <em>Nature</em>. El mundo supo que era posible romper el átomo y liberar una cantidad colosal de energía. Era la base teórica de lo que seis años después se convertiría en la bomba atómica y, más tarde, en la energía nuclear civil.
+  </p>
+
+  <p>
+    En 1944, el <strong>Premio Nobel de Química fue otorgado únicamente a Otto Hahn</strong>. Meitner no fue mencionada. La omisión es considerada uno de los mayores errores del comité Nobel. Aunque más tarde recibió otros reconocimientos —incluyendo el Premio Enrico Fermi en 1966—, nunca se corrigió la injusticia central. Meitner, fiel a su carácter, nunca reclamó públicamente.
+  </p>
+
+  <p>
+    Hoy el elemento 109 de la tabla periódica lleva su nombre: <strong>meitnerio</strong>. Es uno de los pocos elementos bautizados en honor a una mujer. Lise Meitner murió en 1968, poco antes de cumplir 90 años. En su lápida, su sobrino Otto Frisch mandó grabar: <em>"Lise Meitner: una física que nunca perdió su humanidad."</em>
+  </p>
+
+  <div style="background: rgba(124,77,255,0.04); border: 1px solid rgba(124,77,255,0.15); border-left: 3px solid #7C4DFF; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#7C4DFF;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Lise Meitner fue la física que interpretó correctamente los experimentos de Otto Hahn: el uranio se había partido en dos. Acuñó el término "fisión nuclear".</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Usó el modelo de la gota líquida y E=mc² para calcular la energía liberada: ~200 MeV por fisión.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ A pesar de ser coautora del descubrimiento, el Nobel de Química de 1944 fue otorgado únicamente a Hahn.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Judía en la Alemania nazi, escapó a Suecia en 1938. Rechazó participar en el Proyecto Manhattan.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ El elemento 109 de la tabla periódica, el meitnerio, fue nombrado en su honor.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#F59E0B;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="curie.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Marie Curie</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="fermi.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Enrico Fermi</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="einstein.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Einstein y la mecánica cuántica</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    Meitner entendió la fisión y rechazó la bomba. Cuando la invitaron a trabajar en el Proyecto Manhattan, respondió: "No tendré nada que ver con una bomba". Comprendió mejor que nadie el poder que había desatado, y eligió no usarlo para destruir.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>

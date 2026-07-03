@@ -51,11 +51,31 @@
     .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(220,38,38,0.12); color: #F87171; border: 1px solid rgba(220,38,38,0.25); }
     .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
     .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
-    .sibling-link:hover { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.04); }
+    .sibling-link:hover { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(220,38,38,0.15); }
     .sibling-link-fusion { border-color: rgba(59,130,246,0.15); }
-    .sibling-link-fusion:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.04); }
+    .sibling-link-fusion:hover { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(59,130,246,0.15); }
     .glow-red { box-shadow: 0 0 40px rgba(220,38,38,0.4), inset 0 0 20px rgba(220,38,38,0.2); }
     .fission-products { opacity: 0; }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(220,38,38,0.3); }
+    .toc-inner a.active { color: #F87171; border-left-color: #DC2626; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #DC2626; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #DC2626; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(220,38,38,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #F87171; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(220,38,38,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
   </style>
 </head>
 <body>
@@ -66,17 +86,17 @@
     <div class="flex items-center justify-between h-14 md:h-16">
       <div class="flex items-center gap-2 text-xs flex-wrap">
         <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
-          <span class="iconify" data-icon="lucide:home" data-width="14"></span>
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
           <span class="hidden sm:inline">Inicio</span>
         </a>
-        <span class="text-nucleo-silverDark">/</span>
-        <a href="../index.html#conceptos" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
-        <span class="text-nucleo-silverDark">/</span>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
         <span class="text-nucleo-accent font-semibold">Fisión</span>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
-        <a href="fusion.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-colors hidden sm:flex items-center gap-1">
+        <a href="fusion.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
           <span>Fusión</span>
           <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
         </a>
@@ -107,17 +127,44 @@
         <span class="chip">Reacción en cadena</span>
         <span class="chip">200 MeV por evento</span>
         <span class="chip chip-yellow">Tecnología madura</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~8 min de lectura
+        </span>
       </div>
     </div>
   </div>
 </section>
 
-<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-  <main class="max-w-4xl mx-auto">
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
 
-    <section class="reveal mb-16">
-      <div class="flex items-center gap-4 mb-6">
-        <span class="section-num">01</span>
+    <!-- TOC Sidebar (desktop) -->
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué ocurre exactamente?</a>
+        <a href="#sec02"><span class="num">02</span> La reacción en cadena</a>
+        <a href="#sec03"><span class="num">03</span> Moderación y control</a>
+        <a href="#sec04"><span class="num">04</span> Productos de fisión</a>
+        <a href="#sec05"><span class="num">05</span> Tipos de reactores</a>
+      </div>
+    </aside>
+
+    <!-- TOC Mobile -->
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué ocurre exactamente?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · La reacción en cadena</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Moderación y control</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Productos de fisión</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Tipos de reactores</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
         <div class="accent-line"></div>
         <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué ocurre exactamente?</h2>
       </div>
@@ -130,13 +177,22 @@
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
         La masa total de los productos es <strong class="text-nucleo-accent">ligeramente menor</strong> que la del núcleo original más el neutrón incidente. Esa diferencia se convierte en energía según \(E = mc^2\). Un kilogramo de uranio libera la misma energía que <span class="inline-stat"><span class="val">2.700.000 kg</span></span> de carbón.
       </p>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">En cada fisión del uranio-235 se liberan 200 MeV de energía. Esa energía alcanza para hacer brillar una lamparita LED de 10 watts durante 0,000000003 segundos. Pero con los 2,7 × 10²¹ átomos que hay en un gramo de uranio, la energía total equivale a quemar 2.700 litros de petróleo.</p>
+          </div>
+        </div>
+      </div>
       <div class="equation-block">
         <span class="eq-label">Reacción típica de fisión del U-235</span>
         \(^{1}_{0}\text{n} + \, ^{235}_{92}\text{U} \;\longrightarrow\; ^{141}_{56}\text{Ba} + \, ^{92}_{36}\text{Kr} + 3\,^{1}_{0}\text{n} + 200\,\text{MeV}\)
       </div>
     </section>
 
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec02">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">02</span>
         <div class="accent-line"></div>
@@ -146,7 +202,7 @@
         Cada fisión produce 2 o 3 neutrones. Si esos neutrones golpean otros núcleos de U-235, producen nuevas fisiones, que a su vez liberan más neutrones, y así sucesivamente. Esto se llama <strong class="text-nucleo-accent">reacción en cadena</strong>.
       </p>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
-        Para mantener una reacción estable y controlada, de cada fisión solo <strong class="text-nucleo-accentLight">uno de los neutrones</strong> en promedio debe provocar otra fisión. Esto se mide con el <strong>factor de multiplicación \(k\)</strong>:
+        Para mantener una reacción estable y controlada, de cada fisión solo <strong class="text-nucleo-accentLight">uno de los neutrones</strong> en promedio debe provocar otra fisión. Esto se mide con el <span class="glosario" data-tip="Relación entre neutrones de una generación y la anterior: k>1 la reacción crece, k=1 es estable (crítico), k<1 decrece (subcrítico)." style="color:#F87171;border-bottom-color:#F87171;">factor de multiplicación \(k\)</span>:
       </p>
       <div class="grid sm:grid-cols-3 gap-3 mb-8">
         <div class="px-4 py-3 border-l-2 border-nucleo-accent">
@@ -160,6 +216,16 @@
         <div class="px-4 py-3 border-l-2 border-nucleo-accentLight">
           <div class="font-heading text-2xl font-bold text-nucleo-accentLight">k &gt; 1</div>
           <div class="text-xs text-nucleo-silverDark uppercase tracking-wider mt-1" style="font-family:'Inter',sans-serif;">Supercrítico</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">El Chicago Pile-1, el primer reactor de la historia construido por Fermi en 1942, tenía 45.000 ladrillos de grafito y 50 toneladas de uranio. No tenía blindaje, no tenía refrigeración y estaba en una cancha de squash. Pero funcionó: alcanzó la criticidad y la humanidad dominó la fisión.</p>
+          </div>
         </div>
       </div>
 
@@ -488,25 +554,34 @@
       </div>
     </section>
 
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec03">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">03</span>
         <div class="accent-line"></div>
         <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Moderación y control</h2>
       </div>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
-        El U-235 fisiona con mayor probabilidad cuando es golpeado por un neutrón <strong class="text-nucleo-accent">lento</strong> (neutrón térmico). Sin embargo, los neutrones que salen de una fisión son <strong class="text-nucleo-accent">rápidos</strong>. Hay que <strong class="text-nucleo-accent">frenarlos</strong> con un moderador (agua pesada en los reactores argentinos).
+        El U-235 fisiona con mayor probabilidad cuando es golpeado por un neutrón <strong class="text-nucleo-accent">lento</strong> (<span class="glosario" data-tip="Neutrón con energía cinética baja (~0.025 eV), equivalente a la agitación térmica a temperatura ambiente. Es el que tiene mayor probabilidad de provocar una fisión." style="color:#F87171;border-bottom-color:#F87171;">neutrón térmico</span>). Sin embargo, los neutrones que salen de una fisión son <strong class="text-nucleo-accent">rápidos</strong>. Hay que <strong class="text-nucleo-accent">frenarlos</strong> con un moderador (agua pesada en los reactores argentinos).
       </p>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
         Las <strong class="text-nucleo-accent">barras de control</strong> (boro, cadmio, hafnio) absorben neutrones: al insertarlas en el núcleo, bajan \(k\) por debajo de 1 y detienen la reacción.
       </p>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">Argentina es uno de los pocos países que domina la tecnología del agua pesada. La planta industrial de Arroyito (Neuquén) produce D₂O desde 1994 y abastece a Atucha I, Atucha II y Embalse. Tener agua pesada propia permite usar uranio natural sin enriquecerlo.</p>
+          </div>
+        </div>
+      </div>
       <div class="dato-box">
         <span class="dato-label">En Argentina</span>
-        <p>Las centrales Atucha I, Atucha II y Embalse usan <strong>agua pesada</strong> como moderador y refrigerante, lo que les permite quemar <strong>uranio natural</strong> sin enriquecimiento.</p>
+        <p>Las centrales Atucha I, Atucha II y Embalse usan <span class="glosario" data-tip="D₂O: agua donde el hidrógeno (¹H) se reemplaza por deuterio (²H). Es un excelente moderador de neutrones y es clave en los reactores argentinos." style="color:#F87171;border-bottom-color:#F87171;">agua pesada</span> como moderador y refrigerante, lo que les permite quemar <strong>uranio natural</strong> sin enriquecimiento.</p>
       </div>
     </section>
 
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec04">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">04</span>
         <div class="accent-line"></div>
@@ -520,19 +595,71 @@
       </p>
     </section>
 
-    <section class="reveal mb-16">
+    <section class="reveal mb-16" id="sec05">
       <div class="flex items-center gap-4 mb-6">
         <span class="section-num">05</span>
         <div class="accent-line"></div>
         <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Tipos de reactores</h2>
       </div>
       <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
-        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">PWR</strong> — Agua presurizada. El más usado (~70%). Combustible: uranio enriquecido. Argentina tiene el prototipo CAREM.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><span class="glosario" data-tip="Pressurized Water Reactor: reactor de agua presurizada. El más usado en el mundo (~70%). Combustible: uranio enriquecido." style="color:#F87171;border-bottom-color:#F87171;">PWR</span> — Agua presurizada. El más usado (~70%). Combustible: uranio enriquecido. Argentina tiene el prototipo CAREM.</li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">BWR</strong> — Agua hirviente. El agua hierve dentro del núcleo.</li>
-        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">PHWR</strong> — Agua pesada presurizada. Usa D₂O. Permite uranio natural. <strong class="text-white">Diseño de Atucha I, Atucha II y Embalse</strong>.</li>
-        <li class="pl-5 border-l-2 border-nucleo-accent/40"><strong class="text-nucleo-accentLight">MSR</strong> — Sales fundidas. Combustible disuelto en sales de fluoruro líquido.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><span class="glosario" data-tip="Pressurized Heavy Water Reactor: reactor de agua pesada presurizada. Usa D₂O como moderador y permite uranio natural sin enriquecer. Diseño argentino." style="color:#F87171;border-bottom-color:#F87171;">PHWR</span> — Agua pesada presurizada. Usa D₂O. Permite uranio natural. <strong class="text-white">Diseño de Atucha I, Atucha II y Embalse</strong>.</li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40"><span class="glosario" data-tip="Molten Salt Reactor: reactor de sales fundidas. El combustible está disuelto en sales de fluoruro líquidas que actúan como refrigerante." style="color:#F87171;border-bottom-color:#F87171;">MSR</span> — Sales fundidas. Combustible disuelto en sales de fluoruro líquido.</li>
       </ul>
     </section>
+
+    <!-- CONCEPTOS CLAVE -->
+    <div class="reveal mb-10" style="background: rgba(220,38,38,0.04); border: 1px solid rgba(220,38,38,0.15); border-left: 3px solid #DC2626; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La fisión divide un núcleo pesado (²³⁵U) en dos fragmentos, liberando <strong class="text-nucleo-accentLight">~200 MeV</strong> y 2–3 neutrones.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los neutrones liberados pueden iniciar una <strong class="text-nucleo-accentLight">reacción en cadena</strong>. El factor k=1 mantiene la reacción estable (estado crítico).</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los reactores necesitan un <strong class="text-nucleo-accentLight">moderador</strong> (agua pesada en Argentina) para frenar neutrones y <strong class="text-nucleo-accentLight">barras de control</strong> (boro, cadmio) para regular k.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los productos de fisión son <strong class="text-nucleo-accentLight">radiactivos</strong> y algunos se usan en medicina: I-131, Mo-99 → Tc-99m, Cs-137.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Argentina opera tres centrales nucleares con diseño PHWR (agua pesada) y desarrolla el reactor <strong class="text-nucleo-accentLight">CAREM</strong>, el primer PWR de diseño nacional.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TEMAS RELACIONADOS -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="reactores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Reactores Nucleares</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cómo se aprovecha la fisión en los reactores de potencia</p>
+        </a>
+        <a href="radioisotopos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioisótopos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los productos de fisión que diagnostican y curan</p>
+        </a>
+        <a href="argentina.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Argentina Nuclear</span>
+          <p class="text-sm text-nucleo-silver mt-1">Atucha I, II, Embalse y el desarrollo nuclear nacional</p>
+        </a>
+      </div>
+    </div>
 
     <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
       <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white">
@@ -608,6 +735,44 @@
   }
   tick();
   window.setInterval(tick, 50);
+})();
+</script>
+<script>
+// TOC: mobile toggle
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+// TOC: scroll-based active section
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
 })();
 </script>
 </body>

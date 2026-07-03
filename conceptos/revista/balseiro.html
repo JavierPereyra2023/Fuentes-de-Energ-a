@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>José Balseiro — Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#75AADB', accentLight: '#A3C6E8',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #75AADB; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #75AADB; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #75AADB; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #A3C6E8; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #A3C6E8; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #75AADB; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #A3C6E8; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span style="color:rgba(117,170,219,0.5);">/</span>
+        <span style="color:#A3C6E8; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">José Balseiro</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(117,170,219,0.15); color:#A3C6E8; font-family:'Inter',sans-serif;">Biografía · Argentina</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1 ml-3" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~9 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="revista-articulo" style="padding-top:5rem;">
+  <h2>José Antonio Balseiro, el físico que soñó una ciencia argentina de excelencia</h2>
+
+  <p class="fecha">
+    Fuente histórica: <em>La Nación</em>, 5 de agosto de 1955.
+  </p>
+
+  <p>
+    José Antonio Balseiro nació en Córdoba en 1919. Desde chico mostró un talento excepcional para la ciencia: a los 14 años ya había leído tratados de física avanzada y a los 18 ingresó a la Universidad Nacional de Córdoba, donde estudió astronomía y física. Pronto quedó claro que su lugar no era Córdoba: en 1940 se mudó a La Plata, donde trabajó en el Observatorio Astronómico bajo la dirección del célebre astrónomo español Enrique Gaviola.
+  </p>
+
+  <p>
+    Gaviola, que había trabajado con Albert Einstein y Max Planck durante su estadía en Europa, se convirtió en el mentor y modelo de Balseiro. Fue Gaviola quien le enseñó que la ciencia argentina podía —y debía— competir a nivel internacional. Pero en esa época, Argentina no contaba con institutos de investigación nuclear de primer nivel. Había que crearlos.
+  </p>
+
+  <p>
+    Después de doctorarse, Balseiro viajó a Inglaterra para trabajar en el <strong>Laboratorio Cavendish de Cambridge</strong>, uno de los centros de física más importantes del mundo. Allí investigó en física nuclear, trabajó con detectores de partículas y absorbió la cultura científica europea. En 1952 regresó a la Argentina con una convicción: había que formar científicos en el país, no mandarlos al exterior a formarse.
+  </p>
+
+  <p>
+    En 1955, la <strong>Comisión Nacional de Energía Atómica (CNEA)</strong> decidió crear un instituto de física en Bariloche, aprovechando la infraestructura que había quedado de un proyecto anterior en la isla Huemul. Balseiro fue el elegido para dirigirlo. Aceptó con una condición que marcó el destino del instituto: los estudiantes debían <strong>dedicarse exclusivamente al estudio</strong>, sin trabajar en otra cosa. Así nació la beca completa, una rareza en la Argentina de los años 50.
+  </p>
+
+  <p>
+    El <strong>Instituto de Física de Bariloche</strong> abrió sus puertas en agosto de 1955 con apenas un puñado de estudiantes y profesores. El plan de estudios era intensivo, exigente y en inglés —porque los mejores libros de física no estaban traducidos al español—. Balseiro enseñaba personalmente, escribía los apuntes, corregía exámenes y recibía a los estudiantes en su casa para discutir problemas. Dormía poco y trabajaba todo el día.
+  </p>
+
+  <p>
+    Balseiro falleció trágicamente el 26 de marzo de 1962, a los 42 años, víctima de una leucemia fulminante. No llegó a ver el impacto total de su obra, pero el instituto que fundó —que hoy lleva su nombre— se convirtió en la <strong>principal usina de formación de físicos e ingenieros nucleares de América Latina</strong>. De sus aulas salieron los científicos que diseñaron los reactores de INVAP, los que operan Atucha y Embalse, los que investigan en el CONICET.
+  </p>
+
+  <p>
+    El <strong>Instituto Balseiro</strong> es hoy una institución de prestigio mundial. Cada año recibe postulantes de toda América Latina que compiten por las escasas vacantes. La tradición que fundó Balseiro —estudio intensivo, dedicación exclusiva, contacto directo entre profesores y alumnos— sigue viva. Su legado es invisible pero omnipresente: está en cada reactor, cada laboratorio, cada paper científico firmado por un argentino.
+  </p>
+
+  <div style="background: rgba(117,170,219,0.04); border: 1px solid rgba(117,170,219,0.15); border-left: 3px solid #75AADB; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#75AADB;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ José Balseiro fundó en 1955 el Instituto de Física de Bariloche —hoy Instituto Balseiro—, la institución científica más prestigiosa de América Latina.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Estableció un sistema de becas completas con dedicación exclusiva, inédito en la Argentina de los años 50.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Se formó en el Laboratorio Cavendish de Cambridge y trabajó con Enrique Gaviola, quien había colaborado con Einstein y Planck.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Falleció a los 42 años de leucemia, pero su instituto formó a generaciones de físicos e ingenieros nucleares argentinos.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;">✦ Su legado está en cada reactor diseñado en Argentina: Atucha, Embalse, CAREM, los reactores de INVAP.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#F59E0B;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="fermi.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Enrico Fermi</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="propulsion.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Propulsión nuclear espacial</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="oklo.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(245,158,11,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">El reactor de Oklo</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#F59E0B;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    Balseiro dijo alguna vez: "Lo importante no es lo que uno hace, sino cómo lo hace." Él lo hizo con una intensidad que le costó la vida. Pero el instituto que fundó —y los miles de científicos que se formaron allí— son la prueba de que su sacrificio valió la pena.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>
