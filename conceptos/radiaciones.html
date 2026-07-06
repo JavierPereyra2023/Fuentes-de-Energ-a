@@ -210,6 +210,179 @@
           <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Frenado por: agua, concreto<br>Carga: 0 · Masa: 1 u</div>
         </div>
       </div>
+
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:radiation" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Diagrama animado · Penetración de α, β, X, γ y neutrones</span>
+        </div>
+
+        <svg viewBox="0 0 1020 445" class="w-full" role="img" aria-label="Penetración de radiaciones alfa, beta, rayos X, gamma y neutrones a través de distintos materiales">
+          <defs>
+            <radialGradient id="fuenteRad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FF8A65"/>
+              <stop offset="55%" stop-color="#FF6E40"/>
+              <stop offset="100%" stop-color="#D84315"/>
+            </radialGradient>
+            <radialGradient id="alphaGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FCA5A5"/>
+              <stop offset="55%" stop-color="#DC2626"/>
+              <stop offset="100%" stop-color="#7F1D1D"/>
+            </radialGradient>
+            <radialGradient id="betaGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FDE68A"/>
+              <stop offset="55%" stop-color="#FFB300"/>
+              <stop offset="100%" stop-color="#C77F00"/>
+            </radialGradient>
+            <radialGradient id="xrayGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#DBEAFE"/>
+              <stop offset="55%" stop-color="#3B82F6"/>
+              <stop offset="100%" stop-color="#1D4ED8"/>
+            </radialGradient>
+            <radialGradient id="gammaGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#CFFAFE"/>
+              <stop offset="55%" stop-color="#00E5FF"/>
+              <stop offset="100%" stop-color="#00B8D4"/>
+            </radialGradient>
+            <radialGradient id="neutronR" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#E9D5FF"/>
+              <stop offset="55%" stop-color="#C084FC"/>
+              <stop offset="100%" stop-color="#7C3AED"/>
+            </radialGradient>
+            <radialGradient id="flashG" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+              <stop offset="40%" stop-color="#FF8A65" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#FF6E40" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="barrierGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+              <stop offset="50%" stop-color="rgba(255,255,255,0.04)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0.10)"/>
+            </linearGradient>
+            <linearGradient id="concreteGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(180,180,180,0.18)"/>
+              <stop offset="50%" stop-color="rgba(140,140,140,0.10)"/>
+              <stop offset="100%" stop-color="rgba(180,180,180,0.18)"/>
+            </linearGradient>
+            <filter id="glowCyan">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glowBlue">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <text x="510" y="28" fill="#FF6E40" font-size="13" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">PENETRACIÓN DE α · β · X · γ · n</text>
+          <text x="510" y="46" fill="#5A6B72" font-size="10" font-family="Inter,sans-serif" text-anchor="middle">partículas (α, β, n) y ondas (X, γ) · cada material frena un tipo distinto: papel, aluminio, plomo, hormigón y agua</text>
+
+          <text x="22" y="79" fill="#DC2626" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">α</text>
+          <text x="22" y="149" fill="#FFB300" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">β</text>
+          <text x="22" y="219" fill="#3B82F6" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">X</text>
+          <text x="22" y="289" fill="#00E5FF" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">γ</text>
+          <text x="22" y="359" fill="#C084FC" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">n</text>
+          <line x1="36" y1="75" x2="60" y2="75" stroke="#DC2626" stroke-width="1" opacity="0.4"/>
+          <line x1="36" y1="145" x2="60" y2="145" stroke="#FFB300" stroke-width="1" opacity="0.4"/>
+          <line x1="36" y1="215" x2="60" y2="215" stroke="#3B82F6" stroke-width="1" opacity="0.4"/>
+          <line x1="36" y1="285" x2="60" y2="285" stroke="#00E5FF" stroke-width="1" opacity="0.4"/>
+          <line x1="36" y1="355" x2="60" y2="355" stroke="#C084FC" stroke-width="1" opacity="0.4"/>
+
+          <g id="fuente">
+            <circle cx="80" cy="217" r="24" fill="url(#fuenteRad)" stroke="#D84315" stroke-width="1.5">
+              <animate attributeName="r" values="24;26;24" keyTimes="0;0.5;1" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <text x="80" y="221" fill="#FFFFFF" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">FUENTE</text>
+            <text x="80" y="258" fill="#A8B5BD" font-size="8" font-family="Inter,sans-serif" text-anchor="middle">radiactiva</text>
+          </g>
+
+          <rect x="195" y="50" width="14" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+          <text x="202" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">PAPEL</text>
+          <text x="202" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· piel ·</text>
+
+          <rect x="345" y="50" width="18" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.22)" stroke-width="0.5"/>
+          <text x="354" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">ALUMINIO</text>
+          <text x="354" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· acrílico ·</text>
+
+          <rect x="510" y="50" width="28" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.30)" stroke-width="0.5"/>
+          <text x="524" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">PLOMO</text>
+          <text x="524" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· acero ·</text>
+
+          <rect x="705" y="50" width="34" height="335" fill="url(#concreteGrad)" stroke="rgba(200,200,200,0.30)" stroke-width="0.6"/>
+          <text x="722" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">HORMIGÓN</text>
+          <text x="722" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· concreto ·</text>
+
+          <rect x="895" y="50" width="22" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.22)" stroke-width="0.5"/>
+          <text x="906" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">AGUA</text>
+          <text x="906" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· parafina ·</text>
+
+          <circle cx="202" cy="75" r="5" fill="url(#flashG)" opacity="0">
+            <animate attributeName="r" values="0;0;22;0" keyTimes="0;0.17;0.185;0.22" dur="12s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0;0.9;0" keyTimes="0;0.17;0.185;0.22" dur="12s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="8" fill="url(#alphaGrad)" stroke="#7F1D1D" stroke-width="0.8">
+            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.05;0.17;0.18;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1" path="M 95 75 L 150 75 L 195 75 L 200 75 L 200 75"/>
+            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.17;0.185;1" dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <circle cx="354" cy="145" r="5" fill="url(#flashG)" opacity="0">
+            <animate attributeName="r" values="0;0;22;0" keyTimes="0;0.3;0.32;0.37" dur="12s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0;0.9;0" keyTimes="0;0.3;0.32;0.37" dur="12s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="url(#betaGrad)" stroke="#C77F00" stroke-width="0.6">
+            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.3;0.31;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.4 0 0.6 1; 0 0 1 1; 0 0 1 1" path="M 95 145 L 270 145 L 345 145 L 354 145 L 354 145"/>
+            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.3;0.32;1" dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <path d="M 95 215 Q 130 207 165 215 T 235 215 T 305 215 T 375 215 T 445 215 T 524 215 T 600 215 T 680 215 T 722 215 T 800 215 T 880 215 T 920 215" fill="none" stroke="#3B82F6" stroke-width="1.2" opacity="0.32" stroke-dasharray="0"/>
+          <circle r="4" fill="url(#xrayGrad)" stroke="#1D4ED8" stroke-width="0.5" filter="url(#glowBlue)">
+            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.45;0.7;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.4 0 0.6 1; 0.5 0 0.5 1; 0 0 1 1" path="M 95 215 L 150 209 L 220 221 L 290 209 L 360 221 L 430 209 L 500 221 L 524 215 L 600 211 L 660 219 L 720 213 L 760 215"/>
+            <animate attributeName="opacity" values="0;1;1;0.35;0.35" keyTimes="0;0.04;0.45;0.7;0.95" dur="12s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="524" cy="215" r="5" fill="url(#flashG)" opacity="0">
+            <animate attributeName="r" values="0;0;16;0" keyTimes="0;0.43;0.47;0.52" dur="12s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0;0.7;0" keyTimes="0;0.43;0.47;0.52" dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <path d="M 95 285 Q 130 277 165 285 T 235 285 T 305 285 T 375 285 T 445 285 T 524 285 T 600 285 T 680 285 T 722 285 T 800 285 T 880 285 T 920 285" fill="none" stroke="#00E5FF" stroke-width="1.2" opacity="0.32"/>
+          <circle r="4" fill="url(#gammaGrad)" stroke="#00B8D4" stroke-width="0.5" filter="url(#glowCyan)">
+            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.4;0.75;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.4 0 0.6 1; 0.5 0 0.5 1; 0 0 1 1" path="M 95 285 L 160 279 L 230 291 L 300 279 L 370 291 L 440 279 L 510 291 L 580 281 L 660 289 L 722 285 L 780 287 L 820 283 L 855 285"/>
+            <animate attributeName="opacity" values="0;1;1;0.3;0.3" keyTimes="0;0.04;0.4;0.75;0.95" dur="12s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="722" cy="285" r="5" fill="url(#flashG)" opacity="0">
+            <animate attributeName="r" values="0;0;16;0" keyTimes="0;0.72;0.76;0.81" dur="12s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0;0.7;0" keyTimes="0;0.72;0.76;0.81" dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <circle cx="906" cy="355" r="6" fill="url(#flashG)" opacity="0">
+            <animate attributeName="r" values="0;0;22;0" keyTimes="0;0.78;0.82;0.9" dur="12s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0;0.85;0" keyTimes="0;0.78;0.82;0.9" dur="12s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="6" fill="url(#neutronR)" stroke="#7C3AED" stroke-width="0.6">
+            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.4;0.78;0.82;1" calcMode="spline" keySplines="0.25 0 0.5 1; 0.4 0 0.4 1; 0.4 0 0.6 1; 0.6 0.4 0.5 0.6; 0 0 1 1" path="M 95 355 L 250 355 L 420 355 L 590 355 L 760 355 L 906 355 L 912 355"/>
+            <animate attributeName="opacity" values="0;1;1;1;1;0" keyTimes="0;0.04;0.4;0.78;0.82;0.92" dur="12s" repeatCount="indefinite"/>
+          </circle>
+
+          <g transform="translate(60 425)">
+            <circle r="6" fill="url(#alphaGrad)" stroke="#7F1D1D" stroke-width="0.5"/>
+            <text x="11" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">α · papel</text>
+            <circle cx="95" r="5" fill="url(#betaGrad)" stroke="#C77F00" stroke-width="0.5"/>
+            <text x="105" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">β · aluminio</text>
+            <circle cx="205" r="4" fill="url(#xrayGrad)" stroke="#1D4ED8" stroke-width="0.5"/>
+            <text x="214" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">X · plomo (onda)</text>
+            <circle cx="335" r="4" fill="url(#gammaGrad)" stroke="#00B8D4" stroke-width="0.5"/>
+            <text x="344" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">γ · hormigón (onda)</text>
+            <circle cx="475" r="5" fill="url(#neutronR)" stroke="#7C3AED" stroke-width="0.5"/>
+            <text x="485" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">n · agua/parafina</text>
+            <circle cx="640" r="7" fill="url(#fuenteRad)" stroke="#D84315" stroke-width="0.5"/>
+            <text x="652" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">Fuente radiactiva</text>
+          </g>
+        </svg>
+
+        <p class="px-5 py-4 text-base text-nucleo-silver leading-relaxed border-t border-white/5">
+          La <strong class="text-nucleo-accentLight">partícula alfa</strong> es tan grande que una simple hoja de papel basta para detenerla; la <strong class="text-nucleo-accentLight">beta</strong>, más chica, necesita aluminio o acrílico. Los <strong class="text-nucleo-accentLight">rayos X y gamma</strong> son ondas electromagnéticas —sin masa ni carga— que se atenúan con <strong class="text-nucleo-accent">plomo</strong> (más denso, ideal para X) o con <strong class="text-nucleo-accent">hormigón</strong> grueso (más barato y efectivo para gamma de alta energía en grandes instalaciones). Los <strong class="text-nucleo-accentLight">neutrones</strong> son la excepción: al no tener carga eléctrica ignoran el plomo y solo se frenan colisionando contra núcleos livianos —por eso el <strong class="text-nucleo-accent">agua, la parafina o el hormigón bórico</strong> ricos en hidrógeno son el blindaje correcto.
+        </p>
+      </div>
     </section>
 
     <section class="reveal mb-16" id="sec02">
@@ -385,7 +558,7 @@
         <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
         Temas Relacionados
       </h3>
-      <div class="grid sm:grid-cols-3 gap-3">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <a href="radioisotopos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
           <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioisótopos</span>
           <p class="text-sm text-nucleo-silver mt-1">Los átomos inestables que emiten estas radiaciones</p>
@@ -398,6 +571,10 @@
           <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Aplicaciones</span>
           <p class="text-sm text-nucleo-silver mt-1">Cómo usamos la radiación en medicina, industria e investigación</p>
         </a>
+        <a href="espectro.html" class="block p-4 border border-white/5 hover:border-purple-500/40 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider" style="color:#7C4DFF; font-family:'Inter',sans-serif;">Espectro EM</span>
+          <p class="text-sm text-nucleo-silver mt-1">Espectro electromagnético, barreras, ionizante vs no ionizante</p>
+        </a>
       </div>
     </div>
 
@@ -409,12 +586,12 @@
           <div class="font-heading text-lg font-bold text-white">← Radioisótopos</div>
         </div>
       </a>
-      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+      <a href="espectro.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
         <div>
-          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
-          <div class="font-heading text-lg font-bold text-white">Fuerzas de la Naturaleza →</div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#7C4DFF;">Siguiente concepto</div>
+          <div class="font-heading text-lg font-bold text-white">Espectro EM →</div>
         </div>
-        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-right" data-width="20"></span>
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="20" style="color:#7C4DFF;"></span>
       </a>
     </nav>
 
@@ -434,7 +611,7 @@
       <div class="flex items-center gap-6">
         <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
         <a href="radioisotopos.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-teal-400 transition-colors">Radioisótopos</a>
-        <a href="../index.html#centrales" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Centrales AR</a>
+        <a href="espectro.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-purple-400 transition-colors">Espectro EM</a>
         <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
       </div>
     </div>

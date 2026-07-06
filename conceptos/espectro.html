@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espectro Electromagnético — De las Ondas de Radio a los Rayos Gamma | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#7C4DFF', accentLight: '#B388FF', accentDark: '#4A148C',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+              alpha: '#DC2626', beta: '#F59E0B', gamma: '#00E5FF', neutron: '#7C4DFF',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #7C4DFF; color: #fff; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #7C4DFF; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #7C4DFF; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(124, 77, 255, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #4A148C, #7C4DFF, #B388FF); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(124,77,255,0.12); border-bottom: 2px solid #7C4DFF; font-family: 'Inter', sans-serif; font-weight: 600; color: #B388FF; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(124,77,255,0.04); border-left: 3px solid #7C4DFF; font-size: 1.1rem; color: #B388FF; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #7C4DFF; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #7C4DFF; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(124,77,255,0.12); color: #B388FF; border: 1px solid rgba(124,77,255,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(124,77,255,0.3); background: rgba(124,77,255,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(124,77,255,0.15); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(124,77,255,0.3); }
+    .toc-inner a.active { color: #B388FF; border-left-color: #7C4DFF; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #7C4DFF; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #7C4DFF; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(124,77,255,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #B388FF; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(124,77,255,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+    .spectrum-svg text { font-family: 'Inter', sans-serif; }
+    .barrier-svg .barrier-label { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Espectro EM</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="../index.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Inicio</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #7C4DFF 1px, transparent 1px), radial-gradient(circle at 70% 30%, #7C4DFF 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Física de Radiaciones</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Espectro<br>
+        <span class="text-nucleo-accent">Electromagnético</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Desde las ondas de radio hasta los rayos gamma, toda la radiación electromagnética comparte la misma naturaleza: fotones viajando a la velocidad de la luz. Lo que las distingue es su energía, y eso define si pueden ionizar átomos o no.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Ondas de Radio</span>
+        <span class="chip">Microondas</span>
+        <span class="chip">Infrarrojo</span>
+        <span class="chip">Luz Visible</span>
+        <span class="chip">Ultravioleta</span>
+        <span class="chip">Rayos X</span>
+        <span class="chip">Rayos Gamma</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> El espectro EM</a>
+        <a href="#sec02"><span class="num">02</span> Ionizante vs No ionizante</a>
+        <a href="#sec03"><span class="num">03</span> ¿Ondas o partículas?</a>
+        <a href="#sec04"><span class="num">04</span> Barreras y blindajes</a>
+        <a href="#sec05"><span class="num">05</span> Materiales frente a la radiación</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · El espectro EM</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Ionizante vs No ionizante</a>
+      <a href="#sec03" class="toc-mobile-link">03 · ¿Ondas o partículas?</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Barreras y blindajes</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Materiales frente a la radiación</a>
+    </div>
+
+    <!-- ========== SECCIÓN 01: EL ESPECTRO ELECTROMAGNÉTICO ========== -->
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El Espectro Electromagnético</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Toda la radiación electromagnética —desde las ondas de radio hasta los rayos gamma— está compuesta por <strong class="text-nucleo-accentLight">fotones</strong> que viajan a la velocidad de la luz (\(c = 3 \times 10^8\ \text{m/s}\)). La diferencia entre cada tipo de radiación está en su <strong class="text-nucleo-accent">longitud de onda</strong> (\(\lambda\)) y su <strong class="text-nucleo-accent">frecuencia</strong> (\(f\)), relacionadas por la ecuación fundamental:
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Relación entre longitud de onda, frecuencia y energía</span>
+        \(c = \lambda \cdot f \qquad E = h \cdot f = \frac{hc}{\lambda}\)
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+        A menor longitud de onda, <strong class="text-nucleo-accentLight">mayor frecuencia y mayor energía</strong>. Esto explica por qué un fotón de rayos X es millones de veces más energético que un fotón de radio, aunque ambos viajen a la misma velocidad.
+      </p>
+
+      <!-- SVG: ESPECTRO ELECTROMAGNÉTICO -->
+      <div class="my-8 bg-nucleo-dark/60 border border-white/5 overflow-hidden" style="border-radius:12px;">
+        <svg viewBox="0 0 1050 480" class="w-full spectrum-svg" style="max-height:520px;">
+          <defs>
+            <linearGradient id="spectrumGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7f1d1d"/>
+              <stop offset="16%" stop-color="#c2410c"/>
+              <stop offset="32%" stop-color="#b91c1c"/>
+              <stop offset="44%" stop-color="#eab308"/>
+              <stop offset="50%" stop-color="#22c55e"/>
+              <stop offset="56%" stop-color="#06b6d4"/>
+              <stop offset="64%" stop-color="#7C4DFF"/>
+              <stop offset="76%" stop-color="#3b82f6"/>
+              <stop offset="88%" stop-color="#00E5FF"/>
+              <stop offset="100%" stop-color="#00B8D4"/>
+            </linearGradient>
+            <linearGradient id="visGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#dc2626"/>
+              <stop offset="17%" stop-color="#ea580c"/>
+              <stop offset="33%" stop-color="#eab308"/>
+              <stop offset="50%" stop-color="#22c55e"/>
+              <stop offset="67%" stop-color="#06b6d4"/>
+              <stop offset="83%" stop-color="#2563eb"/>
+              <stop offset="100%" stop-color="#7C4DFF"/>
+            </linearGradient>
+            <linearGradient id="ionoGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(124,77,255,0.0)"/>
+              <stop offset="33%" stop-color="rgba(124,77,255,0.6)"/>
+              <stop offset="66%" stop-color="rgba(124,77,255,0.6)"/>
+              <stop offset="100%" stop-color="rgba(124,77,255,0.0)"/>
+            </linearGradient>
+            <filter id="glowPurple">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="glowRed">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Fondo -->
+          <rect x="0" y="0" width="1050" height="480" fill="none"/>
+
+          <!-- Título -->
+          <text x="525" y="36" text-anchor="middle" fill="#C8D4DC" font-family="'Playfair Display',serif" font-size="22" font-weight="700" letter-spacing="2">EL ESPECTRO ELECTROMAGNÉTICO</text>
+          <line x1="340" y1="50" x2="710" y2="50" stroke="#7C4DFF" stroke-width="1.5" opacity="0.5"/>
+
+          <!-- Labels de región -->
+          <text x="105" y="82" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700" letter-spacing="1">RADIO</text>
+          <text x="240" y="82" text-anchor="middle" fill="#f97316" font-size="11" font-weight="700" letter-spacing="1">MICROONDAS</text>
+          <text x="395" y="82" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="700" letter-spacing="1">INFRARROJO</text>
+          <text x="510" y="75" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700" letter-spacing="1">LUZ</text>
+          <text x="510" y="89" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700" letter-spacing="1">VISIBLE</text>
+          <text x="610" y="82" text-anchor="middle" fill="#7C4DFF" font-size="11" font-weight="700" letter-spacing="1">UV</text>
+          <text x="745" y="82" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700" letter-spacing="1">RAYOS X</text>
+          <text x="910" y="82" text-anchor="middle" fill="#00E5FF" font-size="11" font-weight="700" letter-spacing="1">GAMMA</text>
+
+          <!-- Flechitas conectando labels a la barra -->
+          <line x1="105" y1="92" x2="105" y2="103" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+          <line x1="240" y1="92" x2="240" y2="103" stroke="#f97316" stroke-width="1" opacity="0.4"/>
+          <line x1="395" y1="92" x2="395" y2="103" stroke="#dc2626" stroke-width="1" opacity="0.4"/>
+          <line x1="510" y1="92" x2="510" y2="103" stroke="#fbbf24" stroke-width="1" opacity="0.4"/>
+          <line x1="610" y1="92" x2="610" y2="103" stroke="#7C4DFF" stroke-width="1" opacity="0.4"/>
+          <line x1="745" y1="92" x2="745" y2="103" stroke="#3b82f6" stroke-width="1" opacity="0.4"/>
+          <line x1="910" y1="92" x2="910" y2="103" stroke="#00E5FF" stroke-width="1" opacity="0.4"/>
+
+          <!-- Barra principal del espectro -->
+          <rect x="30" y="108" width="990" height="42" rx="2" fill="url(#spectrumGrad)" opacity="0.9"/>
+          <rect x="30" y="108" width="990" height="42" rx="2" fill="none" stroke="#fff" stroke-width="0.5" opacity="0.15"/>
+
+          <!-- Rainbow stripe for visible -->
+          <rect x="472" y="108" width="76" height="42" fill="url(#visGrad)" opacity="0.85"/>
+
+          <!-- Líneas divisorias entre regiones -->
+          <line x1="200" y1="108" x2="200" y2="150" stroke="#fff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="340" y1="108" x2="340" y2="150" stroke="#fff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="460" y1="108" x2="460" y2="160" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
+          <line x1="535" y1="108" x2="535" y2="160" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
+          <line x1="660" y1="108" x2="660" y2="150" stroke="#fff" stroke-width="0.5" opacity="0.2"/>
+          <line x1="810" y1="108" x2="810" y2="150" stroke="#fff" stroke-width="0.5" opacity="0.2"/>
+
+          <!-- Escala de longitud de onda -->
+          <text x="525" y="172" text-anchor="middle" fill="#5A6B72" font-size="9" font-weight="700" letter-spacing="2">LONGITUD DE ONDA (λ)</text>
+          <text x="40" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">10³ m</text>
+          <text x="150" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">1 m</text>
+          <text x="260" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">1 mm</text>
+          <text x="390" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">1 µm</text>
+          <text x="500" y="186" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">700 nm</text>
+          <text x="535" y="186" text-anchor="middle" fill="#2563eb" font-size="10" font-weight="600">400 nm</text>
+          <text x="660" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">10 nm</text>
+          <text x="800" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">10 pm</text>
+          <text x="960" y="192" text-anchor="middle" fill="#A8B5BD" font-size="11">10⁻¹² m</text>
+
+          <!-- Escala de frecuencia -->
+          <text x="525" y="218" text-anchor="middle" fill="#5A6B72" font-size="9" font-weight="700" letter-spacing="2">FRECUENCIA (f)</text>
+          <text x="40" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10⁵ Hz</text>
+          <text x="150" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10⁸ Hz</text>
+          <text x="260" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10¹¹ Hz</text>
+          <text x="390" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10¹⁴ Hz</text>
+          <text x="660" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10¹⁶ Hz</text>
+          <text x="800" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10¹⁹ Hz</text>
+          <text x="960" y="238" text-anchor="middle" fill="#A8B5BD" font-size="11">10²¹ Hz</text>
+
+          <!-- Escala de energía -->
+          <text x="525" y="264" text-anchor="middle" fill="#5A6B72" font-size="9" font-weight="700" letter-spacing="2">ENERGÍA DEL FOTÓN (E = hf)</text>
+          <text x="40" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">neV</text>
+          <text x="150" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">µeV</text>
+          <text x="260" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">meV</text>
+          <text x="390" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">eV</text>
+          <text x="660" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">keV</text>
+          <text x="800" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">MeV</text>
+          <text x="960" y="284" text-anchor="middle" fill="#A8B5BD" font-size="11">GeV</text>
+
+          <!-- Línea de transición: IONIZANTE -->
+          <line x1="575" y1="100" x2="575" y2="300" stroke="#7C4DFF" stroke-width="2.5" stroke-dasharray="8,4" filter="url(#glowPurple)"/>
+          <rect x="580" y="293" width="180" height="22" rx="4" fill="rgba(124,77,255,0.15)" stroke="#7C4DFF" stroke-width="1"/>
+          <text x="670" y="308" text-anchor="middle" fill="#B388FF" font-size="10" font-weight="700" letter-spacing="1">RADIACIÓN IONIZANTE →</text>
+
+          <!-- Franja ionizante sobre la barra -->
+          <rect x="575" y="108" width="445" height="42" fill="url(#ionoGrad)" opacity="0.22"/>
+
+          <!-- No ionizante -->
+          <rect x="30" y="298" width="210" height="22" rx="4" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="0.8" opacity="0.7"/>
+          <text x="135" y="313" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="600" letter-spacing="1">← NO IONIZANTE</text>
+
+          <!-- Referencias visuales -->
+          <text x="525" y="340" text-anchor="middle" fill="#5A6B72" font-size="9" font-weight="700" letter-spacing="2">REFERENCIAS DE TAMAÑO</text>
+          <line x1="300" y1="346" x2="750" y2="346" stroke="#5A6B72" stroke-width="0.5" opacity="0.3"/>
+
+          <text x="60" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Edificio</text>
+          <text x="160" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Persona</text>
+          <text x="270" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Abeja</text>
+          <text x="380" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Cabello</text>
+          <text x="490" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Célula</text>
+          <text x="600" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Bacteria</text>
+          <text x="710" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Virus</text>
+          <text x="820" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Átomo</text>
+          <text x="940" y="370" text-anchor="middle" fill="#A8B5BD" font-size="9" opacity="0.7">Núcleo</text>
+
+          <!-- Íconos simples para referencias -->
+          <rect x="45" y="375" width="28" height="16" rx="2" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="160" cy="383" r="7" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="271" cy="384" r="3" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="271" cy="381" r="2.5" fill="rgba(255,255,255,0.06)"/>
+          <line x1="380" y1="380" x2="380" y2="386" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <circle cx="491" cy="383" r="5" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="600" cy="383" r="3" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="710" cy="383" r="1.5" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="820" cy="383" r="4" fill="rgba(7C4DFF,0.15)" stroke="#7C4DFF" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <circle cx="940" cy="383" r="2" fill="rgba(0,229,255,0.15)" stroke="#00E5FF" stroke-width="0.5"/>
+
+          <!-- Fuentes típicas -->
+          <text x="525" y="416" text-anchor="middle" fill="#5A6B72" font-size="9" font-weight="700" letter-spacing="2">FUENTES TÍPICAS</text>
+          <text x="105" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">Antenas</text>
+          <text x="240" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">WiFi, horno</text>
+          <text x="395" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">Calor, láser</text>
+          <text x="510" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">Sol, bombilla</text>
+          <text x="610" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">Sol, soldadura</text>
+          <text x="745" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">Radiografía médica</text>
+          <text x="910" y="440" text-anchor="middle" fill="#A8B5BD" font-size="8.5" opacity="0.7">Desintegraciones nucleares</text>
+
+          <!-- Animación sutil de la línea ionizante -->
+          <line x1="575" y1="100" x2="575" y2="300" stroke="#B388FF" stroke-width="0.5" opacity="0.4">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/>
+          </line>
+        </svg>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mt-6">
+        La gran división del espectro está en el <strong class="text-nucleo-accentLight">ultravioleta</strong>: por debajo de los ~100 nm (~12,4 eV), los fotones tienen suficiente energía para <strong class="text-nucleo-accent">arrancar electrones de los átomos</strong>. Esa es la frontera entre la radiación no ionizante —que puede calentar o excitar moléculas pero no romper enlaces directamente— y la radiación ionizante —que puede dañar el ADN y causar mutaciones.
+      </p>
+    </section>
+
+    <!-- ========== SECCIÓN 02: IONIZANTE VS NO IONIZANTE ========== -->
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Radiación Ionizante vs No Ionizante</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mb-6">
+        <div class="px-5 py-5 border-l-3" style="border-color:rgba(239,68,68,0.5); background:rgba(239,68,68,0.04);">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="iconify text-red-500" data-icon="lucide:shield-off" data-width="18"></span>
+            <h3 class="font-heading text-lg font-bold text-red-400 uppercase">NO Ionizante</h3>
+          </div>
+          <p class="text-base text-nucleo-silver leading-relaxed">
+            Radio, microondas, infrarrojo y luz visible. Sus fotones tienen <strong class="text-red-400">menos de ~10 eV</strong>: no pueden arrancar electrones. Sus efectos son térmicos (calentamiento), fotoquímicos (visión, fotosíntesis) o de excitación molecular. <br><br>
+            <span class="text-nucleo-silverDark">Ejemplos: ondas de radio y TV, WiFi, horno microondas, control remoto, luz solar.</span>
+          </p>
+        </div>
+        <div class="px-5 py-5 border-l-3" style="border-color:rgba(124,77,255,0.5); background:rgba(124,77,255,0.04);">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="iconify text-nucleo-accent" data-icon="lucide:shield-alert" data-width="18"></span>
+            <h3 class="font-heading text-lg font-bold text-nucleo-accentLight uppercase">Ionizante</h3>
+          </div>
+          <p class="text-base text-nucleo-silver leading-relaxed">
+            UV-C, rayos X y rayos gamma. Sus fotones tienen <strong class="text-nucleo-accentLight">más de ~12 eV</strong>: pueden arrancar electrones, romper enlaces químicos y dañar el ADN. Las partículas alfa y beta también son ionizantes. <br><br>
+            <span class="text-nucleo-silverDark">Ejemplos: rayos X médicos, radón, radioterapia, desintegraciones nucleares.</span>
+          </p>
+        </div>
+      </div>
+      <div class="dato-box">
+        <span class="dato-label">El umbral de ionización</span>
+        <p>La energía necesaria para ionizar un átomo típico es de ~5 a 15 eV. Los fotones UV-A (3,1 eV) no ionizan —producen quemaduras solares por mecanismos fotoquímicos indirectos. Los UV-C (~4,4–12,4 eV) y los rayos X (>100 eV) sí <strong>ionizan directamente</strong>, arrancando electrones con cada impacto.</p>
+      </div>
+    </section>
+
+    <!-- ========== SECCIÓN 03: ¿ONDAS O PARTÍCULAS? ========== -->
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Ondas o Partículas?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La radiación electromagnética tiene una <strong class="text-nucleo-accentLight">doble naturaleza</strong>: se comporta como onda en unas situaciones y como partícula en otras. En la práctica, esta dualidad se manifiesta de forma distinta según la región del espectro:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2" style="border-color:rgba(239,68,68,0.4);">
+          <strong class="text-red-400">Ondas (baja energía):</strong> Radio, microondas, infrarrojo y luz visible se propagan como ondas electromagnéticas. Exhiben <strong class="text-red-300">difracción, interferencia y polarización</strong>. Su energía es tan baja que es más útil describirlas por su frecuencia y longitud de onda que por fotones individuales. Las antenas de radio funcionan porque las ondas EM inducen corrientes en conductores.
+        </li>
+        <li class="pl-5 border-l-2" style="border-color:rgba(59,130,246,0.4);">
+          <strong class="text-blue-400">Partículas (alta energía):</strong> Los rayos X y gamma se comportan predominantemente como <strong class="text-blue-300">fotones individuales</strong> —"paquetes" discretos de energía. No muestran efectos de onda en la mayoría de las interacciones con la materia. Un solo fotón gamma puede depositar toda su energía en un electrón (efecto Compton o fotoeléctrico), ionizando el átomo.
+        </li>
+        <li class="pl-5 border-l-2" style="border-color:rgba(124,77,255,0.4);">
+          <strong class="text-nucleo-accentLight">Partículas con masa:</strong> Alfa (núcleos de helio), beta (electrones/positrones) y neutrones <strong class="text-nucleo-accent">no son radiación electromagnética</strong>: son partículas con masa en reposo. Se propagan como proyectiles, no como ondas. Se frenan por colisiones, no por absorción de fotones. Aunque también exhiben dualidad onda-partícula (longitud de onda de De Broglie), en la práctica cotidiana se comportan como partículas.
+        </li>
+      </ul>
+      <div class="equation-block">
+        <span class="eq-label">Longitud de onda de De Broglie (para partículas con masa)</span>
+        \(\lambda = \frac{h}{p} = \frac{h}{mv} \qquad\) donde \(h\) es la constante de Planck y \(p\) el momento lineal
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Una partícula alfa de 5 MeV tiene una \(\lambda \approx 6 \times 10^{-15}\) m —mucho menor que un núcleo atómico—, razón por la cual en su interacción con la materia predomina el comportamiento corpuscular.
+      </p>
+    </section>
+
+    <!-- ========== SECCIÓN 04: BARRERAS Y BLINDAJES ========== -->
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Barreras y Blindajes</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cada tipo de radiación interactúa de manera diferente con los materiales. La clave está en entender <strong class="text-nucleo-accentLight">qué frena a qué</strong>. Este SVG animado muestra cuatro tipos de radiación —alfa, beta, gamma y neutrones— atravesando cinco barreras de distinta densidad y composición:
+      </p>
+
+      <!-- SVG BARRERAS ANIMADO -->
+      <div class="my-6 bg-nucleo-dark/60 border border-white/5 overflow-hidden" style="border-radius:12px;">
+        <svg viewBox="0 0 960 420" class="w-full barrier-svg" style="max-height:440px;">
+          <defs>
+            <radialGradient id="srcGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#7C4DFF" stop-opacity="0.9"/>
+              <stop offset="30%" stop-color="#7C4DFF" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#7C4DFF" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="srcGlowPulse" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#7C4DFF" stop-opacity="0.5"/>
+              <stop offset="70%" stop-color="#7C4DFF" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#7C4DFF" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="glowSrc">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="softGlow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Fondo -->
+          <rect x="0" y="0" width="960" height="420" fill="none"/>
+
+          <!-- Título -->
+          <text x="480" y="28" text-anchor="middle" fill="#C8D4DC" font-family="'Playfair Display',serif" font-size="18" font-weight="700" letter-spacing="2">BARRERAS Y BLINDAJES CONTRA LA RADIACIÓN</text>
+
+          <!-- Fuente radiactiva -->
+          <circle cx="55" cy="210" r="30" fill="url(#srcGlowPulse)" opacity="0.6">
+            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="55" cy="210" r="14" fill="#7C4DFF" filter="url(#glowSrc)"/>
+          <circle cx="55" cy="210" r="6" fill="#B388FF"/>
+          <text x="55" y="214" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">☢</text>
+
+          <!-- === BARRERAS === -->
+
+          <!-- Barrera 1: Papel -->
+          <rect x="165" y="60" width="8" height="300" rx="2" fill="rgba(229,211,179,0.25)" stroke="rgba(229,211,179,0.4)" stroke-width="1"/>
+          <text x="169" y="48" class="barrier-label" fill="#E5D3B3">📄 Papel</text>
+          <text x="169" y="372" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.6">0,1 mm</text>
+
+          <!-- Barrera 2: Tejido biológico -->
+          <rect x="270" y="55" width="12" height="310" rx="2" fill="rgba(220,160,140,0.25)" stroke="rgba(220,160,140,0.4)" stroke-width="1"/>
+          <text x="276" y="43" class="barrier-label" fill="#DCA08C">🧬 Tejido</text>
+          <text x="276" y="55" class="barrier-label" fill="#DCA08C">biológico</text>
+          <text x="276" y="372" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.6">~5 mm</text>
+
+          <!-- Barrera 3: Aluminio -->
+          <rect x="395" y="57" width="10" height="306" rx="2" fill="rgba(168,181,189,0.3)" stroke="rgba(168,181,189,0.5)" stroke-width="1"/>
+          <text x="400" y="45" class="barrier-label" fill="#C8D4DC">🔩 Aluminio</text>
+          <text x="400" y="372" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.6">2 mm</text>
+
+          <!-- Barrera 4: Plomo -->
+          <rect x="560" y="50" width="18" height="320" rx="2" fill="rgba(90,107,114,0.35)" stroke="rgba(90,107,114,0.5)" stroke-width="1.5"/>
+          <text x="569" y="38" class="barrier-label" fill="#5A6B72">🧱 Plomo</text>
+          <text x="569" y="372" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.6">5 cm</text>
+
+          <!-- Barrera 5: Hormigón -->
+          <rect x="750" y="40" width="24" height="340" rx="2" fill="rgba(80,90,100,0.4)" stroke="rgba(80,90,100,0.55)" stroke-width="1.5"/>
+          <text x="762" y="28" class="barrier-label" fill="#8B9EA8">🏗️ Hormigón</text>
+          <text x="762" y="372" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.6">50 cm</text>
+
+          <!-- === TRACK DE ALFA (y=100) === -->
+          <text x="55" y="92" text-anchor="middle" fill="#DC2626" font-size="10" font-weight="700" filter="url(#softGlow)">α</text>
+          <line x1="65" y1="100" x2="160" y2="100" stroke="rgba(220,38,38,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <circle r="5" fill="#DC2626" filter="url(#softGlow)">
+            <animateMotion dur="9s" repeatCount="indefinite" begin="0s"
+              keyTimes="0;0.06;0.8;0.9;0.95;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,100 L 65,100 L 130,100 L 155,100 L 158,100"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.06;0.82;0.92;0.96;1" dur="9s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="5" fill="#DC2626" filter="url(#softGlow)">
+            <animateMotion dur="9s" repeatCount="indefinite" begin="3s"
+              keyTimes="0;0.06;0.8;0.9;0.95;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,100 L 65,100 L 130,100 L 155,100 L 158,100"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.06;0.82;0.92;0.96;1" dur="9s" repeatCount="indefinite" begin="3s"/>
+          </circle>
+          <circle r="5" fill="#DC2626" filter="url(#softGlow)">
+            <animateMotion dur="9s" repeatCount="indefinite" begin="6s"
+              keyTimes="0;0.06;0.8;0.9;0.95;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,100 L 65,100 L 130,100 L 155,100 L 158,100"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.06;0.82;0.92;0.96;1" dur="9s" repeatCount="indefinite" begin="6s"/>
+          </circle>
+
+          <!-- Stops on PAPER annotation -->
+          <text x="145" y="84" text-anchor="end" fill="#DC2626" font-size="8" font-weight="600" opacity="0.7">
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.82;1" dur="9s" repeatCount="indefinite"/>
+          </text>
+
+          <!-- === TRACK DE BETA (y=160) === -->
+          <text x="55" y="152" text-anchor="middle" fill="#F59E0B" font-size="10" font-weight="700" filter="url(#softGlow)">β</text>
+          <line x1="65" y1="160" x2="390" y2="160" stroke="rgba(245,158,11,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <circle r="4" fill="#F59E0B" filter="url(#softGlow)">
+            <animateMotion dur="10s" repeatCount="indefinite" begin="0s"
+              keyTimes="0;0.05;0.75;0.86;0.93;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,160 L 65,160 L 200,160 L 340,160 L 390,160"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.05;0.77;0.88;0.94;1" dur="10s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="4" fill="#F59E0B" filter="url(#softGlow)">
+            <animateMotion dur="10s" repeatCount="indefinite" begin="3.3s"
+              keyTimes="0;0.05;0.75;0.86;0.93;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,160 L 65,160 L 200,160 L 340,160 L 390,160"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.05;0.77;0.88;0.94;1" dur="10s" repeatCount="indefinite" begin="3.3s"/>
+          </circle>
+          <circle r="4" fill="#F59E0B" filter="url(#softGlow)">
+            <animateMotion dur="10s" repeatCount="indefinite" begin="6.7s"
+              keyTimes="0;0.05;0.75;0.86;0.93;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,160 L 65,160 L 200,160 L 340,160 L 390,160"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.05;0.77;0.88;0.94;1" dur="10s" repeatCount="indefinite" begin="6.7s"/>
+          </circle>
+
+          <text x="380" y="144" text-anchor="end" fill="#F59E0B" font-size="8" font-weight="600" opacity="0.7">
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.77;1" dur="10s" repeatCount="indefinite"/>
+          </text>
+
+          <!-- === TRACK DE GAMMA (y=220) === -->
+          <text x="55" y="212" text-anchor="middle" fill="#00E5FF" font-size="10" font-weight="700" filter="url(#softGlow)">γ</text>
+          <line x1="65" y1="220" x2="920" y2="220" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <circle r="3" fill="#00E5FF" filter="url(#softGlow)">
+            <animateMotion dur="8s" repeatCount="indefinite" begin="0s"
+              keyTimes="0;0.04;0.55;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0.2 0 0.8 1; 0 0 1 1"
+              path="M 55,220 L 65,220 L 350,220 L 680,220 L 920,220"/>
+            <animate attributeName="opacity" values="0;0.9;0.6;0.15;0" keyTimes="0;0.04;0.55;0.9;1" dur="8s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="3" fill="#00E5FF" filter="url(#softGlow)">
+            <animateMotion dur="8s" repeatCount="indefinite" begin="2s"
+              keyTimes="0;0.04;0.55;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0.2 0 0.8 1; 0 0 1 1"
+              path="M 55,220 L 65,220 L 350,220 L 680,220 L 920,220"/>
+            <animate attributeName="opacity" values="0;0.9;0.6;0.15;0" keyTimes="0;0.04;0.55;0.9;1" dur="8s" repeatCount="indefinite" begin="2s"/>
+          </circle>
+          <circle r="3" fill="#00E5FF" filter="url(#softGlow)">
+            <animateMotion dur="8s" repeatCount="indefinite" begin="4s"
+              keyTimes="0;0.04;0.55;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0.2 0 0.8 1; 0 0 1 1"
+              path="M 55,220 L 65,220 L 350,220 L 680,220 L 920,220"/>
+            <animate attributeName="opacity" values="0;0.9;0.6;0.15;0" keyTimes="0;0.04;0.55;0.9;1" dur="8s" repeatCount="indefinite" begin="4s"/>
+          </circle>
+          <circle r="3" fill="#00E5FF" filter="url(#softGlow)">
+            <animateMotion dur="8s" repeatCount="indefinite" begin="6s"
+              keyTimes="0;0.04;0.55;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0.2 0 0.8 1; 0 0 1 1"
+              path="M 55,220 L 65,220 L 350,220 L 680,220 L 920,220"/>
+            <animate attributeName="opacity" values="0;0.9;0.6;0.15;0" keyTimes="0;0.04;0.55;0.9;1" dur="8s" repeatCount="indefinite" begin="6s"/>
+          </circle>
+
+          <!-- Texto gamma: atraviesa todo pero se atenúa -->
+          <text x="575" y="205" text-anchor="middle" fill="#00E5FF" font-size="8" font-weight="600" opacity="0.5">atenuada por Pb y hormigón</text>
+
+          <!-- === TRACK DE NEUTRONES (y=290) === -->
+          <text x="55" y="282" text-anchor="middle" fill="#C084FC" font-size="10" font-weight="700" filter="url(#softGlow)">n</text>
+          <line x1="65" y1="290" x2="745" y2="290" stroke="rgba(192,132,252,0.12)" stroke-width="1" stroke-dasharray="4,4"/>
+
+          <circle r="4" fill="#C084FC" filter="url(#softGlow)">
+            <animateMotion dur="11s" repeatCount="indefinite" begin="0s"
+              keyTimes="0;0.05;0.72;0.84;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,290 L 65,290 L 250,290 L 550,290 L 745,290"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.05;0.74;0.86;0.93;1" dur="11s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="4" fill="#C084FC" filter="url(#softGlow)">
+            <animateMotion dur="11s" repeatCount="indefinite" begin="3.7s"
+              keyTimes="0;0.05;0.72;0.84;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,290 L 65,290 L 250,290 L 550,290 L 745,290"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.05;0.74;0.86;0.93;1" dur="11s" repeatCount="indefinite" begin="3.7s"/>
+          </circle>
+          <circle r="4" fill="#C084FC" filter="url(#softGlow)">
+            <animateMotion dur="11s" repeatCount="indefinite" begin="7.3s"
+              keyTimes="0;0.05;0.72;0.84;0.92;1"
+              calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1; 0 0 1 1"
+              path="M 55,290 L 65,290 L 250,290 L 550,290 L 745,290"/>
+            <animate attributeName="opacity" values="0;1;1;0;0;0" keyTimes="0;0.05;0.74;0.86;0.93;1" dur="11s" repeatCount="indefinite" begin="7.3s"/>
+          </circle>
+
+          <text x="735" y="274" text-anchor="end" fill="#C084FC" font-size="8" font-weight="600" opacity="0.7">
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.74;1" dur="11s" repeatCount="indefinite"/>
+          </text>
+
+          <!-- Flag: neutrones pasan el plomo -->
+          <text x="550" y="274" text-anchor="middle" fill="#C084FC" font-size="8" font-weight="600" opacity="0.4">atraviesan el Pb</text>
+
+          <!-- Etiquetas de tipo de radiación a la derecha -->
+          <text x="935" y="96" fill="#DC2626" font-size="9" font-weight="600">← Alfa (α)</text>
+          <text x="935" y="156" fill="#F59E0B" font-size="9" font-weight="600">← Beta (β)</text>
+          <text x="935" y="216" fill="#00E5FF" font-size="9" font-weight="600">← Gamma (γ)</text>
+          <text x="935" y="286" fill="#C084FC" font-size="9" font-weight="600">← Neutrones (n)</text>
+
+          <!-- Iconos de materiales al pie -->
+          <text x="169" y="395" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.5" font-family="'Inter',sans-serif;">Para alfa</text>
+          <text x="276" y="395" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.5" font-family="'Inter',sans-serif;">Para beta y alfa</text>
+          <text x="400" y="395" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.5" font-family="'Inter',sans-serif;">Para beta</text>
+          <text x="569" y="395" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.5" font-family="'Inter',sans-serif;">Para gamma y X</text>
+          <text x="762" y="395" text-anchor="middle" fill="#A8B5BD" font-size="8" opacity="0.5" font-family="'Inter',sans-serif;">Para neutrones</text>
+        </svg>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mt-4">
+        La lógica del blindaje no es igual para todos: <strong class="text-red-400">alfa</strong> es detenida por cualquier cosa; <strong class="text-yellow-400">beta</strong> por metales livianos como el aluminio (el plomo generaría rayos X por <em>bremsstrahlung</em>); <strong class="text-nucleo-cyan">gamma</strong> necesita materiales muy densos como plomo o concreto grueso; y los <strong class="text-nucleo-accentLight">neutrones</strong> —sin carga— atraviesan metales densos pero son frenados por materiales ricos en hidrógeno como agua, parafina u hormigón.
+      </p>
+    </section>
+
+    <!-- ========== SECCIÓN 05: TABLA DE MATERIALES ========== -->
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Materiales Frente a las Radiaciones</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La siguiente tabla muestra qué materiales son efectivos para cada tipo de radiación. El símbolo ✓ indica que el material <strong class="text-nucleo-accentLight">detiene</strong> por completo ese tipo de radiación en un espesor práctico; ◐ indica <strong class="text-nucleo-accent">atenuación parcial</strong>; ✗ significa que la radiación es <strong class="text-red-400">transparente</strong> al material.
+      </p>
+
+      <div class="my-8 bg-nucleo-dark/40 border border-white/5 overflow-x-auto" style="border-radius:10px;">
+        <table class="w-full text-sm" style="font-family:'Inter',sans-serif;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+              <th class="text-left py-3 px-4 text-[10px] uppercase tracking-wider text-nucleo-silverDark">Material</th>
+              <th class="text-center py-3 px-3 text-[10px] uppercase tracking-wider" style="color:#DC2626;">Alfa α</th>
+              <th class="text-center py-3 px-3 text-[10px] uppercase tracking-wider" style="color:#F59E0B;">Beta β</th>
+              <th class="text-center py-3 px-3 text-[10px] uppercase tracking-wider" style="color:#00E5FF;">Gamma γ</th>
+              <th class="text-center py-3 px-3 text-[10px] uppercase tracking-wider" style="color:#3B82F6;">Rayos X</th>
+              <th class="text-center py-3 px-3 text-[10px] uppercase tracking-wider" style="color:#C084FC;">Neutrón n</th>
+              <th class="text-left py-3 px-4 text-[10px] uppercase tracking-wider text-nucleo-silverDark">Mecanismo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td class="py-3 px-4 text-white font-semibold">Papel</td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="py-3 px-4 text-nucleo-silverDark text-xs">Absorción coulombiana</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td class="py-3 px-4 text-white font-semibold">Tejido biológico (piel)</td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-yellow-400 font-bold">◐</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-yellow-400 font-bold">◐</span></td>
+              <td class="py-3 px-4 text-nucleo-silverDark text-xs">Colisiones elásticas con H</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td class="py-3 px-4 text-white font-semibold">Aluminio (2 mm)</td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-yellow-400 font-bold">◐</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="py-3 px-4 text-nucleo-silverDark text-xs">Bajo Z: poco bremsstrahlung</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td class="py-3 px-4 text-white font-semibold">Plomo (5 cm)</td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-yellow-400 font-bold">◐</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="py-3 px-4 text-nucleo-silverDark text-xs">Alto Z: absorción fotoeléctrica</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td class="py-3 px-4 text-white font-semibold">Hormigón (50 cm)</td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-yellow-400 font-bold">◐</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="py-3 px-4 text-nucleo-silverDark text-xs">Hidrógeno + densidad combinados</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td class="py-3 px-4 text-white font-semibold">Agua / Parafina</td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-red-400 font-bold">✗</span></td>
+              <td class="text-center py-3 px-3"><span class="text-green-400 font-bold">✓</span></td>
+              <td class="py-3 px-4 text-nucleo-silverDark text-xs">Ricas en H: moderación neutrónica</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        <strong class="text-nucleo-accentLight">La clave está en la interacción física:</strong> las partículas cargadas (alfa, beta) se frenan por atracción/repulsión eléctrica con los electrones del material. Los fotones (gamma, X) se atenúan por efecto fotoeléctrico y Compton. Los neutrones, al no tener carga, solo se frenan chocando contra núcleos livianos —por eso el <strong class="text-nucleo-accentLight">agua</strong> y el <strong class="text-nucleo-accentLight">hormigón</strong> son los blindajes neutrónicos por excelencia, mientras el <strong class="text-nucleo-accent">plomo</strong> los deja pasar casi intactos.
+      </p>
+    </section>
+
+    <!-- Key Takeaways -->
+    <div class="reveal mb-10" style="background: rgba(124,77,255,0.04); border: 1px solid rgba(124,77,255,0.15); border-left: 3px solid #7C4DFF; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El espectro electromagnético abarca desde ondas de radio (km) hasta rayos gamma (pm). La <strong class="text-nucleo-accentLight">energía del fotón</strong> (\(E=hf\)) determina si la radiación es ionizante o no.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La frontera ionizante está en el <strong class="text-nucleo-accentLight">UV-C (~100 nm, ~12,4 eV)</strong>. Radio, microondas, IR y luz visible son no ionizantes. UV-C, rayos X y gamma son ionizantes.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Las radiaciones de <strong class="text-nucleo-accentLight">baja energía</strong> se propagan como ondas (antenas, interferencia). Las de <strong class="text-nucleo-accentLight">alta energía</strong> se comportan como partículas (fotones). Alfa, beta y neutrones son partículas con masa.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El blindaje depende del tipo de radiación: <strong class="text-red-400">alfa</strong> → papel; <strong class="text-yellow-400">beta</strong> → aluminio; <strong class="text-nucleo-cyan">gamma/X</strong> → plomo/hormigón; <strong class="text-nucleo-accentLight">neutrones</strong> → agua/hormigón (ricos en hidrógeno).</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los <strong class="text-nucleo-accentLight">neutrones atraviesan el plomo</strong> —no tienen carga— pero son frenados por materiales livianos ricos en hidrógeno. Blindar neutrones con plomo es inútil.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Related Topics -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="radiaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/40 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radiaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Tipos de radiación nuclear, efectos biológicos y protección radiológica</p>
+        </a>
+        <a href="fuerzas.html" class="block p-4 border border-white/5 hover:border-nucleo-cyan/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-cyan" style="font-family:'Inter',sans-serif;">Fuerzas de la Naturaleza</span>
+          <p class="text-sm text-nucleo-silver mt-1">La fuerza electromagnética y cómo interactúa con la materia</p>
+        </a>
+        <a href="cosmicos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Rayos Cósmicos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Partículas del espacio que atraviesan la atmósfera hasta la Tierra</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Prev / Next -->
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="radiaciones.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify" data-icon="lucide:arrow-left" data-width="20" style="color:#FF6E40;"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#FF6E40;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Radiaciones</div>
+        </div>
+      </a>
+      <a href="fuerzas.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Siguiente concepto</div>
+          <div class="font-heading text-lg font-bold text-white">Fuerzas de la Naturaleza →</div>
+        </div>
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm" style="box-shadow: 0 0 20px rgba(124,77,255,0.4);">
+          <span class="iconify text-white" data-icon="lucide:radio" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Espectro EM</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="radiaciones.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Radiaciones</a>
+        <a href="../index.html#temas" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
