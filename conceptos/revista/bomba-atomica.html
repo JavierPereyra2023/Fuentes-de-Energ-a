@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Bomba Atómica — El Proyecto Manhattan y la Era Nuclear | Revista Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#DC2626', accentLight: '#F87171',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #DC2626; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #DC2626; border-radius: 3px; }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #DC2626; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    @keyframes heroZoom { from { transform: scale(1.1); } to { transform: scale(1); } }
+    .hero-img-animate { animation: heroZoom 8s ease-out forwards; }
+    .revista-articulo { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+    .revista-articulo h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; line-height: 1.2; }
+    .revista-articulo .fecha { font-family: 'Inter', sans-serif; font-size: 12px; color: #5A6B72; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .revista-articulo .fecha em { color: #F87171; font-style: normal; }
+    .revista-articulo p { font-size: 1.1rem; line-height: 1.75; margin-bottom: 1.25rem; color: #A8B5BD; }
+    .revista-articulo strong { color: #F87171; }
+    .revista-articulo blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.5rem; line-height: 1.4; color: #C8D4DC; padding: 1.5rem 0 1.5rem 1.5rem; border-left: 3px solid #DC2626; margin: 2.5rem 0; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #F87171; }
+    @media (max-width: 640px) { .revista-articulo { padding: 2rem 1rem; } .revista-articulo h2 { font-size: 1.5rem; } .revista-articulo blockquote { font-size: 1.2rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-3 text-xs">
+        <a href="../../revista.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:arrow-left" data-width="14"></span>
+          <span>Revista</span>
+        </a>
+        <span class="text-nucleo-silverDark/50">/</span>
+        <span style="color:#F87171; font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.15em; text-transform:uppercase;">Bomba Atómica</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-1" style="background:rgba(220,38,38,0.15); color:#F87171; font-family:'Inter',sans-serif;">Artículo · Historia y Ciencia</span>
+      <span class="text-[9px] font-semibold uppercase tracking-wider text-nucleo-silverDark flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+        <span class="iconify" data-icon="lucide:clock" data-width="11"></span>
+        ~14 min
+      </span>
+    </div>
+  </div>
+</nav>
+
+<section class="relative bg-nucleo-black overflow-hidden" style="min-height:70vh;">
+  <div class="absolute inset-0">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Trinity_Test_Fireball_16ms.jpg/800px-Trinity_Test_Fireball_16ms.jpg" alt="Prueba Trinity - primera explosión nuclear" class="hero-img-animate w-full h-full object-cover" style="object-position: center 20%; filter: brightness(0.25) contrast(1.2) saturate(0.3);">
+    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(6,9,12,0.85) 0%, rgba(6,9,12,0.3) 35%, rgba(6,9,12,0.3) 65%, rgba(6,9,12,0.9) 100%);"></div>
+  </div>
+  <div class="absolute inset-0 flex items-end justify-center pb-16 md:pb-20 z-10">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
+      <h2 style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:#fff; margin-bottom:0.75rem; line-height:1.2;">La bomba atómica: el Proyecto Manhattan y el nacimiento de la era nuclear</h2>
+      <p class="fecha" style="font-family:'Inter',sans-serif; font-size:12px; color:rgba(255,255,255,0.5); display:inline-block; padding-bottom:0.75rem; border-bottom:1px solid rgba(255,255,255,0.12);">Fuente histórica: <em style="color:#F87171; font-style:normal;">Manhattan Project Archives</em>, 16 de julio de 1945.</p>
+    </div>
+  </div>
+</section>
+
+<section class="revista-articulo" style="padding-top:2rem;">
+  <p>
+    El 2 de agosto de 1939, <strong>Albert Einstein</strong> firmó una carta dirigida al presidente Franklin D. Roosevelt. No la había escrito él —la había redactado el físico húngaro Leo Szilard— pero su firma le daba un peso que ninguna otra podía igualar. La carta advertía que la Alemania nazi podía estar desarrollando "bombas de un nuevo tipo, extremadamente poderosas" basadas en la fisión del uranio, un fenómeno descubierto apenas unos meses antes por Otto Hahn y Fritz Strassmann, e interpretado por Lise Meitner. Esa carta encendió la mecha del <strong>Proyecto Manhattan</strong>.
+  </p>
+
+  <p>
+    Lo que siguió fue la mayor concentración de talento científico y recursos industriales jamás reunida con un solo propósito. El Proyecto Manhattan empleó a más de <strong>130.000 personas</strong> en instalaciones secretas distribuidas por todo Estados Unidos: Oak Ridge (Tennessee) para enriquecer uranio, Hanford (Washington) para producir plutonio en reactores nucleares, y un remoto laboratorio en una meseta de Nuevo México cuyo nombre se volvería legendario: <strong>Los Alamos</strong>.
+  </p>
+
+  <h2>Los Alamos y Oppenheimer</h2>
+
+  <p>
+    Al frente del laboratorio de Los Alamos —el corazón científico del proyecto— fue designado un físico teórico brillante, carismático y complejo: <strong>J. Robert Oppenheimer</strong>. Nacido en Nueva York en 1904, Oppenheimer había estudiado en Harvard, Cambridge y Gotinga, donde se doctoró bajo la dirección de Max Born. Hablaba sánscrito, leía literatura francesa en el original y era dueño de una mente que sus colegas describían como "más rápida que cualquier otra".
+  </p>
+
+  <p>
+    Oppenheimer reunió en Los Alamos a un equipo de genios sin precedentes: <strong>Enrico Fermi</strong> (el hombre que ya había construido el primer reactor nuclear), <strong>Richard Feynman</strong> (que entonces tenía 25 años y ya deslumbraba a todos), <strong>Hans Bethe</strong> (que dirigió la división teórica), <strong>Edward Teller</strong> (obsesionado ya con la bomba de hidrógeno), <strong>John von Neumann</strong> (el matemático que diseñó el mecanismo de implosión) y muchos otros. En la cima de su actividad, Los Alamos albergó a más de 6.000 científicos, ingenieros y técnicos viviendo en un aislamiento casi total, sin contacto con el exterior, trabajando contra reloj.
+  </p>
+
+  <p>
+    El enemigo era el tiempo. Se sabía que los alemanes, bajo el liderazgo de Werner Heisenberg, también investigaban la fisión con fines bélicos. La carrera por la bomba era existencial: quien llegara primero definiría el desenlace de la Segunda Guerra Mundial. En los hechos, el programa alemán nunca estuvo cerca de producir un arma funcional —subestimaron la cantidad de uranio necesaria y carecían de los recursos industriales—, pero en Los Alamos nadie lo sabía con certeza.
+  </p>
+
+  <h2>Cómo funciona una bomba atómica</h2>
+
+  <p>
+    Una bomba atómica de fisión funciona bajo un principio sencillo de enunciar y aterradoramente difícil de ejecutar: juntar una <strong>masa supercrítica</strong> de material fisionable en un tiempo tan corto que la reacción en cadena se descontrole por completo antes de que la propia explosión disperse el material.
+  </p>
+
+  <p>
+    Un núcleo de uranio-235, al fisionarse, libera ~200 MeV de energía y 2 o 3 neutrones. En un reactor nuclear, esos neutrones se moderan y se controlan para que exactamente uno de ellos —en promedio— provoque otra fisión: es el estado crítico controlado (k = 1). En una bomba, <strong>no hay moderador ni control</strong>: los neutrones rápidos provocan nuevas fisiones tan rápido que el factor de multiplicación k salta muy por encima de 1. En millonésimas de segundo, la energía liberada crece de manera exponencial.
+  </p>
+
+  <p>
+    El Proyecto Manhattan desarrolló <strong>dos diseños completamente distintos</strong>:
+  </p>
+
+  <p>
+    <strong>Little Boy</strong> (el "niño pequeño"), lanzada sobre Hiroshima, usaba un mecanismo tipo cañón: una masa subcrítica de uranio-235 era disparada como un proyectil contra otra masa subcrítica dentro del mismo tubo. Al unirse, formaban una masa supercrítica y la reacción en cadena se desataba. Era un diseño simple y tan confiable que <strong>nunca fue probado antes de usarse en combate</strong> —no hizo falta.
+  </p>
+
+  <p>
+    <strong>Fat Man</strong> ("hombre gordo"), lanzada sobre Nagasaki, era radicalmente diferente. Usaba plutonio-239 —producido en los reactores de Hanford—, un material que no admite el mecanismo de cañón porque se pre-inicia espontáneamente. En su lugar, usaba <strong>implosión</strong>: una esfera de plutonio del tamaño de una pelota de béisbol era comprimida por explosivos químicos convencionales dispuestos a su alrededor como los gajos de una naranja. La implosión —una onda de choque perfectamente esférica— comprimía el plutonio hasta alcanzar la masa supercrítica. Diseñar esa lente explosiva fue un desafío matemático y de ingeniería colosal, resuelto en gran parte por Von Neumann.
+  </p>
+
+  <h2>Trinity: el día que el mundo cambió</h2>
+
+  <p>
+    El diseño de Fat Man era tan complejo que los científicos no estaban seguros de que funcionara. Por eso decidieron probarlo. A las <strong>5:29:45 AM del 16 de julio de 1945</strong>, en el desierto de Alamogordo, Nuevo México —un sitio bautizado como "Trinity" por Oppenheimer—, la primera explosión nuclear de la historia iluminó el amanecer.
+  </p>
+
+  <p>
+    La bomba, apodada "The Gadget" (el artilugio), era un dispositivo de implosión de plutonio idéntico al Fat Man que se lanzaría sobre Nagasaki tres semanas después. Estaba montada sobre una torre de acero de 30 metros. La explosión liberó una energía equivalente a aproximadamente <strong>21 kilotones de TNT</strong> (21.000 toneladas).
+  </p>
+
+  <h2>La bola de fuego: temperaturas y dimensiones</h2>
+
+  <p>
+    En el instante mismo de la detonación, la temperatura en el centro de la reacción alcanzó <strong>varios millones de grados Celsius</strong> —más caliente que el núcleo del Sol, que ronda los 15 millones de grados en su centro pero libera energía de manera mucho más gradual. La radiación térmica —rayos X y ultravioleta— calentó el aire circundante hasta formar una <strong>bola de fuego</strong> que se expandió a velocidad supersónica.
+  </p>
+
+  <p>
+    En Trinity, la bola de fuego alcanzó un diámetro máximo de aproximadamente <strong>370 metros</strong> en menos de un segundo. Todo lo que estaba dentro de ese radio —la torre de acero, los instrumentos, el suelo mismo— fue vaporizado instantáneamente. La arena del desierto se fundió y formó un vidrio verde radiactivo que los científicos llamaron <strong>trinitita</strong>.
+  </p>
+
+  <p>
+    Para ponerlo en perspectiva: la temperatura de la superficie del Sol es de aproximadamente 5.500 °C. La temperatura en el núcleo de la bola de fuego de una bomba atómica, en sus primeros instantes, supera los <strong>10.000.000 °C</strong>. Nada sólido sobrevive dentro de ese volumen.
+  </p>
+
+  <h2>La onda expansiva: destrucción en anillos concéntricos</h2>
+
+  <p>
+    La explosión genera una <strong>onda de choque</strong> —una pared de aire comprimido que viaja más rápido que el sonido— que es la principal responsable de la destrucción. En Hiroshima, la bomba Little Boy (equivalente a ~15 kilotones) fue detonada a 600 metros de altura para maximizar el daño. Los efectos se distribuyeron en anillos concéntricos:
+  </p>
+
+  <p>
+    <strong>Zona de vaporización (0–500 m del hipocentro):</strong> Todo lo que estaba directamente debajo de la explosión —personas, edificios, árboles— fue instantáneamente vaporizado o reducido a cenizas. Las temperaturas superaron los 3.000 °C en el suelo. Las siluetas de personas quedaron impresas en las paredes de hormigón y piedra por el efecto de "flash" térmico: la radiación blanqueó todo el material expuesto, excepto donde un cuerpo hizo sombra por una fracción de segundo antes de desaparecer.
+  </p>
+
+  <p>
+    <strong>Zona de destrucción total (500 m–1,6 km):</strong> La onda de choque, con vientos de más de 800 km/h, arrasó prácticamente todas las estructuras. Los edificios de hormigón armado quedaron reducidos a esqueletos. Más del 90% de las construcciones en este radio colapsaron. Las quemaduras térmicas de tercer grado eran fatales incluso a 2 km de distancia.
+  </p>
+
+  <p>
+    <strong>Zona de daño severo (1,6 km–3 km):</strong> Edificios de madera destruidos. Estructuras de hormigón con daños graves pero en pie. Quemaduras de segundo y tercer grado en toda la piel expuesta. Incendios generalizados que se fusionaron en una <strong>tormenta de fuego</strong> —un fenómeno donde el incendio es tan grande que genera su propio viento, succionando oxígeno hacia el centro y avivando las llamas.
+  </p>
+
+  <p>
+    En Hiroshima, la tormenta de fuego duró varias horas y consumió aproximadamente 11 km² de la ciudad. En Nagasaki, la geografía montañosa contuvo parcialmente el daño, pero aun así 6,7 km² fueron destruidos.
+  </p>
+
+  <h2>Las radiaciones que emite una bomba atómica</h2>
+
+  <p>
+    A diferencia de un terremoto o un huracán, una explosión nuclear libera algo que ninguna otra catástrofe produce: <strong>radiación ionizante</strong>. Esta radiación se manifiesta en dos grandes categorías.
+  </p>
+
+  <p>
+    La <strong>radiación instantánea (prompt)</strong> se emite en la fracción de segundo que dura la explosión misma. Consiste principalmente en <strong>rayos gamma</strong> —fotones de altísima energía que atraviesan el cuerpo humano como si fuera papel— y <strong>neutrones rápidos</strong>, partículas sin carga eléctrica que penetran profundamente en los tejidos y pueden activar otros átomos volviéndolos radiactivos. La dosis de radiación prompt a 1 km del hipocentro de una bomba de 15 kilotones es letal en minutos. A 2 km, causa enfermedad aguda por radiación con alta probabilidad de muerte en semanas.
+  </p>
+
+  <p>
+    La <strong>radiación residual</strong> aparece después de la explosión. Tiene dos orígenes. El primero son los <strong>productos de fisión</strong>: los fragmentos radiactivos de los núcleos de uranio o plutonio que se partieron —cesio-137, estroncio-90, yodo-131, entre otros—, que siguen emitiendo radiación beta y gamma durante días, años o siglos. El segundo es la <strong>activación neutrónica</strong>: los neutrones de la explosión chocan contra el suelo, los edificios y el aire, convirtiendo átomos estables en radiactivos.
+  </p>
+
+  <p>
+    Cuando la bola de fuego toca el suelo —como en Trinity, o en una detonación a baja altura—, succiona polvo, tierra y escombros que se mezclan con los productos de fisión radiactivos. Esta mezcla asciende en la columna del hongo y luego se dispersa con el viento: es la <strong>lluvia radiactiva</strong> o <em>fallout</em>. Las partículas más grandes caen cerca del sitio de la explosión en las primeras 24 horas; las más finas pueden viajar cientos de kilómetros y depositarse gradualmente. A diferencia de la radiación instantánea —que dura una fracción de segundo—, el fallout puede dejar zonas inhabitables durante décadas.
+  </p>
+
+  <p>
+    Los isótopos más preocupantes en el fallout: <strong>yodo-131</strong> (vida media 8 días, se acumula en la tiroides), <strong>estroncio-90</strong> (29 años, se deposita en los huesos porque el cuerpo lo confunde con calcio), y <strong>cesio-137</strong> (30 años, se distribuye por todo el cuerpo y emite gamma penetrante). Estos tres isótopos son los mismos que preocupan en un accidente nuclear como Chernobyl, pero en una explosión atómica las cantidades liberadas y la dispersión son mucho más violentas.
+  </p>
+
+  <h2>Hiroshima y Nagasaki</h2>
+
+  <p>
+    El 6 de agosto de 1945, el bombardero B-29 <em>Enola Gay</em> lanzó a Little Boy sobre Hiroshima a las 8:15 AM. El 9 de agosto, el B-29 <em>Bockscar</em> lanzó a Fat Man sobre Nagasaki a las 11:02 AM. Japón se rindió incondicionalmente el 15 de agosto. La Segunda Guerra Mundial había terminado.
+  </p>
+
+  <p>
+    Las cifras son abrumadoras. En Hiroshima, de una población de aproximadamente 350.000 personas, se estima que <strong>80.000 murieron instantáneamente</strong> o en las primeras horas. Para fines de 1945, la cifra de muertos ascendía a ~140.000. En Nagasaki, las muertes inmediatas fueron alrededor de 40.000, con un total de ~74.000 para fin de año. A estas cifras hay que sumarles los miles de <em>hibakusha</em> —sobrevivientes— que desarrollaron cáncer, leucemia y otras enfermedades en los años y décadas siguientes como consecuencia directa de la exposición a la radiación.
+  </p>
+
+  <p>
+    Ningún otro evento en la historia humana concentró tanta energía destructiva en tan poco tiempo y espacio. La energía liberada por Little Boy —15 kilotones— equivale a la que liberarían <strong>15 millones de kilos de TNT</strong>. Cargar esa cantidad de explosivo convencional requeriría un tren de carga de más de 3 kilómetros de largo. La bomba atómica lo concentró en un dispositivo de 4,4 toneladas que cabía en la panza de un avión.
+  </p>
+
+  <h2>El legado: Oppenheimer, la era nuclear y la duda ética</h2>
+
+  <p>
+    Al ver la explosión de Trinity, Oppenheimer recordó unas líneas del texto sagrado hindú <em>Bhagavad Gita</em>: <strong>"Ahora me he convertido en la Muerte, el destructor de mundos"</strong> (<em>Now I am become Death, the destroyer of worlds</em>). Años después, en una entrevista, diría con una lucidez sombría: "Los físicos conocieron el pecado. Y este es un conocimiento del que no pueden desprenderse".
+  </p>
+
+  <p>
+    En los años posteriores a la guerra, Oppenheimer se convirtió en un defensor del control internacional de las armas atómicas y se opuso al desarrollo de la bomba de hidrógeno —un arma termonuclear cientos de veces más potente que las de fisión—. Esta postura le costó su carrera: en 1954, en plena caza de brujas del macartismo, le fue revocada su habilitación de seguridad en una audiencia humillante. El hombre que había dirigido el proyecto científico más importante del siglo XX fue marginado por el mismo gobierno que lo había reclutado.
+  </p>
+
+  <p>
+    Hoy, décadas después, el legado del Proyecto Manhattan es dual e irresoluble. Por un lado, la física nuclear que se desarrolló en Los Alamos —el conocimiento del núcleo atómico, de las reacciones en cadena, de los neutrones y los isótopos— es la misma física que alimenta los reactores que generan electricidad para millones de personas, que produce radioisótopos para diagnosticar y tratar el cáncer, que impulsa sondas al espacio profundo. Por otro lado, el mundo vive bajo la sombra de arsenales que suman miles de ojivas nucleares, cada una de ellas con una potencia que empequeñece a las bombas de Hiroshima y Nagasaki.
+  </p>
+
+  <p>
+    La ciencia, como toda herramienta humana, no tiene moral propia. La moral la ponemos nosotros. Y la historia del Proyecto Manhattan es, quizás, el ejemplo más extremo de esa verdad.
+  </p>
+
+  <div style="background: rgba(220,38,38,0.04); border: 1px solid rgba(220,38,38,0.15); border-left: 3px solid #DC2626; padding: 1.5rem 2rem; margin: 2.5rem 0;">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="iconify" data-icon="lucide:lightbulb" data-width="18" style="color:#DC2626;"></span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Conceptos Clave</h3>
+    </div>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#DC2626;">✦</span> Una bomba atómica de fisión genera una <strong style="color:#F87171;">reacción en cadena descontrolada</strong> juntando una masa supercrítica de U-235 o Pu-239 en millonésimas de segundo.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#DC2626;">✦</span> La bola de fuego alcanza temperaturas de <strong style="color:#F87171;">millones de grados Celsius</strong> (más caliente que el interior del Sol). A 1 km del hipocentro, todo se vaporiza. A 3 km, la onda de choque destruye edificios.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; margin-bottom:0.5rem; line-height:1.5;"><span style="color:#DC2626;">✦</span> La explosión emite <strong style="color:#F87171;">radiación gamma y neutrones instantáneos</strong> (letales a ~1 km sin blindaje) más <strong style="color:#F87171;">fallout</strong> —productos de fisión como Cs-137, Sr-90 e I-131— que puede contaminar por décadas.</li>
+      <li style="display:flex; align-items:flex-start; gap:0.5rem; font-size:14px; color:#A8B5BD; line-height:1.5;"><span style="color:#DC2626;">✦</span> El Proyecto Manhattan, dirigido por <strong style="color:#F87171;">Oppenheimer</strong> en Los Alamos, reunió a las mentes más brillantes de la física en una carrera contra el tiempo. Su legado es dual: la misma física que destruyó Hiroshima hoy salva vidas en hospitales y centrales nucleares.</li>
+    </ul>
+  </div>
+
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:#fff; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+      <span class="iconify" data-icon="lucide:bookmark" data-width="16" style="color:#DC2626;"></span>
+      Seguir Leyendo
+    </h3>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+      <a href="chernobyl.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(220,38,38,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Chernobyl</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#DC2626;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="fukushima.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(220,38,38,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Fukushima</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#DC2626;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+      <a href="fermi.html" style="display:block; padding:1rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.2s ease;" onmouseover="this.style.borderColor='rgba(220,38,38,0.3)';this.style.background='rgba(255,255,255,0.04)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)';this.style.background='rgba(255,255,255,0.02)';">
+        <div style="font-family:'Playfair Display',serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:0.25rem;">Enrico Fermi</div>
+        <div style="display:flex; align-items:center; gap:0.25rem; font-family:'Inter',sans-serif; font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#DC2626;">Leer <span class="iconify" data-icon="lucide:arrow-right" data-width="11"></span></div>
+      </a>
+    </div>
+  </div>
+
+  <blockquote>
+    "Los físicos conocieron el pecado. Y este es un conocimiento del que no pueden desprenderse." La ciencia nos da poder. Lo que hagamos con él es, y siempre será, una decisión humana.
+  </blockquote>
+</section>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+</body>
+</html>

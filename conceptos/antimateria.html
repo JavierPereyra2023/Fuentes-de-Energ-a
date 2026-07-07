@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antimateria — El Reflejo Invisible del Universo | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#EC4899', accentLight: '#F472B6', accentDark: '#BE185D',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #EC4899; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #EC4899; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #EC4899; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(236,72,153,0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #EC4899, #F472B6); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(236,72,153,0.12); border-bottom: 2px solid #EC4899; font-family: 'Inter', sans-serif; font-weight: 600; color: #F472B6; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(236,72,153,0.04); border-left: 3px solid #EC4899; font-size: 1.1rem; color: #F472B6; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #EC4899; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #EC4899; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(236,72,153,0.12); color: #F472B6; border: 1px solid rgba(236,72,153,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(236,72,153,0.3); background: rgba(236,72,153,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(236,72,153,0.15); }
+    .sibling-link-indigo { border-color: rgba(79,70,229,0.15); }
+    .sibling-link-indigo:hover { border-color: rgba(79,70,229,0.4); background: rgba(79,70,229,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(79,70,229,0.15); }
+    .glow-fucsia { box-shadow: 0 0 40px rgba(236,72,153,0.4), inset 0 0 20px rgba(236,72,153,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(236,72,153,0.3); }
+    .toc-inner a.active { color: #F472B6; border-left-color: #EC4899; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #EC4899; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #EC4899; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(236,72,153,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #F472B6; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(236,72,153,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Antimateria</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Central</span>
+        <a href="materia-oscura.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Materia Oscura</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #EC4899 1px, transparent 1px), radial-gradient(circle at 70% 30%, #EC4899 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(236,72,153,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Física de Partículas</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Antimateria —<br>
+        <span class="text-nucleo-accent">el reflejo invisible del universo</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Cada partícula de materia tiene una gemela de antimateria: idéntica masa, carga opuesta. Cuando se encuentran, se aniquilan en un destello de energía pura. Es la forma de energía más eficiente del universo... y uno de sus mayores misterios.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">positrón</span>
+        <span class="chip">Dirac</span>
+        <span class="chip">aniquilación</span>
+        <span class="chip">CERN</span>
+        <span class="chip">PET</span>
+        <span class="chip">CPT</span>
+        <span class="chip chip-yellow">Física de partículas</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~8 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <!-- TOC Sidebar (desktop) -->
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> Predicción y descubrimiento</a>
+        <a href="#sec02"><span class="num">02</span> ¿Qué es la antimateria?</a>
+        <a href="#sec03"><span class="num">03</span> Aniquilación materia-antimateria</a>
+        <a href="#sec04"><span class="num">04</span> Producción de antimateria</a>
+        <a href="#sec05"><span class="num">05</span> Aplicaciones médicas y científicas</a>
+        <a href="#sec06"><span class="num">06</span> El misterio de la asimetría</a>
+      </div>
+    </aside>
+
+    <!-- TOC Mobile -->
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · Predicción y descubrimiento</a>
+      <a href="#sec02" class="toc-mobile-link">02 · ¿Qué es la antimateria?</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Aniquilación materia-antimateria</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Producción de antimateria</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Aplicaciones médicas y científicas</a>
+      <a href="#sec06" class="toc-mobile-link">06 · El misterio de la asimetría</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Predicción y descubrimiento</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En 1928, el físico británico <strong class="text-nucleo-accent">Paul Dirac</strong> unificó la mecánica cuántica con la relatividad especial en una elegante ecuación que describía al electrón. Pero su ecuación tenía una segunda solución matemática que parecía absurda: predecía un electrón con carga positiva. Dirac no la descartó. En 1931 publicó que debía existir un «anti-electrón».
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Apenas un año después, en 1932, el físico estadounidense <strong class="text-nucleo-accentLight">Carl Anderson</strong> estudiaba rayos cósmicos con una cámara de niebla en Caltech cuando fotografió una partícula que se curvaba en el campo magnético como un electrón... pero en dirección opuesta. Había descubierto el <strong class="text-nucleo-accent">positrón</strong> (e⁺), la primera partícula de antimateria. Por este hallazgo recibió el Premio Nobel de Física en 1936, con solo 31 años. Dirac lo recibió en 1933.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El <strong class="text-nucleo-accent">antiprotón</strong> (p̄) tardó más: se necesitó el Bevatron, un acelerador de 6 GeV. En 1955, <strong class="text-nucleo-accentLight">Emilio Segrè</strong> y <strong class="text-nucleo-accentLight">Owen Chamberlain</strong> lo detectaron en Berkeley (Nobel 1959). El antineutrón se descubrió en 1956. En 1995, el CERN creó los primeros átomos de <strong class="text-nucleo-accent">antihidrógeno</strong>: 9 átomos que duraron 40 nanosegundos. Hoy el experimento ALPHA los mantiene atrapados por más de 15 minutos.
+      </p>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">Una banana típica —rica en potasio-40, un isótopo radiactivo natural— emite un positrón aproximadamente cada 75 minutos. Comés bananas, comés antimateria. La naturaleza produce antimateria todo el tiempo; el desafío es juntarla y almacenarla.</p>
+          </div>
+        </div>
+      </div>
+      <div class="equation-block">
+        <span class="eq-label">Ecuación de Dirac (1928)</span>
+        \((i\gamma^\mu \partial_\mu - m)\psi = 0\)
+        <p style="font-size:12px; color:#5A6B72; margin-top:4px;">Esta ecuación unificó la mecánica cuántica con la relatividad especial y predijo matemáticamente la existencia de la antimateria, antes de que fuera observada experimentalmente.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué es la antimateria?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Imaginá un espejo perfecto. Cuando un electrón (carga −1, masa 9,11 × 10⁻³¹ kg) se mira en ese espejo, ve un <span class="inline-stat">positrón</span>: idéntica masa, idéntico espín, pero carga +1. Así con cada partícula: el protón tiene su <span class="inline-stat">antiprotón</span> (carga negativa), el neutrón su <span class="inline-stat">antineutrón</span> (sin carga, pero con momento magnético invertido), y hasta el neutrino tiene su antineutrino.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">simetría CPT</strong> (Carga-Paridad-Tiempo) es una de las leyes más fundamentales: si invertís todas las cargas (C), reflejás en un espejo (P) y das vuelta la flecha del tiempo (T), el universo resultante es físicamente indistinguible del original. Una taza de antihidrógeno con antiagua se comportaría exactamente igual que su contraparte de materia... hasta que toque la taza, claro.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        El anti-núcleo más complejo jamás detectado es el <span class="inline-stat">antihelio-4</span>, observado en 2011 en el colisionador RHIC de Brookhaven. Se necesitaron 500 millones de colisiones para encontrar apenas 18 núcleos.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Aniquilación materia-antimateria</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cuando una partícula encuentra su antipartícula, ocurre la <strong class="text-nucleo-accent">aniquilación</strong>: ambas desaparecen y toda su masa se convierte en energía pura. La ecuación que lo rige es la más famosa de la física: \(E = mc^2\). Es la conversión de masa en energía más eficiente posible: <strong class="text-nucleo-accentLight">100% de eficiencia</strong>. Para comparar, una bomba de fisión convierte ~0,1% de la masa en energía; la fusión en el Sol, ~0,7%.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En la aniquilación electrón-positrón, se producen <strong class="text-nucleo-accent">dos fotones gamma</strong> de exactamente <span class='inline-stat'><span class='val'>511 keV</span></span> cada uno —el equivalente energético de la masa del electrón— que salen en direcciones opuestas (180°). Es justamente esta propiedad la que aprovechan los escáneres PET.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Un solo gramo de antimateria aniquilándose con un gramo de materia liberaría ~43 kilotones de energía, comparable a dos bombas de Nagasaki. Producir ese gramo, sin embargo, costaría varios billones de dólares y llevaría millones de años con la tecnología actual. El CERN ha producido en toda su historia apenas nanogramos de antiprotones.
+      </p>
+      <div style="background: rgba(255,179,0,0.06); border: 1px solid rgba(255,179,0,0.2); border-left: 3px solid #FFB300; padding: 1rem 1.25rem; margin: 1.5rem 0;">
+        <div style="display:flex; align-items:flex-start; gap:0.5rem;">
+          <span class="iconify" data-icon="lucide:lightbulb" data-width="16" style="color:#FFB300; flex-shrink:0; margin-top:1px;"></span>
+          <div>
+            <span style="font-family:'Inter',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:#FFB300; display:block; margin-bottom:0.35rem;">¿Sabías que...?</span>
+            <p style="font-size:14px; color:#C8D4DC; line-height:1.6; margin:0;">El proceso inverso a la aniquilación también existe: se llama <strong>producción de pares</strong>. Un fotón con suficiente energía (>1,022 MeV) puede convertirse espontáneamente en un par electrón-positrón al pasar cerca de un núcleo atómico. Es E = mc² funcionando en reversa: energía pura que se materializa en partículas.</p>
+          </div>
+        </div>
+      </div>
+      <div class="equation-block">
+        <span class="eq-label">Aniquilación electrón-positrón</span>
+        \(e^- + e^+ \longrightarrow \gamma + \gamma\)
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Producción de antimateria</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El principal productor mundial de antimateria es el <strong class="text-nucleo-accent">Antiproton Decelerator (AD)</strong> del CERN, una instalación dedicada a frenar antiprotones. El proceso: se acelera un haz de protones contra un blanco metálico, y de cada <strong class="text-nucleo-accentLight">millón de colisiones</strong> se obtiene aproximadamente <strong class="text-nucleo-accentLight">1 antiprotón</strong>. Los antiprotones se desaceleran y almacenan en <strong class="text-nucleo-accent">trampas de Penning</strong> —dispositivos que usan campos eléctricos y magnéticos para confinar partículas cargadas en vacío ultra-alto.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Pero la antimateria también se produce en la naturaleza. Los <strong class="text-nucleo-accent">rayos cósmicos</strong> que chocan con la atmósfera generan positrones y antiprotones. En 2011, el telescopio Fermi detectó haces de positrones emergiendo de <strong class="text-nucleo-accentLight">tormentas eléctricas</strong>: los rayos pueden actuar como aceleradores de partículas naturales. El Sol mismo produce positrones en las reacciones de fusión de la cadena protón-protón.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Para almacenar antihidrógeno neutro —que no puede atraparse con campos eléctricos— el experimento <strong class="text-nucleo-accent">ALPHA</strong> del CERN usa imanes superconductores que generan un pozo magnético tridimensional a apenas 0,5 grados sobre el cero absoluto (−272,65 °C). Es como intentar sostener una pelusa con pinzas hechas de campos magnéticos.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Aplicaciones médicas y científicas</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La aplicación real más importante es la <strong class="text-nucleo-accent">Tomografía por Emisión de Positrones (PET)</strong>. Se inyecta al paciente una molécula marcada con un isótopo emisor de positrones —generalmente <strong class="text-nucleo-accentLight">Flúor-18</strong> (vida media: 110 minutos). El F-18 se acumula en tejidos metabólicamente activos como tumores. Al decaer, el positrón se aniquila con un electrón cercano, produciendo dos fotones gamma de 511 keV en direcciones opuestas. Detectores en anillo registran las coincidencias y reconstruyen una imagen 3D del interior del cuerpo.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El PET se usa para detección temprana de cáncer y metástasis, estudio de actividad cerebral (qué regiones se activan al leer, hablar o pensar), diagnóstico de Alzheimer y Parkinson, y evaluación cardíaca post-infarto. En Argentina, hospitales como el <strong class="text-nucleo-accentLight">FLENI</strong> y el <strong class="text-nucleo-accentLight">Hospital Italiano de Buenos Aires</strong> cuentan con equipos PET.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En el frente de la investigación fundamental, los experimentos <strong class="text-nucleo-accent">ALPHA</strong>, <strong class="text-nucleo-accent">AEgIS</strong> y <strong class="text-nucleo-accent">GBAR</strong> del CERN estudian si la antimateria siente la gravedad igual que la materia. Hasta 2023, las mediciones confirman que el antihidrógeno «cae» igual. Si se descubriera lo contrario, habría que reescribir la relatividad general. La <strong class="text-nucleo-accent">propulsión con antimateria</strong>, aunque extremadamente especulativa, es estudiada por la NASA: miligramos de antimateria bastarían para un viaje a Marte en semanas en lugar de meses.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">En Argentina</span>
+        <p>El <strong>TANDAR</strong> (Centro Atómico Constituyentes, CNEA) es un acelerador de 20 MV donde se realiza investigación en física nuclear. Grupos de CONICET y la UBA participan en la colaboración internacional del <strong>experimento ATLAS</strong> del CERN, contribuyendo al análisis de datos del LHC.</p>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec06">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">06</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El misterio de la asimetría</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El Big Bang debería haber producido cantidades iguales de materia y antimateria. Si así fue, toda se habría aniquilado en los primeros instantes, dejando un universo sin galaxias, sin estrellas... sin nosotros. Pero existimos. Por cada mil millones de pares partícula-antipartícula que se aniquilaron, aproximadamente <strong class="text-nucleo-accent">una partícula de materia sobró</strong>. Esa asimetría de una parte en 10⁹ es todo lo que somos.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El físico ruso <strong class="text-nucleo-accentLight">Andréi Sájarov</strong> formuló en 1967 las tres condiciones necesarias para generar esta asimetría: violación del número bariónico, violación CP (las leyes deben tratar materia y antimateria de forma ligeramente distinta), y que el proceso ocurra fuera del equilibrio térmico. La <strong class="text-nucleo-accent">violación CP</strong> fue descubierta en 1964 por <strong class="text-nucleo-accentLight">James Cronin</strong> y <strong class="text-nucleo-accentLight">Val Fitch</strong> (Nobel 1980) estudiando el decaimiento de kaones neutros.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+        Hoy, los experimentos <strong class="text-nucleo-accent">LHCb</strong> en el CERN y <strong class="text-nucleo-accent">T2K</strong> en Japón investigan nuevas fuentes de violación CP, especialmente en neutrinos. Si los neutrinos —las partículas más esquivas del universo— resultan ser la clave de por qué existimos, sería uno de los giros más poéticos en la historia de la ciencia.
+      </p>
+      <div class="pull-quote">
+        «Por cada mil millones de pares que se aniquilaron, una partícula de materia sobró. Somos el residuo de una aniquilación cósmica.»
+      </div>
+    </section>
+
+    <!-- CONCEPTOS CLAVE -->
+    <div class="reveal mb-10" style="background: rgba(236,72,153,0.04); border: 1px solid rgba(236,72,153,0.15); border-left: 3px solid #EC4899; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Toda partícula tiene una antipartícula con igual masa y carga opuesta. Pueden formar antiátomos indistinguibles de los átomos de materia... hasta que tocan materia.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La aniquilación materia-antimateria convierte el 100% de la masa en energía (E = mc²), produciendo fotones gamma. Es la base del escáner PET.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Producir antimateria es extremadamente difícil y costoso. El CERN ha producido apenas nanogramos en toda su historia.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El PET es la aplicación médica más importante: permite detectar tumores, estudiar el cerebro y diagnosticar Alzheimer usando isótopos como Flúor-18.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La asimetría materia-antimateria es uno de los mayores misterios de la física. Una pequeñísima diferencia (1 en 10⁹) permitió que existieran galaxias, estrellas y vida.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TEMAS RELACIONADOS -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-3 gap-3">
+        <a href="aceleradores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Aceleradores de Partículas</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cómo se producen antiprotones en el CERN y en el TANDAR argentino</p>
+        </a>
+        <a href="cosmicos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Rayos Cósmicos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Fuente natural de antimateria: positrones y antiprotones del espacio</p>
+        </a>
+        <a href="fuerzas.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fuerzas Fundamentales</span>
+          <p class="text-sm text-nucleo-silver mt-1">La fuerza débil y la violación CP que explica la asimetría</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">Energía Nuclear · Inicio</div>
+        </div>
+      </a>
+      <a href="materia-oscura.html" class="sibling-link sibling-link-indigo text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-indigo-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Materia Oscura →</div>
+        </div>
+        <span class="iconify text-indigo-400" data-icon="lucide:arrow-right" data-width="20"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-fucsia">
+          <span class="iconify text-white" data-icon="lucide:equal-not" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Antimateria</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="materia-oscura.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-indigo-400 transition-colors">Materia Oscura</a>
+        <a href="../index.html#temas" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Centrales AR</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+// TOC: mobile toggle
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+// TOC: scroll-based active section
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

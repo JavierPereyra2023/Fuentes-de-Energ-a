@@ -10,10 +10,37 @@ Sitio web educativo estático sobre **energía nuclear** dirigido a estudiantes 
 
 ```
 D:\nucle-ar\
-├── index.html                  # Página principal de Energía Nuclear
+├── index.html                  # Página principal (cian #00E5FF)
+├── revista.html                # Índice de artículos de revista (oro #F59E0B)
+├── assets/                     # Recursos estáticos
 ├── conceptos\
-│   ├── fision.html             # Concepto de fisión (acento ROJO #DC2626)
-│   └── fusion.html             # Concepto de fusión (acento AZUL #3B82F6)
+│   ├── aceleradores.html       # Aceleradores de partículas (violeta #7C4DFF) — incluye BNCT
+│   ├── antimateria.html        # Antimateria (fucsia #EC4899)
+│   ├── aplicaciones.html       # Aplicaciones (rojo #DC2626) — incluye BNCT
+│   ├── argentina.html          # Tecnología nuclear argentina (celeste #75AADB) — incluye TANDAR
+│   ├── atomos.html             # Estructura del átomo (ámbar #F59E0B)
+│   ├── cosmicos.html           # Rayos cósmicos (violeta #7C4DFF)
+│   ├── espectro.html           # Espectro electromagnético (violeta #7C4DFF)
+│   ├── fision.html             # Fisión (rojo #DC2626)
+│   ├── fuerzas.html            # Fuerzas fundamentales (cian #00E5FF)
+│   ├── fusion.html             # Fusión (azul #3B82F6)
+│   ├── instituciones.html      # Instituciones argentinas (celeste #75AADB, plantilla reducida, 9 tarjetas)
+│   ├── materia-oscura.html     # Materia oscura (índigo #4F46E5)
+│   ├── peliculas.html          # Películas y series nucleares (oro #F59E0B, plantilla reducida, sin iframes)
+│   ├── radiaciones.html        # Radiaciones ionizantes (naranja #FF6E40)
+│   ├── radioisotopos.html      # Radioisótopos (verde #26A69A)
+│   ├── reactores.html          # Reactores nucleares (ámbar #FFB300)
+│   └── revista\                # 10 artículos (plantilla reducida, sin TOC/num)
+│       ├── balseiro.html       # Balseiro (celeste #75AADB)
+│       ├── bomba-atomica.html  # Proyecto Manhattan / Oppenheimer (rojo #DC2626)
+│       ├── chernobyl.html      # Chernobyl (rojo #DC2626)
+│       ├── curie.html          # Marie Curie (violeta #7C4DFF)
+│       ├── einstein.html       # Einstein (ámbar #F59E0B)
+│       ├── fermi.html          # Fermi (ámbar #F59E0B)
+│       ├── fukushima.html      # Fukushima (naranja #FF6E40)
+│       ├── meitner.html        # Lise Meitner (violeta #7C4DFF)
+│       ├── oklo.html           # Oklo, reactor natural (ámbar #F59E0B)
+│       └── propulsion.html     # Propulsión nuclear (ámbar #F59E0B)
 └── CLAUDE.md
 ```
 
@@ -45,22 +72,80 @@ Para verificar cambios sin recargar manualmente, usar `?nocache=1` o Ctrl+F5.
 ### `index.html` — Página principal
 - Hero con átomo decorativo animado (órbitas CSS rotando)
 - 8 secciones: hero, marquee, qué es, fisión vs fusión, Argentina, centrales (Atucha I/II, Embalse, CAREM, INVAP), aplicaciones, seguridad, recursos, footer
-- Color de acento: cian radioactivo `#00E5FF` (paleta `nucleo` en `tailwind.config`)
+- Color de acento: cian radioactivo `#00E5FF` (paleta `nucleo` en `tailwind.config`, sin clave `accent`; usa `cyan`/`cyanLight`/`cyanDark`)
 - Imágenes de Wikimedia Commons (URLs verificadas) y Unsplash
+- Grid de 12 tarjetas de temas (`#temas`) enlazando a las páginas de conceptos
+- Nav incluye: Fundamentos, Conceptos, Argentina, Instituciones, Películas, Temas, Revista
+- Marquee incluye TANDAR. Timeline argentina incluye hito 1985 (TANDAR)
+- Colores adicionales en paleta: `fucsia` (#EC4899), `indigo` (#4F46E5)
 
-### `conceptos/fision.html` y `conceptos/fusion.html` — Conceptos individuales
-Plantilla común:
+### `revista.html` — Índice de la revista
+- Lista 9 artículos de `conceptos/revista/` como tarjetas + 1 destacado (Einstein)
+- Acento oro `#F59E0B` (paleta `nucleo` sin `accent`; usa `oro`/`oroLight`)
+- Una tarjeta destacada + 9 tarjetas chicas en grid
+- Footer con link a Películas
+
+### Páginas de conceptos (`conceptos/*.html`)
+Plantilla común (14 páginas con secciones numeradas):
 - Mismo fondo oscuro, mismas fuentes y patrón de nav/footer
-- Hero + secciones numeradas (01–06) con SVG animado en la sección 02
+- Breadcrumb `Inicio / Conceptos / Nombre`
+- Hero + secciones numeradas (01–05 o 06) con `section-num`
+- Tabla de contenidos lateral fija (`.toc-sidebar` desktop, `.toc-overlay` móvil)
 - Ecuaciones con MathJax (`\(...\)` para inline, `\[...\]` para bloque)
 - Barra de progreso de lectura superior (`.reading-bar`)
-- Navegación cruzada entre páginas hermanas al final
+- "Conceptos Clave" + "Temas Relacionados" + navegación cruzada al final
+- Footer con badge del icono del concepto
 
-**Diferenciación visual entre conceptos**:
-| Concepto | Color `accent` | Icono principal | Tema |
-|----------|---------------|-----------------|------|
-| Fisión | `#DC2626` rojo | `lucide:split` | Peligro, potencia, ruptura |
-| Fusión | `#3B82F6` azul | `lucide:merge` | Estrella, plasma, futuro |
+**Plantilla reducida** (`instituciones.html`, `peliculas.html`): sin TOC, sin `section-num`, sin MathJax. Grid de 2 columnas con tarjetas. `instituciones.html` usa enlaces externos (YouTube + sitio oficial). `peliculas.html` usa links de YouTube sin iframes (evitar error 153 de embedding bloqueado).
+
+**Diferenciación visual entre conceptos** (cada página define su propio `accent` en `tailwind.config`):
+| Concepto | Color `accent` | Icono footer | Tema |
+|----------|---------------|--------------|------|
+| Aceleradores | `#7C4DFF` violeta | `lucide:zap` | Ciclotrones, sincrotrones, TANDAR, BNCT, Dr. Kreiner |
+| Antimateria | `#EC4899` fucsia | `lucide:equal-not` | Dirac, positrón, aniquilación, PET, asimetría |
+| Aplicaciones | `#DC2626` rojo | `lucide:stethoscope` | Medicina, industria, TIE, BNCT |
+| Argentina | `#75AADB` celeste | `lucide:map-pin` | CNEA, NA-SA, INVAP, CAREM, TANDAR |
+| Átomos | `#F59E0B` ámbar | `lucide:atom` | Estructura atómica, Schrödinger |
+| Cósmicos | `#7C4DFF` violeta | `lucide:particles` | Rayos cósmicos, Pierre Auger |
+| Espectro | `#7C4DFF` violeta | `lucide:radio` | Espectro electromagnético |
+| Fisión | `#DC2626` rojo | `lucide:split` | Reacción en cadena, U-235 |
+| Fuerzas | `#00E5FF` cian | `lucide:zap` | Gravitatoria, EM, débil, fuerte |
+| Fusión | `#3B82F6` azul | `lucide:merge` | Plasma, tokamaks, estrellas |
+| Instituciones | `#75AADB` celeste | `lucide:landmark` | Plantilla reducida, 9 tarjetas (incluye UNSAM) |
+| Materia Oscura | `#4F46E5` índigo | `lucide:eye-off` | WIMP, rotación galáctica, Zwicky, Rubin, 27% |
+| Radiaciones | `#FF6E40` naranja | `lucide:radio` | α, β, X, γ, neutrones |
+| Radioisótopos | `#26A69A` verde | `lucide:flask-conical` | Co-60, Tc-99m, I-131 |
+| Reactores | `#FFB300` ámbar | `lucide:atom` | Atucha I/II, Embalse, CAREM |
+
+Nota: los iconos del footer de cada página pueden diferir de los iconos usados en las tarjetas de `index.html`. Mantener ambos.
+
+### Artículos de revista (`conceptos/revista/*.html`)
+10 artículos largos sobre personas/eventos clave: Balseiro, Bomba Atómica, Chernobyl, Curie, Einstein, Fermi, Fukushima, Meitner, Oklo, Propulsión nuclear.
+- Reutilizan la plantilla de conceptos pero con nav simplificada y **sin TOC lateral ni `section-num`**
+- Cada uno define su propio `accent` según la temática (ver árbol de estructura)
+- Sin MathJax (las ecuaciones se muestran como imágenes o texto simple)
+- Sin footer
+
+### Página de Películas y Series (`conceptos/peliculas.html`)
+- Plantilla reducida (sin TOC, sin section-num, sin MathJax)
+- 12 tarjetas en grid de 2 columnas con: título, año, tipo (badge de color), descripción, link IMDb
+- **Sin iframes de YouTube**: todos los tráilers se abren como link externo (click → YouTube). Esto evita el error 153 por embedding bloqueado.
+- 5 tarjetas tienen link directo al video de YouTube (IDs verificados vía oembed API)
+- 6 tarjetas tienen link de búsqueda en YouTube (términos específicos para el tráiler oficial)
+- 1 tarjeta (The Day After Trinity) linkea a Internet Archive
+
+### Contenido enriquecido
+
+**BNCT (Terapia por Captura Neutrónica de Boro)**:
+- `aceleradores.html` sec06: historia argentina (RA-6 Bariloche), melanoma, glioblastoma, acelerador compacto Kreiner/UNSAM
+- `aplicaciones.html` sec06: cómo funciona (boro-10 + neutrones), Argentina pionera mundial
+
+**TANDAR y aceleradores argentinos**:
+- `aceleradores.html` sec05 expandida: Dr. Andrés Kreiner, salas experimentales (física nuclear, irradiación de materiales, microhaz, biología/metales pesados), FUESMEN, ciclotrones médicos
+- `argentina.html` sec05: párrafo sobre TANDAR y aceleradores
+
+**Instituciones**:
+- `instituciones.html`: 9 tarjetas. UNSAM agregada (física médica, RMN, co-tutelas Alemania). Balseiro y Sabato con descripciones ajustadas.
 
 ## Patrones SVG animados
 
@@ -86,6 +171,8 @@ Para **separación de fragmentos** los `animateMotion` necesitan paths con **pun
 ```
 Mal ejemplo: `path="M 0 0 L -32 -50 L -32 -50 L -32 -50 L -32 -50"` (el producto aparece estático, sin movimiento visible).
 
+**Penetración de radiaciones** (`radiaciones.html`): carriles horizontales con barreras verticales. Las **partículas** (α, β, n) se dibujan como círculos que recorren `animateMotion` lineales; las **ondas electromagnéticas** (X, γ) como paths sinusoidales con `Q`/`T` (ej.: `path="M 95 215 L 160 209 L 230 291 L 300 279 L 370 291 ..."`) y un trazo tenue de referencia debajo. La atenuación se modela con `opacity` ramp `1→0.25` al cruzar la barrera — la absorción con `flashG` + `opacity 0`. No mezclarlas: gamma **se atenúa** (sigue avanzando, opacity decrece); alfa/beta **se absorben** (flash + desaparecen).
+
 ## Paleta de colores
 
 Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
@@ -94,13 +181,33 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
 - Acentos variables según la página (ver tabla arriba)
 - Estados: `warning #FFB300` (alertas), `cyan #00E5FF` (énfasis secundario)
 
+## Bugs conocidos y corregidos
+
+- **Wrapper flex en cada `sec0X`**: toda `<section class="reveal mb-16" id="sec0X">` debe abrir explícitamente `<div class="flex items-center gap-4 mb-6">` + `<span class="section-num">0X</span>` + `<div class="accent-line"></div>` + `<h2>` + `</div>`. Si se omite el wrapper y se deja un `</div>` huérfano, el navegador auto-anida todo el resto del `<main>` (incluyendo el footer) y los botones del pie se ven deformados/anchos. Síntoma visual: footer roto, no SVG. Auditoría rápida: `grep -n 'id="sec0X"' *.html` y revisar las 5 líneas siguientes.
+
+- **Anchor `#centrales`**: ~~El footer de varias páginas linkeaba a `../index.html#centrales`, pero index.html no tiene ese id.~~ Corregido en los 6 archivos afectados (aceleradores, fision, fusion, radioisotopos, antimateria, materia-oscura). Cambiado a `#temas`.
+
+- **Enlaces de YouTube en `instituciones.html`**: los handles con formato `@NombreCompleto` (CamelCase) suelen dar 404 — los canales oficiales argentinos usan formatos heredados (`/user/invapin`, `/user/nucleoelectricaarg`, IDs de canal `UC...`, o handles con sufijos `@institutobalseiroIB`). UNSAM verificado: `@unsamoficial` funciona.
+
+- **Embedding de YouTube en `peliculas.html`**: los iframes de YouTube producen error 153 (embedding bloqueado por el uploader) en la mayoría de los tráilers. Solución: no usar iframes. Toda la página usa links externos (click → abre YouTube en pestaña nueva). Para verificar IDs de video antes de usarlos, consultar `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=ID&format=json` — si devuelve 404, el video no existe o no está disponible.
+
+- **Paleta accent variable por página**: cada archivo define su propio `accent` en `tailwind.config` — no asumir un único color. El violeta `#7C4DFF` se repite en 3 conceptos (aceleradores, cósmicos, espectro) por coincidencia temática, no por error. `index.html`, `revista.html` y `peliculas.html` no usan la clave `accent`; usan `cyan`/`oro`.
+
+- **`revista/` no lleva `section-num`**: los artículos usan la plantilla reducida sin secciones numeradas — no forzarles el patrón del main `conceptos/`. Tampoco llevan MathJax ni footer.
+
+- **Penetración de radiaciones — distinción ondas vs partículas**: en el SVG de `radiaciones.html`, las partículas (α, β, n) son círculos que avanzan en línea recta y se absorben con flash; las ondas electromagnéticas (X, γ) son paths sinusoidales que se atenúan (opacity decrece) sin desaparecer. No mezclar los dos patrones.
+
+## Cross-links establecidos
+
+- `aceleradores.html` ↔ `argentina.html` (Temas Relacionados)
+- `antimateria.html` ↔ `materia-oscura.html` (prev/next nav + footer)
+- Películas linkeada desde nav de `index.html`, footer de `index.html` y `revista.html`
+
 ## Notas para futuras instancias
 
 - **No usar `npm` ni crear `package.json`**: el proyecto es deliberadamente sin build. Todo se carga por CDN.
-- **Mantener coherencia visual** entre páginas: misma nav, mismo footer, mismas fuentes, mismo patrón de breadcrumb (`Inicio / Conceptos / Nombre`).
-- **Imágenes**: usar URLs estables. Wikimedia Commons funciona para reactores argentinos; Unsplash para imágenes genéricas. Las URLs de Wikimedia con hashes incorrectos (como `/thumb/X/X/...`) dan 404 — verificar antes de usar.
+- **Mantener coherencia visual** entre páginas: misma nav, mismo footer, mismas fuentes, mismo patrón de breadcrumb.
+- **Imágenes**: usar URLs estables. Wikimedia Commons funciona para reactores argentinos; Unsplash para imágenes genéricas. Las URLs de Wikimedia con hashes incorrectos dan 404 — verificar antes de usar.
 - **Gradientes SVG**: los productos de fisión se diferencian por color (`baGrad` dorado, `krGrad` naranja, `xeGrad` cian, `srGrad` verde) según el canal de fisión real.
 - **Datos técnicos de reactores argentinos** (Atucha I, Atucha II, Embalse, CAREM, INVAP) están en la página principal — mantener consistencia si se expanden.
 - **No hay tests automatizados** ni CI. La verificación es manual abriendo las páginas en el navegador.
-</content>
-</invoke>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Películas y Series Nucleares — Cine, Ciencia y Energía | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#F59E0B', accentLight: '#FCD34D',
+              cyan: '#00E5FF', oro: '#F59E0B',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #F59E0B; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #F59E0B; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #F59E0B, #FCD34D); }
+    .movie-card { background: #0B1014; border: 1px solid rgba(255,255,255,0.05); border-left: 3px solid #F59E0B; transition: all 0.3s ease; }
+    .movie-card:hover { border-color: rgba(245,158,11,0.3); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,158,11,0.1); }
+    .movie-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; line-height: 1.3; }
+    .movie-card .year { font-size: 11px; color: #5A6B72; margin-bottom: 0.75rem; font-family: 'Inter', sans-serif; }
+    .movie-card .year em { color: #FCD34D; font-style: normal; }
+    .movie-card p { font-size: 14px; color: #A8B5BD; line-height: 1.6; margin-bottom: 1rem; }
+    .movie-card .trailer-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 1rem; background: #06090C; }
+    .movie-card .trailer-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .badge { display: inline-block; font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 8px; margin-bottom: 0.6rem; }
+    .badge-film { background: rgba(220,38,38,0.15); color: #F87171; }
+    .badge-series { background: rgba(59,130,246,0.15); color: #60A5FA; }
+    .badge-doc { background: rgba(38,166,154,0.15); color: #2DD4BF; }
+    .imdb-link { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #F59E0B; text-decoration: none; transition: color 0.2s; }
+    .imdb-link:hover { color: #fff; }
+    .nav-back { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: #FCD34D; }
+    @media (max-width: 640px) { .movie-card h3 { font-size: 1.1rem; } }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs">
+        <a href="../index.html" class="nav-back">
+          <span class="iconify" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/50">/</span>
+        <span class="text-nucleo-accent font-semibold">Películas y Series</span>
+      </div>
+      <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1">Cine y Ciencia</span>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-28 pb-12 md:pt-36 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 40% 50%, #F59E0B 1px, transparent 1px), radial-gradient(circle at 70% 30%, #F59E0B 1px, transparent 1px); background-size: 50px 50px, 70px 70px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(245,158,11,0.12) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 text-center">
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <div class="accent-line"></div>
+      <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Cine, Ciencia y Energía</span>
+      <div class="accent-line"></div>
+    </div>
+    <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">Películas y Series <span class="text-nucleo-accent">Nucleares</span></h1>
+    <p class="text-lg md:text-xl text-nucleo-silver max-w-2xl mx-auto leading-relaxed">Documentales, biopics y ficciones que llevaron la energía nuclear al cine. Historias de científicos, accidentes, dilemas éticos y el futuro de la energía atómica. Cada título incluye su tráiler oficial para ver en clase o en casa.</p>
+  </div>
+</section>
+
+<section class="relative py-12 md:py-16 bg-nucleo-black">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+
+    <!-- Filtros -->
+    <div class="flex items-center gap-3 mb-8 flex-wrap">
+      <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-silverDark" style="font-family:'Inter',sans-serif;">Filtrar por:</span>
+      <span class="badge badge-film">Películas</span>
+      <span class="badge badge-series">Series</span>
+      <span class="badge badge-doc">Documentales</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- 1. Chernobyl -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/watch?v=s9APLXM9Ei8" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Chernobyl · HBO →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-series">Miniserie · 5 episodios</span>
+          <h3>Chernobyl</h3>
+          <p class="year">HBO · 2019 · Creador: <em>Craig Mazin</em></p>
+          <p>Miniserie que dramatiza el desastre nuclear del 26 de abril de 1986. Sigue al científico Valeri Legásov y a la física Uliana Jomiuk mientras lidian con la explosión del reactor 4, el encubrimiento soviético y la operación de limpieza. Basada en testimonios reales del libro <em>Voces de Chernóbil</em> de Svetlana Aleksiévich. Ideal para entender la física de un reactor RBMK, los efectos de la radiación en el cuerpo y la importancia de la transparencia científica. 19 premios Emmy.</p>
+          <a href="https://www.imdb.com/title/tt7366338/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 2. Oppenheimer -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/watch?v=uYPbbksJxIg" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Oppenheimer · Universal →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-film">Película</span>
+          <h3>Oppenheimer</h3>
+          <p class="year">2023 · Director: <em>Christopher Nolan</em></p>
+          <p>Thriller biográfico que sigue la vida de J. Robert Oppenheimer, el físico que lideró el Laboratorio de Los Álamos durante el Proyecto Manhattan. Basada en <em>American Prometheus</em>, entrelaza sus estudios en Europa, la construcción de las bombas en el desierto de Nuevo México, la prueba Trinity, y la audiencia de 1954 donde le revocaron su credencial de seguridad. 7 premios Oscar. Introduce fisión nuclear, reacción en cadena y el dilema ético de las armas atómicas.</p>
+          <a href="https://www.imdb.com/title/tt15398776/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 3. El síndrome de China -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/watch?v=bIGH1AfIS18" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">El síndrome de China · 1979 →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-film">Película</span>
+          <h3>El síndrome de China</h3>
+          <p class="year">1979 · Director: <em>James Bridges</em></p>
+          <p>Thriller con Jane Fonda, Jack Lemmon y Michael Douglas sobre los peligros de la negligencia corporativa en centrales nucleares. Una reportera presencia un SCRAM de emergencia y el supervisor descubre radiografías de soldadura falsificadas. Estrenada 12 días <em>antes</em> del accidente real de Three Mile Island, lo que le dio una relevancia profética. Explica el concepto de fusión del núcleo, barras de control y cultura de seguridad. Una de las películas más influyentes en el debate nuclear.</p>
+          <a href="https://www.imdb.com/title/tt0078966/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 4. Madame Curie (Radioactive) -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/watch?v=mU0oOUTo5zo" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Madame Curie · Prime Video →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-film">Película</span>
+          <h3>Madame Curie</h3>
+          <p class="year">2019 · Directora: <em>Marjane Satrapi</em></p>
+          <p>Bioprotagonizada por Rosamund Pike, narra la vida de Marie Skłodowska-Curie, la científica que descubrió el polonio y el radio, acuñó el término "radiactividad" y fue la primera persona en ganar dos Premios Nobel. La película entrelaza su lucha contra el sexismo académico con flash-forwards que muestran las consecuencias de sus descubrimientos: la radioterapia salvando vidas, Hiroshima en 1945 y Chernóbil en 1986. Introduce radiactividad natural, unidades Curie y la dualidad de la ciencia nuclear.</p>
+          <a href="https://www.imdb.com/title/tt6017756/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 5. Creadores de sombras -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/results?search_query=Fat+Man+Little+Boy+1989+official+trailer" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Creadores de sombras · 1989 →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-film">Película</span>
+          <h3>Creadores de sombras</h3>
+          <p class="year">1989 · Director: <em>Roland Joffé</em></p>
+          <p>Drama histórico con Paul Newman como el General Leslie Groves, que narra el Proyecto Manhattan desde el enfrentamiento entre el militar metódico que construyó Los Álamos y el físico atormentado Oppenheimer. Muestra el diseño de las bombas (implosión de plutonio vs. cañón de uranio), el accidente del núcleo demoníaco —el experimento "Tickling the Dragon's Tail" que mató al científico Louis Slotin—, y la prueba Trinity. Título original: <em>Fat Man and Little Boy</em>, los nombres clave de las bombas.</p>
+          <a href="https://www.imdb.com/title/tt0097336/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 6. Silkwood -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/results?search_query=Silkwood+1983+Meryl+Streep+official+trailer" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Silkwood · 1983 →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-film">Película</span>
+          <h3>Silkwood</h3>
+          <p class="year">1983 · Director: <em>Mike Nichols</em></p>
+          <p>Meryl Streep interpreta a Karen Silkwood, trabajadora de una planta de plutonio que se convirtió en denunciante al descubrir gravísimas violaciones de seguridad: falsificación de informes y contaminación radiactiva de trabajadores. Introduce el combustible MOX (óxido mixto de uranio y plutonio), los riesgos de exposición al plutonio y la vigilancia radiológica ocupacional. Murió en 1974 en un accidente sospechoso cuando llevaba pruebas a un periodista. Su caso sentó precedentes legales sobre responsabilidad industrial nuclear.</p>
+          <a href="https://www.imdb.com/title/tt0086312/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 7. The Days (Netflix) -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/results?search_query=The+Days+Netflix+2023+official+trailer" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">The Days · Netflix →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-series">Miniserie · 8 episodios</span>
+          <h3>The Days</h3>
+          <p class="year">Netflix · 2023 · Creador: <em>Jun Masumoto</em></p>
+          <p>Miniserie japonesa de Netflix que dramatiza el desastre de Fukushima Daiichi desde adentro de la sala de control. Sigue a los operadores de la central, a los directivos de TEPCO y al gobierno japonés durante los siete días críticos que siguieron al terremoto y tsunami del 11 de marzo de 2011. A diferencia del cine de catástrofe, <em>The Days</em> se centra en el horror silencioso de hombres atrapados en una instalación sin electricidad, sin instrumentos y con tres reactores camino a la fusión. Ideal para entender la diferencia entre accidente de diseño (Chernobyl) y accidente por desastre natural (Fukushima), y el concepto de <em>station blackout</em>.</p>
+          <a href="https://www.imdb.com/title/tt22074484/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 8. Command and Control -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/results?search_query=Command+and+Control+2016+PBS+official+trailer" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Command and Control · 2016 →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-doc">Documental</span>
+          <h3>Command and Control</h3>
+          <p class="year">2016 · Director: <em>Robert Kenner</em> · PBS</p>
+          <p>Documental de PBS que reconstruye el accidente del misil Titan II en Damascus, Arkansas (1980): una llave de 4 kg perforó el tanque de combustible, amenazando con detonar una cabeza nuclear de 9 megatones (600 veces Hiroshima). Alterna la cronología del accidente con docenas de "Broken Arrow" —incidentes con armas nucleares que casi provocan una detonación accidental. Basado en el libro de Eric Schlosser. Introduce propelentes hipergólicos y el principio de fail-safe.</p>
+          <a href="https://www.imdb.com/title/tt5598206/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 9. Pandora's Promise -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/watch?v=bDw3ET3zqxk" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Pandora's Promise · 2013 →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-doc">Documental</span>
+          <h3>La promesa de Pandora</h3>
+          <p class="year">2013 · Director: <em>Robert Stone</em></p>
+          <p>Documental que sigue a ambientalistas prominentes que pasaron de antinucleares a defensores de la energía atómica como herramienta contra el cambio climático. Entrevista a Stewart Brand, Mark Lynas y Richard Rhodes. Recorre Three Mile Island, Chernóbil y Fukushima, explica dosimetría con ejemplos cotidianos (dosis equivalente en bananas), y presenta tecnologías avanzadas: reactores de Generación IV, torio, IFR y SMR. Excelente para el debate informado sobre matriz energética.</p>
+          <a href="https://www.imdb.com/title/tt1992193/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 10. Into Eternity -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/results?search_query=Into+Eternity+2010+Onkalo+official+trailer" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Into Eternity · 2010 →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-doc">Documental</span>
+          <h3>Into Eternity (Hacia la eternidad)</h3>
+          <p class="year">2010 · Director: <em>Michael Madsen</em></p>
+          <p>Documental filosófico sobre la construcción de Onkalo, en Finlandia: el primer repositorio geológico profundo del mundo para residuos nucleares de alta actividad. El director se dirige a humanos del futuro dentro de 100.000 años —más tiempo del que existe la civilización— y plantea preguntas inquietantes: ¿cómo advertirles del peligro si ningún idioma actual será comprensible? ¿Cómo evitar que futuros arqueólogos lo confundan con un tesoro? Una obra sobre responsabilidad intergeneracional, ética e ingeniería.</p>
+          <a href="https://www.imdb.com/title/tt1194612/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 11. The Day After Trinity -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:film" data-width="32" style="color:#F59E0B;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Sin tráiler oficial en YouTube</p>
+            <a href="https://archive.org/details/thedayaftertrinity" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Ver completo en Internet Archive →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-doc">Documental</span>
+          <h3>The Day After Trinity</h3>
+          <p class="year">1981 · Director: <em>Jon H. Else</em></p>
+          <p>Documental nominado al Oscar y ganador del Premio Peabody sobre la vida de Oppenheimer. Su valor excepcional: incluye entrevistas reales con los científicos de Los Álamos —Hans Bethe, Robert Serber, Frank Oppenheimer, I.I. Rabi, Freeman Dyson— más imágenes de archivo recién desclasificadas. El título alude a la reflexión del propio Oppenheimer: "Debió hacerse el día después de Trinity", sobre el control internacional de armas nucleares. No tiene tráiler en YouTube pero está disponible completo en Internet Archive.</p>
+          <a href="https://www.imdb.com/title/tt0080594/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+      <!-- 12. Genius: Einstein -->
+      <div class="movie-card">
+        <div class="trailer-wrap" style="padding-bottom:0; height:auto;">
+          <div style="padding:2rem; text-align:center; background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.1); display:flex; flex-direction:column; align-items:center; gap:0.75rem;">
+            <span class="iconify" data-icon="lucide:youtube" data-width="32" style="color:#FF0000;"></span>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:#FCD34D; font-weight:600; margin:0;">Ver tráiler oficial en YouTube</p>
+            <a href="https://www.youtube.com/results?search_query=Genius+Einstein+National+Geographic+official+trailer" target="_blank" rel="noopener" style="font-family:'Inter',sans-serif; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#fff; text-decoration:none; padding:0.5rem 1rem; border:1px solid rgba(245,158,11,0.3); transition:all 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.1)';" onmouseout="this.style.background='transparent';">Genius: Einstein · NatGeo →</a>
+          </div>
+        </div>
+        <div style="padding: 0 1.5rem 1.5rem 1.5rem;">
+          <span class="badge badge-series">Serie · 10 episodios</span>
+          <h3>Genius: Einstein</h3>
+          <p class="year">National Geographic · 2017 · Creador: <em>Noah Pink</em></p>
+          <p>Primera temporada de la serie antológica <em>Genius</em>, protagonizada por Geoffrey Rush como el Einstein mayor y Johnny Flynn como el joven. Recorre toda su vida: el empleo en la oficina de patentes, el año milagroso de 1905, la relatividad, el ascenso del nazismo, su exilio en Estados Unidos, la carta a Roosevelt que desencadenó el Proyecto Manhattan, y su profundo arrepentimiento por haber contribuido indirectamente a la bomba atómica. Una producción visualmente deslumbrante que entrelaza la evolución de sus ideas científicas con el drama político de la primera mitad del siglo XX. Ideal para entender el vínculo entre ciencia, guerra y energía nuclear a través de la biografía del físico más icónico de la historia.</p>
+          <a href="https://www.imdb.com/title/tt5673782/" target="_blank" rel="noopener" class="imdb-link">IMDb <span class="iconify" data-icon="lucide:external-link" data-width="11"></span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="relative py-10 bg-nucleo-black border-t border-white/5 mt-8">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 bg-nucleo-accent flex items-center justify-center rounded-sm">
+          <span class="iconify text-nucleo-black" data-icon="lucide:clapperboard" data-width="16"></span>
+        </div>
+        <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-nucleo-silverDark">
+          <span>Prof. Pereyra, Javier</span>
+          <span style="color:#5A6B72;">·</span>
+          <span>© 2026 — Material Educativo</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="../index.html#temas" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Temas</a>
+        <a href="../revista.html" class="text-[10px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Revista</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('.movie-card');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  els.forEach(function(el){
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    obs.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
