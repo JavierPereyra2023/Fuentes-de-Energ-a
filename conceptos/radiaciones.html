@@ -116,7 +116,7 @@
         <span class="text-nucleo-accent">alfa, beta, gamma, neutrones</span>
       </h1>
       <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
-        La radiación es energía que viaja en forma de partículas u ondas electromagnéticas. La radiación ionizante —alfa, beta, gamma, neutrones— interactúa con la materia de formas distintas, y entender esas diferencias es clave para la protección, la medicina y la tecnología.
+        La radiación es energía que se propaga como partículas u ondas electromagnéticas. Alfa, beta y gamma son directamente ionizantes; los neutrones producen ionización de manera indirecta. Entender cómo interactúan con la materia es clave para la protección, la medicina y la tecnología.
       </p>
       <div class="flex flex-wrap gap-2">
         <span class="chip">Alfa α</span>
@@ -179,10 +179,10 @@
           <strong class="text-nucleo-accentLight">Beta más (β⁺):</strong> un positrón —la antipartícula del electrón— emitido cuando un protón se convierte en neutrón. Al encontrarse con un electrón se aniquilan y producen dos fotones de 511 keV, base del PET.
         </li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40">
-          <strong class="text-nucleo-accentLight">Gamma (γ):</strong> radiación electromagnética de muy alta energía (fotones), sin masa ni carga. <strong class="text-nucleo-accent">Alto poder de penetración</strong>: se necesita plomo o concreto grueso para atenuarla. Acompaña a la mayoría de las desintegraciones alfa y beta.
+          <strong class="text-nucleo-accentLight">Gamma (γ):</strong> radiación electromagnética de alta energía (fotones), sin masa ni carga. <strong class="text-nucleo-accent">Alto poder de penetración</strong>: se necesitan espesores adecuados de plomo, acero o concreto para atenuarla. Se emite cuando un núcleo queda excitado tras algunas desintegraciones alfa o beta y pasa a un estado de menor energía.
         </li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40">
-          <strong class="text-nucleo-accentLight">Neutrones:</strong> partículas neutras, muy penetrantes. No son detenidos por materiales densos como el plomo —se necesita <strong class="text-nucleo-accent">agua, concreto o materiales ricos en hidrógeno</strong> para frenarlos mediante colisiones elásticas.
+          <strong class="text-nucleo-accentLight">Neutrones:</strong> partículas neutras que pueden ser muy penetrantes. Primero se los <strong class="text-nucleo-accent">modera</strong> con agua, polietileno o concreto rico en hidrógeno; luego conviene capturarlos con boro u otros absorbentes. El plomo no es un moderador eficaz y se reserva, si hace falta, para los fotones secundarios.
         </li>
       </ul>
       <div class="equation-block">
@@ -199,185 +199,62 @@
         </div>
         <div class="px-4 py-3 border-l-2" style="border-color: rgba(255,179,0,0.6); background: rgba(255,179,0,0.04);">
           <div class="font-heading text-lg font-bold text-nucleo-warning">Beta β</div>
-          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Detenida por: aluminio, plástico<br>Carga: ±1 · Masa: electrón</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Frenada por: plástico o acrílico<br>Carga: ±1 · Masa: electrón</div>
         </div>
         <div class="px-4 py-3 border-l-2" style="border-color: rgba(0,229,255,0.6); background: rgba(0,229,255,0.04);">
           <div class="font-heading text-lg font-bold text-nucleo-cyan">Gamma γ</div>
-          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Atenuada por: plomo, concreto<br>Carga: 0 · Masa: 0 (fotón)</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Atenuada por: plomo o concreto<br>Carga: 0 · Masa: 0 (fotón)</div>
         </div>
         <div class="px-4 py-3 border-l-2" style="border-color: rgba(168,85,247,0.6); background: rgba(168,85,247,0.04);">
           <div class="font-heading text-lg font-bold" style="color: #C084FC;">Neutrón n</div>
-          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Frenado por: agua, concreto<br>Carga: 0 · Masa: 1 u</div>
+          <div class="text-xs text-nucleo-silverDark mt-1" style="font-family:'Inter',sans-serif;">Moderado por: agua o polietileno<br>Carga: 0 · Masa: 1 u</div>
         </div>
       </div>
 
       <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
         <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
           <span class="iconify text-nucleo-accent" data-icon="lucide:radiation" data-width="16"></span>
-          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Diagrama animado · Penetración de α, β, X, γ y neutrones</span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Diagrama animado · Radiación y materiales de blindaje</span>
         </div>
 
-        <svg viewBox="0 0 1020 445" class="w-full" role="img" aria-label="Penetración de radiaciones alfa, beta, rayos X, gamma y neutrones a través de distintos materiales">
+        <div class="overflow-x-auto" aria-label="Diagrama desplazable en pantallas angostas">
+          <svg viewBox="0 0 1020 510" class="w-full min-w-[820px]" role="img" aria-label="Comparación de blindajes para radiación alfa, beta, gamma y neutrones">
           <defs>
-            <radialGradient id="fuenteRad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FF8A65"/>
-              <stop offset="55%" stop-color="#FF6E40"/>
-              <stop offset="100%" stop-color="#D84315"/>
-            </radialGradient>
-            <radialGradient id="alphaGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FCA5A5"/>
-              <stop offset="55%" stop-color="#DC2626"/>
-              <stop offset="100%" stop-color="#7F1D1D"/>
-            </radialGradient>
-            <radialGradient id="betaGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FDE68A"/>
-              <stop offset="55%" stop-color="#FFB300"/>
-              <stop offset="100%" stop-color="#C77F00"/>
-            </radialGradient>
-            <radialGradient id="xrayGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#DBEAFE"/>
-              <stop offset="55%" stop-color="#3B82F6"/>
-              <stop offset="100%" stop-color="#1D4ED8"/>
-            </radialGradient>
-            <radialGradient id="gammaGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#CFFAFE"/>
-              <stop offset="55%" stop-color="#00E5FF"/>
-              <stop offset="100%" stop-color="#00B8D4"/>
-            </radialGradient>
-            <radialGradient id="neutronR" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#E9D5FF"/>
-              <stop offset="55%" stop-color="#C084FC"/>
-              <stop offset="100%" stop-color="#7C3AED"/>
-            </radialGradient>
-            <radialGradient id="flashG" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
-              <stop offset="40%" stop-color="#FF8A65" stop-opacity="0.5"/>
-              <stop offset="100%" stop-color="#FF6E40" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="barrierGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
-              <stop offset="50%" stop-color="rgba(255,255,255,0.04)"/>
-              <stop offset="100%" stop-color="rgba(255,255,255,0.10)"/>
-            </linearGradient>
-            <linearGradient id="concreteGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="rgba(180,180,180,0.18)"/>
-              <stop offset="50%" stop-color="rgba(140,140,140,0.10)"/>
-              <stop offset="100%" stop-color="rgba(180,180,180,0.18)"/>
-            </linearGradient>
-            <filter id="glowCyan">
-              <feGaussianBlur stdDeviation="2.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="glowBlue">
-              <feGaussianBlur stdDeviation="2.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
+            <linearGradient id="rad-source" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8A65"/><stop offset="1" stop-color="#D84315"/></linearGradient>
+            <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F7E7B5"/><stop offset="1" stop-color="#C9A96A"/></linearGradient>
+            <linearGradient id="acrylic" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#D7F7FF" stop-opacity=".82"/><stop offset="1" stop-color="#48B9D2" stop-opacity=".35"/></linearGradient>
+            <linearGradient id="lead" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#B9C3CC"/><stop offset="1" stop-color="#53616B"/></linearGradient>
+            <linearGradient id="poly" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#DDE9EC"/><stop offset="1" stop-color="#6EA6B4"/></linearGradient>
+            <filter id="soft-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="arrow-a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7Z" fill="#EF4444"/></marker>
+            <marker id="arrow-b" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7Z" fill="#FFB300"/></marker>
+            <marker id="arrow-g" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7Z" fill="#00E5FF"/></marker>
+            <marker id="arrow-n" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7Z" fill="#C084FC"/></marker>
           </defs>
-
-          <text x="510" y="28" fill="#FF6E40" font-size="13" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700" letter-spacing="2">PENETRACIÓN DE α · β · X · γ · n</text>
-          <text x="510" y="46" fill="#5A6B72" font-size="10" font-family="Inter,sans-serif" text-anchor="middle">partículas (α, β, n) y ondas (X, γ) · cada material frena un tipo distinto: papel, aluminio, plomo, hormigón y agua</text>
-
-          <text x="22" y="79" fill="#DC2626" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">α</text>
-          <text x="22" y="149" fill="#FFB300" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">β</text>
-          <text x="22" y="219" fill="#3B82F6" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">X</text>
-          <text x="22" y="289" fill="#00E5FF" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">γ</text>
-          <text x="22" y="359" fill="#C084FC" font-size="11" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">n</text>
-          <line x1="36" y1="75" x2="60" y2="75" stroke="#DC2626" stroke-width="1" opacity="0.4"/>
-          <line x1="36" y1="145" x2="60" y2="145" stroke="#FFB300" stroke-width="1" opacity="0.4"/>
-          <line x1="36" y1="215" x2="60" y2="215" stroke="#3B82F6" stroke-width="1" opacity="0.4"/>
-          <line x1="36" y1="285" x2="60" y2="285" stroke="#00E5FF" stroke-width="1" opacity="0.4"/>
-          <line x1="36" y1="355" x2="60" y2="355" stroke="#C084FC" stroke-width="1" opacity="0.4"/>
-
-          <g id="fuente">
-            <circle cx="80" cy="217" r="24" fill="url(#fuenteRad)" stroke="#D84315" stroke-width="1.5">
-              <animate attributeName="r" values="24;26;24" keyTimes="0;0.5;1" dur="3s" repeatCount="indefinite"/>
-            </circle>
-            <text x="80" y="221" fill="#FFFFFF" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="700">FUENTE</text>
-            <text x="80" y="258" fill="#A8B5BD" font-size="8" font-family="Inter,sans-serif" text-anchor="middle">radiactiva</text>
+          <rect width="1020" height="510" fill="#090E12"/>
+          <text x="510" y="35" fill="#FF8A65" font-size="14" font-family="Inter,sans-serif" font-weight="700" text-anchor="middle" letter-spacing="1.8">RADIACIÓN Y MATERIALES DE BLINDAJE</text>
+          <text x="510" y="56" fill="#8A9AA3" font-size="10" font-family="Inter,sans-serif" text-anchor="middle">El material, el espesor y la energía determinan cuánto se reduce la radiación.</text>
+          <line x1="44" y1="78" x2="976" y2="78" stroke="#273139"/>
+          <g transform="translate(46 103)">
+            <circle cx="45" cy="170" r="34" fill="url(#rad-source)" filter="url(#soft-glow)"/><circle cx="45" cy="170" r="23" fill="none" stroke="#FFD1C2" stroke-opacity=".65"/>
+            <path d="M45 145v50M20 170h50M27 152l36 36M63 152l-36 36" stroke="#FFF5F0" stroke-width="1.5" opacity=".82"/>
+            <text x="45" y="222" fill="#FFB199" font-size="10" font-family="Inter,sans-serif" font-weight="700" text-anchor="middle">FUENTE</text><text x="45" y="237" fill="#8A9AA3" font-size="8" font-family="Inter,sans-serif" text-anchor="middle">emite radiación</text>
           </g>
-
-          <rect x="195" y="50" width="14" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
-          <text x="202" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">PAPEL</text>
-          <text x="202" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· piel ·</text>
-
-          <rect x="345" y="50" width="18" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.22)" stroke-width="0.5"/>
-          <text x="354" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">ALUMINIO</text>
-          <text x="354" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· acrílico ·</text>
-
-          <rect x="510" y="50" width="28" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.30)" stroke-width="0.5"/>
-          <text x="524" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">PLOMO</text>
-          <text x="524" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· acero ·</text>
-
-          <rect x="705" y="50" width="34" height="335" fill="url(#concreteGrad)" stroke="rgba(200,200,200,0.30)" stroke-width="0.6"/>
-          <text x="722" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">HORMIGÓN</text>
-          <text x="722" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· concreto ·</text>
-
-          <rect x="895" y="50" width="22" height="335" fill="url(#barrierGrad)" stroke="rgba(255,255,255,0.22)" stroke-width="0.5"/>
-          <text x="906" y="397" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif" text-anchor="middle" font-weight="600">AGUA</text>
-          <text x="906" y="408" fill="#5A6B72" font-size="7" font-family="Inter,sans-serif" text-anchor="middle">· parafina ·</text>
-
-          <circle cx="202" cy="75" r="5" fill="url(#flashG)" opacity="0">
-            <animate attributeName="r" values="0;0;22;0" keyTimes="0;0.17;0.185;0.22" dur="12s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;0;0.9;0" keyTimes="0;0.17;0.185;0.22" dur="12s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="8" fill="url(#alphaGrad)" stroke="#7F1D1D" stroke-width="0.8">
-            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.05;0.17;0.18;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.3 0 0.7 1; 0 0 1 1; 0 0 1 1" path="M 95 75 L 150 75 L 195 75 L 200 75 L 200 75"/>
-            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.17;0.185;1" dur="12s" repeatCount="indefinite"/>
-          </circle>
-
-          <circle cx="354" cy="145" r="5" fill="url(#flashG)" opacity="0">
-            <animate attributeName="r" values="0;0;22;0" keyTimes="0;0.3;0.32;0.37" dur="12s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;0;0.9;0" keyTimes="0;0.3;0.32;0.37" dur="12s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="5" fill="url(#betaGrad)" stroke="#C77F00" stroke-width="0.6">
-            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.3;0.31;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.4 0 0.6 1; 0 0 1 1; 0 0 1 1" path="M 95 145 L 270 145 L 345 145 L 354 145 L 354 145"/>
-            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.3;0.32;1" dur="12s" repeatCount="indefinite"/>
-          </circle>
-
-          <path d="M 95 215 Q 130 207 165 215 T 235 215 T 305 215 T 375 215 T 445 215 T 524 215 T 600 215 T 680 215 T 722 215 T 800 215 T 880 215 T 920 215" fill="none" stroke="#3B82F6" stroke-width="1.2" opacity="0.32" stroke-dasharray="0"/>
-          <circle r="4" fill="url(#xrayGrad)" stroke="#1D4ED8" stroke-width="0.5" filter="url(#glowBlue)">
-            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.45;0.7;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.4 0 0.6 1; 0.5 0 0.5 1; 0 0 1 1" path="M 95 215 L 150 209 L 220 221 L 290 209 L 360 221 L 430 209 L 500 221 L 524 215 L 600 211 L 660 219 L 720 213 L 760 215"/>
-            <animate attributeName="opacity" values="0;1;1;0.35;0.35" keyTimes="0;0.04;0.45;0.7;0.95" dur="12s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="524" cy="215" r="5" fill="url(#flashG)" opacity="0">
-            <animate attributeName="r" values="0;0;16;0" keyTimes="0;0.43;0.47;0.52" dur="12s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;0;0.7;0" keyTimes="0;0.43;0.47;0.52" dur="12s" repeatCount="indefinite"/>
-          </circle>
-
-          <path d="M 95 285 Q 130 277 165 285 T 235 285 T 305 285 T 375 285 T 445 285 T 524 285 T 600 285 T 680 285 T 722 285 T 800 285 T 880 285 T 920 285" fill="none" stroke="#00E5FF" stroke-width="1.2" opacity="0.32"/>
-          <circle r="4" fill="url(#gammaGrad)" stroke="#00B8D4" stroke-width="0.5" filter="url(#glowCyan)">
-            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.4;0.75;1" calcMode="spline" keySplines="0.3 0 0.7 1; 0.4 0 0.6 1; 0.5 0 0.5 1; 0 0 1 1" path="M 95 285 L 160 279 L 230 291 L 300 279 L 370 291 L 440 279 L 510 291 L 580 281 L 660 289 L 722 285 L 780 287 L 820 283 L 855 285"/>
-            <animate attributeName="opacity" values="0;1;1;0.3;0.3" keyTimes="0;0.04;0.4;0.75;0.95" dur="12s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="722" cy="285" r="5" fill="url(#flashG)" opacity="0">
-            <animate attributeName="r" values="0;0;16;0" keyTimes="0;0.72;0.76;0.81" dur="12s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;0;0.7;0" keyTimes="0;0.72;0.76;0.81" dur="12s" repeatCount="indefinite"/>
-          </circle>
-
-          <circle cx="906" cy="355" r="6" fill="url(#flashG)" opacity="0">
-            <animate attributeName="r" values="0;0;22;0" keyTimes="0;0.78;0.82;0.9" dur="12s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;0;0.85;0" keyTimes="0;0.78;0.82;0.9" dur="12s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="6" fill="url(#neutronR)" stroke="#7C3AED" stroke-width="0.6">
-            <animateMotion dur="12s" repeatCount="indefinite" keyTimes="0;0.04;0.4;0.78;0.82;1" calcMode="spline" keySplines="0.25 0 0.5 1; 0.4 0 0.4 1; 0.4 0 0.6 1; 0.6 0.4 0.5 0.6; 0 0 1 1" path="M 95 355 L 250 355 L 420 355 L 590 355 L 760 355 L 906 355 L 912 355"/>
-            <animate attributeName="opacity" values="0;1;1;1;1;0" keyTimes="0;0.04;0.4;0.78;0.82;0.92" dur="12s" repeatCount="indefinite"/>
-          </circle>
-
-          <g transform="translate(60 425)">
-            <circle r="6" fill="url(#alphaGrad)" stroke="#7F1D1D" stroke-width="0.5"/>
-            <text x="11" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">α · papel</text>
-            <circle cx="95" r="5" fill="url(#betaGrad)" stroke="#C77F00" stroke-width="0.5"/>
-            <text x="105" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">β · aluminio</text>
-            <circle cx="205" r="4" fill="url(#xrayGrad)" stroke="#1D4ED8" stroke-width="0.5"/>
-            <text x="214" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">X · plomo (onda)</text>
-            <circle cx="335" r="4" fill="url(#gammaGrad)" stroke="#00B8D4" stroke-width="0.5"/>
-            <text x="344" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">γ · hormigón (onda)</text>
-            <circle cx="475" r="5" fill="url(#neutronR)" stroke="#7C3AED" stroke-width="0.5"/>
-            <text x="485" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">n · agua/parafina</text>
-            <circle cx="640" r="7" fill="url(#fuenteRad)" stroke="#D84315" stroke-width="0.5"/>
-            <text x="652" y="3" fill="#A8B5BD" font-size="9" font-family="Inter,sans-serif">Fuente radiactiva</text>
+          <g font-family="Inter,sans-serif">
+            <text x="170" y="111" fill="#6F818B" font-size="9" font-weight="700" letter-spacing="1.4">RADIACIÓN</text><text x="405" y="111" fill="#6F818B" font-size="9" font-weight="700" letter-spacing="1.4">MATERIAL PRINCIPAL</text><text x="735" y="111" fill="#6F818B" font-size="9" font-weight="700" letter-spacing="1.4">RESULTADO</text>
+            <line x1="148" y1="160" x2="925" y2="160" stroke="#263139"/><line x1="148" y1="246" x2="925" y2="246" stroke="#263139"/><line x1="148" y1="332" x2="925" y2="332" stroke="#263139"/><line x1="148" y1="418" x2="925" y2="418" stroke="#263139"/>
+            <text x="170" y="143" fill="#F87171" font-size="18" font-weight="700">α</text><text x="198" y="142" fill="#D5E0E5" font-size="13" font-weight="700">Alfa</text><text x="198" y="157" fill="#8A9AA3" font-size="9">partícula pesada, +2e</text><path d="M286 147 H388" stroke="#EF4444" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-a)"><animate attributeName="stroke-dasharray" values="0,120;120,0" dur="2.4s" repeatCount="indefinite"/></path>
+            <rect x="405" y="124" width="195" height="46" rx="4" fill="url(#paper)" stroke="#E8CF92"/><path d="M420 135h165M420 145h165M420 155h165" stroke="#8D7040" stroke-opacity=".42"/><text x="503" y="145" fill="#3E321D" font-size="12" font-weight="700" text-anchor="middle">Papel o capa externa de piel</text><text x="503" y="159" fill="#604E2D" font-size="9" text-anchor="middle">detiene la alfa externa</text><path d="M655 140l14 14m0-14l-14 14" stroke="#F87171" stroke-width="2"/><text x="735" y="145" fill="#FCA5A5" font-size="12" font-weight="700">Se detiene</text><text x="735" y="160" fill="#8A9AA3" font-size="9">riesgo relevante si ingresa al cuerpo</text>
+            <text x="170" y="229" fill="#FCD34D" font-size="18" font-weight="700">β</text><text x="198" y="228" fill="#D5E0E5" font-size="13" font-weight="700">Beta</text><text x="198" y="243" fill="#8A9AA3" font-size="9">electrón o positrón</text><path d="M286 233 H388" stroke="#FFB300" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-b)"><animate attributeName="stroke-dasharray" values="0,120;120,0" dur="2.8s" repeatCount="indefinite"/></path>
+            <rect x="405" y="210" width="195" height="46" rx="4" fill="url(#acrylic)" stroke="#68D0E7"/><path d="M422 218l18 30m12-30l18 30m12-30l18 30m12-30l18 30m12-30l18 30m12-30l18 30m12-30l18 30" stroke="#2C98B2" stroke-opacity=".46"/><text x="503" y="231" fill="#DFFBFF" font-size="12" font-weight="700" text-anchor="middle">Plástico o acrílico</text><text x="503" y="245" fill="#A2DCE8" font-size="9" text-anchor="middle">bajo Z: reduce bremsstrahlung</text><path d="M655 226l14 14m0-14l-14 14" stroke="#FCD34D" stroke-width="2"/><text x="735" y="231" fill="#FDE68A" font-size="12" font-weight="700">Se frena</text><text x="735" y="246" fill="#8A9AA3" font-size="9">el espesor depende de su energía</text>
+            <text x="166" y="315" fill="#67E8F9" font-size="18" font-weight="700">γ</text><text x="198" y="314" fill="#D5E0E5" font-size="13" font-weight="700">Gamma / rayos X</text><text x="198" y="329" fill="#8A9AA3" font-size="9">fotones, sin masa ni carga</text><path d="M286 319 H388" stroke="#00E5FF" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-g)"><animate attributeName="stroke-dasharray" values="0,120;120,0" dur="3.2s" repeatCount="indefinite"/></path>
+            <rect x="405" y="296" width="86" height="46" rx="4" fill="url(#lead)" stroke="#C8D4DC"/><rect x="501" y="296" width="99" height="46" rx="4" fill="#67737B" stroke="#AAB6BC"/><circle cx="514" cy="308" r="3" fill="#A8B5BD"/><circle cx="541" cy="326" r="4" fill="#39454D"/><circle cx="572" cy="309" r="3" fill="#B9C2C6"/><text x="448" y="319" fill="#F3F6F7" font-size="11" font-weight="700" text-anchor="middle">PLOMO</text><text x="551" y="319" fill="#F3F6F7" font-size="10" font-weight="700" text-anchor="middle">CONCRETO</text><text x="503" y="333" fill="#D1DADD" font-size="8" text-anchor="middle">alta densidad o gran espesor</text><path d="M610 319h78" stroke="#00E5FF" stroke-width="2" stroke-dasharray="5 5" opacity=".35" marker-end="url(#arrow-g)"/><text x="735" y="317" fill="#A5F3FC" font-size="12" font-weight="700">Se atenúa</text><text x="735" y="332" fill="#8A9AA3" font-size="9">no hay blindaje absoluto</text>
+            <text x="168" y="401" fill="#D8B4FE" font-size="17" font-weight="700">n</text><text x="198" y="400" fill="#D5E0E5" font-size="13" font-weight="700">Neutrones</text><text x="198" y="415" fill="#8A9AA3" font-size="9">partículas neutras</text><path d="M286 405 H388" stroke="#C084FC" stroke-width="3" stroke-linecap="round" marker-end="url(#arrow-n)"><animate attributeName="stroke-dasharray" values="0,120;120,0" dur="3.6s" repeatCount="indefinite"/></path>
+            <rect x="405" y="382" width="132" height="46" rx="4" fill="url(#poly)" stroke="#9ED5DF"/><rect x="547" y="382" width="53" height="46" rx="4" fill="#587F78" stroke="#8FC5B9"/><text x="471" y="405" fill="#E4F6F8" font-size="11" font-weight="700" text-anchor="middle">AGUA / POLIETILENO</text><text x="573" y="405" fill="#DDF4EE" font-size="11" font-weight="700" text-anchor="middle">BORO</text><text x="503" y="419" fill="#B8E0E5" font-size="8" text-anchor="middle">modera</text><text x="573" y="419" fill="#BCE7DD" font-size="8" text-anchor="middle">captura</text><path d="M610 405h25" stroke="#C084FC" stroke-width="2" stroke-dasharray="4 4" opacity=".45" marker-end="url(#arrow-n)"/><text x="735" y="403" fill="#E9D5FF" font-size="12" font-weight="700">Modera + captura</text><text x="735" y="418" fill="#8A9AA3" font-size="9">puede requerir blindaje adicional</text>
           </g>
-        </svg>
+          <rect x="44" y="456" width="932" height="32" rx="4" fill="#11191F" stroke="#263139"/><text x="510" y="476" fill="#B9C8CF" font-size="10" font-family="Inter,sans-serif" text-anchor="middle">En diseño real se calculan energía, actividad, geometría, distancia y espesor; los materiales suelen combinarse.</text>
+          </svg>
+        </div>
 
         <p class="px-5 py-4 text-base text-nucleo-silver leading-relaxed border-t border-white/5">
           La <strong class="text-nucleo-accentLight">partícula alfa</strong> es tan grande que una simple hoja de papel basta para detenerla; la <strong class="text-nucleo-accentLight">beta</strong>, más chica, necesita aluminio o acrílico. Los <strong class="text-nucleo-accentLight">rayos X y gamma</strong> son ondas electromagnéticas —sin masa ni carga— que se atenúan con <strong class="text-nucleo-accent">plomo</strong> (más denso, ideal para X) o con <strong class="text-nucleo-accent">hormigón</strong> grueso (más barato y efectivo para gamma de alta energía en grandes instalaciones). Los <strong class="text-nucleo-accentLight">neutrones</strong> son la excepción: al no tener carga eléctrica ignoran el plomo y solo se frenan colisionando contra núcleos livianos —por eso el <strong class="text-nucleo-accent">agua, la parafina o el hormigón bórico</strong> ricos en hidrógeno son el blindaje correcto.
@@ -392,14 +269,14 @@
         <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Origen y fuentes de radiación</h2>
       </div>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
-        Aproximadamente el <span class="inline-stat"><span class="val">80%</span></span> de la radiación que recibe una persona proviene de fuentes <strong class="text-nucleo-accent">naturales</strong>: radiación cósmica (dependiente de la altitud —a mayor altura, mayor exposición), radiación terrestre (uranio, torio, potasio-40 en suelos y rocas), gas radón (producto de la desintegración del uranio que se acumula en sótanos), y fuentes internas (K-40 y C-14 dentro de nuestro propio cuerpo).
+        Como referencia mundial, cerca del <span class="inline-stat"><span class="val">80%</span></span> de la exposición promedio proviene de fuentes <strong class="text-nucleo-accent">naturales</strong>; la proporción varía según el lugar y las prácticas médicas: radiación cósmica (dependiente de la altitud —a mayor altura, mayor exposición), radiación terrestre (uranio, torio, potasio-40 en suelos y rocas), gas radón (producto de la desintegración del uranio que se acumula en sótanos), y fuentes internas (K-40 y C-14 dentro de nuestro propio cuerpo).
       </p>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
-        El <span class="inline-stat"><span class="val">~20%</span></span> restante proviene de fuentes <strong class="text-nucleo-accentLight">artificiales</strong>: usos médicos (radiografías, tomografías, medicina nuclear, radioterapia), aplicaciones industriales, y una fracción ínfima de la energía nuclear en operación normal. También persiste una pequeña contribución residual de las pruebas nucleares atmosféricas realizadas entre 1945 y 1963.
+        El aporte restante procede de fuentes <strong class="text-nucleo-accentLight">artificiales</strong>, principalmente de usos médicos: usos médicos (radiografías, tomografías, medicina nuclear, radioterapia), aplicaciones industriales, y una fracción ínfima de la energía nuclear en operación normal. También persiste una pequeña contribución residual de las pruebas nucleares atmosféricas realizadas entre 1945 y 1963.
       </p>
       <div class="dato-box">
         <span class="dato-label">Dosis comparativas</span>
-        <p>Una persona recibe en promedio <strong>2,4 mSv por año</strong> de radiación natural. Un vuelo Buenos Aires-Miami agrega ~0,03 mSv por la altitud. Una radiografía de tórax: ~0,1 mSv. Una tomografía computada de tórax: <strong>~7 mSv</strong>. El límite anual para público general establecido por la ARN es de 1 mSv (adicional al fondo natural).</p>
+        <p>El promedio mundial de radiación natural es de <strong>2,4 mSv por año</strong>, pero cambia mucho con la geología y la altitud. Un vuelo Buenos Aires-Miami agrega ~0,03 mSv. Una radiografía de tórax: ~0,1 mSv. Una tomografía computada de tórax: <strong>~7 mSv</strong>; estos valores dependen del equipo y protocolo. El límite anual para público general establecido por la ARN es de 1 mSv, adicional al fondo natural y a la exposición médica justificada.</p>
       </div>
     </section>
 
@@ -410,14 +287,14 @@
         <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Efectos biológicos de la radiación</h2>
       </div>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
-        La radiación ionizante daña el tejido biológico creando <strong class="text-nucleo-accent">radicales libres</strong> que rompen enlaces químicos. El blanco más crítico es el <strong class="text-nucleo-accent">ADN</strong>: si el daño es intenso puede causar muerte celular, y si es subletal puede provocar mutaciones que deriven en cáncer. Los efectos se clasifican en dos categorías:
+        La radiación ionizante puede dañar el tejido biológico de forma directa o al producir <strong class="text-nucleo-accent">radicales libres</strong> a partir del agua. Un blanco crítico es el <strong class="text-nucleo-accent">ADN</strong>: si el daño es intenso puede causar muerte celular y, si se repara de modo incorrecto, aumentar la probabilidad de mutaciones y cáncer. Los efectos se clasifican en dos categorías:
       </p>
       <ul class="text-lg md:text-xl text-nucleo-silver space-y-3 my-6" style="list-style: none;">
         <li class="pl-5 border-l-2 border-nucleo-accent/40">
-          <strong class="text-nucleo-accentLight">Efectos determinísticos (reacciones tisulares):</strong> ocurren por encima de una dosis umbral. Ejemplos: quemaduras en la piel, cataratas, síndrome de radiación aguda (náuseas, pérdida de cabello, daño a la médula ósea por encima de ~1 Sv). La severidad aumenta con la dosis.
+          <strong class="text-nucleo-accentLight">Efectos determinísticos (reacciones tisulares):</strong> ocurren por encima de una dosis umbral. Ejemplos: quemaduras en la piel, cataratas, síndrome de radiación aguda (náuseas, pérdida de cabello, daño a la médula ósea por encima de ~1 Sv de dosis corporal aguda). La severidad aumenta con la dosis.
         </li>
         <li class="pl-5 border-l-2 border-nucleo-warning/40">
-          <strong class="text-nucleo-warning">Efectos estocásticos:</strong> no tienen umbral conocido —la probabilidad aumenta con la dosis pero la severidad no depende de ella. El principal riesgo es el cáncer y los efectos hereditarios. El modelo <span class="glosario" data-tip="Linear No-Threshold: modelo de protección radiológica que asume que el riesgo es proporcional a la dosis incluso para dosis muy bajas, sin umbral de seguridad. Es un modelo conservador para la protección." style="color:#FF8A65;border-bottom-color:#FF8A65;">LNT (Linear No-Threshold)</span> —que asume que no hay dosis totalmente segura— guía las normas internacionales de protección por precaución.
+          <strong class="text-nucleo-warning">Efectos estocásticos:</strong> no tienen umbral conocido —la probabilidad aumenta con la dosis pero la severidad no depende de ella. El principal riesgo es el cáncer y los efectos hereditarios. El modelo <span class="glosario" data-tip="Linear No-Threshold: modelo de protección radiológica que, para regular dosis bajas, supone que el riesgo aumenta con la dosis sin introducir un umbral. Es un supuesto prudente de protección, no una medición directa del riesgo individual." style="color:#FF8A65;border-bottom-color:#FF8A65;">LNT (Linear No-Threshold)</span> se usa de manera prudente en protección radiológica; no permite predecir el riesgo individual a dosis muy bajas.
         </li>
       </ul>
       <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
@@ -481,7 +358,7 @@
         </div>
         <div class="px-4 py-3 border-l-2 border-nucleo-warning/60 bg-nucleo-dark/30">
           <div class="font-heading text-lg font-bold text-nucleo-warning">Sievert (Sv)</div>
-          <div class="text-xs text-nucleo-silver mt-1">Dosis equivalente<br>Sv = Gy × factor de peso</div>
+          <div class="text-xs text-nucleo-silver mt-1">Dosis equivalente o efectiva<br>Gy × factores de ponderación</div>
         </div>
         <div class="px-4 py-3 border-l-2 border-nucleo-cyan/60 bg-nucleo-dark/30">
           <div class="font-heading text-lg font-bold text-nucleo-cyan">Becquerel (Bq)</div>
@@ -489,7 +366,7 @@
         </div>
       </div>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
-        El <strong class="text-nucleo-accent">factor de ponderación</strong> de la radiación refleja la efectividad biológica de cada tipo: para alfa es 20 (muy dañina por unidad de energía), para beta y gamma es 1, y para neutrones varía con la energía (entre 5 y 20).
+        El <strong class="text-nucleo-accent">factor de ponderación de la radiación</strong> representa, para protección radiológica, la distinta eficacia biológica de cada tipo: para alfa es 20, para beta y gamma es 1, y para neutrones es una función de su energía, con valores que pueden acercarse a 20.
       </p>
     </section>
 
@@ -510,11 +387,11 @@
           <strong class="text-nucleo-accentLight">Distancia:</strong> mantenerse lo más lejos posible. La dosis sigue la <strong class="text-nucleo-accent">ley del inverso del cuadrado</strong>: \( \text{dosis} \propto 1/r^2 \). Duplicar la distancia reduce la exposición a un cuarto.
         </li>
         <li class="pl-5 border-l-2 border-nucleo-accent/40">
-          <strong class="text-nucleo-accentLight">Blindaje:</strong> interponer materiales adecuados. Alfa: nada (papel). Beta: plástico o acrílico. Gamma y X: plomo o concreto. Neutrones: agua, parafina, concreto con boro.
+          <strong class="text-nucleo-accentLight">Blindaje:</strong> interponer materiales adecuados y con el espesor calculado. Alfa: papel o piel para exposición externa. Beta: plástico o acrílico. Gamma y X: plomo, acero o concreto. Neutrones: materiales ricos en hidrógeno para moderar y boro para capturar.
         </li>
       </ul>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
-        El principio <strong class="text-nucleo-accent">ALARA</strong> (As Low As Reasonably Achievable — "tan bajo como sea razonablemente posible") guía toda la protección radiológica: cada exposición debe justificarse (el beneficio debe superar el riesgo), optimizarse (usar la dosis mínima necesaria) y limitarse (no exceder los límites legales).
+        El principio <strong class="text-nucleo-accent">ALARA</strong> (As Low As Reasonably Achievable — "tan bajo como sea razonablemente posible") guía la optimización de la protección: cada práctica debe justificarse, las exposiciones deben optimizarse y no deben superarse los límites legales.
       </p>
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
         En Argentina, la <strong class="text-nucleo-accentLight">Autoridad Regulatoria Nuclear (ARN)</strong> establece los límites de dosis: 1 mSv/año para el público general, 20 mSv/año promediado en 5 años para trabajadores ocupacionalmente expuestos (con un máximo de 50 mSv en cualquier año individual). Estos valores siguen las recomendaciones de la Comisión Internacional de Protección Radiológica (ICRP) y del OIEA.
@@ -532,15 +409,15 @@
       <ul class="space-y-2.5" style="list-style: none;">
         <li class="flex items-start gap-2 text-base text-nucleo-silver">
           <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
-          <span>Cuatro tipos de radiación nuclear: <strong class="text-nucleo-accentLight">alfa</strong> (poco penetrante), <strong class="text-nucleo-accentLight">beta</strong> (media), <strong class="text-nucleo-accentLight">gamma</strong> (alta penetración, necesita plomo), <strong class="text-nucleo-accentLight">neutrones</strong> (muy penetrantes, necesitan agua/concreto).</span>
+          <span>Alfa, beta, gamma y neutrones interactúan de forma distinta: el blindaje se elige por tipo, energía y espesor. Para neutrones se combina moderación con materiales ricos en hidrógeno y captura con boro.</span>
         </li>
         <li class="flex items-start gap-2 text-base text-nucleo-silver">
           <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
-          <span>El <strong class="text-nucleo-accentLight">80% de la radiación</strong> que recibimos es natural (cósmica, terrestre, radón). El resto proviene principalmente de usos médicos.</span>
+          <span>En el promedio mundial predominan las fuentes naturales (cósmica, terrestre y radón); la proporción real cambia según la región y los estudios médicos recibidos.</span>
         </li>
         <li class="flex items-start gap-2 text-base text-nucleo-silver">
           <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
-          <span>La radiación ionizante daña el ADN. Efectos <strong class="text-nucleo-accentLight">determinísticos</strong> (umbral) y <strong class="text-nucleo-accentLight">estocásticos</strong> (probabilísticos, como el cáncer). El modelo LNT asume que no hay dosis segura.</span>
+          <span>La radiación ionizante puede dañar el ADN. Las reacciones tisulares tienen umbral; los efectos estocásticos, como el cáncer, se gestionan con un modelo prudente de protección.</span>
         </li>
         <li class="flex items-start gap-2 text-base text-nucleo-silver">
           <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
