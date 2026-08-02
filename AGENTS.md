@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
 ## Descripción del proyecto
 
@@ -53,7 +53,7 @@ D:\nucle-ar\
 │       ├── meitner.html        # Lise Meitner (violeta #7C4DFF)
 │       ├── oklo.html           # Oklo, reactor natural (ámbar #F59E0B)
 │       └── propulsion.html     # Propulsión nuclear (ámbar #F59E0B)
-└── CLAUDE.md
+└── AGENTS.md
 ```
 
 ## Stack técnico

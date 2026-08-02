@@ -171,7 +171,7 @@
 <section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
   <!-- Decoración: campo de estrellas / plasma -->
   <div class="absolute inset-0 opacity-50">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" class="w-full h-full" aria-hidden="true">
       <defs>
         <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
@@ -333,7 +333,9 @@
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Diagrama animado · Tokamak: el toro donde late el plasma</span>
         </div>
 
-        <svg viewBox="0 0 800 460" class="w-full" role="img" aria-label="Animación de un tokamak con plasma confinado magnéticamente">
+      <div class="overflow-x-auto" aria-label="Diagrama desplazable en pantallas angostas">
+        <svg viewBox="0 0 800 460" class="w-full min-w-[720px]" role="img" aria-label="Animación de un tokamak con plasma confinado magnéticamente">
+          <title>Tokamak y plasma confinado</title><desc>Esquema de una cámara toroidal donde campos magnéticos confinan un plasma.</desc>
           <defs>
             <radialGradient id="plasmaTok" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
@@ -479,6 +481,7 @@
           <line x1="50" y1="395" x2="280" y2="395" stroke="#5A6B72" stroke-width="1" opacity="0.5"/>
           <line x1="510" y1="395" x2="740" y2="395" stroke="#5A6B72" stroke-width="1" opacity="0.5"/>
         </svg>
+      </div>
 
         <p class="px-5 py-4 text-base text-nucleo-silver leading-relaxed border-t border-white/5">
           El <span class="glosario" data-tip="Cámara toroidal con bobinas magnéticas que confinan plasma a 100+ millones de °C. Diseño soviético de los años 50. ITER es el más grande del mundo." style="color:#93C5FD;border-bottom-color:#93C5FD;">tokamak</span> es una cámara con forma de anillo (toro) donde campos magnéticos muy intensos — generados por bobinas superconductoras — confinan el plasma sin que toque las paredes. Los <strong class="text-nucleo-accent">deuterones</strong> (azules) y <strong class="text-nucleo-accent">tritones</strong> (violetas) circulan en espirales dentro del toro y, al chocar, se fusionan para formar helio y un neutrón energético (amarillo). El neutrón escapa del campo magnético, sale del plasma y deposita su energía en el <strong>manto</strong> que rodea al reactor — donde también se genera nuevo tritio a partir del litio.

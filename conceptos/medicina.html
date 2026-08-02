@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medicina Nuclear y Radiología — Todas las técnicas que salvan vidas | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#DC2626', accentLight: '#F87171', accentDark: '#991B1B',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #DC2626; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #DC2626; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #DC2626; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(220, 38, 38, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #DC2626, #F87171); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(220,38,38,0.12); border-bottom: 2px solid #DC2626; font-family: 'Inter', sans-serif; font-weight: 600; color: #F87171; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(220,38,38,0.04); border-left: 3px solid #DC2626; font-size: 1.1rem; color: #F87171; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #DC2626; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #DC2626; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(220,38,38,0.12); color: #F87171; border: 1px solid rgba(220,38,38,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(220,38,38,0.15); }
+    .sibling-link-aplicaciones { border-color: rgba(220,38,38,0.15); }
+    .sibling-link-aplicaciones:hover { border-color: rgba(220,38,38,0.4); background: rgba(220,38,38,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(220,38,38,0.15); }
+    .glow-red { box-shadow: 0 0 40px rgba(220,38,38,0.4), inset 0 0 20px rgba(220,38,38,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(220,38,38,0.3); }
+    .toc-inner a.active { color: #F87171; border-left-color: #DC2626; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #DC2626; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #DC2626; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(220,38,38,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #F87171; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(220,38,38,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+    .credits { font-family: 'Inter', sans-serif; font-size: 10.5px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Medicina Nuclear</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Tema Aplicado</span>
+        <a href="aplicaciones.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Aplicaciones</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #DC2626 1px, transparent 1px), radial-gradient(circle at 70% 30%, #DC2626 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(220,38,38,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Medicina</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Medicina Nuclear<br>
+        <span class="text-nucleo-accent">y Radiología</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Todas las técnicas que usan radiación para mirar dentro del cuerpo humano y curar enfermedades: rayos X, tomografías, gammagrafías, PET, radioterapia, protones y la terapia argentina que destruye tumores célula por célula.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Radiología</span>
+        <span class="chip">Gammagrafía</span>
+        <span class="chip">SPECT</span>
+        <span class="chip">PET/CT</span>
+        <span class="chip">Radioterapia</span>
+        <span class="chip">Braquiterapia</span>
+        <span class="chip chip-yellow">BNCT</span>
+        <span class="chip chip-yellow">Teranóstica</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~18 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> Dos mundos, una radiación</a>
+        <a href="#sec02"><span class="num">02</span> Radiología: rayos X y TC</a>
+        <a href="#sec03"><span class="num">03</span> Gammagrafía</a>
+        <a href="#sec04"><span class="num">04</span> SPECT</a>
+        <a href="#sec05"><span class="num">05</span> PET y PET/CT</a>
+        <a href="#sec06"><span class="num">06</span> Radioterapia con fotones</a>
+        <a href="#sec07"><span class="num">07</span> Protones e iones</a>
+        <a href="#sec08"><span class="num">08</span> Braquiterapia</a>
+        <a href="#sec09"><span class="num">09</span> Radiofármacos y teranóstica</a>
+        <a href="#sec10"><span class="num">10</span> BNCT: la terapia argentina</a>
+        <a href="#sec11"><span class="num">11</span> Esterilización e irradiación</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · Dos mundos, una radiación</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Radiología: rayos X y TC</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Gammagrafía</a>
+      <a href="#sec04" class="toc-mobile-link">04 · SPECT</a>
+      <a href="#sec05" class="toc-mobile-link">05 · PET y PET/CT</a>
+      <a href="#sec06" class="toc-mobile-link">06 · Radioterapia con fotones</a>
+      <a href="#sec07" class="toc-mobile-link">07 · Protones e iones</a>
+      <a href="#sec08" class="toc-mobile-link">08 · Braquiterapia</a>
+      <a href="#sec09" class="toc-mobile-link">09 · Radiofármacos y teranóstica</a>
+      <a href="#sec10" class="toc-mobile-link">10 · BNCT: la terapia argentina</a>
+      <a href="#sec11" class="toc-mobile-link">11 · Esterilización e irradiación</a>
+    </div>
+
+    <!-- SEC 01 · DOS MUNDOS -->
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Dos mundos, una sola radiación</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cada día, en los hospitales de todo el mundo, la radiación ionizante se usa para <strong class="text-nucleo-accent">mirar dentro del cuerpo sin abrirlo</strong> y para <strong class="text-nucleo-accent">destruir tumores</strong>. En medicina existen dos grandes "mundos" que la aprovechan, y conviene distinguirlos desde el principio porque la radiación nace en lugares distintos:
+      </p>
+      <ul class="space-y-4 mb-6" style="list-style:none;">
+        <li class="flex items-start gap-3 p-4 bg-nucleo-dark border border-white/5 border-l-2" style="border-left-color:#FCA5A5;">
+          <span class="iconify text-nucleo-accent mt-0.5" data-icon="lucide:scan" data-width="18"></span>
+          <div>
+            <span class="font-heading font-bold text-white uppercase tracking-tight text-sm">Radiología</span>
+            <p class="text-base text-nucleo-silver mt-1 leading-relaxed">La radiación sale de una <strong class="text-nucleo-accentLight">máquina externa</strong> (un tubo de rayos X, un tomógrafo) y atraviesa al paciente. Muestra la <strong class="text-nucleo-accentLight">anatomía</strong>: huesos, órganos, estructuras.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 p-4 bg-nucleo-dark border border-white/5 border-l-2" style="border-left-color:#FBBF24;">
+          <span class="iconify text-nucleo-silverDark mt-0.5" data-icon="lucide:inbox" data-width="18"></span>
+          <div>
+            <span class="font-heading font-bold text-white uppercase tracking-tight text-sm">Medicina nuclear</span>
+            <p class="text-base text-nucleo-silver mt-1 leading-relaxed">Se administra un <span class="glosario" data-tip="Radiofármaco: molécula unida a un isótopo radiactivo que se acumula en un tejido concreto y emite radiación detectable desde afuera." style="color:#F87171;border-bottom-color:#F87171;">radiofármaco</span> y la radiación <strong class="text-nucleo-accentLight">nace dentro del paciente</strong>, en el órgano que se quiere estudiar. Muestra la <strong class="text-nucleo-accentLight">función</strong>: el metabolismo, el flujo de sangre, la actividad de un tejido.</p>
+          </div>
+        </li>
+      </ul>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Y existe un tercer uso, la <strong class="text-nucleo-accent">radioterapia</strong>, que no busca "ver" sino <strong class="text-nucleo-accentLight">tratar</strong>: dirige radiación (externa o interna) contra las células cancerosas para destruirlas. En las próximas secciones verás cada técnica con sus imágenes y sus aplicaciones reales.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">Ojo: no todo lo que brilla es nuclear</span>
+        <p>La <strong>resonancia magnética</strong> (RM) y el <strong>ultrasonido</strong> (ecografía) son técnicas de imagen muy usadas, pero <strong>no usan radiación ionizante</strong>: la RM usa campos magnéticos y ondas de radio, y la ecografía usa sonido. La radiación ionizante es patrimonio de la radiología y de la medicina nuclear.</p>
+      </div>
+      <div class="equation-block">
+        <span class="eq-label">Ley de atenuación · por qué importa el espesor</span>
+        \[I = I_0 \cdot e^{-\mu x}\]
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Esta fórmula resume cómo se debilita cualquier haz de radiación al atravesar la materia. \(I_0\) es la intensidad inicial, \(I\) la que queda después de recorrer un espesor \(x\), y \(\mu\) es el <strong class="text-nucleo-accentLight">coeficiente de atenuación</strong>, que depende del material. Cuanto más denso el tejido (un hueso, el plomo de un delantal), más grande es \(\mu\) y más rápido se frena la radiación. Por eso en los huesos los rayos X dejan "menos rayos" y en la placa aparecen blancos: es la misma física que protege a los técnicos detrás de las paredes de plomo.
+      </p>
+    </section>
+
+    <!-- SEC 02 · RADIOLOGÍA -->
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Radiología: rayos X, mamografía, TC y fluoroscopia</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Todo empezó en 1895. El físico alemán <strong class="text-nucleo-accent">Wilhelm Röntgen</strong> descubrió, casi por accidente, que una pantalla fluorescente brillaba cuando hacía pasar corriente por un tubo de vacío cubierto de cartón: nacía una radiación desconocida que llamó "rayos X". Pocos días después tomó la primera radiografía de la historia —la mano de su esposa Anna Bertha, con su anillo de bodas— y en 1901 recibió el primer Premio Nobel de Física. Los rayos X se convirtieron, literalmente, en una ventana al interior del cuerpo.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · La primera radiografía de la historia (1895)</span>
+        </div>
+        <img src="../assets/medicina/rontgen-1895.jpg" alt="Radiografía histórica de la mano izquierda de Anna Bertha Ludwig con un anillo, tomada por Wilhelm Röntgen en 1895" class="w-full h-auto block max-w-xl mx-auto" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Mano de Anna Bertha Ludwig, esposa de Röntgen, con su anillo de bodas (22 de diciembre de 1895). Fuente: Wikimedia Commons · Wilhelm Röntgen — Dominio público.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accentLight">radiografía simple</strong> sigue siendo el examen más común del mundo: huesos fracturados, tórax, dientes, abdomen. Es rápida, barata y con una dosis de radiación muy baja. Su límite es que comprime la información tridimensional en una sola imagen: dos huesos pueden superponerse y "esconderse".
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Mamógrafo</span>
+        </div>
+        <img src="../assets/medicina/mamografia.jpg" alt="Técnica de mamografía demostrando el uso de un mamógrafo con una paciente" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Mamografía: rayos X de baja energía para la detección temprana del cáncer de mama. Fuente: Wikimedia Commons · U.S. Air Force / Sgt. Teresa Cleveland — Dominio público.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">mamografía</strong> es una radiografía especializada de baja energía para estudiar la mama y detectar el <strong class="text-nucleo-accentLight">cáncer de mama</strong> en etapas tempranas, cuando todavía no se palpa. Es el examen de cribado que ha contribuido a reducir la mortalidad por este tipo de tumor en los países que lo implementaron.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Tomógrafo computado (TC)</span>
+        </div>
+        <img src="../assets/medicina/tc-scanner.jpg" alt="Paciente acostado entrando a un tomógrafo computado Siemens SOMATOM en una sala hospitalaria" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Paciente en un tomógrafo computado Siemens SOMATOM Sensation 64. Fuente: Wikimedia Commons · Ptrump16 — CC BY-SA 4.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">tomografía computada (TC)</strong>, desarrollada por <strong class="text-nucleo-accentLight">Godfrey Hounsfield</strong> (1971, Premio Nobel en 1979), resolvió el problema de la superposición: un tubo de rayos X <strong class="text-nucleo-accentLight">gira alrededor del paciente</strong> mientras una computadora reconstruye <strong class="text-nucleo-accentLight">cortes transversales</strong> del cuerpo, como rodajas de una manzana. Con esos cortes se pueden armar imágenes tridimensionales. La TC muestra con enorme detalle el interior del cráneo, el tórax, el abdomen y la columna. Su costo es una dosis mayor que la de una radiografía simple —aun así, muy inferior a la que causa daño—.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Fluoroscopia / angiografía con arco en C</span>
+        </div>
+        <img src="../assets/medicina/fluoroscopia-carm.jpg" alt="Cardiólogos realizando un cateterismo cardíaco guiado por una máquina de rayos X con arco en C (fluoroscopia)" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Cateterismo cardíaco guiado por fluoroscopia: imagen de rayos X en tiempo real. Fuente: Wikimedia Commons · U.S. Navy / MC3 Jake Greenberg — Dominio público.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">fluoroscopia</strong> es una radiografía en <strong class="text-nucleo-accentLight">tiempo real</strong>, como un video de rayos X. Se usa en el quirófano con los "arcos en C" (C-arm) para ver en vivo el paso de un catéter, una guía o un stent: cateterismos cardíacos, colocación de prótesis, estudios del aparato digestivo con contraste.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">Dato clave para no confundirse</span>
+        <p>Ninguno de los equipos de esta sección usa <strong>radioisótopos</strong>. Los rayos X nacen en un <strong>tubo de vacío</strong>: electrones acelerados a gran velocidad chocan contra un blanco metálico (el ánodo) y en esa frenada emiten radiación electromagnética ionizante, el llamado <strong>bremsstrahlung</strong> ("radiación de frenado"). La radiación es la misma familia que los rayos gamma, pero su origen es eléctrico, no nuclear.</p>
+      </div>
+    </section>
+
+    <!-- SEC 03 · GAMMAGRAFÍA -->
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Gammagrafía: la cámara gamma</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Aquí empieza la <strong class="text-nucleo-accent">medicina nuclear</strong>. Se administra al paciente un <span class="glosario" data-tip="Radiofármaco: molécula unida a un isótopo radiactivo que se acumula en un tejido concreto y emite radiación detectable desde afuera." style="color:#F87171;border-bottom-color:#F87171;">radiofármaco</span> que se acumula en el órgano de interés. Ese órgano emite rayos gamma, y una <strong class="text-nucleo-accent">cámara gamma</strong> —un gran detector de cristal con fotomultiplicadores— los capta desde afuera y arma una imagen de dónde está concentrado el radiofármaco. Si un tejido concentra de más o de menos, hay un problema: la medicina nuclear <strong class="text-nucleo-accentLight">no ve estructuras, ve funciones</strong>.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El protagonista indiscutido es el <span class="inline-stat"><span class="val">Tc-99m</span></span> (tecnecio-99m): se usa en <strong class="text-nucleo-accentLight">más del 80% de los procedimientos de medicina nuclear del mundo</strong>. Es un isótopo de vida media corta (unas 6 horas), que emite gamma de energía ideal para la cámara. Se obtiene del decaimiento del <span class="inline-stat"><span class="val">Mo-99</span></span>, que se fabrica en reactores nucleares de investigación. <strong class="text-nucleo-accent">Argentina produce Mo-99/Tc-99m en el reactor RA-3</strong> del Centro Atómico Ezeiza y abastece al mercado regional: sin reactores nucleares, la medicina nuclear moderna no existiría.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Cámara gamma</span>
+        </div>
+        <img src="../assets/medicina/camara-gamma.jpg" alt="Cámara gamma de doble cabezal de Siemens, el detector clásico de la medicina nuclear" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Cámara gamma de doble cabezal (Siemens) en un servicio de medicina nuclear. Fuente: Wikimedia Commons · Ideastoday — CC BY-SA 3.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">gammagrafía plana</strong> es la aplicación más sencilla: la cámara está quieta y produce una imagen en dos dimensiones. Es la técnica de la <strong class="text-nucleo-accentLight">gammagrafía ósea</strong>, uno de los exámenes más pedidos, que detecta metástasis en los huesos mucho antes de que se vean en una radiografía: el radiofármaco se acumula en las zonas de recambio óseo acelerado.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Gammagrafía ósea de cuerpo entero</span>
+        </div>
+        <img src="../assets/medicina/gammagrafia-osea.jpg" alt="Gammagrafía ósea de cuerpo entero donde se ven metástasis en la columna vertebral como zonas de mayor captación" class="w-full h-auto block max-w-xs mx-auto" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Gammagrafía ósea con Tc-99m-HDP: el paciente presenta metástasis en la columna vertebral (puntos de mayor captación). Fuente: Wikimedia Commons · Hg6996 — CC BY-SA 3.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Cada órgano tiene su "receta": distintos radiofármacos se dirigen a distintos tejidos. Esta es la tabla práctica que resume los estudios más frecuentes:
+      </p>
+      <div class="overflow-x-auto my-6 border border-white/5 rounded-sm">
+        <table class="w-full text-sm" style="font-family:'Inter',sans-serif;">
+          <thead>
+            <tr class="bg-nucleo-dark text-left">
+              <th class="px-4 py-3 text-[10px] uppercase tracking-wider text-nucleo-accent font-bold">Órgano</th>
+              <th class="px-4 py-3 text-[10px] uppercase tracking-wider text-nucleo-accent font-bold">Estudio</th>
+              <th class="px-4 py-3 text-[10px] uppercase tracking-wider text-nucleo-accent font-bold">Para qué se pide</th>
+            </tr>
+          </thead>
+          <tbody class="text-nucleo-silver">
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Huesos</td><td class="px-4 py-2.5">Gammagrafía ósea</td><td class="px-4 py-2.5">Metástasis, infecciones, fracturas ocultas</td></tr>
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Tiroides</td><td class="px-4 py-2.5">Gammagrafía / captación de I-131</td><td class="px-4 py-2.5">Nódulos, hipertiroidismo, función tiroidea</td></tr>
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Corazón</td><td class="px-4 py-2.5">Perfusión miocárdica (MUGA)</td><td class="px-4 py-2.5">Isquemia, evaluación de la bomba cardíaca</td></tr>
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Riñones</td><td class="px-4 py-2.5">Renograma (MAG3, DTPA)</td><td class="px-4 py-2.5">Función renal de cada riñón por separado</td></tr>
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Pulmones</td><td class="px-4 py-2.5">Ventilación/perfusión (V/Q)</td><td class="px-4 py-2.5">Embolia de pulmón</td></tr>
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Ganglio centinela</td><td class="px-4 py-2.5">Linfogammagrafía</td><td class="px-4 py-2.5">Guía en cirugía de cáncer de mama y melanoma</td></tr>
+            <tr class="border-t border-white/5"><td class="px-4 py-2.5 text-nucleo-silverLight font-semibold">Hígado / vías biliares</td><td class="px-4 py-2.5">HIDA</td><td class="px-4 py-2.5">Vesícula y flujo de bilis</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="dato-box">
+        <span class="dato-label">Dato argentino</span>
+        <p>El <strong>RA-3</strong> del Centro Atómico Ezeiza produce el <strong>Mo-99</strong> del que se extrae el Tc-99m. Argentina es uno de los pocos países del mundo con la cadena completa: del reactor al hospital, pasando por la radiofarmacia.</p>
+      </div>
+    </section>
+
+    <!-- SEC 04 · SPECT -->
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">SPECT: la gammagrafía en tres dimensiones</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">SPECT</strong> (tomografía computarizada por emisión de fotón único) es la versión "tomográfica" de la gammagrafía. La cámara gamma, en vez de quedarse quieta, <strong class="text-nucleo-accentLight">rota alrededor del paciente</strong> y va tomando imágenes desde cientos de ángulos. Una computadora las combina y reconstruye <strong class="text-nucleo-accentLight">cortes tridimensionales</strong>, lo que permite localizar con mucha más precisión dónde está el radiofármaco en profundidad.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Para que la imagen tenga sentido, los fotones deben llegar "en línea recta": por eso los detectores llevan un <strong class="text-nucleo-accent">colimador</strong>, una rejilla de plomo que solo deja pasar los rayos gamma que llegan en la dirección correcta. Es el mismo principio que el estenopeico de una cámara fotográfica.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Tomógrafo SPECT/CT</span>
+        </div>
+        <img src="../assets/medicina/spect-ct.jpg" alt="Tomógrafo SPECT/CT Siemens Symbia en operación realizando una gammagrafía de cuerpo entero" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Tomógrafo SPECT/CT (Siemens Symbia) realizando una gammagrafía de cuerpo entero. Fuente: Wikimedia Commons · Ytrottier — CC BY-SA 3.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los usos más frecuentes de la SPECT son la <strong class="text-nucleo-accentLight">perfusión miocárdica</strong> (estudiar si el músculo del corazón recibe suficiente sangre, clave para diagnosticar la enfermedad coronaria), la <strong class="text-nucleo-accentLight">SPECT cerebral</strong> (flujo sanguíneo del cerebro, útil en epilepsia y demencias) y la <strong class="text-nucleo-accentLight">SPECT ósea</strong>. Los equipos modernos combinan la SPECT con un tomógrafo de rayos X: la <strong class="text-nucleo-accent">SPECT/CT</strong> superpone la información funcional con la anatómica en una sola imagen, y es la tecnología de punta para localizar lesiones con exactitud milimétrica.
+      </p>
+    </section>
+
+    <!-- SEC 05 · PET -->
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">PET y PET/CT: la física del positrón</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">PET</strong> (tomografía por emisión de positrones) es la joya de la medicina nuclear diagnóstica. Usa radiofármacos que emiten <span class="glosario" data-tip="Positrón (e⁺): la antipartícula del electrón, con la misma masa pero carga positiva. Al chocar con un electrón se aniquilan produciendo dos fotones gamma." style="color:#F87171;border-bottom-color:#F87171;">positrones</span> (e⁺), la <strong class="text-nucleo-accentLight">antimateria del electrón</strong>. Cuando un positrón se encuentra con un electrón del tejido, ambos se <strong class="text-nucleo-accentLight">aniquilan</strong> y su masa entera se transforma en energía, según la famosa fórmula \(E = mc^2\): nacen dos fotones gamma de <span class="inline-stat"><span class="val">511 keV</span></span> que salen en direcciones exactamente opuestas.
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Aniquilación positrón-electrón</span>
+        \(e^{+} + e^{-} \;\longrightarrow\; 2\gamma\;(511\;\text{keV cada uno})\)
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El escáner PET es un <strong class="text-nucleo-accent">anillo de detectores</strong> que rodea al paciente. Los detectores opuestos que registran dos fotones <strong class="text-nucleo-accentLight">al mismo instante</strong> permiten dibujar una línea sobre la que ocurrió la aniquilación; juntando miles de "coincidencias" se localiza el punto exacto en 3D. Es como triangulación con fotones.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Tomógrafo PET/CT</span>
+        </div>
+        <img src="../assets/medicina/pet-ct-scanner.jpg" alt="Tomógrafo PET/CT Philips en una sala de medicina nuclear con iluminación azul" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Tomógrafo PET/CT (Philips) en una sala de medicina nuclear. Fuente: Wikimedia Commons · Partynia — CC BY-SA 4.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El radiofármaco estrella es la <span class="inline-stat"><span class="val">F-18 FDG</span></span> (fluorodesoxiglucosa): una molécula de glucosa marcada con el isótopo flúor-18. Como las células tumorales son auténticas "devoradoras de glucosa", acumulan FDG y <strong class="text-nucleo-accentLight">brillan en la imagen</strong>. Por eso el PET oncológico es clave para <strong class="text-nucleo-accentLight">estadificar un cáncer</strong> (ver si se diseminó), detectar recaídas y evaluar si un tratamiento está funcionando. También se usa en cardiología (miocardio viable) y neurología (Alzheimer, epilepsia).
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · PET cerebral con F-18 FDG</span>
+        </div>
+        <img src="../assets/aplicaciones/pet-cerebral.jpg" alt="Imagen PET cerebral con F-18 FDG mostrando el metabolismo de glucosa: zonas activas en rojo y amarillo" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          PET cerebral con F-18 FDG: las zonas en rojo/amarillo muestran la actividad metabólica del cerebro. Fuente: proyecto nucle-ar.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los escáneres modernos son <strong class="text-nucleo-accent">híbridos</strong>: PET/CT y PET/MRI combinan la imagen funcional del PET con la anatómica del tomógrafo, de modo que el médico ve el tumor (anatomía) y su actividad metabólica (función) superpuestos en la misma pantalla. En Argentina, los ciclotrones de Buenos Aires y otras ciudades fabrican el F-18, porque su vida media es de solo <span class="inline-stat"><span class="val">110 minutos</span></span>: el radiofármaco se produce cerca del hospital y se usa el mismo día.
+      </p>
+    </section>
+
+    <!-- SEC 06 · RADIOTERAPIA EXTERNA -->
+    <section class="reveal mb-16" id="sec06">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">06</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Radioterapia externa con fotones</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">radioterapia</strong> es, junto con la cirugía y la quimioterapia, una de las tres grandes armas contra el cáncer: <strong class="text-nucleo-accentLight">alrededor de la mitad de los pacientes oncológicos</strong> la recibe en algún momento. La idea es tan simple como brutal: dirigir radiación ionizante al tumor para que sus células no puedan seguir dividiéndose. La dificultad es que la radiación también daña el tejido sano que atraviesa, así que toda la evolución de la técnica ha buscado <strong class="text-nucleo-accentLight">dar la máxima dosis al tumor y la mínima a lo demás</strong>.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Acelerador lineal de radioterapia</span>
+        </div>
+        <img src="../assets/medicina/acelerador-lineal.jpg" alt="Acelerador lineal de radioterapia Elekta Compact con el cabezal giratorio y la camilla" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Acelerador lineal de radioterapia (Elekta Compact). Fuente: Wikimedia Commons · Narenfox — CC BY-SA 4.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La máquina principal es el <strong class="text-nucleo-accent">acelerador lineal (LINAC)</strong>: acelera electrones que, al frenarse contra un blanco, generan rayos X de alta energía capaces de alcanzar tumores profundos. El cabezal gira alrededor del paciente y moldea el haz para atacar el tumor desde varios ángulos. Sobre esta base se montaron las técnicas modernas:
+      </p>
+      <div class="grid sm:grid-cols-2 gap-3 my-6">
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">3D-CRT</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Radioterapia conformada tridimensional: el haz se moldea con la forma del tumor visto en la TC de planificación.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">IMRT</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">De intensidad modulada: un colimador de láminas móviles cambia la intensidad del haz punto por punto, "esculpiendo" la dosis.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">VMAT</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">El cabezal rota alrededor del paciente mientras el haz cambia continuamente: tratamientos más rápidos y precisos.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">IGRT</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Guiada por imágenes: se toma una imagen justo antes de tratar para corregir la posición exacta del tumor.</p>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Para tumores cerebrales y pequeños, existe la <strong class="text-nucleo-accent">radiocirugía estereotáctica (SRS/SBRT)</strong>: se aplica una dosis altísima en una o pocas sesiones con precisión sub-milimétrica. El <strong class="text-nucleo-accentLight">Gamma Knife</strong> (arriba, en el equipo Perfexion) concentra 192 haces de cobalto-60 sobre un punto exacto del cráneo, como lupa con 192 luces; el <strong class="text-nucleo-accentLight">CyberKnife</strong> hace lo mismo con un acelerador robótico sobre una mesa móvil.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Gamma Knife</span>
+        </div>
+        <img src="../assets/medicina/gamma-knife.jpg" alt="Sistema de radiocirugía Leksell Gamma Knife Perfexion en un quirófano" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Sistema de radiocirugía Leksell Gamma Knife Perfexion. Fuente: Wikimedia Commons · Mos.ru — CC BY 4.0.
+        </div>
+      </div>
+      <div class="dato-box">
+        <span class="dato-label">Dato argentino</span>
+        <p>El <strong>cobalto-60</strong> que producen las centrales de <strong>Embalse</strong> (Córdoba) y la CNEA no solo esteriliza: durante décadas fue la fuente de la teleterapia en el país y en toda América Latina. Argentina es de los pocos países del mundo capaces de producir Co-60 de uso médico.</p>
+      </div>
+    </section>
+
+    <!-- SEC 07 · PROTONES -->
+    <section class="reveal mb-16" id="sec07">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">07</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Protones e iones de carbono: el pico de Bragg</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los rayos X depositan su energía en forma exponencial: máxima cerca de la superficie y decreciente en profundidad. Los <strong class="text-nucleo-accent">protones</strong> —núcleos de hidrógeno acelerados a gran velocidad— hacen algo distinto y extraordinario: depositan <strong class="text-nucleo-accentLight">poca energía al entrar</strong>, la liberan casi toda al final de su camino —en el famoso <strong class="text-nucleo-accent">pico de Bragg</strong>— y luego la dosis cae a prácticamente cero. Ajustando la energía del haz se coloca ese pico exactamente a la profundidad del tumor.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La consecuencia es clínica y hermosa: el tumor recibe la dosis completa, los tejidos que están antes reciben poca, y los que están después <strong class="text-nucleo-accentLight">no reciben nada</strong>. Es el tratamiento de elección para tumores que viven pegados a órganos críticos —cerebro, ojos, base del cráneo, médula espinal— y para los niños, porque su radiación se está desarrollando. Los <strong class="text-nucleo-accentLight">iones de carbono</strong> son aún más pesados y su pico es más agudo; se usan en Japón, Alemania e Italia.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Sala de protonterapia</span>
+        </div>
+        <img src="../assets/aplicaciones/protonterapia-sala.jpg" alt="Sala moderna de protonterapia con gantry rotacional de gran tamaño y paciente sobre la camilla" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Sala de tratamiento con protonterapia: el gantry rota 360° para dirigir el haz de protones desde el mejor ángulo. Fuente: proyecto nucle-ar.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La contracara es el precio: un centro de protonterapia cuesta entre <strong class="text-nucleo-accent">30 y 60 millones de dólares</strong> y necesita un ciclotrón o sincrotrón dedicado. En Argentina todavía no hay un centro de estas características; en la práctica se reserva para los casos en que la ventaja física se traduce en una ventaja clínica real.
+      </p>
+    </section>
+
+    <!-- SEC 08 · BRAQUITERAPIA -->
+    <section class="reveal mb-16" id="sec08">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">08</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Braquiterapia: la fuente, adentro</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">braquiterapia</strong> ("tratamiento de corta distancia") da vuelta el planteo de la radioterapia externa: en vez de traer el haz desde afuera, <strong class="text-nucleo-accentLight">lleva la fuente radiactiva hasta el tumor</strong>. Como la dosis cae muy rápido con la distancia, se logra una dosis altísima en el tumor con un daño mínimo a los tejidos sanos que lo rodean.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Semillas radiactivas de braquiterapia</span>
+        </div>
+        <img src="../assets/medicina/braquiterapia-semillas.jpg" alt="Pequeñas semillas radiactivas de braquiterapia para el tratamiento del cáncer de próstata" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Semillas radiactivas de braquiterapia (implantadas en la próstata). Fuente: Wikimedia Commons · Nuclear Regulatory Commission — Dominio público.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Hay dos grandes modalidades. En la <strong class="text-nucleo-accent">braquiterapia de baja tasa (LDR)</strong>, decenas de semillas minúsculas de <span class="inline-stat"><span class="val">I-125</span></span> o <span class="inline-stat"><span class="val">Pd-103</span></span> se implantan de forma permanente en el tumor —el caso típico es el <strong class="text-nucleo-accentLight">cáncer de próstata</strong>— y van liberando su radiación durante meses hasta desactivarse. En la <strong class="text-nucleo-accent">alta tasa (HDR)</strong>, una fuente de <span class="inline-stat"><span class="val">Ir-192</span></span> se introduce con un aplicador durante unos minutos y se retira: se usa en tumores ginecológicos, de mama y de cabeza y cuello. También existen <strong class="text-nucleo-accentLight">placas oculares</strong> con I-125 para el melanoma del ojo.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">Dato argentino</span>
+        <p>Las semillas de <strong>I-125</strong> que se usan en el país para braquiterapia de próstata se producen en el reactor <strong>RA-3</strong> del Centro Atómico Ezeiza: otra pieza de la cadena argentina del átomo al hospital.</p>
+      </div>
+    </section>
+
+    <!-- SEC 09 · RADIOFÁRMACOS -->
+    <section class="reveal mb-16" id="sec09">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">09</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Radiofármacos terapéuticos y teranóstica</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">terapia molecular</strong> lleva la radioterapia a la última escala: en vez de apuntar un haz, se administra un radiofármaco que <strong class="text-nucleo-accentLight">viaja por la sangre, reconoce la célula enferma por su biología</strong> y le deposita la radiación desde adentro. Cada radiofármaco es una "llave" molecular que abre la cerradura de un tipo de célula.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Isótopo radiactivo en vial</span>
+        </div>
+        <img src="../assets/medicina/radiofarmaco-vial.jpg" alt="Vial de laboratorio con una solución radiactiva de color rosa, similar a un radiofármaco listo para administrar" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Los radiofármacos se preparan por paciente en la radiofarmacia, a partir de soluciones de isótopos como esta. Fuente: Wikimedia Commons · Oak Ridge National Laboratory — Dominio público.
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3 my-6">
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">I-131 · Tiroides</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">El clásico: la tiroides concentra yodo, así que el <strong>I-131</strong> se acumula ahí. Una cápsula destruye el tejido tiroideo enfermo (cáncer o hipertiroidismo) sin tocar el resto del cuerpo.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">PRRT · Lu-177</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Lu-177-DOTATATE (aprobado por la FDA en 2018) para tumores neuroendocrinos; Lu-177-PSMA para el cáncer de próstata avanzado.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioinmunoterapia</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Anticuerpos monoclonales + radiactividad (90Y-ibritumomab) que "etiquetan" a las células de ciertos linfomas para destruirlas.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Metástasis óseas</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Sm-153, Sr-89 y Ra-223 (alfa) alivian el dolor óseo de las metástasis; el Ra-223 incluso prolonga la supervivencia.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioembolización (SIRT)</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Microesferas de <strong>90Y</strong> inyectadas en la arteria que alimenta un tumor hepático: la radiación llega por dentro del propio tumor.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Terapia alfa dirigida</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Ac-225 y Bi-213 emiten partículas alfa de muy corto alcance y enorme energía por célula: precisión extrema contra metástasis microscópicas.</p>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La frontera actual se llama <strong class="text-nucleo-accent">teranóstica</strong> (terapia + diagnóstico): se usa <strong class="text-nucleo-accentLight">la misma molécula</strong> para ver y para tratar. Se inyecta una versión "de imagen" que muestra dónde está el tumor (por ejemplo <span class="inline-stat"><span class="val">68Ga-PSMA</span></span>) y, si el tumor capta, se administra la versión "de tratamiento" (<span class="inline-stat"><span class="val">177Lu-PSMA</span></span>) que va exactamente al mismo lugar. El principio médico se resume en una frase: <em class="text-nucleo-accentLight">"lo que puedes ver, puedes tratarlo"</em>.
+      </p>
+      <div class="pull-quote">
+        "Lo que puedes ver con el diagnóstico, puedes tratarlo con la misma molécula."
+      </div>
+    </section>
+
+    <!-- SEC 10 · BNCT -->
+    <section class="reveal mb-16" id="sec10">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">10</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">BNCT: la terapia argentina</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accent">Terapia por Captura Neutrónica de Boro</strong> (BNCT) es una técnica de precisión extrema, y <strong class="text-nucleo-accentLight">Argentina fue pionera mundial</strong> en su aplicación clínica. Funciona en dos pasos: primero se administra al paciente un compuesto con <strong class="text-nucleo-accentLight">boro-10</strong>, que se acumula selectivamente dentro de las células tumorales; después se irradia la zona con <strong class="text-nucleo-accentLight">neutrones de baja energía</strong>. Cuando un neutrón es capturado por el boro-10, la reacción libera una partícula alfa y un núcleo de litio-7 que <strong class="text-nucleo-accent">destruyen la célula tumoral desde adentro</strong> — y nada más: esas partículas recorren apenas 5–9 micrómetros, el diámetro de una célula.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Ilustración de la BNCT</span>
+        </div>
+        <img src="../assets/medicina/bnct.jpg" alt="Ilustración de la terapia por captura neutrónica de boro: el boro se acumula en la célula cancerosa y los neutrones disparan la destrucción" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Ilustración de la BNCT del National Cancer Institute: 1) el boro se acumula en la célula tumoral; 2) el haz de neutrones la destruye desde adentro. Fuente: Wikimedia Commons · NCI — Dominio público.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La historia local comenzó en el <strong class="text-nucleo-accent">Centro Atómico Bariloche</strong>: el reactor <strong class="text-nucleo-accentLight">RA-6</strong> fue acondicionado en los años 90 para producir haces de neutrones aptos para ensayos clínicos, y Argentina trató pacientes reales con <strong class="text-nucleo-accentLight">melanoma</strong> y <strong class="text-nucleo-accentLight">glioblastoma multiforme</strong>. El desafío actual es reemplazar el reactor por un <strong class="text-nucleo-accent">acelerador compacto</strong> instalable en un hospital —el proyecto que lidera el <strong class="text-nucleo-accentLight">Dr. Andrés Kreiner</strong> (CNEA-CONICET-UNSAM)— para masificar la técnica. La ecuación de la reacción y el diagrama animado completo están en la página de <a href="aplicaciones.html#sec10" class="text-nucleo-accent underline decoration-dotted underline-offset-4 hover:text-nucleo-accentLight">Aplicaciones de la Energía Nuclear</a>.
+      </p>
+    </section>
+
+    <!-- SEC 11 · ESTERILIZACIÓN -->
+    <section class="reveal mb-16" id="sec11">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">11</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Esterilización e irradiación: el hospital invisible</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La tecnología nuclear también salva vidas <strong class="text-nucleo-accent">antes de que el paciente llegue al quirófano</strong>. La mayor parte del material médico de un solo uso —jeringas, agujas, catéteres, guantes, suturas, implantes— se <strong class="text-nucleo-accent">esteriliza con radiación gamma de cobalto-60</strong>. Los productos pasan por lotes dentro de una instalación blindada, y la radiación elimina bacterias y virus sin calor ni químicos: no se puede esterilizar con vapor algo que se derrite.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Instalación de irradiación con Co-60</span>
+        </div>
+        <img src="../assets/medicina/irradiador-cobalto.jpg" alt="Instalación multipropósito de irradiación con cobalto-60 en los terrenos de un instituto nuclear" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Instalación multipropósito de irradiación con Cobalto-60 (PNRI, Filipinas). Fuente: Wikimedia Commons · Philippine Nuclear Research Institute — CC BY-SA 3.0.
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Otro uso callado pero vital es la <strong class="text-nucleo-accent">irradiación de sangre</strong>: antes de transfundir a pacientes con el sistema inmune debilitado (trasplantes, quimioterapia), las bolsas de sangre se irradian para inactivar los linfocitos del donante y así prevenir una complicación grave llamada <span class="glosario" data-tip="EICH: enfermedad injerto contra huésped, cuando los linfocitos del donante atacan los tejidos del receptor. La irradiación de la bolsa la previene." style="color:#F87171;border-bottom-color:#F87171;">enfermedad injerto contra huésped</span>. El mismo tipo de instalaciones se usa para irradiar alimentos y conservar su seguridad, tema que se desarrolla en la página de <a href="aplicaciones.html#sec05" class="text-nucleo-accent underline decoration-dotted underline-offset-4 hover:text-nucleo-accentLight">Aplicaciones</a>.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">Dato argentino</span>
+        <p>El <strong>Co-60</strong> se produce en la central nuclear de <strong>Embalse</strong> (Córdoba) y la CNEA fabrica las fuentes selladas que esterilizan insumos en Argentina y en toda América Latina. Es una de las pocas cadenas completas de Co-60 de uso médico del mundo.</p>
+      </div>
+    </section>
+
+    <!-- CONCEPTOS CLAVE -->
+    <div class="reveal mb-10" style="background: rgba(220,38,38,0.04); border: 1px solid rgba(220,38,38,0.15); border-left: 3px solid #DC2626; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La <strong class="text-nucleo-accentLight">radiología</strong> (rayos X, mamografía, TC, fluoroscopia) usa una fuente externa; la <strong class="text-nucleo-accentLight">medicina nuclear</strong> (gamma, SPECT, PET) usa radiofármacos que emiten desde adentro.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">Tc-99m</strong> interviene en más del 80% de los procedimientos de medicina nuclear; se obtiene del Mo-99 producido en reactores (RA-3 en Ezeiza).</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>En el <strong class="text-nucleo-accentLight">PET</strong>, un positrón se aniquila con un electrón y produce dos fotones de 511 keV; la <strong class="text-nucleo-accentLight">F-18 FDG</strong> marca las células que consumen mucha glucosa (los tumores).</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La radioterapia usa <strong class="text-nucleo-accentLight">fotones</strong> (LINAC, IMRT, VMAT, SRS/SBRT), <strong class="text-nucleo-accentLight">partículas</strong> (protones con pico de Bragg, iones de carbono) y <strong class="text-nucleo-accentLight">braquiterapia</strong> con la fuente dentro del tumor.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Los <strong class="text-nucleo-accentLight">radiofármacos terapéuticos</strong> (I-131, Lu-177, Ra-223, Ac-225) llevan la radiación a la célula enferma; la <strong class="text-nucleo-accentLight">teranóstica</strong> usa la misma molécula para ver y para tratar.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La <strong class="text-nucleo-accentLight">BNCT</strong> destruye células tumorales con boro-10 + neutrones: Argentina fue pionera mundial (RA-6 en Bariloche) y desarrolla un acelerador compacto para masificarla.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>El <strong class="text-nucleo-accentLight">Co-60</strong> de Embalse esteriliza insumos médicos e irradia sangre: la tecnología nuclear también protege a los pacientes antes del quirófano.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TEMAS RELACIONADOS -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <a href="aplicaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Aplicaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">La medicina dentro del mapa completo de usos de la energía nuclear</p>
+        </a>
+        <a href="radioisotopos.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radioisótopos</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los átomos inestables que hacen posibles el diagnóstico y la terapia</p>
+        </a>
+        <a href="radiaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radiaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Alfa, beta y gamma: los tipos de emisión que usa la medicina</p>
+        </a>
+        <a href="antimateria.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Antimateria</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los positrones del PET nacen de la antimateria</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="../index.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-nucleo-silverDark" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif;">Volver</div>
+          <div class="font-heading text-lg font-bold text-white">Energía Nuclear · Inicio</div>
+        </div>
+      </a>
+      <a href="aplicaciones.html" class="sibling-link sibling-link-aplicaciones text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#DC2626;">Concepto siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Aplicaciones →</div>
+        </div>
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="20" style="color:#DC2626;"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-red">
+          <span class="iconify text-white" data-icon="lucide:stethoscope" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Medicina Nuclear</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="aplicaciones.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Aplicaciones</a>
+        <a href="radioisotopos.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-[#26A69A] transition-colors">Radioisótopos</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal, div.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

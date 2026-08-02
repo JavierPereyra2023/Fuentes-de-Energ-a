@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energía Solar — Otras Fuentes de Energía | Energía Nuclear</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#F59E0B', accentLight: '#FBBF24', accentDark: '#B45309',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #F59E0B; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #F59E0B; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #F59E0B; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(245, 158, 11, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(245,158,11,0.12); border-bottom: 2px solid #F59E0B; font-family: 'Inter', sans-serif; font-weight: 600; color: #FBBF24; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(245,158,11,0.04); border-left: 3px solid #F59E0B; font-size: 1.1rem; color: #FBBF24; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #F59E0B; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #F59E0B; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(245,158,11,0.12); color: #FBBF24; border: 1px solid rgba(245,158,11,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .chip-red { background: rgba(220,38,38,0.12); color: #F87171; border-color: rgba(220,38,38,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(245,158,11,0.15); }
+    .sibling-link-eolica { border-color: rgba(0,229,255,0.15); }
+    .sibling-link-eolica:hover { border-color: rgba(0,229,255,0.4); background: rgba(0,229,255,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,229,255,0.15); }
+    .sibling-link-biomasa { border-color: rgba(38,166,154,0.15); }
+    .sibling-link-biomasa:hover { border-color: rgba(38,166,154,0.4); background: rgba(38,166,154,0.04); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(38,166,154,0.15); }
+    .glow-amber { box-shadow: 0 0 40px rgba(245,158,11,0.4), inset 0 0 20px rgba(245,158,11,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(245,158,11,0.3); }
+    .toc-inner a.active { color: #FBBF24; border-left-color: #F59E0B; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #F59E0B; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #F59E0B; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(245,158,11,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #FBBF24; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(245,158,11,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+    .credits { font-family: 'Inter', sans-serif; font-size: 10.5px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../energias.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Otras Energías</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Solar</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Fuente Renovable</span>
+        <a href="../energias.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Todas las fuentes</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #F59E0B 1px, transparent 1px), radial-gradient(circle at 70% 30%, #F59E0B 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(245,158,11,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Fuente de Energía · Renovable</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Energía<br>
+        <span class="text-nucleo-accent">Solar</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        El desierto de altura del norte argentino convierte la luz del sol en electricidad. Con Cauchari en Jujuy como emblema, la solar ya aporta el 17% de la generación renovable y sigue creciendo a paso acelerado.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">~3% de la matriz</span>
+        <span class="chip">17% de lo renovable</span>
+        <span class="chip">40 – 80 g CO₂/kWh</span>
+        <span class="chip chip-yellow">Solo de día</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~8 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> Cómo funciona</a>
+        <a href="#sec02"><span class="num">02</span> Ubicación en Argentina</a>
+        <a href="#sec03"><span class="num">03</span> Potencia generada</a>
+        <a href="#sec04"><span class="num">04</span> Ventajas y desventajas</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · Cómo funciona</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Ubicación en Argentina</a>
+      <a href="#sec03" class="toc-mobile-link">03 · Potencia generada</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Ventajas y desventajas</a>
+    </div>
+
+    <!-- SEC 01 · CÓMO FUNCIONA -->
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Cómo funciona la energía solar?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        A diferencia de la hidro y la eólica, la <strong class="text-nucleo-accent">solar fotovoltaica</strong> no usa turbinas: convierte la luz directamente en electricidad mediante el <strong class="text-nucleo-accentLight">efecto fotoeléctrico</strong>. Paso a paso:
+      </p>
+      <div class="space-y-3 my-6">
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">1 · Los fotones golpean el panel</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Cada panel está formado por celdas de silicio. Cuando la luz del sol (fotones) golpea la celda, entrega su energía a los electrones del silicio.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">2 · Se liberan electrones</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Esos electrones se desprenden de sus átomos. La celda está construida con dos capas de silicio dopado (tipo p y tipo n) que crean un campo eléctrico que ordena a los electrones moverse en una sola dirección.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">3 · Nace la corriente continua</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">El movimiento ordenado de electrones es corriente eléctrica continua (DC). Un panel genera típicamente entre 400 y 550 W en condiciones óptimas.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">4 · El inversor la convierte en alterna</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">La red eléctrica funciona con corriente alterna (AC). Un inversor transforma la DC de los paneles en AC, y en parques grandes se conectan miles de inversores.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">5 · A la red</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Un transformador eleva el voltaje y la electricidad de los miles de paneles de un parque se vierte a la red nacional de alta tensión.</p>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La cantidad de energía que entrega cada panel depende de la <strong class="text-nucleo-accentLight">radiación solar</strong> del lugar y de la inclinación de los paneles. El norte argentino tiene una ventaja enorme:
+      </p>
+      <div class="equation-block">
+        <span class="eq-label">Energía de un fotón</span>
+        \[ E = h \cdot f \]
+        <div class="text-sm mt-2" style="color:#A8B5BD;">\(h\) constante de Planck · \(f\) frecuencia de la luz — la energía que recibe cada electrón al ser golpeado</div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En la Puna jujeña, a más de 4.000 metros de altura, la radiación solar es de las más altas de Sudamérica: por eso Cauchari se convirtió en un parque de clase mundial.
+      </p>
+    </section>
+
+    <!-- SEC 02 · UBICACIÓN EN ARGENTINA -->
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Ubicación en Argentina</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los grandes parques solares se concentran en el <strong class="text-nucleo-accentLight">NOA</strong>: Jujuy, Salta y Catamarca, en las regiones de mayor radiación del país. También hay plantas menores en San Juan, Mendoza y otras provincias, además de la creciente <strong class="text-nucleo-accentLight">generación distribuida</strong> en techos de casas y comercios.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Parque solar Cauchari</span>
+        </div>
+        <img src="../../assets/energias/cauchari.jpg" alt="Hileras de paneles solares fotovoltaicos en el Parque Solar Cauchari, Jujuy, a 4000 metros de altura" class="w-full h-auto block" style="display:block;"/>
+        <div class="px-5 py-3 credits text-nucleo-silverDark">
+          Parque Solar Cauchari (Jujuy), uno de los más grandes de Sudamérica, a unos 4.000 m de altitud. Fuente: Wikimedia Commons · Manuel arequipa — CC BY-SA 4.0.
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3 my-6">
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Cauchari I-II-III · Jujuy</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">~300 MW en la Puna, uno de los parques solares más grandes de Sudamérica, junto a la localidad de Cauchari.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Ullum · San Juan</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Uno de los primeros parques solares de escala del país, en la provincia con mayor radiación promedio.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Salta y Catamarca</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Provincias con proyectos solares en expansión aprovechando la radiación del altiplano.</p>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Generación distribuida</span>
+          <p class="text-sm text-nucleo-silver mt-1 leading-relaxed">Paneles en techos de hogares y comercios en todo el país, con medidores bidireccionales que venden excedentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEC 03 · POTENCIA GENERADA -->
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Potencia generada y rol en la matriz</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Argentina tenía a fines de 2024 alrededor de <span class="inline-stat"><span class="val">1.500 MW</span></span> solares instalados, que generaron unos <span class="inline-stat"><span class="val">3.900 GWh</span></span> — cerca del <span class="inline-stat"><span class="val">17%</span></span> de la electricidad renovable del país. La solar fue la tecnología que más potencia nueva sumó en los últimos años.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Como porcentaje de la matriz total aporta todavía un <strong class="text-nucleo-accentLight">3-4%</strong> promedio, pero con un detalle muy valioso: genera justo en las <strong class="text-nucleo-accentLight">horas pico de la tarde</strong>, cuando más demanda hay. Eso ayuda a "aplanar" la curva de consumo y ahorrar gas.
+      </p>
+      <div class="dato-box">
+        <span class="dato-label">Dato curioso</span>
+        <p>El <strong>límite nocturno</strong> es el talón de Aquiles solar: a las 19 horas la generación colapsa a cero justo cuando la demanda empieza a subir. Por eso la solar se combina con <strong>baterías</strong> y con fuentes de base como la <strong>nuclear</strong> y la <strong>hidro</strong>.</p>
+      </div>
+    </section>
+
+    <!-- SEC 04 · VENTAJAS Y DESVENTAJAS -->
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Ventajas y desventajas</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3 my-6">
+        <div class="p-4 bg-nucleo-dark border border-nucleo-accent/30">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">✓ Ventajas</span>
+          <ul class="space-y-2 mt-2 text-sm text-nucleo-silver leading-relaxed" style="list-style:none;">
+            <li>✦ <strong class="text-nucleo-accentLight">Sin emisiones ni combustible</strong>: el sol es gratis e inagotable.</li>
+            <li>✦ <strong class="text-nucleo-accentLight">Costo del kWh en caída</strong> constante en la última década.</li>
+            <li>✦ <strong class="text-nucleo-accentLight">Escalable</strong>: desde un panel en un techo hasta 300 MW en la Puna.</li>
+            <li>✦ Genera en las <strong class="text-nucleo-accentLight">horas pico</strong> del día, aliviando la red.</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-nucleo-dark border border-white/5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">✗ Desventajas</span>
+          <ul class="space-y-2 mt-2 text-sm text-nucleo-silver leading-relaxed" style="list-style:none;">
+            <li>✦ <strong class="text-nucleo-accentLight">Solo genera de día</strong>; de noche su producción es cero.</li>
+            <li>✦ <strong class="text-nucleo-accentLight">Depende del clima</strong>: nubes y niebla reducen la generación.</li>
+            <li>✦ <strong class="text-nucleo-accentLight">Ocupa mucho terreno</strong> (muchos paneles por MW) y requiere minerales raros.</li>
+            <li>✦ Sin <strong class="text-nucleo-accentLight">almacenamiento</strong>, su aporte no puede "trasladarse" a la noche.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pull-quote">
+        "La solar ilumina las horas pico del desierto del NOA: el desafío es guardar esa energía para la noche."
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En la matriz del futuro la solar y la eólica se complementan: el sol genera de día, el viento suele soplar más de noche, y las baterías y las centrales de base cubren los huecos. Para comparar todas las fuentes, volvé al <a href="../energias.html" class="text-nucleo-accent underline decoration-dotted underline-offset-4 hover:text-nucleo-accentLight">mapa de todas las fuentes</a>.
+      </p>
+    </section>
+
+    <!-- CONCEPTOS CLAVE -->
+    <div class="reveal mb-10" style="background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.15); border-left: 3px solid #F59E0B; padding: 1.5rem 2rem;">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:lightbulb" data-width="18"></span>
+        <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight">Conceptos Clave</h3>
+      </div>
+      <ul class="space-y-2.5" style="list-style: none;">
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>La solar convierte <strong class="text-nucleo-accentLight">la luz directamente en electricidad</strong> (efecto fotoeléctrico): fotones → electrones → corriente continua → inversor → alterna.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Ubicación clave: <strong class="text-nucleo-accentLight">NOA</strong> (Cauchari en Jujuy, San Juan, Salta, Catamarca) con la mayor radiación de Sudamérica.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Aporta ~17% de lo renovable y ~3-4% de la matriz, generando en las horas pico del día.</span>
+        </li>
+        <li class="flex items-start gap-2 text-base text-nucleo-silver">
+          <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+          <span>Ventaja: limpia, escalable y en abaratamiento. Límite: <strong class="text-nucleo-accentLight">solo de día</strong> y necesita almacenamiento.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- TEMAS RELACIONADOS -->
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <a href="../energias.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Todas las Fuentes</span>
+          <p class="text-sm text-nucleo-silver mt-1">El mapa completo de la matriz energética argentina</p>
+        </a>
+        <a href="eolica.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Eólica</span>
+          <p class="text-sm text-nucleo-silver mt-1">El viento que complementa al sol en el ciclo diario</p>
+        </a>
+        <a href="biomasa.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Biomasa</span>
+          <p class="text-sm text-nucleo-silver mt-1">La renovable que sí se puede "encender" a demanda</p>
+        </a>
+        <a href="nuclear.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Nuclear</span>
+          <p class="text-sm text-nucleo-silver mt-1">La energía de base que cubre la noche sin emisiones</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="eolica.html" class="sibling-link sibling-link-eolica text-nucleo-silverDark hover:text-white">
+        <span class="iconify" data-icon="lucide:arrow-left" data-width="20" style="color:#00E5FF;"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-nucleo-silverDark font-semibold" style="font-family:'Inter',sans-serif; color:#00E5FF;">Fuente anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Energía Eólica</div>
+        </div>
+      </a>
+      <a href="biomasa.html" class="sibling-link sibling-link-biomasa text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#26A69A;">Fuente siguiente</div>
+          <div class="font-heading text-lg font-bold text-white">Biomasa →</div>
+        </div>
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="20" style="color:#26A69A;"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-amber">
+          <span class="iconify text-white" data-icon="lucide:sun" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Solar</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="../energias.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Otras Energías</a>
+        <a href="biomasa.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Biomasa</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+  var els = document.querySelectorAll('section.reveal, div.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
