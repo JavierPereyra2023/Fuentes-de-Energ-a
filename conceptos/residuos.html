@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Residuos Radiactivos — Clasificación, gestión y el repositorio | Energía Nuclear</title>
+  <meta name="description" content="Residuos radiactivos: qué son, clasificación, de dónde salen, cómo se gestionan y el debate del repositorio definitivo. Casos Onkalo y Argentina.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Energía Nuclear">
+  <meta property="og:title" content="Residuos Radiactivos — Clasificación, gestión y el repositorio | Energía Nuclear">
+  <meta property="og:description" content="Residuos radiactivos: qué son, clasificación, de dónde salen, cómo se gestionan y el debate del repositorio definitivo. Casos Onkalo y Argentina.">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#EAB308', accentLight: '#FACC15', accentDark: '#CA8A04',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #EAB308; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #EAB308; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #EAB308; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(234, 179, 8, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #CA8A04, #EAB308, #FACC15); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(234,179,8,0.12); border-bottom: 2px solid #EAB308; font-family: 'Inter', sans-serif; font-weight: 600; color: #FACC15; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(234,179,8,0.04); border-left: 3px solid #EAB308; font-size: 1.1rem; color: #FACC15; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #EAB308; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #EAB308; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(234,179,8,0.12); color: #FACC15; border: 1px solid rgba(234,179,8,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(234,179,8,0.3); background: rgba(234,179,8,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(234,179,8,0.15); }
+    .glow-yellow { box-shadow: 0 0 40px rgba(234,179,8,0.4), inset 0 0 20px rgba(234,179,8,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(234,179,8,0.3); }
+    .toc-inner a.active { color: #FACC15; border-left-color: #EAB308; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #EAB308; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #EAB308; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(234,179,8,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #FACC15; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(234,179,8,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Residuos</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Gestión</span>
+        <a href="../index.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Inicio</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #EAB308 1px, transparent 1px), radial-gradient(circle at 70% 30%, #EAB308 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(234,179,8,0.16) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Gestión de Materiales</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        Residuos<br>
+        <span class="text-nucleo-accent">radiactivos</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Casi nada en la tecnología nuclear es "basura": los residuos se clasifican, se acondicionan y se guardan con planificación que mira décadas y siglos hacia adelante. En esta página vemos qué son, de dónde salen y hacia dónde van.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">Muy baja</span>
+        <span class="chip">Baja</span>
+        <span class="chip">Media</span>
+        <span class="chip">Alta</span>
+        <span class="chip chip-yellow">Onkalo</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~10 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> ¿Qué son?</a>
+        <a href="#sec02"><span class="num">02</span> Clasificación</a>
+        <a href="#sec03"><span class="num">03</span> De dónde salen</a>
+        <a href="#sec04"><span class="num">04</span> Gestión actual</a>
+        <a href="#sec05"><span class="num">05</span> El repositorio</a>
+        <a href="#sec06"><span class="num">06</span> El debate</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · ¿Qué son?</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Clasificación</a>
+      <a href="#sec03" class="toc-mobile-link">03 · De dónde salen</a>
+      <a href="#sec04" class="toc-mobile-link">04 · Gestión actual</a>
+      <a href="#sec05" class="toc-mobile-link">05 · El repositorio</a>
+      <a href="#sec06" class="toc-mobile-link">06 · El debate</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">¿Qué son?</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Un <strong class="text-nucleo-accentLight">residuo radiactivo</strong> es cualquier material que contiene o está contaminado con radionucleidos y que ya no tiene un uso previsto. La clave no es el origen sino la <strong class="text-nucleo-accent">actividad</strong>: cuánta radiación emite y durante cuánto tiempo.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Conviene aclarar lo que <em>no</em> son:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">No son tóxicos químicos ordinarios</strong>: su riesgo es la radiación ionizante, que decae con el tiempo por su propia física. La mayoría pierde peligrosidad en poco tiempo.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">No son "basura" generada en el reactor</strong>: el combustible gastado es un material con el que además se puede extraer energía reutilizable, y su gestión está planificada desde el diseño de la central.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Su volumen es diminuto</strong>: toda la electricidad nuclear del mundo produce al año un volumen de residuos de alta actividad mucho menor que el de muchos residuos industriales de un solo país.
+        </li>
+      </ul>
+      <div class="equation-block">
+        <span class="eq-label">Ley de desintegración (semivida)</span>
+        \[N(t) = N_0 \cdot e^{-\lambda t} \qquad t_{1/2} = \frac{\ln 2}{\lambda}\]
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El concepto de <strong class="text-nucleo-accentLight">semivida</strong> (\(t_{1/2}\)) ordena toda la gestión: el Cs-137 tarda 30 años en reducirse a la mitad, el Sr-90 lo hace en 29, y el plutonio-239 en 24.000. Los planes de almacenamiento se diseñan para el isótopo más longevo presente en cada contenedor.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Clasificación</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los organismos internacionales clasifican los residuos por su <strong class="text-nucleo-accent">actividad</strong> y su <strong class="text-nucleo-accent">semivida</strong>, porque ambos deciden el nivel de blindaje y el tiempo de aislamiento necesarios:
+      </p>
+      <div class="my-6 overflow-x-auto">
+        <table class="w-full text-sm" style="font-family:'Inter',sans-serif; border-collapse: collapse;">
+          <thead>
+            <tr class="text-left text-[10px] uppercase tracking-[0.2em] text-nucleo-accent border-b border-nucleo-accent/30">
+              <th class="py-3 pr-4">Categoría</th>
+              <th class="py-3 pr-4">Ejemplos</th>
+              <th class="py-3">Gestión típica</th>
+            </tr>
+          </thead>
+          <tbody class="text-nucleo-silver">
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Exenta / muy baja</td><td class="py-3 pr-4">Residuos hospitalarios y de laboratorio con actividad mínima</td><td class="py-3">Liberación controlada o reúso si cumple criterios de exención</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Baja (MBBA)</td><td class="py-3 pr-4">Ropa, guantes, papeles, herramientas de instalaciones nucleares</td><td class="py-3">Compactación y almacenamiento en celdas de superficie o trincheras</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Media (MVA)</td><td class="py-3 pr-4">Resinas y filtros de reactores, fuentes médicas en desuso</td><td class="py-3">Inmovilización en cemento o betún + almacenamiento en superficie o media profundidad</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Alta (AVA)</td><td class="py-3 pr-4">Combustible gastado, vidrios vitrificados de reprocesamiento</td><td class="py-3">Enfriamiento en piscinas, luego contenedores secos y repositorio geológico profundo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En Argentina, la <strong class="text-nucleo-accentLight">CNEA</strong> gestiona los residuos de sus instalaciones bajo la supervisión de la <strong class="text-nucleo-accentLight">ARN</strong>, que define los criterios de exención y clasificación en su normativa.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">De dónde salen</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Los residuos no salen solo de las centrales: casi toda actividad que usa radiación genera algún material que hay que gestionar. Las fuentes son:
+      </p>
+      <div class="grid sm:grid-cols-2 gap-4 my-6">
+        <div class="p-5 bg-nucleo-dark border-l-2 border-nucleo-accent">
+          <div class="font-heading text-lg font-bold text-white uppercase">Reactores de potencia</div>
+          <p class="text-sm text-nucleo-silver mt-2 leading-relaxed">Atucha I/II y Embalse: combustible gastado y materiales de operación (resinas, filtros, herramientas). Generan los residuos de media y alta actividad del país.</p>
+        </div>
+        <div class="p-5 bg-nucleo-dark border-l-2 border-nucleo-accent">
+          <div class="font-heading text-lg font-bold text-white uppercase">Medicina nuclear</div>
+          <p class="text-sm text-nucleo-silver mt-2 leading-relaxed">Radiofármacos y sus envases, jeringas, agujas y fuentes de braquiterapia vencidas. Son de baja actividad y semivida corta.</p>
+        </div>
+        <div class="p-5 bg-nucleo-dark border-l-2 border-nucleo-accent">
+          <div class="font-heading text-lg font-bold text-white uppercase">Industria e investigación</div>
+          <p class="text-sm text-nucleo-silver mt-2 leading-relaxed">Fuentes de irradiación (Co-60 para esterilización), medidores, trazadores y las instalaciones como el RA-6 o los ciclotrones.</p>
+        </div>
+        <div class="p-5 bg-nucleo-dark border-l-2 border-nucleo-accent">
+          <div class="font-heading text-lg font-bold text-white uppercase">Minería del uranio</div>
+          <p class="text-sm text-nucleo-silver mt-2 leading-relaxed">Los estériles y residuos del procesamiento del mineral. En Argentina el país cuenta con reservas y hubo producción histórica en Sierra Pintada.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Gestión actual</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La gestión sigue una cadena lógica: <strong class="text-nucleo-accentLight">minimizar</strong> en el origen, <strong class="text-nucleo-accentLight">acondicionar</strong> para estabilizar, y <strong class="text-nucleo-accentLight">aislar</strong> hasta que la actividad decaiga.
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Minimización:</strong> diseño de instalaciones, selección de materiales y buenas prácticas reducen cuánto residuo se genera.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Acondicionamiento:</strong> se concentra la actividad y se inmoviliza: los líquidos se mezclan con cemento, el combustible se encierra en contenedores de acero y hormigón. El objetivo es un bulto estable, seco e impermeable.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Almacenamiento temporal:</strong> el combustible gastado primero se enfría en <strong class="text-nucleo-accent">piscinas</strong> de agua desmineralizada (que absorbe calor y radiación), y luego pasa a <strong class="text-nucleo-accent">contenedores secos</strong> de hormigón vigilados. En las centrales argentinas se gestiona así desde la puesta en marcha.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Transporte:</strong> los contenedores de alta actividad están diseñados y ensayados para resistir accidentes severos: caídas, incendios e inmersión. Es uno de los transportes de carga más regulados del mundo.
+        </li>
+      </ul>
+      <div class="dato-box">
+        <span class="dato-label">Dato · Volumen</span>
+        Si toda la electricidad de un argentino promedio durante un año saliera de centrales nucleares, los residuos de alta actividad generados ocuparían menos de un cubo de ~10 litros, un volumen minúsculo frente a los residuos de otras industrias.
+      </div>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El repositorio</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Para los residuos de alta actividad, la comunidad internacional eligió como solución final el <strong class="text-nucleo-accentLight">almacenamiento geológico profundo</strong>: una instalación excavada a varios cientos de metros bajo tierra, en formaciones estables, que aísla los residuos por más de cien mil años.
+      </p>
+      <div class="pull-quote">
+        "Lo que hoy se guarda en superficie con vigilancia activa, mañana debe protegerse solo: la geología es el candado más duradero que conocemos."
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El proyecto más avanzado es <strong class="text-nucleo-accentLight">Onkalo</strong>, en Finlandia: una red de túneles en granito a unos 450 metros de profundidad, cuyo diseño prevé contener el combustible gastado del país durante más de 100.000 años. Suecia también avanza en un repositorio similar. En Argentina, el combustible gastado de Atucha y Embalse se mantiene en almacenamiento temporal mientras se evalúan las opciones definitivas, con estudios geológicos históricos que identificaron candidatos en la Patagonia.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec06">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">06</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">El debate</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La gestión de residuos es el argumento técnico y social más citado en el debate nuclear. Vale la pena mirar los dos lados:
+      </p>
+      <div class="grid sm:grid-cols-2 gap-4 my-6">
+        <div class="p-5 bg-nucleo-dark border-t-2 border-nucleo-accent/60">
+          <div class="font-heading text-lg font-bold text-white uppercase text-nucleo-accentLight">A favor</div>
+          <ul class="text-sm text-nucleo-silver mt-3 space-y-2 leading-relaxed" style="list-style:none;">
+            <li class="flex items-start gap-2"><span class="text-nucleo-accent mt-0.5">✦</span> Volumen diminuto frente a otras industrias; es un problema acotado y manejable.</li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-accent mt-0.5">✦</span> La tecnología de contención está probada: los contenedores soportan accidentes severos.</li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-accent mt-0.5">✦</span> Los residuos "quedan donde están": no se emiten a la atmósfera como otros contaminantes.</li>
+          </ul>
+        </div>
+        <div class="p-5 bg-nucleo-dark border-t-2 border-nucleo-warning/60">
+          <div class="font-heading text-lg font-bold text-white uppercase text-nucleo-warning">En contra</div>
+          <ul class="text-sm text-nucleo-silver mt-3 space-y-2 leading-relaxed" style="list-style:none;">
+            <li class="flex items-start gap-2"><span class="text-nucleo-warning mt-0.5">✦</span> La deuda intergeneracional: se traslada la vigilancia a comunidades que no decidieron.</li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-warning mt-0.5">✦</span> Los repositorios definitivos avanzan lento por falta de consenso social y político.</li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-warning mt-0.5">✦</span> La larga duración del Pu-239 y del Am-241 obliga a pensar en escalas de tiempo casi geológicas.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La transparencia es la salida que eligen cada vez más países: decisiones públicas, participación local y compromisos verificables. La ciencia ya sabe <em>cómo</em> aislar los residuos; el desafío pendiente es <em>dónde y con quién</em>.
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:archive" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Conceptos clave</span>
+        </div>
+        <ul class="px-5 py-4 space-y-3" style="list-style:none;">
+          <li class="flex items-start gap-2 text-base text-nucleo-silver">
+            <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+            <span>El riesgo se define por <strong class="text-nucleo-accentLight">actividad y semivida</strong>, no por el origen del residuo.</span>
+          </li>
+          <li class="flex items-start gap-2 text-base text-nucleo-silver">
+            <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+            <span>Cadena de gestión: <strong class="text-nucleo-accentLight">minimizar → acondicionar → aislar</strong> hasta que la actividad decaiga.</span>
+          </li>
+          <li class="flex items-start gap-2 text-base text-nucleo-silver">
+            <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+            <span>El estándar final es el <strong class="text-nucleo-accentLight">repositorio geológico profundo</strong>: Onkalo (Finlandia) es el referente mundial.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <a href="reactores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Reactores</span>
+          <p class="text-sm text-nucleo-silver mt-1">De dónde viene el combustible gastado</p>
+        </a>
+        <a href="dosis.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Dosis</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cómo se mide el riesgo de la radiación</p>
+        </a>
+        <a href="radiaciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Radiaciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">Los tipos de radiación a contener</p>
+        </a>
+        <a href="instituciones.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Instituciones</span>
+          <p class="text-sm text-nucleo-silver mt-1">CNEA y ARN, los organismos que gestionan</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="dosis.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-teal-400" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-teal-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Dosis y Protección</div>
+        </div>
+      </a>
+      <a href="mundo.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#2563EB;">Siguiente concepto</div>
+          <div class="font-heading text-lg font-bold text-white">La Nuclear en el Mundo →</div>
+        </div>
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="20" style="color:#2563EB;"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-yellow">
+          <span class="iconify text-white" data-icon="lucide:archive" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">Residuos</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="dosis.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-teal-400 transition-colors">Dosis</a>
+        <a href="mundo.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-blue-500 transition-colors">Mundo</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

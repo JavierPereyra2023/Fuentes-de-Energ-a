@@ -20,6 +20,7 @@ D:\nucle-ar\
 │   ├── argentina.html          # Tecnología nuclear argentina (celeste #75AADB) — incluye TANDAR
 │   ├── atomos.html             # Estructura del átomo (ámbar #F59E0B)
 │   ├── cosmicos.html           # Rayos cósmicos (violeta #7C4DFF)
+│   ├── dosis.html              # Dosis y protección radiológica (teal #14B8A6) — Gy/Sv/mSv, límites ARN, radón, ALARA
 │   ├── espectro.html           # Espectro electromagnético (violeta #7C4DFF)
 │   ├── energias.html           # Otras fuentes de energía (verde esmeralda #10B981) — hub de 4 secciones, grid de 9 cards a energias\, sin SVG
 │   ├── fision.html             # Fisión (rojo #DC2626)
@@ -28,10 +29,12 @@ D:\nucle-ar\
 │   ├── instituciones.html      # Instituciones argentinas (celeste #75AADB, plantilla reducida, 9 tarjetas)
 │   ├── materia-oscura.html     # Materia oscura (índigo #4F46E5)
 │   ├── medicina.html           # Medicina nuclear y radiología (rojo #DC2626) — 11 secciones, sin SVG
+│   ├── mundo.html              # La nuclear en el mundo (blue-600 #2563EB) — flota, países, SMR/Gen IV, COP28
 │   ├── peliculas.html          # Películas y series nucleares (oro #F59E0B, plantilla reducida, sin iframes)
 │   ├── radiaciones.html        # Radiaciones ionizantes (naranja #FF6E40)
 │   ├── radioisotopos.html      # Radioisótopos (verde #26A69A)
 │   ├── reactores.html          # Reactores nucleares (ámbar #FFB300)
+│   ├── residuos.html           # Residuos radiactivos (yellow #EAB308) — clasificación, gestión, Onkalo, debate
 │   ├── energias\               # 9 páginas de fuentes de energía (plantilla completa, 4 secciones 01-04)
 │   │   ├── hidroelectrica.html # Hidroeléctrica (sky #38BDF8) — Yacyretá, Salto Grande, Comahue
 │   │   ├── eolica.html         # Eólica (cian #00E5FF) — Patagonia, 71% de lo renovable
@@ -53,6 +56,8 @@ D:\nucle-ar\
 │       ├── meitner.html        # Lise Meitner (violeta #7C4DFF)
 │       ├── oklo.html           # Oklo, reactor natural (ámbar #F59E0B)
 │       └── propulsion.html     # Propulsión nuclear (ámbar #F59E0B)
+├── tools\                      # Scripts de mantenimiento
+│   └── verificar-links.ps1     # Valida href/src locales, anchors #id y wrapper flex de secciones
 └── AGENTS.md
 ```
 
@@ -79,6 +84,13 @@ Start-Process "D:\nucle-ar\conceptos\fision.html"
 
 Para verificar cambios sin recargar manualmente, usar `?nocache=1` o Ctrl+F5.
 
+Para validar enlaces locales, anchors y el patrón de secciones, ejecutar el verificador:
+
+```powershell
+# Verificar enlaces, anchors y wrapper flex de todas las páginas
+& "D:\nucle-ar\tools\verificar-links.ps1"
+```
+
 ## Arquitectura del sitio
 
 ### `index.html` — Página principal
@@ -86,7 +98,7 @@ Para verificar cambios sin recargar manualmente, usar `?nocache=1` o Ctrl+F5.
 - 5 secciones + marquee + footer: hero, marquee, qué es, fisión vs fusión, Argentina, temas, footer (las secciones `centrales`/`aplicaciones`/`seguridad`/`recursos` ya no existen)
 - Color de acento: cian radioactivo `#00E5FF` (paleta `nucleo` en `tailwind.config`, sin clave `accent`; usa `cyan`/`cyanLight`/`cyanDark`)
 - Imágenes de Wikimedia Commons (URLs verificadas) y Unsplash
-- Grid de 15 tarjetas de temas (`#temas`) numeradas 01–15 enlazando a las páginas de conceptos (incluye Fusión 12, Espectro EM 13, Medicina Nuclear 14 y Otras Energías 15; la tarjeta de Fusión usa clases Tailwind `blue-500` porque no hay azul en la paleta `nucleo`, y Otras Energías usa `emerald-500` porque el verde esmeralda no está en la paleta)
+- Grid de 18 tarjetas de temas (`#temas`) numeradas 01–18 enlazando a las páginas de conceptos (incluye Fusión 12, Espectro EM 13, Medicina Nuclear 14, Otras Energías 15, Dosis 16, Residuos 17 y La Nuclear en el Mundo 18; las tarjetas de Fusión, Otras Energías, Dosis, Residuos y Mundo usan clases Tailwind estándar `blue-500`/`emerald-500`/`teal-500`/`yellow-500`/`blue-600` porque esos colores no están en la paleta `nucleo`)
 - Nav incluye: Fundamentos, Conceptos, Argentina, Instituciones, Películas, Temas, Revista
 - Marquee incluye TANDAR. Timeline argentina incluye hito 1985 (TANDAR)
 - Colores adicionales en paleta: `fucsia` (#EC4899), `indigo` (#4F46E5)
@@ -119,6 +131,7 @@ Plantilla común (15 páginas con secciones numeradas):
 | Argentina | `#75AADB` celeste | `lucide:map-pin` | CNEA, NA-SA, INVAP, CAREM, TANDAR |
 | Átomos | `#F59E0B` ámbar | `lucide:atom` | Estructura atómica, Schrödinger |
 | Cósmicos | `#7C4DFF` violeta | `lucide:particles` | Rayos cósmicos, Pierre Auger |
+| Dosis | `#14B8A6` teal | `lucide:shield` | Gy/Sv/mSv, dosis típicas, límites ICRP/ARN, radón, dosimetría, tiempo/distancia/blindaje, ALARA |
 | Espectro | `#7C4DFF` violeta | `lucide:radio` | Espectro electromagnético |
 | Energías | `#10B981` verde esmeralda | `lucide:leaf` | Matriz argentina, renovables (hidro, eólica, solar, biomasa, geotermia), fósiles, emisiones CO₂, nuclear en la matriz |
 | Fisión | `#DC2626` rojo | `lucide:split` | Reacción en cadena, U-235 |
@@ -127,9 +140,11 @@ Plantilla común (15 páginas con secciones numeradas):
 | Instituciones | `#75AADB` celeste | `lucide:landmark` | Plantilla reducida, 9 tarjetas (incluye UNSAM) |
 | Materia Oscura | `#4F46E5` índigo | `lucide:eye-off` | WIMP, rotación galáctica, Zwicky, Rubin, 27% |
 | Medicina | `#DC2626` rojo | `lucide:stethoscope` | Radiología, gammagrafía, SPECT, PET, radioterapia, protones, braquiterapia, teranóstica, BNCT, esterilización |
+| Mundo | `#2563EB` blue-600 | `lucide:globe` | Flota mundial, países líderes, en construcción, SMR, Generación IV, COP28 |
 | Radiaciones | `#FF6E40` naranja | `lucide:radio` | α, β, X, γ, neutrones |
 | Radioisótopos | `#26A69A` verde | `lucide:flask-conical` | Co-60, Tc-99m, I-131 |
 | Reactores | `#FFB300` ámbar | `lucide:atom` | Atucha I/II, Embalse, CAREM |
+| Residuos | `#EAB308` yellow | `lucide:archive` | Clasificación (MBBA/ABBA/MVA/AVA), gestión, transporte, Onkalo, debate |
 
 Nota: los iconos del footer de cada página pueden diferir de los iconos usados en las tarjetas de `index.html`. Mantener ambos.
 
@@ -173,6 +188,29 @@ Nota: los iconos del footer de cada página pueden diferir de los iconos usados 
 - sec02 **Las fuentes, una por una**: grid de 9 cards enlazando a `energias/hidroelectrica.html`, `eolica.html`, `solar.html`, `biomasa.html`, `geotermia.html`, `gas.html`, `petroleo.html`, `carbon.html` y `nuclear.html`
 - sec03 Emisiones: tabla CO₂eq/kWh (carbón 740-920, petróleo 800-1000, gas 410-490, biomasa 200-280, solar 40-80, nuclear 5-40, eólica 7-14, hidro 4-30)
 - sec04 Transición: base + variable + respaldo + almacenamiento; imágenes en `assets/energias/`
+
+**Dosis y protección radiológica** (`dosis.html`, 6 secciones 01–06, teal `#14B8A6`, footer `lucide:shield`):
+- sec01 Qué es la dosis: gray (energía absorbida, Gy) vs sievert (efecto biológico, Sv), \(D=dE/dm\), \(H=D\cdot w_R\), factores de peso \(w_R\)/\(w_T\)
+- sec02 Dosis típicas: tabla comparativa (radiografía 0,02 mSv, vuelo 0,03–0,06, fondo 2,4 mSv/año, TC ~8 mSv, límite trabajador 20 mSv)
+- sec03 Límites y regulación: ICRP, ARN, 20 mSv/año trabajador (promedio 5 años, máx 50), 1 mSv/año público, pacientes (justificación + optimización), ALARA
+- sec04 Radón y fondo natural: radón ~50%, cósmicos ~15%, terrestre ~20%, alimentos ~15%; medicina ≫ centrales en dosis artificial
+- sec05 Dosimetría: TLD, OSL, dosímetro electrónico, monitores de área, registros vitalicios
+- sec06 Protección práctica: tiempo / distancia / blindaje, ley del inverso del cuadrado \(I_2=I_1(d_1/d_2)^2\)
+
+**Residuos radiactivos** (`residuos.html`, 6 secciones 01–06, yellow `#EAB308`, footer `lucide:archive`):
+- sec01 Qué son: actividad y semivida definen el riesgo; volumen diminuto; ley de desintegración \(N(t)=N_0 e^{-\lambda t}\)
+- sec02 Clasificación: tabla (exenta/muy baja, baja, media MVA, alta AVA según actividad y semivida)
+- sec03 De dónde salen: reactores de potencia, medicina, industria e investigación, minería del uranio
+- sec04 Gestión actual: minimizar → acondicionar (cemento/vidrio) → aislar (piscinas, contenedores secos); transporte regulado
+- sec05 El repositorio: almacenamiento geológico profundo, Onkalo (Finlandia, granito 450 m), caso argentino (combustible en temporario, candidatos en Patagonia)
+- sec06 El debate: argumentos a favor/en contra, deuda intergeneracional, transparencia
+
+**La nuclear en el mundo** (`mundo.html`, 5 secciones 01–05, blue-600 `#2563EB`, footer `lucide:globe`):
+- sec01 La flota mundial: ~440 reactores, ~400 GW, ~10% electricidad mundial, ~25% de la limpia, factor de carga más alto
+- sec02 Países líderes: tabla (EE.UU. ~93/~19%, Francia ~56/~65%, China ~55, Rusia ~37, Corea ~25, Canadá ~19, Argentina 3/~7-9%); imagen `assets/generated/central-nuclear-argentina.png`
+- sec03 En construcción: ~60 unidades, China/India lideran, Egipto (El Dabaa) y Turquía (Akkuyu) primeros programas, Japón revisa su salida
+- sec04 SMR y Generación IV: reactores modulares pequeños (hasta 300 MW), CAREM argentino, NuScale/BWRX-300, MSR/SFR/HTGR, ciclo cerrado del combustible
+- sec05 Rol en la transición: COP28 declaración de triplicar capacidad nuclear para 2050, cross-links a `argentina.html`, `reactores.html#sec05`, `energias.html`
 
 **Páginas de fuentes de energía** (`conceptos/energias/`, 9 archivos, plantilla completa de conceptos, 4 secciones 01–04):
 - Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas. Hero con chips, TOC, breadcrumb `../../index.html / ../../index.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
@@ -254,6 +292,10 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
 
 - `aceleradores.html` ↔ `argentina.html` (Temas Relacionados)
 - `antimateria.html` ↔ `materia-oscura.html` (prev/next nav + footer)
+- `dosis.html` ↔ `residuos.html` ↔ `mundo.html` (prev/next nav encadenado: radiaciones → dosis → residuos → mundo → energias)
+- `dosis.html` ↔ `radiaciones.html`, `medicina.html`, `instituciones.html`, `residuos.html` (Temas Relacionados)
+- `residuos.html` ↔ `reactores.html`, `radiaciones.html`, `dosis.html`, `instituciones.html` (Temas Relacionados)
+- `mundo.html` ↔ `reactores.html`, `argentina.html`, `energias.html`, `fusion.html` (Temas Relacionados; cross-links en sec02/sec04/sec05 a `argentina.html`, `reactores.html#sec05`, `energias.html`)
 - `energias.html` ↔ `reactores.html` y `argentina.html` (Temas Relacionados; `energias.html` → `reactores.html` y `argentina.html`); hub ↔ 9 páginas de `energias/` (grid sec02 + nav encadenado)
 - `medicina.html` ↔ `aplicaciones.html` (prev/next nav, Temas Relacionados, cross-links en sec10/sec11 → `aplicaciones.html#sec10`/`#sec05`; `aplicaciones.html` sec02 → `medicina.html`)
 - `medicina.html` ↔ `radioisotopos.html` y `antimateria.html` (Temas Relacionados)
@@ -267,3 +309,10 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
 - **Gradientes SVG**: los productos de fisión se diferencian por color (`baGrad` dorado, `krGrad` naranja, `xeGrad` cian, `srGrad` verde) según el canal de fisión real.
 - **Datos técnicos de reactores argentinos** (Atucha I, Atucha II, Embalse, CAREM, INVAP) están en la página principal — mantener consistencia si se expanden.
 - **No hay tests automatizados** ni CI. La verificación es manual abriendo las páginas en el navegador.
+
+## SEO y favicon
+
+- Todas las páginas llevan `<meta name="description">` única, Open Graph (`og:type`, `og:site_name`, `og:title`, `og:description`, `og:image`) y Twitter Card. El favicon es `assets/favicon.svg` (átomo cian), referenciado con `<link rel="icon" type="image/svg+xml">` y rutas relativas por profundidad.
+- `og:image` apunta a `assets/generated/hero-laboratorio-nuclear.png` con ruta relativa (no hay dominio). Si el sitio se aloja con URL pública, convertir a URL absoluta.
+- Las descripciones se mantienen en sincronía manualmente al crear/renombrar páginas; el verificador (`tools/verificar-links.ps1`) comprueba que el `<head>` tenga `meta description` y favicon en cada archivo.
+- Al crear una página nueva, copiar el bloque meta completo de una existente y ajustar `title`, `description` y la ruta del favicon/og:image según la profundidad (`.`, `../`, `../../`).

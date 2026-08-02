@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Energía Nuclear en el Mundo — Flota, países y futuro | Energía Nuclear</title>
+  <meta name="description" content="La energía nuclear en el mundo: la flota global de reactores, los países líderes, centrales en construcción, SMRs y Generación IV, y el rol en la transición energética.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Energía Nuclear">
+  <meta property="og:title" content="La Energía Nuclear en el Mundo — Flota, países y futuro | Energía Nuclear">
+  <meta property="og:description" content="La energía nuclear en el mundo: la flota global de reactores, los países líderes, centrales en construcción, SMRs y Generación IV, y el rol en la transición energética.">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              accent: '#2563EB', accentLight: '#60A5FA', accentDark: '#1D4ED8',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4',
+              warning: '#FFB300', warningDark: '#C77F00',
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #2563EB; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reading-bar { position: fixed; top: 0; left: 0; height: 3px; background: #2563EB; width: 0%; transition: width 0.15s ease-out; z-index: 9999; }
+    .section-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(37, 99, 235, 0.3); line-height: 1; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #1D4ED8, #2563EB, #60A5FA); }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(37,99,235,0.12); border-bottom: 2px solid #2563EB; font-family: 'Inter', sans-serif; font-weight: 600; color: #60A5FA; }
+    .equation-block { font-family: 'Inter', sans-serif; padding: 1.5rem 2rem; margin: 2rem 0; background: rgba(37,99,235,0.04); border-left: 3px solid #2563EB; font-size: 1.1rem; color: #60A5FA; overflow-x: auto; }
+    .equation-block .eq-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #2563EB; margin-bottom: 0.5rem; }
+    .pull-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.4; color: #C8D4DC; padding: 1rem 0 1rem 1.5rem; border-left: 4px solid #2563EB; margin: 2.5rem 0; }
+    .dato-box { font-family: 'Inter', sans-serif; background: rgba(255, 179, 0, 0.04); border-left: 3px solid #FFB300; padding: 14px 18px; margin: 24px 0; border-radius: 0 8px 8px 0; font-size: 14px; color: #C8D4DC; }
+    .dato-box .dato-label { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #FFB300; margin-bottom: 6px; }
+    .chip { display: inline-block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; background: rgba(37,99,235,0.12); color: #60A5FA; border: 1px solid rgba(37,99,235,0.25); }
+    .chip-yellow { background: rgba(255,179,0,0.12); color: #FFB300; border-color: rgba(255,179,0,0.25); }
+    .sibling-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s ease; text-decoration: none; }
+    .sibling-link:hover { border-color: rgba(37,99,235,0.3); background: rgba(37,99,235,0.04); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(37,99,235,0.15); }
+    .glow-blue { box-shadow: 0 0 40px rgba(37,99,235,0.4), inset 0 0 20px rgba(37,99,235,0.2); }
+    .toc-sidebar { position: absolute; top: 0; right: -230px; width: 180px; }
+    .toc-inner { position: sticky; top: 5rem; }
+    .toc-inner .toc-title { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: #5A6B72; margin-bottom: 0.75rem; }
+    .toc-inner a { display: flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0 0.3rem 0.75rem; font-family: 'Inter', sans-serif; font-size: 11px; color: #5A6B72; text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s ease; margin-bottom: 1px; }
+    .toc-inner a:hover { color: #C8D4DC; border-left-color: rgba(37,99,235,0.3); }
+    .toc-inner a.active { color: #60A5FA; border-left-color: #2563EB; font-weight: 600; }
+    .toc-inner a .num { font-weight: 700; font-size: 9px; color: #2563EB; min-width: 1.2rem; }
+    .toc-mobile-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: #2563EB; color: #fff; display: none; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.4); border: none; transition: transform 0.2s; }
+    .toc-mobile-btn:hover { transform: scale(1.1); }
+    .toc-overlay { position: fixed; inset: 0; background: rgba(6,9,12,0.96); z-index: 200; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .toc-overlay.open { display: flex; }
+    .toc-overlay a { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #5A6B72; text-decoration: none; transition: color 0.2s; }
+    .toc-overlay a:hover { color: #60A5FA; }
+    .toc-overlay .close-toc { position: absolute; top: 2rem; right: 2rem; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: background 0.2s; }
+    .toc-overlay .close-toc:hover { background: rgba(37,99,235,0.2); }
+    @media (max-width: 1279px) { .toc-sidebar { display: none; } .toc-mobile-btn { display: flex; } }
+    @media (min-width: 1280px) { .toc-mobile-btn { display: none; } .toc-overlay { display: none !important; } }
+    .glosario { border-bottom: 1px dotted; cursor: help; position: relative; }
+    .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
+    .glosario:hover::after { opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="reading-bar" id="reading-bar"></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex items-center justify-between h-14 md:h-16">
+      <div class="flex items-center gap-2 text-xs flex-wrap">
+        <a href="../index.html" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors flex items-center gap-1">
+          <span class="iconify text-nucleo-silverDark" data-icon="lucide:home" data-width="14"></span>
+          <span class="hidden sm:inline">Inicio</span>
+        </a>
+        <span class="text-nucleo-accent/60">/</span>
+        <a href="../index.html#temas" class="text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Conceptos</a>
+        <span class="text-nucleo-accent/60">/</span>
+        <span class="text-nucleo-accent font-semibold">Nuclear en el Mundo</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/15 text-nucleo-accent px-2.5 py-1 hidden sm:inline">Global</span>
+        <a href="../index.html" class="text-[11px] font-bold uppercase tracking-wider text-nucleo-silver hover:text-white transition-all duration-200 hidden sm:flex items-center gap-1 hover:bg-white/5 px-3 py-1.5 rounded-sm">
+          <span>Inicio</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="relative pt-24 pb-12 md:pt-32 md:pb-16 bg-nucleo-black overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 30% 50%, #2563EB 1px, transparent 1px), radial-gradient(circle at 70% 30%, #2563EB 1px, transparent 1px); background-size: 60px 60px, 80px 80px;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(37,99,235,0.18) 0%, transparent 65%); pointer-events: none;"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+    <div class="max-w-4xl">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-accent">Concepto · Panorama Global</span>
+      </div>
+      <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase leading-[1.05] tracking-tight text-white mb-5">
+        La nuclear<br>
+        <span class="text-nucleo-accent">en el mundo</span>
+      </h1>
+      <p class="text-base md:text-xl text-nucleo-silver max-w-2xl leading-relaxed mb-6">
+        Casi 440 reactores operan en más de 30 países y generan alrededor del 10% de la electricidad mundial. ¿Quiénes lideran la flota, qué se construye hoy y qué rol juega el átomo en la transición energética?
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="chip">440 reactores</span>
+        <span class="chip">32 países</span>
+        <span class="chip">~10% eléctrico</span>
+        <span class="chip">SMR</span>
+        <span class="chip chip-yellow">Gen IV</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-nucleo-silverDark ml-2 flex items-center gap-1" style="font-family:'Inter',sans-serif;">
+          <span class="iconify" data-icon="lucide:clock" data-width="12"></span>
+          ~9 min de lectura
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16" style="overflow:visible;">
+  <main class="max-w-4xl mx-auto relative">
+
+    <aside class="toc-sidebar" aria-label="Tabla de contenidos">
+      <div class="toc-inner">
+        <div class="toc-title">En esta página</div>
+        <a href="#sec01"><span class="num">01</span> La flota mundial</a>
+        <a href="#sec02"><span class="num">02</span> Países líderes</a>
+        <a href="#sec03"><span class="num">03</span> En construcción</a>
+        <a href="#sec04"><span class="num">04</span> SMR y Generación IV</a>
+        <a href="#sec05"><span class="num">05</span> Rol en la transición</a>
+      </div>
+    </aside>
+
+    <button class="toc-mobile-btn" id="tocMobileBtn" aria-label="Abrir tabla de contenidos">
+      <span class="iconify" data-icon="lucide:list" data-width="20"></span>
+    </button>
+    <div class="toc-overlay" id="tocOverlay">
+      <button class="close-toc" id="tocClose">✕</button>
+      <a href="#sec01" class="toc-mobile-link">01 · La flota mundial</a>
+      <a href="#sec02" class="toc-mobile-link">02 · Países líderes</a>
+      <a href="#sec03" class="toc-mobile-link">03 · En construcción</a>
+      <a href="#sec04" class="toc-mobile-link">04 · SMR y Generación IV</a>
+      <a href="#sec05" class="toc-mobile-link">05 · Rol en la transición</a>
+    </div>
+
+    <section class="reveal mb-16" id="sec01">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">01</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">La flota mundial</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La primera central comercial del mundo, Obninsk, encendió en la Unión Soviética en 1954. Setenta años después, la flota mundial ronda los <span class="inline-stat">440 reactores</span> en operación con unos <span class="inline-stat">400 GW</span> de potencia instalada.
+      </p>
+      <div class="grid sm:grid-cols-3 gap-4 my-6">
+        <div class="p-5 bg-nucleo-dark text-center">
+          <div class="font-heading text-4xl font-bold text-nucleo-accentLight">~440</div>
+          <div class="text-[10px] uppercase tracking-wider text-nucleo-silverDark mt-2" style="font-family:'Inter',sans-serif;">reactores en operación</div>
+        </div>
+        <div class="p-5 bg-nucleo-dark text-center">
+          <div class="font-heading text-4xl font-bold text-nucleo-accentLight">~10%</div>
+          <div class="text-[10px] uppercase tracking-wider text-nucleo-silverDark mt-2" style="font-family:'Inter',sans-serif;">de la electricidad mundial</div>
+        </div>
+        <div class="p-5 bg-nucleo-dark text-center">
+          <div class="font-heading text-4xl font-bold text-nucleo-accentLight">~25%</div>
+          <div class="text-[10px] uppercase tracking-wider text-nucleo-silverDark mt-2" style="font-family:'Inter',sans-serif;">de la electricidad limpia</div>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La nuclear es la segunda fuente de electricidad baja en carbono del mundo, después de la hidroeléctrica, y la primera en países que la adoptaron masivamente. Su factor de carga es el más alto de todas las tecnologías: las centrales funcionan la mayor parte de las horas del año, sin depender del clima.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El mapa de la flota está muy concentrado: <strong class="text-nucleo-accentLight">Estados Unidos, Francia y China</strong> reúnen más de la mitad de los reactores del planeta, y la edad media de la flota mundial supera los 30 años, lo que explica el debate entre <strong class="text-nucleo-accent">extender la vida útil</strong>, <strong class="text-nucleo-accent">cerrar</strong> o <strong class="text-nucleo-accent">construir de nuevo</strong>.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec02">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">02</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Países líderes</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        No todos usan la nuclear igual: algunos generan cantidades enormes de energía, otros dependen de ella para una parte muy grande de su electricidad:
+      </p>
+      <div class="my-6 overflow-x-auto">
+        <table class="w-full text-sm" style="font-family:'Inter',sans-serif; border-collapse: collapse;">
+          <thead>
+            <tr class="text-left text-[10px] uppercase tracking-[0.2em] text-nucleo-accent border-b border-nucleo-accent/30">
+              <th class="py-3 pr-4">País</th>
+              <th class="py-3 pr-4">Reactores</th>
+              <th class="py-3 pr-4">% de su electricidad</th>
+              <th class="py-3">Nota</th>
+            </tr>
+          </thead>
+          <tbody class="text-nucleo-silver">
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Estados Unidos</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">~93</td><td class="py-3 pr-4">~19%</td><td class="py-3">La mayor flota del mundo</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Francia</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">~56</td><td class="py-3 pr-4">~65%</td><td class="py-3">El país más dependiente del nuclear</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">China</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">~55</td><td class="py-3 pr-4">~5%</td><td class="py-3">Crecimiento más veloz; ~20 en construcción</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Rusia</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">~37</td><td class="py-3 pr-4">~20%</td><td class="py-3">Exporta centrales a otros países</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Corea del Sur</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">~25</td><td class="py-3 pr-4">~30%</td><td class="py-3">Referente de eficiencia de construcción</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Canadá</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">~19</td><td class="py-3 pr-4">~14%</td><td class="py-3">Reactores CANDU de agua pesada</td></tr>
+            <tr class="border-b border-white/5"><td class="py-3 pr-4">Argentina</td><td class="py-3 pr-4 text-nucleo-accentLight font-semibold">3</td><td class="py-3 pr-4">~7-9%</td><td class="py-3">Atucha I, Atucha II y Embalse</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Argentina tiene la flota más grande de América Latina y fue pionera en el hemisferio sur: la primera central de la región, Atucha I, operó desde 1974. <a href="argentina.html" class="text-nucleo-accentLight underline underline-offset-4 hover:text-nucleo-accent">Toda la historia, en la página de Argentina.</a>
+      </p>
+      <img src="../assets/generated/central-nuclear-argentina.png" alt="Vista de una central nuclear argentina con sus torres de refrigeración" class="w-full rounded-md my-6" loading="lazy">
+      <p class="text-xs text-nucleo-silverDark mb-4" style="font-family:'Inter',sans-serif;">Representación generada de una central argentina. Las instalaciones reales de Atucha y Embalse se ven en <a href="argentina.html" class="text-nucleo-accentLight underline underline-offset-4">argentina.html</a>.</p>
+    </section>
+
+    <section class="reveal mb-16" id="sec03">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">03</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">En construcción</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En el mundo hay más de <span class="inline-stat">60 reactores</span> en construcción. El protagonismo es claramente asiático, con algunos países que recién inician su programa nuclear:
+      </p>
+      <ul class="text-lg md:text-xl text-nucleo-silver space-y-4 my-6" style="list-style: none;">
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">China</strong> encabeza la lista con la mayor cantidad de unidades en obra y la cadena de suministro más activa del mundo.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">India</strong> expande su flota para sostener el crecimiento de la demanda con reactores de agua pesada y agua ligera.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Egipto y Turquía</strong> construyen sus primeras centrales (en El Dabaa y Akkuyu), con tecnología rusa y china.
+        </li>
+        <li class="pl-5 border-l-2 border-nucleo-accent/40">
+          <strong class="text-nucleo-accentLight">Reino Unido, Francia y Emiratos</strong> avanzan con diseños EPR y con la central de Barakah, la primera árabe.
+        </li>
+      </ul>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En paralelo, algunos países que habían anunciado salidas —como Japón tras Fukushima— revisan su posición frente al desafío climático y a la necesidad de una base firme de generación.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec04">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">04</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">SMR y Generación IV</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La próxima generación nuclear apunta a <strong class="text-nucleo-accentLight">reactores modulares pequeños (SMR)</strong>: unidades de menor potencia (hasta 300 MW) que se fabrican en serie, se transportan y se montan en el sitio. Su promesa es bajar costos y abrir mercados que hoy no justifican una central gigante.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        Argentina es pionera en este campo con el <strong class="text-nucleo-accentLight">CAREM</strong>, un reactor integral de diseño nacional que será una referencia mundial de SMR. <a href="reactores.html#sec05" class="text-nucleo-accentLight underline underline-offset-4 hover:text-nucleo-accent">El CAREM se explica en Reactores.</a>
+      </p>
+      <div class="grid sm:grid-cols-2 gap-4 my-6">
+        <div class="p-5 bg-nucleo-dark border-l-2 border-nucleo-accent">
+          <div class="font-heading text-lg font-bold text-white uppercase">SMR comercial</div>
+          <p class="text-sm text-nucleo-silver mt-2 leading-relaxed">NuScale (EE.UU.), SMR-160, BWRX-300 y diseños chinos y rusos compiten por ser los primeros a gran escala.</p>
+        </div>
+        <div class="p-5 bg-nucleo-dark border-l-2 border-nucleo-accent">
+          <div class="font-heading text-lg font-bold text-white uppercase">Generación IV</div>
+          <p class="text-sm text-nucleo-silver mt-2 leading-relaxed">Reactores de sales fundidas (MSR), de sodio (SFR) y de alta temperatura (HTGR): más eficiencia, más seguridad pasiva y menos residuos.</p>
+        </div>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        La <strong class="text-nucleo-accentLight">Generación IV</strong> busca además cerrar el ciclo del combustible: en lugar de descartar el uranio y el plutonio gastados, algunos diseños los <strong class="text-nucleo-accent">reutilizan</strong> como combustible, reduciendo drásticamente la radiotoxicidad y el tiempo de aislamiento de los residuos finales.
+      </p>
+    </section>
+
+    <section class="reveal mb-16" id="sec05">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="section-num">05</span>
+        <div class="accent-line"></div>
+        <h2 class="font-heading text-xl md:text-2xl font-bold text-white uppercase tracking-tight">Rol en la transición</h2>
+      </div>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        En la cumbre climática de <strong class="text-nucleo-accentLight">Dubái (COP28)</strong>, más de 20 países firmaron una declaración histórica: <strong class="text-nucleo-accent">triplicar la capacidad nuclear para 2050</strong> como parte de la respuesta al cambio climático. Es la primera vez que el átomo entra de lleno en la agenda climática global.
+      </p>
+      <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+        El argumento es simple: la nuclear genera electricidad <strong class="text-nucleo-accentLight">sin emisiones de CO₂</strong>, con muy poca tierra por megavatio y funcionando las 24 horas. Junto a las renovables variables (sol y viento), aporta la base firme que la red necesita cuando no hay sol ni viento. <a href="energias.html" class="text-nucleo-accentLight underline underline-offset-4 hover:text-nucleo-accent">La matriz argentina y las emisiones, en Otras Fuentes de Energía.</a>
+      </p>
+      <div class="my-8 bg-nucleo-dark/40 border-l-4 border-nucleo-accent overflow-hidden">
+        <div class="p-5 pb-2 flex items-center gap-2 border-b border-white/5">
+          <span class="iconify text-nucleo-accent" data-icon="lucide:globe" data-width="16"></span>
+          <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Conceptos clave</span>
+        </div>
+        <ul class="px-5 py-4 space-y-3" style="list-style:none;">
+          <li class="flex items-start gap-2 text-base text-nucleo-silver">
+            <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+            <span>~<strong class="text-nucleo-accentLight">440 reactores</strong> en 32 países generan ~10% de la electricidad mundial y ~25% de la limpia.</span>
+          </li>
+          <li class="flex items-start gap-2 text-base text-nucleo-silver">
+            <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+            <span>Líderes: <strong class="text-nucleo-accentLight">EE.UU., Francia y China</strong>; Francia obtiene ~65% de su electricidad del átomo.</span>
+          </li>
+          <li class="flex items-start gap-2 text-base text-nucleo-silver">
+            <span class="text-nucleo-accent mt-0.5 text-sm">✦</span>
+            <span>El futuro: <strong class="text-nucleo-accentLight">SMR</strong> (como el CAREM argentino) y <strong class="text-nucleo-accentLight">Generación IV</strong> para menos residuos y más seguridad pasiva.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="reveal mb-10">
+      <h3 class="font-heading text-lg font-bold text-white uppercase tracking-tight mb-4 flex items-center gap-2">
+        <span class="iconify text-nucleo-accent" data-icon="lucide:link" data-width="16"></span>
+        Temas Relacionados
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <a href="reactores.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Reactores</span>
+          <p class="text-sm text-nucleo-silver mt-1">Cómo funcionan las máquinas de la flota mundial</p>
+        </a>
+        <a href="argentina.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Argentina</span>
+          <p class="text-sm text-nucleo-silver mt-1">Atucha, Embalse y el CAREM argentino</p>
+        </a>
+        <a href="energias.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Otras Fuentes</span>
+          <p class="text-sm text-nucleo-silver mt-1">La matriz argentina y las emisiones comparadas</p>
+        </a>
+        <a href="fusion.html" class="block p-4 border border-white/5 hover:border-nucleo-accent/30 bg-nucleo-dark hover:bg-nucleo-mid transition-all duration-200 no-underline">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-accent" style="font-family:'Inter',sans-serif;">Fusión</span>
+          <p class="text-sm text-nucleo-silver mt-1">La promesa a largo plazo, con ITER de bandera</p>
+        </a>
+      </div>
+    </div>
+
+    <nav class="grid sm:grid-cols-2 gap-4 mb-12 mt-16">
+      <a href="residuos.html" class="sibling-link text-nucleo-silverDark hover:text-white">
+        <span class="iconify text-yellow-400" data-icon="lucide:arrow-left" data-width="20"></span>
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-yellow-400 font-semibold" style="font-family:'Inter',sans-serif;">Concepto anterior</div>
+          <div class="font-heading text-lg font-bold text-white">← Residuos Radiactivos</div>
+        </div>
+      </a>
+      <a href="energias.html" class="sibling-link text-nucleo-silverDark hover:text-white justify-end text-right">
+        <div>
+          <div class="text-[10px] uppercase tracking-[0.2em] font-semibold" style="font-family:'Inter',sans-serif; color:#10B981;">Siguiente concepto</div>
+          <div class="font-heading text-lg font-bold text-white">Otras Fuentes de Energía →</div>
+        </div>
+        <span class="iconify" data-icon="lucide:arrow-right" data-width="20" style="color:#10B981;"></span>
+      </a>
+    </nav>
+
+  </main>
+</div>
+
+<footer class="relative py-8 bg-nucleo-black border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-nucleo-accent flex items-center justify-center rounded-sm glow-blue">
+          <span class="iconify text-white" data-icon="lucide:globe" data-width="14"></span>
+        </div>
+        <span class="font-heading font-bold text-sm tracking-wider text-white uppercase">Energía Nuclear</span>
+        <span class="text-[11px] text-nucleo-silverDark ml-2">La Nuclear en el Mundo</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="../index.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-nucleo-accent transition-colors">Inicio</a>
+        <a href="residuos.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-yellow-400 transition-colors">Residuos</a>
+        <a href="energias.html" class="text-[11px] uppercase tracking-wider text-nucleo-silverDark hover:text-emerald-400 transition-colors">Fuentes</a>
+        <span class="text-[11px] uppercase tracking-wider text-nucleo-silverDark">Prof. Pereyra, Javier</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('reading-bar');if(!b)return;function u(){var t=document.documentElement,h=t.scrollHeight-t.clientHeight;if(h<=0)return;b.style.width=Math.min(100,Math.round(window.scrollY/h*100))+'%';}window.addEventListener('scroll',u,{passive:true});u();})();
+</script>
+<script>
+(function(){
+  var els = document.querySelectorAll('section.reveal');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('tocMobileBtn');
+  var overlay = document.getElementById('tocOverlay');
+  var close = document.getElementById('tocClose');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function(){ overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  close.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.querySelectorAll('.toc-mobile-link').forEach(function(l){ l.addEventListener('click', function(){ overlay.classList.remove('open'); document.body.style.overflow=''; }); });
+})();
+(function(){
+  var links = document.querySelectorAll('.toc-inner a');
+  if (!links.length) return;
+  var sections = [];
+  links.forEach(function(link){
+    var id = link.getAttribute('href');
+    if (id) { var el = document.querySelector(id); if (el) sections.push({ el: el, link: link }); }
+  });
+  if (!sections.length) return;
+  var current = null;
+  function update(){
+    var top = window.scrollY + 120;
+    var active = sections[0];
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= top) { active = sections[i]; break; }
+    }
+    if (active !== current) {
+      if (current) current.link.classList.remove('active');
+      active.link.classList.add('active');
+      current = active;
+    }
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
