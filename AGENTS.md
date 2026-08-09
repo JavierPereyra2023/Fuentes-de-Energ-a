@@ -35,7 +35,11 @@ D:\nucle-ar\
 │   ├── radioisotopos.html      # Radioisótopos (verde #26A69A)
 │   ├── reactores.html          # Reactores nucleares (ámbar #FFB300)
 │   ├── residuos.html           # Residuos radiactivos (yellow #EAB308) — clasificación, gestión, Onkalo, debate
-│   ├── energias\               # 9 páginas de fuentes de energía (plantilla completa, 4 secciones 01-04)
+│   ├── energias\               # 9 páginas de fuentes de energía (plantilla completa, 5 secciones 01-05, sec05 = modelo 3D)
+│   │   ├── modelo3D_represa\   # Modelo 3D de represa hidroeléctrica (copia de Naturales_1)
+│   │   ├── modelo3D_eolico\    # Modelo 3D de parque eólico (copia de Naturales_1)
+│   │   ├── modelo3D_parque_solar\  # Modelo 3D de parque solar (copia de Naturales_1)
+│   │   ├── modelo3D-central_nuclear\  # Modelo 3D de central nuclear (copia de Naturales_1)
 │   │   ├── hidroelectrica.html # Hidroeléctrica (sky #38BDF8) — Yacyretá, Salto Grande, Comahue
 │   │   ├── eolica.html         # Eólica (cian #00E5FF) — Patagonia, 71% de lo renovable
 │   │   ├── solar.html          # Solar (ámbar #F59E0B) — Cauchari (Jujuy)
@@ -212,17 +216,19 @@ Nota: los iconos del footer de cada página pueden diferir de los iconos usados 
 - sec04 SMR y Generación IV: reactores modulares pequeños (hasta 300 MW), CAREM argentino, NuScale/BWRX-300, MSR/SFR/HTGR, ciclo cerrado del combustible
 - sec05 Rol en la transición: COP28 declaración de triplicar capacidad nuclear para 2050, cross-links a `argentina.html`, `reactores.html#sec05`, `energias.html`
 
-**Páginas de fuentes de energía** (`conceptos/energias/`, 9 archivos, plantilla completa de conceptos, 4 secciones 01–04):
+**Páginas de fuentes de energía** (`conceptos/energias/`, 9 archivos, plantilla completa de conceptos, 5 secciones 01-05):
+- Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas, `sec05` Modelo 3D interactivo. Hero con chips, TOC, breadcrumb `../../index.html / ../../index.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
+- **sec05 Modelo 3D**: shell `.energy3d-shell` con iframe embebido a `modelo3D_*/...` para 4 fuentes (hidroeléctrica, eólica, solar, nuclear) y placeholder "Modelo 3D en desarrollo" para las 5 restantes (biomasa, geotermia, gas, petróleo, carbón). El shell se adapta al color `accent` de cada página (sky/cyan/amber/red/orange/amber/dark-amber/gray/teal), botones de pantalla completa con fullscreen API, y `.energy3d-placeholder` centrado. La TOC pasa a tener 5 entradas. Modelos 3D son copias de `D:\naturales_1\modelo3D_*` (origen NO alterado).
 - Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas. Hero con chips, TOC, breadcrumb `../../index.html / ../../index.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
-- `hidroelectrica.html` (sky `#38BDF8`): ecuación \(P=\rho g Q h\), Yacyretá, Salto Grande, El Chocón, Piedra del Águila; 9.000–10.000 MW instalados
-- `eolica.html` (cian `#00E5FF`): Patagonia, Loma Blanca; 71% de lo renovable, 16.200 GWh 2024
-- `solar.html` (ámbar `#F59E0B`): efecto fotoeléctrico, Cauchari (Jujuy); 17% de lo renovable, 3.900 GWh 2024
-- `biomasa.html` (verde `#26A69A`): biogás, biodiésel/bioetanol, carbono neutro, 1.000–1.300 MW
-- `geotermia.html` (naranja `#FF6E40`): Copahue, Domuyo, Tuzgle; potencial sin centrales de gran porte
-- `gas.html` (`#FFB300`): Vaca Muerta, ~70% de lo térmico, ciclo combinado
-- `petroleo.html` (`#D97706`): golfo San Jorge, fueloil/gasoil de respaldo en picos
-- `carbon.html` (gris `#9CA3AF`): Río Turbio, central San Nicolás, aporte marginal 1-2%
-- `nuclear.html` (rojo `#DC2626`): Atucha I/II, Embalse, CAREM, 1.763 MW, factor >90%, cross-links a `../reactores.html` y `../argentina.html`
+- `hidroelectrica.html` (sky `#38BDF8`): ecuación \(P=\rho g Q h\), Yacyretá, Salto Grande, El Chocón, Piedra del Águila; 9.000–10.000 MW instalados; **sec05 con modelo 3D real** (`modelo3D_represa/`)
+- `eolica.html` (cian `#00E5FF`): Patagonia, Loma Blanca; 71% de lo renovable, 16.200 GWh 2024; **sec05 con modelo 3D real** (`modelo3D_eolico/`)
+- `solar.html` (ámbar `#F59E0B`): efecto fotoeléctrico, Cauchari (Jujuy); 17% de lo renovable, 3.900 GWh 2024; **sec05 con modelo 3D real** (`modelo3D_parque_solar/`)
+- `biomasa.html` (verde `#26A69A`): biogás, biodiésel/bioetanol, carbono neutro, 1.000–1.300 MW; **sec05 con placeholder** (modelo en desarrollo)
+- `geotermia.html` (naranja `#FF6E40`): Copahue, Domuyo, Tuzgle; potencial sin centrales de gran porte; **sec05 con placeholder**
+- `gas.html` (`#FFB300`): Vaca Muerta, ~70% de lo térmico, ciclo combinado; **sec05 con placeholder**
+- `petroleo.html` (`#D97706`): golfo San Jorge, fueloil/gasoil de respaldo en picos; **sec05 con placeholder**
+- `carbon.html` (gris `#9CA3AF`): Río Turbio, central San Nicolás, aporte marginal 1-2%; **sec05 con placeholder**
+- `nuclear.html` (rojo `#DC2626`): Atucha I/II, Embalse, CAREM, 1.763 MW, factor >90%, cross-links a `../reactores.html` y `../argentina.html`; **sec05 con modelo 3D real** (`modelo3D-central_nuclear/`)
 
 **TANDAR y aceleradores argentinos**:
 - `aceleradores.html` sec05 expandida: Dr. Andrés Kreiner, salas experimentales (física nuclear, irradiación de materiales, microhaz, biología/metales pesados), FUESMEN, ciclotrones médicos
@@ -275,6 +281,8 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
 ## Bugs conocidos y corregidos
 
 - **Wrapper flex en cada `sec0X`**: toda `<section class="reveal mb-16" id="sec0X">` debe abrir explícitamente `<div class="flex items-center gap-4 mb-6">` + `<span class="section-num">0X</span>` + `<div class="accent-line"></div>` + `<h2>` + `</div>`. Si se omite el wrapper y se deja un `</div>` huérfano, el navegador auto-anida todo el resto del `<main>` (incluyendo el footer) y los botones del pie se ven deformados/anchos. Síntoma visual: footer roto, no SVG. Auditoría rápida: `grep -n 'id="sec0X"' *.html` y revisar las 5 líneas siguientes.
+
+- **Modelos 3D en `conceptos/energias/`** (sec05): las 9 páginas de fuentes de energía tienen una `sec05` con un shell `.energy3d-shell`. 4 de ellas (hidroeléctrica, eólica, solar, nuclear) embeben un iframe real apuntando a `modelo3D_*/archivo.html?v=YYYYMMDD` (cache-buster). 5 tienen un placeholder `.energy3d-placeholder` con botón disabled "En desarrollo" — agregar el modelo real es solo cambiar el bloque `<div class="energy3d-placeholder">` por un `<iframe class="energy3d-frame" src="modelo3D_X/...html?v=..." allow="fullscreen">` y un JS de fullscreen con prefijo único (`XModelShell/Enter/Back`). El shell usa el color `accent` de cada página (border `rgba(R,G,B,0.3)`, hover `rgba(R,G,B,0.85)`), fondo `#06090C` y patrón fullscreen con `requestFullscreen` + `webkitRequestFullscreen`. Modelos 3D son **copias** de `D:\naturales_1\modelo3D_*` — nunca modificar el origen, solo el destino.
 
 - **Anchor `#centrales`**: ~~El footer de varias páginas linkeaba a `../index.html#centrales`, pero index.html no tiene ese id.~~ Corregido en los 6 archivos afectados (aceleradores, fision, fusion, radioisotopos, antimateria, materia-oscura). Cambiado a `#temas`.
 

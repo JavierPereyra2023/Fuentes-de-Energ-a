@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central nuclear — modelo 3D interactivo</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:'Instrument Sans',system-ui,sans-serif;
+    background:#f2efe8;color:#1d201c;
+    display:grid;grid-template-columns:352px 1fr;height:100vh;overflow:hidden;
+  }
+  a{color:oklch(0.52 0.11 155)}
+  a:hover{color:oklch(0.42 0.11 155)}
+  three-d-stage:not(:defined){visibility:hidden}
+  three-d-stage{width:100%;height:100%;display:block}
+  .stage-wrap{position:relative;min-width:0}
+  aside{
+    border-right:1px solid #ddd8cc;background:#f8f6f1;
+    display:flex;flex-direction:column;min-height:0;
+  }
+  header{padding:22px 24px 16px;border-bottom:1px solid #e5e0d4}
+  h1{font-size:20px;line-height:1.15;margin:0 0 6px;letter-spacing:-0.01em}
+  header p{margin:0;font-size:13px;line-height:1.45;color:#6b6b62}
+  .modes{display:flex;gap:8px;padding:14px 24px 0}
+  .modes button{
+    flex:1;font:inherit;font-size:12.5px;padding:8px 6px;cursor:pointer;
+    border:1px solid #d9d3c6;background:#fff;border-radius:7px;color:#43443d;
+  }
+  .modes button[aria-pressed="true"]{
+    background:oklch(0.52 0.11 155);border-color:oklch(0.52 0.11 155);color:#fff;
+  }
+  .modes.escena{padding-top:8px}
+  .modes.escena button[aria-pressed="true"]{
+    background:oklch(0.46 0.09 250);border-color:oklch(0.46 0.09 250);
+  }
+  .list{overflow-y:auto;padding:14px 16px 8px;display:flex;flex-direction:column;gap:3px;flex:1;min-height:0}
+  .list button{
+    display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:center;
+    text-align:left;font:inherit;font-size:14px;padding:9px 10px;border:0;border-radius:8px;
+    background:transparent;cursor:pointer;color:#252722;width:100%;
+  }
+  .list button:hover{background:#ece8dd}
+  .list button[aria-current="true"]{background:oklch(0.52 0.11 155);color:#fff}
+  .list .num{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8d8d83;
+    border:1px solid #ddd8cc;border-radius:5px;padding:2px 0;text-align:center;
+  }
+  .list button[aria-current="true"] .num{color:#fff;border-color:rgba(255,255,255,.45)}
+  .list .circ{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9a9a90;letter-spacing:.04em}
+  .list button[aria-current="true"] .circ{color:rgba(255,255,255,.8)}
+  .info{border-top:1px solid #e5e0d4;padding:18px 24px 22px;background:#fff}
+  .info h2{margin:0 0 4px;font-size:16px;letter-spacing:-0.01em}
+  .info .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;
+    letter-spacing:.08em;color:oklch(0.52 0.11 155);margin:0 0 10px;
+  }
+  .info p{margin:0;font-size:13.5px;line-height:1.55;color:#4a4c45;text-wrap:pretty}
+  .info .nav{display:flex;gap:8px;margin-top:14px}
+  .info .nav button{
+    font:inherit;font-size:12.5px;padding:7px 12px;border:1px solid #d9d3c6;
+    background:#fbfaf7;border-radius:7px;cursor:pointer;color:#43443d;
+  }
+  .info .nav button:hover{background:#f1eee6}
+  .hint{
+    position:absolute;left:18px;top:18px;font-family:'IBM Plex Mono',monospace;
+    font-size:11px;color:#7d7d73;background:rgba(255,255,255,.78);
+    padding:7px 11px;border-radius:6px;border:1px solid #e3ded1;
+    pointer-events:none;transition:color .4s,background .4s,border-color .4s;
+  }
+  .hint.oscuro{color:#c6d2e0;background:rgba(12,20,32,.6);border-color:rgba(160,185,215,.28)}
+  @media (max-width:900px){
+    body{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
+    aside{border-right:0;border-bottom:1px solid #ddd8cc;max-height:48vh}
+    header{padding:16px 18px 12px}
+    .modes{padding:10px 18px 0}
+    .list{padding:10px 12px 6px}
+    .info{padding:14px 18px 16px}
+    .stage-wrap{min-height:52vh}
+  }
+</style>
+</head>
+<body>
+<aside>
+  <header>
+    <h1>Central nuclear</h1>
+    <p>Modelo 3D para recorrer las partes de una central de agua a presión (PWR). Hacé clic en el modelo o en la lista.</p>
+  </header>
+  <div class="modes">
+    <button id="btn-ext" aria-pressed="true">Vista exterior</button>
+    <button id="btn-int" aria-pressed="false">Ver interior</button>
+  </div>
+  <div class="modes escena">
+    <button id="btn-noche" aria-pressed="false">Noche</button>
+    <button id="btn-marcha" aria-pressed="true">Central en marcha</button>
+  </div>
+  <div class="list" id="list"></div>
+  <div class="info">
+    <p class="tag" id="tag">Circuito primario</p>
+    <h2 id="title">Elegí una parte</h2>
+    <p id="desc">Arrastrá para girar, rueda para acercar. Cada parte muestra su función dentro del proceso de generación eléctrica.</p>
+    <div class="nav">
+      <button id="prev">← Anterior</button>
+      <button id="next">Siguiente →</button>
+      <button id="reset">Vista general</button>
+    </div>
+  </div>
+</aside>
+<div class="stage-wrap">
+  <three-d-stage id="stage" name="central-nuclear" background="#eceadf"></three-d-stage>
+  <div class="hint" id="hint">arrastrar: girar · rueda: zoom · clic derecho: desplazar</div>
+</div>
+
+<script src="./three-d-stage.js"></script>
+<script type="module">
+const stage = document.getElementById('stage');
+const { THREE } = await stage.ready;
+
+const M = (name, color, opts = {}) => Object.assign(
+  new THREE.MeshStandardMaterial({ color, roughness: 0.85, metalness: 0.05, ...opts }),
+  { name }
+);
+const mats = {
+  concreto:  () => M('concreto', 0xbdb7a8, { roughness: 0.95 }),
+  ladrillo:  () => M('ladrillo', 0x9a5041, { roughness: 0.9 }),
+  metal:     () => M('metal', 0xb9bec2, { roughness: 0.4, metalness: 0.35 }),
+  acero:     () => M('acero', 0x8d949a, { roughness: 0.35, metalness: 0.4 }),
+  agua:      () => M('agua', 0x5b93b8, { roughness: 0.2, metalness: 0.1 }),
+  cesped:    () => M('cesped', 0x8fa86a, { roughness: 1 }),
+  asfalto:   () => M('asfalto', 0x8b8b84, { roughness: 1 }),
+  cobre:     () => M('cobre', 0xb5723f, { roughness: 0.5, metalness: 0.35 }),
+  combustible: () => M('combustible', 0xc9a227, { roughness: 0.5, metalness: 0.2 }),
+  vaporCal:  () => M('vapor_caliente', 0xc26a5a, { roughness: 0.5, metalness: 0.2 }),
+  vaporFrio: () => M('vapor_frio', 0x6f9fbf, { roughness: 0.5, metalness: 0.2 }),
+  vidrio:    () => M('vidrio', 0x53646e, { roughness: 0.25, metalness: 0.3 }),
+  follaje:   () => M('follaje', 0x5d7b46, { roughness: 1 }),
+  tronco:    () => M('tronco', 0x6b5947, { roughness: 1 }),
+  cable:     () => M('cable', 0x3b3f42, { roughness: 0.6, metalness: 0.3 }),
+  ciudad:    () => M('hormigon_urbano', 0xa9a49a, { roughness: 0.9 }),
+  luz:       () => M('luz_ventana', 0xf2c76b, { roughness: 0.4, emissive: 0xf2b455, emissiveIntensity: 0.45 }),
+};
+
+const mesh = (geo, mat, name, pos = [0, 0, 0], rot = null) => {
+  const m = new THREE.Mesh(geo, mat);
+  m.name = name;
+  m.position.set(...pos);
+  if (rot) m.rotation.set(...rot);
+  return m;
+};
+const part = (id) => { const g = new THREE.Group(); g.name = id; g.userData.id = id; return g; };
+
+/* Materiales que no deben teñirse con el realce verde ni proyectar sombra:
+   luces, vapor y pulsos de energía se animan por su cuenta. */
+const sinRealce = (m) => { m.userData.sinRealce = true; return m; };
+const sinSombra = (o) => { o.userData.sinSombra = true; return o; };
+
+/* Azar reproducible: el paisaje se ve igual en todas las computadoras. */
+let _semilla = 20260808;
+const rnd = () => ((_semilla = (_semilla * 1664525 + 1013904223) >>> 0) / 4294967296);
+const entre = (a, b) => a + rnd() * (b - a);
+
+const model = new THREE.Group();
+model.name = 'central_nuclear';
+const parts = {};
+const add = (g) => { parts[g.userData.id] = g; model.add(g); return g; };
+
+/* Listas que anima el ciclo día / noche */
+const luces = { ventanas: [], farolas: [], balizas: [], focos: [] };
+const vapor = [];
+const pulsos = [];
+
+/* ── árbol reutilizable ──────────────────────────────── */
+const mFollaje = mats.follaje(), mTronco = mats.tronco();
+const mFollaje2 = M('follaje_claro', 0x6f8c4e, { roughness: 1 });
+function arbol(x, z, esc = 1, nombre = 'arbol') {
+  const g = new THREE.Group(); g.name = nombre;
+  g.add(mesh(new THREE.CylinderGeometry(0.5 * esc, 0.7 * esc, 4 * esc, 6), mTronco, 'tronco', [0, 2 * esc, 0]));
+  g.add(mesh(new THREE.ConeGeometry(3.4 * esc, 9 * esc, 9), rnd() > 0.5 ? mFollaje : mFollaje2, 'copa', [0, 8.2 * esc, 0]));
+  g.position.set(x, 0, z);
+  return g;
+}
+
+/* ── terreno del sitio ───────────────────────────────── */
+const terreno = new THREE.Group(); terreno.name = 'terreno';
+terreno.add(mesh(new THREE.BoxGeometry(250, 1.2, 132), mats.cesped(), 'predio', [-5, -0.6, -20]));
+terreno.add(mesh(new THREE.BoxGeometry(150, 0.3, 96), mats.asfalto(), 'plataforma', [-5, 0.02, -4]));
+terreno.add(mesh(new THREE.BoxGeometry(320, 0.26, 8), mats.asfalto(), 'ruta_de_acceso', [82, 0.12, 36]));
+terreno.add(mesh(new THREE.BoxGeometry(7, 0.26, 74), mats.asfalto(), 'camino_interno', [-58, 0.12, 6]));
+{
+  const spots = [[-96, 26], [-70, 24], [-30, 26], [20, 26], [70, 24], [120, 26],
+                 [-88, 74], [-40, 80], [20, 84], [80, 78], [150, 62],
+                 [-70, -72], [10, -84], [110, -96], [230, 20]];
+  spots.forEach(([x, z], i) => terreno.add(arbol(x, z, 1, `arbolado_${i + 1}`)));
+  const mv = mats.metal();
+  [[-5, 44, 152, 0.5], [-5, -52, 152, 0.5], [-81, -4, 0.5, 96], [71, -4, 0.5, 96]].forEach(([x, z, w, d], i) => {
+    terreno.add(mesh(new THREE.BoxGeometry(w, 3, d), mv, `cerco_perimetral_${i + 1}`, [x, 1.5, z]));
+  });
+}
+model.add(terreno);
+
+/* ── 1. edificio de contención ───────────────────────── */
+{
+  const g = part('contencion');
+  const shell = new THREE.Group(); shell.name = 'cascara_contencion';
+  const mc = mats.concreto();
+  const cyl = mesh(new THREE.CylinderGeometry(18, 18, 24, 48), mc, 'contencion_cilindro', [0, 12, 0]);
+  const dome = mesh(new THREE.SphereGeometry(18, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2), mc, 'contencion_cupula', [0, 24, 0]);
+  shell.add(cyl, dome);
+  shell.userData.shell = true;
+  g.add(shell);
+  g.add(mesh(new THREE.CylinderGeometry(19.5, 19.5, 2, 48), mats.concreto(), 'contencion_zocalo', [0, 1, 0]));
+  const mr = mats.concreto(); mr.color.setHex(0xaba593);
+  for (let i = 0; i < 28; i++) {
+    const a = (i / 28) * Math.PI * 2;
+    g.add(mesh(new THREE.BoxGeometry(0.7, 23, 0.5), mr, `nervadura_${i + 1}`,
+      [Math.cos(a) * 18.15, 12.5, Math.sin(a) * 18.15], [0, -a, 0]));
+  }
+  g.add(mesh(new THREE.TorusGeometry(18.1, 0.45, 8, 56), mr, 'anillo_cornisa', [0, 24, 0], [Math.PI / 2, 0, 0]));
+  g.add(mesh(new THREE.TorusGeometry(13.6, 0.35, 8, 48), mr, 'anillo_cupula', [0, 35.8, 0], [Math.PI / 2, 0, 0]));
+  g.add(mesh(new THREE.BoxGeometry(6, 9, 1), mats.metal(), 'porton_equipos', [0, 4.5, 18.2]));
+  /* baliza roja de señalización aérea sobre la cúpula */
+  {
+    const mb = sinRealce(M('baliza', 0x7a1c14, { emissive: 0xff2a12, emissiveIntensity: 0, roughness: 0.5 }));
+    const b = sinSombra(mesh(new THREE.SphereGeometry(0.9, 10, 8), mb, 'baliza_contencion', [0, 36.6, 0]));
+    g.add(b); luces.balizas.push({ mat: mb, fase: 0 });
+  }
+  g.position.set(34, 0, 4);
+  add(g);
+}
+
+/* ── 2. vasija del reactor ───────────────────────────── */
+{
+  const g = part('reactor');
+  const ma = mats.acero();
+  g.add(mesh(new THREE.CylinderGeometry(4.2, 4.2, 11, 32), ma, 'vasija', [0, 9.5, 0]));
+  g.add(mesh(new THREE.SphereGeometry(4.2, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), ma, 'vasija_fondo', [0, 4, 0]));
+  g.add(mesh(new THREE.SphereGeometry(4.2, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), ma, 'vasija_tapa', [0, 15, 0]));
+  const mnuc = sinRealce(M('combustible', 0xc9a227, { roughness: 0.5, metalness: 0.2, emissive: 0xff7a1e, emissiveIntensity: 0.25 }));
+  g.add(mesh(new THREE.CylinderGeometry(3.2, 3.2, 7, 20), mnuc, 'nucleo_combustible', [0, 8.5, 0]));
+  luces.focos.push({ mat: mnuc, base: 0.12, marcha: 0.85 });
+  g.add(mesh(new THREE.CylinderGeometry(5.6, 5.6, 4, 32), mats.concreto(), 'pedestal_reactor', [0, 2, 0]));
+  g.position.set(34, 0, 4);
+  add(g);
+}
+
+/* ── 3. barras de control ────────────────────────────── */
+{
+  const g = part('barras');
+  const mb = mats.metal();
+  for (let i = 0; i < 9; i++) {
+    const x = ((i % 3) - 1) * 1.7, z = (Math.floor(i / 3) - 1) * 1.7;
+    g.add(mesh(new THREE.CylinderGeometry(0.28, 0.28, 7, 12), mb, `barra_control_${i + 1}`, [x, 20.5, z]));
+  }
+  g.add(mesh(new THREE.BoxGeometry(7, 0.7, 7), mats.acero(), 'mecanismo_barras', [0, 24.3, 0]));
+  g.position.set(34, 0, 4);
+  add(g);
+}
+
+/* ── 4. generador de vapor + presurizador + bomba ────── */
+{
+  const g = part('generador_vapor');
+  const ma = mats.acero();
+  const sg = new THREE.Group(); sg.name = 'generador_de_vapor';
+  sg.add(mesh(new THREE.CylinderGeometry(3.1, 2.3, 14, 32), ma, 'generador_vapor_cuerpo', [0, 11, 0]));
+  sg.add(mesh(new THREE.SphereGeometry(3.1, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), ma, 'generador_vapor_domo', [0, 18, 0]));
+  sg.position.set(-9, 0, 0);
+  g.add(sg);
+  g.add(mesh(new THREE.CylinderGeometry(1.9, 1.9, 9, 24), ma, 'presurizador', [-2, 15, 8]));
+  g.add(mesh(new THREE.CylinderGeometry(1.6, 1.6, 3.4, 24), mats.metal(), 'bomba_refrigerante', [-9, 4, 6], [0, 0, 0]));
+  const pipe = mats.vaporCal();
+  g.add(mesh(new THREE.CylinderGeometry(1.1, 1.1, 9, 20), pipe, 'tuberia_primaria_caliente', [-4.5, 13, 0], [0, 0, Math.PI / 2]));
+  g.add(mesh(new THREE.CylinderGeometry(1.1, 1.1, 9, 20), pipe, 'tuberia_primaria_fria', [-4.5, 6, 0], [0, 0, Math.PI / 2]));
+  g.position.set(34, 0, 4);
+  add(g);
+}
+
+/* ── 5. edificio de turbinas (cáscara) ───────────────── */
+{
+  const g = part('sala_maquinas');
+  const shell = new THREE.Group(); shell.name = 'cascara_sala_maquinas';
+  const ml = mats.ladrillo();
+  shell.add(mesh(new THREE.BoxGeometry(62, 30, 34), ml, 'sala_maquinas_muros', [0, 15, 0]));
+  shell.userData.shell = true;
+  g.add(shell);
+  for (let i = 0; i < 5; i++) {
+    g.add(mesh(new THREE.CylinderGeometry(1.5, 1.5, 1.6, 16), mats.metal(), `extractor_${i + 1}`, [-22 + i * 11, 30.6, 0]));
+  }
+  g.add(mesh(new THREE.BoxGeometry(64, 1.2, 36), mats.concreto(), 'sala_maquinas_base', [0, 0.6, 0]));
+  g.add(mesh(new THREE.BoxGeometry(63.5, 1.1, 35.5), mats.concreto(), 'sala_maquinas_cornisa', [0, 30.2, 0]));
+  const mvid = sinRealce(M('vidrio', 0x53646e, { roughness: 0.25, metalness: 0.3, emissive: 0xffd489, emissiveIntensity: 0 }));
+  luces.ventanas.push({ mat: mvid, base: 0.02, max: 1.5 });
+  [-17.15, 17.15].forEach((z, i) => g.add(mesh(new THREE.BoxGeometry(54, 3.2, 0.3), mvid, `ventanal_${i + 1}`, [0, 24, z])));
+  g.add(mesh(new THREE.BoxGeometry(0.3, 3.2, 30), mvid, 'ventanal_lateral', [-31.15, 24, 0]));
+  g.add(mesh(new THREE.BoxGeometry(7, 8, 0.4), mats.metal(), 'porton_sala_maquinas', [-18, 4, 17.2]));
+  /* reflectores del predio: iluminan la planta de noche */
+  {
+    const mrefl = sinRealce(M('reflector', 0xf6e7c0, { emissive: 0xffdda0, emissiveIntensity: 0, roughness: 0.4 }));
+    luces.ventanas.push({ mat: mrefl, base: 0.02, max: 2.6 });
+    [-26, 0, 26].forEach((x, i) => {
+      g.add(mesh(new THREE.CylinderGeometry(0.4, 0.4, 12, 8), mats.metal(), `mastil_reflector_${i + 1}`, [x, 6, 19]));
+      g.add(sinSombra(mesh(new THREE.BoxGeometry(3, 1.2, 1.2), mrefl, `reflector_${i + 1}`, [x, 12.4, 19])));
+    });
+    const pl = new THREE.PointLight(0xffd9a8, 0, 130, 1.7);
+    pl.position.set(0, 26, 26);
+    g.add(pl); luces.farolas.push({ luz: pl, max: 900 });
+  }
+  g.position.set(-14, 0, 4);
+  add(g);
+}
+
+/* ── 6. turbina de vapor ─────────────────────────────── */
+{
+  const g = part('turbina');
+  const ma = mats.metal();
+  g.add(mesh(new THREE.BoxGeometry(40, 5, 14), mats.concreto(), 'pedestal_turbina', [0, 2.5, 0]));
+  const bodies = [[-14, 4.2], [-2, 5.4], [11, 6.2]];
+  bodies.forEach(([x, r], i) => {
+    g.add(mesh(new THREE.CylinderGeometry(r, r * 0.72, 9, 32), ma, `cuerpo_turbina_${i + 1}`, [x, 9.5, 0], [0, 0, Math.PI / 2]));
+  });
+  g.add(mesh(new THREE.CylinderGeometry(0.9, 0.9, 36, 20), mats.acero(), 'eje_turbina', [0, 9.5, 0], [0, 0, Math.PI / 2]));
+  g.add(mesh(new THREE.CylinderGeometry(1.3, 1.3, 16, 20), mats.vaporCal(), 'vapor_vivo', [-24, 16, 0], [0, 0, Math.PI / 2]));
+  g.position.set(-26, 0, 4);
+  add(g);
+}
+
+/* ── 7. generador eléctrico ──────────────────────────── */
+{
+  const g = part('generador_electrico');
+  g.add(mesh(new THREE.CylinderGeometry(4.6, 4.6, 16, 32), mats.cobre(), 'generador_estator', [0, 9.5, 0], [0, 0, Math.PI / 2]));
+  g.add(mesh(new THREE.CylinderGeometry(2.2, 2.2, 5, 24), mats.acero(), 'excitatriz', [10, 9.5, 0], [0, 0, Math.PI / 2]));
+  g.add(mesh(new THREE.BoxGeometry(22, 5, 12), mats.concreto(), 'pedestal_generador', [1, 2.5, 0]));
+  g.position.set(6, 0, 4);
+  add(g);
+}
+
+/* ── 8. condensador y circuito de refrigeración ──────── */
+{
+  const g = part('condensador');
+  g.add(mesh(new THREE.BoxGeometry(34, 6, 12), mats.acero(), 'condensador_cuerpo', [0, 3.4, 0]));
+  const mf = mats.vaporFrio();
+  g.add(mesh(new THREE.CylinderGeometry(1.6, 1.6, 40, 20), mf, 'agua_refrigeracion_ida', [-14, 2.5, 26], [Math.PI / 2, 0, 0]));
+  g.add(mesh(new THREE.CylinderGeometry(1.6, 1.6, 40, 20), mf, 'agua_refrigeracion_retorno', [-8, 2.5, 26], [Math.PI / 2, 0, 0]));
+  g.add(mesh(new THREE.CylinderGeometry(1.2, 1.2, 26, 20), mf, 'condensado_a_caldera', [16, 2.5, 0], [0, 0, Math.PI / 2]));
+  g.position.set(-16, 0, 4);
+  add(g);
+}
+
+/* ── 9. torre de refrigeración ───────────────────────── */
+{
+  const g = part('torre');
+  const pts = [];
+  const H = 62, throat = 11.5, y0 = 44, c = 42;
+  for (let i = 0; i <= 24; i++) {
+    const y = (i / 24) * H;
+    pts.push(new THREE.Vector2(throat * Math.sqrt(1 + Math.pow((y - y0) / c, 2)), y));
+  }
+  const shell = mesh(new THREE.LatheGeometry(pts, 56), mats.concreto(), 'torre_cascara');
+  shell.material.side = THREE.DoubleSide;
+  g.add(shell);
+  g.add(mesh(new THREE.CylinderGeometry(20.6, 20.6, 1.5, 48), mats.concreto(), 'torre_base', [0, 0.75, 0]));
+  for (let i = 0; i < 16; i++) {
+    const a = (i / 16) * Math.PI * 2;
+    g.add(mesh(new THREE.CylinderGeometry(0.6, 0.6, 9, 8), mats.concreto(),
+      `torre_pilar_${i + 1}`, [Math.cos(a) * 18.5, 4.5, Math.sin(a) * 18.5], [0, 0, Math.cos(a) * 0.12]));
+  }
+  /* penacho: vapor de agua que sale por la boca de la torre */
+  {
+    const mv = sinRealce(new THREE.MeshStandardMaterial({
+      name: 'vapor_de_agua', color: 0xf3f6f8, roughness: 1, metalness: 0,
+      transparent: true, opacity: 0.3, depthWrite: false,
+    }));
+    for (let i = 0; i < 9; i++) {
+      const b = sinSombra(mesh(new THREE.SphereGeometry(1, 12, 9), mv, `penacho_${i + 1}`, [0, 63, 0]));
+      g.add(b);
+      vapor.push({ obj: b, t: i / 9, dx: entre(-1, 1), dz: entre(-1, 1) });
+    }
+    vapor.matPenacho = mv;
+  }
+  {
+    const mb = sinRealce(M('baliza_torre', 0x7a1c14, { emissive: 0xff2a12, emissiveIntensity: 0, roughness: 0.5 }));
+    [[11, 0], [-11, 0], [0, 11]].forEach(([x, z], i) => {
+      g.add(sinSombra(mesh(new THREE.SphereGeometry(0.8, 10, 8), mb, `baliza_torre_${i + 1}`, [x, 62.6, z])));
+    });
+    luces.balizas.push({ mat: mb, fase: 1.1 });
+  }
+  g.position.set(-78, 0, -22);
+  add(g);
+}
+
+/* ── 10. río / toma de agua ──────────────────────────── */
+{
+  const g = part('rio');
+  const magua = mats.agua();
+  g.add(mesh(new THREE.BoxGeometry(900, 0.6, 30), magua, 'rio_cauce', [70, -0.1, 56]));
+  g.add(mesh(new THREE.BoxGeometry(18, 0.5, 30), magua, 'canal_toma', [-30, 0.05, 38]));
+  g.add(mesh(new THREE.BoxGeometry(14, 7, 10), mats.concreto(), 'obra_de_toma', [-30, 3.5, 26]));
+  g.add(mesh(new THREE.BoxGeometry(20, 4, 12), mats.concreto(), 'descarga_al_rio', [26, 2, 46]));
+  g.userData.agua = magua;
+  add(g);
+}
+
+/* ── 11. subestación y transformadores ───────────────── */
+{
+  const g = part('subestacion');
+  for (let i = 0; i < 3; i++) {
+    g.add(mesh(new THREE.BoxGeometry(7, 6, 7), mats.metal(), `transformador_${i + 1}`, [-4 + i * 11, 3, 0]));
+    g.add(mesh(new THREE.CylinderGeometry(0.5, 0.5, 5, 12), mats.metal(), `aislador_${i + 1}`, [-4 + i * 11, 8.4, 0]));
+  }
+  const pylon = (x, z) => {
+    const p = new THREE.Group(); p.name = `torre_alta_tension_${x}`;
+    const mm = mats.acero();
+    [[-1.5, -1.5], [1.5, -1.5], [-1.5, 1.5], [1.5, 1.5]].forEach(([dx, dz], i) => {
+      p.add(mesh(new THREE.CylinderGeometry(0.3, 0.3, 26, 8), mm, `pata_${i + 1}`, [dx, 13, dz]));
+    });
+    [16, 21, 25].forEach((y, i) => {
+      p.add(mesh(new THREE.BoxGeometry(16 - i * 3.5, 0.6, 0.6), mm, `cruceta_${i + 1}`, [0, y, 0]));
+      p.add(mesh(new THREE.BoxGeometry(0.5, 3.5, 0.5), mm, `montante_${i + 1}`, [0, y - 1.8, 0]));
+    });
+    p.position.set(x, 0, z);
+    return p;
+  };
+  g.add(pylon(24, -18));
+  g.position.set(28, 0, -40);
+  add(g);
+}
+
+/* ── 12. sala de control y edificios auxiliares ──────── */
+{
+  const g = part('sala_control');
+  g.add(mesh(new THREE.BoxGeometry(26, 12, 18), mats.ladrillo(), 'edificio_control', [0, 6, 0]));
+  const mvid = sinRealce(M('vidrio_control', 0x53646e, { roughness: 0.25, metalness: 0.3, emissive: 0xfff0c4, emissiveIntensity: 0 }));
+  luces.ventanas.push({ mat: mvid, base: 0.02, max: 2.2 });
+  [-9.15, 9.15].forEach((z, i) => g.add(mesh(new THREE.BoxGeometry(23, 2.4, 0.3), mvid, `control_ventanal_${i + 1}`, [0, 8, z])));
+  g.add(mesh(new THREE.BoxGeometry(27, 0.8, 19), mats.concreto(), 'control_cornisa', [0, 12.4, 0]));
+  g.add(mesh(new THREE.BoxGeometry(18, 9, 14), mats.metal(), 'edificio_auxiliar', [26, 4.5, -6]));
+  g.add(mesh(new THREE.BoxGeometry(18.4, 0.6, 14.4), mats.concreto(), 'auxiliar_cornisa', [26, 9.3, -6]));
+  g.add(mesh(new THREE.CylinderGeometry(2.2, 2.2, 46, 24), mats.concreto(), 'chimenea_ventilacion', [-20, 23, -14]));
+  g.add(mesh(new THREE.TorusGeometry(2.4, 0.25, 8, 24), mats.metal(), 'chimenea_anillo', [-20, 44, -14], [Math.PI / 2, 0, 0]));
+  {
+    const mb = sinRealce(M('baliza_chimenea', 0x7a1c14, { emissive: 0xff2a12, emissiveIntensity: 0, roughness: 0.5 }));
+    g.add(sinSombra(mesh(new THREE.SphereGeometry(0.7, 10, 8), mb, 'baliza_chimenea', [-20, 46.4, -14])));
+    luces.balizas.push({ mat: mb, fase: 2.2 });
+  }
+  g.position.set(66, 0, 22);
+  add(g);
+}
+
+/* ── 13. pileta de combustible gastado ───────────────── */
+{
+  const g = part('combustible_gastado');
+  const shell = new THREE.Group(); shell.name = 'cascara_pileta';
+  shell.add(mesh(new THREE.BoxGeometry(30, 18, 24), mats.concreto(), 'edificio_combustible', [0, 9, 0]));
+  shell.userData.shell = true;
+  g.add(shell);
+  g.add(mesh(new THREE.BoxGeometry(30.4, 0.8, 24.4), mats.concreto(), 'combustible_cornisa', [0, 18.2, 0]));
+  const agua = mats.agua(); agua.transparent = true; agua.opacity = 0.75;
+  g.add(mesh(new THREE.BoxGeometry(16, 10, 12), mats.concreto(), 'pileta_muros', [0, 5, 0]));
+  g.add(mesh(new THREE.BoxGeometry(14, 9, 10), agua, 'agua_de_la_pileta', [0, 5.4, 0]));
+  const mgast = sinRealce(M('combustible_gastado', 0xc9a227, { roughness: 0.5, metalness: 0.2, emissive: 0x4fd8ff, emissiveIntensity: 0.15 }));
+  luces.focos.push({ mat: mgast, base: 0.15, marcha: 0.55 });
+  for (let i = 0; i < 8; i++) {
+    g.add(mesh(new THREE.BoxGeometry(1, 5, 1), mgast,
+      `elemento_combustible_${i + 1}`, [-5 + (i % 4) * 3.4, 3.2, -2.5 + Math.floor(i / 4) * 5]));
+  }
+  g.add(mesh(new THREE.BoxGeometry(24, 1.4, 1.4), mats.metal(), 'puente_grua', [0, 16.4, 0]));
+  g.position.set(34, 0, -38);
+  add(g);
+}
+
+/* ── 14. tanques de agua de emergencia ───────────────── */
+{
+  const g = part('tanques');
+  const mm = mats.metal();
+  [[0, 0, 7], [17, 0, 7], [8.5, -16, 5.5]].forEach(([x, z, r], i) => {
+    g.add(mesh(new THREE.CylinderGeometry(r, r, 16, 32), mm, `tanque_${i + 1}`, [x, 8, z]));
+    g.add(mesh(new THREE.SphereGeometry(r, 32, 12, 0, Math.PI * 2, 0, Math.PI / 2), mm, `tanque_domo_${i + 1}`, [x, 16, z]));
+    g.add(mesh(new THREE.CylinderGeometry(r + 0.8, r + 0.8, 1, 32), mats.concreto(), `tanque_base_${i + 1}`, [x, 0.5, z]));
+  });
+  g.add(mesh(new THREE.BoxGeometry(14, 6, 8), mats.metal(), 'casa_de_bombas', [30, 3, 4]));
+  g.position.set(-4, 0, -40);
+  add(g);
+}
+
+/* ── 15. red eléctrica y ciudad ──────────────────────── */
+{
+  const g = part('red_electrica');
+  const mm = mats.acero(), mcbl = mats.cable();
+  const pylon = (x, z, s = 1) => {
+    const p = new THREE.Group(); p.name = `torre_transmision_${Math.round(x)}`;
+    [[-1.5, -1.5], [1.5, -1.5], [-1.5, 1.5], [1.5, 1.5]].forEach(([dx, dz], i) => {
+      p.add(mesh(new THREE.CylinderGeometry(0.3, 0.3, 30 * s, 8), mm, `pata_${i + 1}`, [dx, 15 * s, dz]));
+    });
+    [0.55, 0.72, 0.88].forEach((f, i) => {
+      p.add(mesh(new THREE.BoxGeometry(18 - i * 4, 0.6, 0.6), mm, `cruceta_${i + 1}`, [0, 30 * s * f, 0]));
+      p.add(mesh(new THREE.BoxGeometry(0.5, 4 * s, 0.5), mm, `montante_${i + 1}`, [0, 30 * s * f - 2 * s, 0]));
+    });
+    p.position.set(x, 0, z);
+    p.userData.arms = [0.55, 0.72, 0.88].map((f) => 30 * s * f);
+    p.userData.span = [9, 7, 5];
+    return p;
+  };
+  const towers = [pylon(78, -62), pylon(112, -66), pylon(146, -70), pylon(178, -72, 0.8)];
+  towers.forEach((t) => g.add(t));
+  const cable = (a, b, y1, y2, off, name) => {
+    const mid = new THREE.Vector3((a.x + b.x) / 2, (y1 + y2) / 2 - 3.5, (a.z + b.z) / 2);
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(a.x, y1, a.z + off), mid.setZ(mid.z + off), new THREE.Vector3(b.x, y2, b.z + off),
+    ]);
+    g.add(mesh(new THREE.TubeGeometry(curve, 24, 0.16, 6), mcbl, name));
+  };
+  const anchor = new THREE.Vector3(52, 0, -58);
+  for (let i = 0; i < towers.length; i++) {
+    const from = i === 0 ? anchor : towers[i - 1].position;
+    const fromArms = i === 0 ? [16, 21, 25] : towers[i - 1].userData.arms;
+    const fromSpan = i === 0 ? [7, 5.5, 4] : towers[i - 1].userData.span;
+    const to = towers[i];
+    to.userData.arms.forEach((y, k) => {
+      [-1, 1].forEach((s) => cable(from, to.position, fromArms[k], y,
+        s * Math.min(fromSpan[k], to.userData.span[k]), `cable_${i + 1}_${k + 1}_${s > 0 ? 'a' : 'b'}`));
+    });
+  }
+
+  /* ── ciudad ──────────────────────────────────────────
+     Barrios de distinta altura sobre una trama de calles.
+     Las ventanas y el alumbrado se encienden de noche, y solo
+     si la central está generando: es el final del recorrido de
+     la energía. */
+  const ciudad = new THREE.Group(); ciudad.name = 'ciudad';
+  const mciu = mats.ciudad();
+  const mciu2 = M('hormigon_claro', 0xc0b8ab, { roughness: 0.9 });
+  const mciu3 = M('ladrillo_urbano', 0x99705c, { roughness: 0.92 });
+  const mtecho = mats.metal();
+  const mluz = sinRealce(mats.luz());
+  luces.ventanas.push({ mat: mluz, base: 0.04, max: 3.4 });
+  const mfar = sinRealce(M('farola_lampara', 0xf7e2b4, { emissive: 0xffcd80, emissiveIntensity: 0, roughness: 0.4 }));
+  luces.ventanas.push({ mat: mfar, base: 0.02, max: 3.0 });
+
+  ciudad.add(mesh(new THREE.BoxGeometry(190, 1.2, 150), mats.asfalto(), 'trama_urbana', [0, -0.2, 0]));
+  const mcalle = M('calle', 0x6f6f6a, { roughness: 1 });
+  for (let i = -2; i <= 2; i++) ciudad.add(mesh(new THREE.BoxGeometry(6, 0.3, 150), mcalle, `calle_ns_${i + 3}`, [i * 36, 0.5, 0]));
+  for (let j = -2; j <= 2; j++) ciudad.add(mesh(new THREE.BoxGeometry(190, 0.3, 6), mcalle, `calle_eo_${j + 3}`, [0, 0.5, j * 30]));
+
+  let nEd = 0;
+  for (let i = -2; i <= 2; i++) {
+    for (let j = -2; j <= 2; j++) {
+      const cx = i * 36, cz = j * 30;
+      const centro = Math.abs(i) <= 1 && Math.abs(j) <= 1;
+      if (i === 0 && j === 0) continue;             // plaza
+      const nSub = centro ? 2 : 1;
+      for (let k = 0; k < nSub; k++) {
+        const w = entre(11, 17), d = entre(11, 16);
+        const h = centro ? entre(16, 42) : entre(7, 18);
+        const x = cx + (nSub === 2 ? (k === 0 ? -7 : 7) : 0) + entre(-2, 2);
+        const z = cz + entre(-3, 3);
+        nEd += 1;
+        const mBase = rnd() < 0.34 ? mciu2 : (rnd() < 0.25 ? mciu3 : mciu);
+        ciudad.add(mesh(new THREE.BoxGeometry(w, h, d), mBase, `edificio_${nEd}`, [x, h / 2 + 0.6, z]));
+        ciudad.add(mesh(new THREE.BoxGeometry(w + 0.6, 0.5, d + 0.6), mtecho, `azotea_${nEd}`, [x, h + 0.85, z]));
+        const pisos = Math.min(6, Math.floor((h - 3) / 5));
+        for (let f = 1; f <= pisos; f++) {
+          const y = f * 5;
+          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.76, 1.9, 0.25), mluz, `ventanas_${nEd}_${f}_n`, [x, y, z + d / 2 + 0.06])));
+          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.76, 1.9, 0.25), mluz, `ventanas_${nEd}_${f}_s`, [x, y, z - d / 2 - 0.06])));
+        }
+        if (h > 30) {
+          const mb = sinRealce(M(`baliza_edificio_${nEd}`, 0x7a1c14, { emissive: 0xff2a12, emissiveIntensity: 0, roughness: 0.5 }));
+          ciudad.add(sinSombra(mesh(new THREE.SphereGeometry(0.7, 8, 6), mb, `baliza_edificio_${nEd}`, [x, h + 1.8, z])));
+          luces.balizas.push({ mat: mb, fase: nEd * 0.7 });
+        }
+      }
+    }
+  }
+
+  /* plaza central: césped, arboleda y un mástil iluminado */
+  const plaza = new THREE.Group(); plaza.name = 'plaza';
+  plaza.add(mesh(new THREE.BoxGeometry(28, 0.5, 24), mats.cesped(), 'plaza_cesped', [0, 0.7, 0]));
+  [[-9, -7], [9, -7], [-9, 7], [9, 7], [0, 9]].forEach(([x, z], i) => plaza.add(arbol(x, z, 0.55, `plaza_arbol_${i + 1}`)));
+  plaza.add(mesh(new THREE.CylinderGeometry(0.35, 0.45, 16, 8), mats.metal(), 'mastil_plaza', [0, 8, 0]));
+  plaza.add(sinSombra(mesh(new THREE.SphereGeometry(0.9, 10, 8), mfar, 'farol_plaza', [0, 16.4, 0])));
+  ciudad.add(plaza);
+
+  /* farolas de las avenidas (poste + lámpara emisiva) */
+  let nFarola = 0;
+  for (let i = -2; i <= 2; i++) {
+    for (let z = -66; z <= 66; z += 22) {
+      nFarola += 1;
+      const x = i * 36 + 4;
+      ciudad.add(mesh(new THREE.CylinderGeometry(0.16, 0.22, 7, 6), mats.metal(), `poste_${nFarola}`, [x, 4, z]));
+      ciudad.add(sinSombra(mesh(new THREE.SphereGeometry(0.55, 8, 6), mfar, `farola_${nFarola}`, [x, 7.7, z])));
+    }
+  }
+  /* cuatro luces reales bastan para dar volumen sin castigar el rendimiento */
+  [[-52, -44], [52, -44], [-52, 44], [52, 44]].forEach(([x, z], i) => {
+    const pl = new THREE.PointLight(0xffc98a, 0, 150, 1.6);
+    pl.position.set(x, 22, z);
+    pl.name = `luz_barrio_${i + 1}`;
+    ciudad.add(pl); luces.farolas.push({ luz: pl, max: 1600 });
+  });
+  const plazaLuz = new THREE.PointLight(0xffdcab, 0, 110, 1.6);
+  plazaLuz.position.set(0, 18, 0);
+  ciudad.add(plazaLuz); luces.farolas.push({ luz: plazaLuz, max: 900 });
+
+  ciudad.position.set(216, 0, -72);
+  g.add(ciudad);
+  g.add(mesh(new THREE.BoxGeometry(16, 8, 12), mats.metal(), 'estacion_transformadora_ciudad', [196, 4, -72]));
+  g.add(mesh(new THREE.CylinderGeometry(0.45, 0.45, 6, 10), mats.metal(), 'aislador_ciudad', [196, 11, -72]));
+
+  /* ── flujo de energía ────────────────────────────────
+     Pulsos que viajan por la línea desde el generador hasta la
+     estación transformadora de la ciudad. Solo se ven con la
+     central en marcha. */
+  const mPulso = sinRealce(new THREE.MeshBasicMaterial({ name: 'pulso_energia', color: 0xfff3b0, transparent: true, opacity: 0 }));
+  pulsos.mat = mPulso;
+  const geoPulso = new THREE.SphereGeometry(0.85, 10, 8);
+
+  /* tramo generador → subestación, sobre dos postes cortos */
+  const poste = (x, z, h) => {
+    const p = new THREE.Group(); p.name = `poste_salida_${Math.round(x)}`;
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([dx, dz], i) =>
+      p.add(mesh(new THREE.CylinderGeometry(0.22, 0.22, h, 6), mm, `pata_${i + 1}`, [dx, h / 2, dz])));
+    p.add(mesh(new THREE.BoxGeometry(8, 0.5, 0.5), mm, 'cruceta', [0, h - 1.5, 0]));
+    p.position.set(x, 0, z);
+    return p;
+  };
+  g.add(poste(20, -14, 20), poste(38, -34, 20));
+
+  const rutaSalida = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(8, 20, 2), new THREE.Vector3(20, 18.5, -14),
+    new THREE.Vector3(38, 18.5, -34), new THREE.Vector3(52, 25, -58),
+  ]);
+  const rutaLinea = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(52, 25, -58),
+    new THREE.Vector3(78, 26.4, -62), new THREE.Vector3(112, 26.4, -66),
+    new THREE.Vector3(146, 26.4, -70), new THREE.Vector3(178, 21.1, -72),
+    new THREE.Vector3(196, 10, -72),
+  ]);
+  g.add(mesh(new THREE.TubeGeometry(rutaSalida, 40, 0.18, 6), mcbl, 'cable_salida_generador'));
+
+  const sembrar = (curva, n, vel) => {
+    for (let i = 0; i < n; i++) {
+      const p = sinSombra(new THREE.Mesh(geoPulso, mPulso));
+      p.name = `pulso_${pulsos.length + 1}`;
+      g.add(p);
+      pulsos.push({ obj: p, curva, t: i / n, vel });
+    }
+  };
+  sembrar(rutaSalida, 4, 0.14);
+  sembrar(rutaLinea, 10, 0.075);
+
+  add(g);
+}
+
+/* ── paisaje regional ────────────────────────────────
+   No es una "parte" del recorrido: es el entorno donde la central
+   está instalada. Queda fuera de la lista y de la vista general. */
+const paisaje = new THREE.Group(); paisaje.name = 'paisaje';
+{
+  const mSuelo = M('suelo_regional', 0x86a066, { roughness: 1 });
+  paisaje.add(mesh(new THREE.BoxGeometry(1100, 4, 780), mSuelo, 'llanura', [70, -2.2, -60]));
+
+  /* parcelas de cultivo: manchas de color que dan escala */
+  const tonos = [0x9aad6b, 0xb0a86a, 0x7f9a5c, 0xa8b07a, 0x8d9c5d];
+  const parcelas = [[-260, 60, 150, 90], [-300, -120, 130, 110], [-190, -230, 170, 100],
+                    [40, -240, 200, 110], [300, -230, 190, 110], [380, -40, 150, 130],
+                    [330, 90, 160, 100], [130, 130, 190, 90], [-120, 150, 200, 90],
+                    [-330, 150, 150, 90], [430, -150, 130, 120]];
+  parcelas.forEach(([x, z, w, d], i) => {
+    const m = M(`parcela_${i + 1}`, tonos[i % tonos.length], { roughness: 1 });
+    paisaje.add(mesh(new THREE.BoxGeometry(w, 0.5, d), m, `parcela_${i + 1}`, [x, -0.05, z]));
+  });
+
+  /* sierras del fondo */
+  const mCerro = M('sierra', 0x6e7f6a, { roughness: 1 });
+  const mCerroLejos = M('sierra_lejana', 0x7d8c92, { roughness: 1 });
+  const cerros = [[-330, -330, 120, 46], [-190, -360, 160, 62], [-30, -340, 130, 40],
+                  [110, -370, 180, 70], [280, -345, 140, 50], [430, -365, 165, 58],
+                  [-450, -300, 110, 36], [560, -320, 130, 44]];
+  cerros.forEach(([x, z, r, h], i) => {
+    const c = mesh(new THREE.SphereGeometry(1, 18, 12), i % 2 ? mCerroLejos : mCerro, `sierra_${i + 1}`, [x, -6, z]);
+    c.scale.set(r, h, r * 0.65);
+    paisaje.add(c);
+  });
+
+  /* bosques */
+  const bosques = [[-190, -110, 26], [-120, 120, 20], [140, 60, 18], [300, 40, 22],
+                   [-30, -190, 24], [250, -190, 20], [400, 60, 18], [-330, 20, 20]];
+  bosques.forEach(([bx, bz, n], b) => {
+    for (let i = 0; i < n; i++) {
+      const x = bx + entre(-48, 48), z = bz + entre(-40, 40);
+      paisaje.add(arbol(x, z, entre(0.7, 1.35), `bosque_${b + 1}_arbol_${i + 1}`));
+    }
+  });
+
+  /* riberas del río y un puente sobre la ruta */
+  const mRibera = M('ribera', 0xc2b391, { roughness: 1 });
+  paisaje.add(mesh(new THREE.BoxGeometry(900, 0.6, 8), mRibera, 'ribera_norte', [70, -0.05, 40]));
+  paisaje.add(mesh(new THREE.BoxGeometry(900, 0.6, 8), mRibera, 'ribera_sur', [70, -0.05, 72]));
+  {
+    const mp = mats.concreto();
+    paisaje.add(mesh(new THREE.BoxGeometry(14, 1.4, 40), mp, 'puente_tablero', [300, 2.2, 56]));
+    [-12, 0, 12].forEach((dz, i) =>
+      paisaje.add(mesh(new THREE.BoxGeometry(3, 4, 3), mp, `puente_pila_${i + 1}`, [300, 0.5, 56 + dz])));
+  }
+
+  /* ruta que une la central con la ciudad */
+  const mAsf = mats.asfalto();
+  paisaje.add(mesh(new THREE.BoxGeometry(9, 0.3, 180), mAsf, 'ruta_a_la_ciudad', [242, 0.16, -50]));
+  paisaje.add(mesh(new THREE.BoxGeometry(80, 0.3, 9), mAsf, 'acceso_ciudad', [280, 0.16, -72]));
+  const mLinea = M('linea_ruta', 0xe8e3d2, { roughness: 1 });
+  for (let z = -128; z <= 32; z += 12) {
+    paisaje.add(mesh(new THREE.BoxGeometry(0.6, 0.32, 6), mLinea, `linea_${z}`, [242, 0.2, z]));
+  }
+  for (let x = -70; x <= 240; x += 12) {
+    paisaje.add(mesh(new THREE.BoxGeometry(6, 0.32, 0.6), mLinea, `linea_acceso_${x}`, [x, 0.2, 36]));
+  }
+
+  /* alumbrado de la ruta: postes con lámpara que se enciende de noche */
+  const mFarRuta = sinRealce(M('farola_ruta', 0xf7e2b4, { emissive: 0xffcd80, emissiveIntensity: 0, roughness: 0.4 }));
+  luces.ventanas.push({ mat: mFarRuta, base: 0.02, max: 2.6 });
+  let nR = 0;
+  for (let x = 20; x <= 236; x += 27) {
+    nR += 1;
+    paisaje.add(mesh(new THREE.CylinderGeometry(0.16, 0.22, 8, 6), mats.metal(), `poste_ruta_${nR}`, [x, 4.4, 41]));
+    paisaje.add(sinSombra(mesh(new THREE.SphereGeometry(0.5, 8, 6), mFarRuta, `farola_ruta_${nR}`, [x, 8.7, 41])));
+  }
+
+  /* algunos vehículos para dar escala humana */
+  const coloresAuto = [0xc0392b, 0x2c5f8a, 0xd9d3c6, 0x4a4f45, 0xb98b3a];
+  const autos = [[-40, 36, 1], [30, 36, 1], [118, 36, -1], [200, 36, 1],
+                 [242, -18, 0], [242, -74, 0], [242, 12, 0], [286, -72, 1]];
+  autos.forEach(([x, z, dir], i) => {
+    const m = M(`auto_${i + 1}`, coloresAuto[i % coloresAuto.length], { roughness: 0.5, metalness: 0.25 });
+    const a = new THREE.Group(); a.name = `vehiculo_${i + 1}`;
+    a.add(mesh(new THREE.BoxGeometry(5.4, 1.5, 2.4), m, 'carroceria', [0, 1.1, 0]));
+    a.add(mesh(new THREE.BoxGeometry(2.8, 1.2, 2.2), m, 'cabina', [-0.3, 2.3, 0]));
+    a.position.set(x, 0, z);
+    if (dir === 0) a.rotation.y = Math.PI / 2;
+    paisaje.add(a);
+  });
+}
+model.add(paisaje);
+
+stage.setObject(model);
+
+/* ── escena: cielo, sol/luna, estrellas y ciclo día-noche ── */
+const scene = stage._scene;
+const key = stage._key;
+const hemi = scene.children.find((o) => o.isHemisphereLight);
+const fill = scene.children.find((o) => o.isDirectionalLight && o !== key);
+
+/* la sombra del suelo del starter mide 200×200: chica para este predio */
+stage._ground.geometry.dispose();
+stage._ground.geometry = new THREE.PlaneGeometry(1600, 1600);
+
+const centro = new THREE.Vector3(70, 6, -30);
+key.target.position.copy(centro);
+scene.add(key.target);
+key.shadow.camera.left = -230;
+key.shadow.camera.right = 230;
+key.shadow.camera.top = 230;
+key.shadow.camera.bottom = -230;
+key.shadow.camera.near = 80;
+key.shadow.camera.far = 1200;
+key.shadow.camera.updateProjectionMatrix();
+
+scene.fog = new THREE.Fog(0xcfe1ec, 420, 1600);
+
+/* estrellas: solo visibles de noche, sin niebla ni sombras */
+const estrellas = (() => {
+  const N = 700, pos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) {
+    const th = rnd() * Math.PI * 2, ph = rnd() * 1.25;
+    const r = 1500;
+    pos[i * 3] = centro.x + r * Math.sin(ph) * Math.cos(th);
+    pos[i * 3 + 1] = centro.y + r * Math.cos(ph);
+    pos[i * 3 + 2] = centro.z + r * Math.sin(ph) * Math.sin(th);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({
+    color: 0xdfe8f7, size: 2.2, sizeAttenuation: false,
+    transparent: true, opacity: 0, depthWrite: false, fog: false,
+  });
+  const p = new THREE.Points(geo, mat);
+  p.name = 'estrellas';
+  scene.add(p);
+  return p;
+})();
+
+/* disco del sol / la luna, siempre de frente a la cámara */
+const disco = new THREE.Mesh(
+  new THREE.CircleGeometry(1, 40),
+  new THREE.MeshBasicMaterial({ color: 0xfff4d6, fog: false, depthWrite: false, transparent: true, opacity: 0.95 })
+);
+disco.name = 'sol_luna';
+disco.renderOrder = -1;
+scene.add(disco);
+
+const DIA = {
+  cielo: ['#5d9bcd', '#a8cee6', '#e6ede4'],
+  fog: '#cfe1ec', fogCerca: 430, fogLejos: 1700,
+  hemiCielo: 0xffffff, hemiSuelo: 0xd8d2c4, hemiInt: 1.0,
+  keyCol: 0xfff5e2, keyInt: 2.3,
+  fillCol: 0xdfe9ff, fillInt: 0.55,
+  disco: 0xfff4d6, discoR: 30,
+  dir: new THREE.Vector3(0.42, 0.82, 0.36).normalize(),
+};
+const NOCHE = {
+  cielo: ['#05080f', '#0b1425', '#1e2d42'],
+  fog: '#14212f', fogCerca: 240, fogLejos: 1250,
+  hemiCielo: 0x35496b, hemiSuelo: 0x0d1117, hemiInt: 0.40,
+  keyCol: 0x9db6e8, keyInt: 0.40,
+  fillCol: 0x35507e, fillInt: 0.16,
+  disco: 0xe9eef8, discoR: 17,
+  dir: new THREE.Vector3(-0.48, 0.60, -0.44).normalize(),
+};
+
+const _cA = new THREE.Color(), _cB = new THREE.Color();
+const mezcla = (a, b, n, dest) => dest.set(a).lerp(_cB.set(b), n);
+const hexMezcla = (a, b, n) => '#' + _cA.set(a).lerp(_cB.set(b), n).getHexString();
+const lerp = (a, b, n) => a + (b - a) * n;
+
+const dirLuz = new THREE.Vector3();
+const hint = document.getElementById('hint');
+
+function aplicarCielo(n) {
+  const c0 = hexMezcla(DIA.cielo[0], NOCHE.cielo[0], n);
+  const c1 = hexMezcla(DIA.cielo[1], NOCHE.cielo[1], n);
+  const c2 = hexMezcla(DIA.cielo[2], NOCHE.cielo[2], n);
+  stage.style.setProperty('--stage-bg', `linear-gradient(${c0} 0%, ${c1} 54%, ${c2} 100%)`);
+  mezcla(DIA.fog, NOCHE.fog, n, scene.fog.color);
+  scene.fog.near = lerp(DIA.fogCerca, NOCHE.fogCerca, n);
+  scene.fog.far = lerp(DIA.fogLejos, NOCHE.fogLejos, n);
+
+  mezcla(DIA.hemiCielo, NOCHE.hemiCielo, n, hemi.color);
+  mezcla(DIA.hemiSuelo, NOCHE.hemiSuelo, n, hemi.groundColor);
+  hemi.intensity = lerp(DIA.hemiInt, NOCHE.hemiInt, n);
+  mezcla(DIA.keyCol, NOCHE.keyCol, n, key.color);
+  key.intensity = lerp(DIA.keyInt, NOCHE.keyInt, n);
+  mezcla(DIA.fillCol, NOCHE.fillCol, n, fill.color);
+  fill.intensity = lerp(DIA.fillInt, NOCHE.fillInt, n);
+
+  dirLuz.copy(DIA.dir).lerp(NOCHE.dir, n).normalize();
+  key.position.copy(centro).addScaledVector(dirLuz, 460);
+  fill.position.copy(centro).addScaledVector(dirLuz, -380).setY(centro.y + 120);
+
+  mezcla(DIA.disco, NOCHE.disco, n, disco.material.color);
+  disco.scale.setScalar(lerp(DIA.discoR, NOCHE.discoR, n));
+  disco.position.copy(centro).addScaledVector(dirLuz, 1350);
+
+  estrellas.material.opacity = Math.max(0, (n - 0.35) / 0.65) * 0.9;
+  hint.classList.toggle('oscuro', n > 0.5);
+}
+
+/* ── contenido educativo ─────────────────────────────── */
+const INFO = [
+  ['contencion', 'Edificio de contención', 'Circuito primario', 'Cúpula de hormigón armado, de más de un metro de espesor, que encierra el reactor. Es la última barrera física: resiste presión interna y aísla el material radiactivo del ambiente.'],
+  ['reactor', 'Vasija del reactor', 'Circuito primario', 'Recipiente de acero donde se produce la fisión del uranio. El calor liberado por la reacción en cadena calienta el agua del circuito primario, que se mantiene a alta presión para que no hierva.'],
+  ['barras', 'Barras de control', 'Circuito primario', 'Barras de material absorbente de neutrones que entran o salen del núcleo. Al introducirlas se frena la reacción en cadena; al retirarlas, se acelera. Son el control de potencia y la parada de emergencia.'],
+  ['generador_vapor', 'Generador de vapor', 'Primario → secundario', 'Intercambiador de calor: el agua caliente del primario circula por miles de tubos y hierve el agua del circuito secundario sin mezclarse con ella. Junto a él, el presurizador mantiene la presión del primario.'],
+  ['sala_maquinas', 'Sala de máquinas', 'Circuito secundario', 'Nave que aloja la turbina, el generador eléctrico y el condensador. Aquí el vapor deja de ser calor y pasa a ser trabajo mecánico y luego electricidad.'],
+  ['turbina', 'Turbina de vapor', 'Circuito secundario', 'El vapor a presión empuja los álabes y hace girar el eje. Pasa por cuerpos de alta y baja presión, expandiéndose y cediendo energía en cada etapa.'],
+  ['generador_electrico', 'Generador eléctrico', 'Circuito secundario', 'Acoplado al eje de la turbina. Al girar el rotor dentro del campo magnético se induce corriente alterna: es el paso de energía mecánica a energía eléctrica.'],
+  ['condensador', 'Condensador', 'Circuito secundario', 'El vapor que sale de la turbina se enfría y vuelve a estado líquido. El agua condensada se bombea de nuevo al generador de vapor y el ciclo se repite.'],
+  ['torre', 'Torre de refrigeración', 'Circuito terciario', 'Evacúa al aire el calor sobrante del condensador. La columna de "humo" es vapor de agua condensado, no contaminante. Algunas centrales, como Atucha, no la usan: refrigeran directamente con agua del río.'],
+  ['rio', 'Río y obra de toma', 'Circuito terciario', 'Fuente fría del sistema. El agua tomada del río circula por el condensador, absorbe calor y se devuelve al cauce o va a la torre. Nunca entra en contacto con el circuito primario.'],
+  ['subestacion', 'Subestación y línea de alta tensión', 'Salida eléctrica', 'Los transformadores elevan la tensión del generador a cientos de miles de voltios para transportar la energía con pocas pérdidas hasta la red nacional.'],
+  ['sala_control', 'Sala de control y edificios auxiliares', 'Operación', 'Desde aquí se supervisan la potencia, la presión y la temperatura las 24 horas. Alrededor se ubican los servicios auxiliares, la ventilación y el tratamiento de residuos.'],
+  ['combustible_gastado', 'Pileta de combustible gastado', 'Gestión del combustible', 'Los elementos combustibles usados se guardan bajo varios metros de agua durante años. El agua enfría el combustible y actúa como blindaje contra la radiación.'],
+  ['tanques', 'Tanques de agua de emergencia', 'Seguridad', 'Reservas de agua borada y bombas de respaldo. Si falla la refrigeración normal, estos sistemas inyectan agua al reactor para retirar el calor residual.'],
+  ['red_electrica', 'Línea de transmisión y ciudad', 'Salida eléctrica', 'Las torres de alta tensión llevan la energía decenas o cientos de kilómetros. Al llegar a la ciudad, otra estación transformadora baja la tensión para repartirla a casas, escuelas e industrias. Pasá a vista nocturna: la ciudad se enciende con la electricidad que sale de la central.'],
+];
+
+/* ── UI ──────────────────────────────────────────────── */
+const listEl = document.getElementById('list');
+INFO.forEach(([id, title, circ], i) => {
+  const b = document.createElement('button');
+  b.dataset.id = id;
+  b.innerHTML = `<span class="num">${String(i + 1).padStart(2, '0')}</span>
+    <span><span style="display:block">${title}</span><span class="circ">${circ}</span></span>`;
+  b.addEventListener('click', () => select(id));
+  listEl.appendChild(b);
+});
+
+let current = null;
+
+function setHighlight(id, on) {
+  const g = parts[id]; if (!g) return;
+  g.traverse((o) => {
+    if (!o.isMesh || !o.material.emissive || o.material.userData.sinRealce) return;
+    o.material.emissive.setHex(on ? 0x2f7d4f : 0x000000);
+    o.material.emissiveIntensity = on ? 0.55 : 0;
+  });
+}
+
+const camAnim = { t: 1, from: new THREE.Vector3(), to: new THREE.Vector3(), tFrom: new THREE.Vector3(), tTo: new THREE.Vector3() };
+function flyTo(box) {
+  const cam = stage._camera, ctr = stage._controls;
+  const sphere = box.getBoundingSphere(new THREE.Sphere());
+  const dist = (sphere.radius / Math.tan((cam.fov * Math.PI) / 360)) * 2.1;
+  const dir = new THREE.Vector3(0.9, 0.6, 1.2).normalize();
+  camAnim.from.copy(cam.position);
+  camAnim.to.copy(sphere.center).add(dir.multiplyScalar(Math.max(dist, 26)));
+  camAnim.tFrom.copy(ctr.target);
+  camAnim.tTo.copy(sphere.center);
+  camAnim.t = 0;
+}
+
+/* la vista general encuadra la central y la ciudad, no el paisaje entero */
+const cajaGeneral = new THREE.Box3();
+Object.values(parts).forEach((g) => cajaGeneral.union(new THREE.Box3().setFromObject(g)));
+
+function select(id) {
+  if (current) setHighlight(current, false);
+  current = id;
+  const row = INFO.find((r) => r[0] === id);
+  if (!row) return;
+  setHighlight(id, true);
+  document.getElementById('title').textContent = row[1];
+  document.getElementById('tag').textContent = row[2];
+  document.getElementById('desc').textContent = row[3];
+  [...listEl.children].forEach((b) => b.setAttribute('aria-current', String(b.dataset.id === id)));
+  const inside = ['reactor', 'barras', 'generador_vapor', 'turbina', 'generador_electrico', 'condensador', 'combustible_gastado'];
+  if (inside.includes(id)) setInterior(true);
+  flyTo(new THREE.Box3().setFromObject(parts[id]));
+}
+
+/* interior / exterior */
+const shells = [];
+model.traverse((o) => { if (o.userData.shell) shells.push(o); });
+function setInterior(on) {
+  shells.forEach((s) => s.traverse((o) => {
+    if (!o.isMesh) return;
+    o.material.transparent = on;
+    o.material.opacity = on ? 0.16 : 1;
+    o.material.depthWrite = !on;
+    o.material.needsUpdate = true;
+  }));
+  document.getElementById('btn-int').setAttribute('aria-pressed', String(on));
+  document.getElementById('btn-ext').setAttribute('aria-pressed', String(!on));
+}
+document.getElementById('btn-int').addEventListener('click', () => setInterior(true));
+document.getElementById('btn-ext').addEventListener('click', () => setInterior(false));
+
+/* día / noche y marcha de la central */
+let nocheObjetivo = 0, noche = 0;
+let enMarcha = true;
+const btnNoche = document.getElementById('btn-noche');
+const btnMarcha = document.getElementById('btn-marcha');
+btnNoche.addEventListener('click', () => {
+  nocheObjetivo = nocheObjetivo > 0.5 ? 0 : 1;
+  btnNoche.setAttribute('aria-pressed', String(nocheObjetivo > 0.5));
+  btnNoche.textContent = nocheObjetivo > 0.5 ? 'Día' : 'Noche';
+});
+btnMarcha.addEventListener('click', () => {
+  enMarcha = !enMarcha;
+  btnMarcha.setAttribute('aria-pressed', String(enMarcha));
+  btnMarcha.textContent = enMarcha ? 'Central en marcha' : 'Central detenida';
+});
+aplicarCielo(0);
+
+/* navegación */
+const idx = () => INFO.findIndex((r) => r[0] === current);
+document.getElementById('next').addEventListener('click', () => select(INFO[(idx() + 1 + INFO.length) % INFO.length][0]));
+document.getElementById('prev').addEventListener('click', () => select(INFO[(idx() - 1 + INFO.length) % INFO.length][0]));
+function vistaGeneral() {
+  if (current) setHighlight(current, false);
+  current = null;
+  setInterior(false);
+  [...listEl.children].forEach((b) => b.setAttribute('aria-current', 'false'));
+  document.getElementById('title').textContent = 'Vista general';
+  document.getElementById('tag').textContent = 'Recorrido';
+  document.getElementById('desc').textContent = 'La central convierte el calor de la fisión en electricidad a través de tres circuitos de agua independientes: primario, secundario y de refrigeración. La línea de alta tensión lleva esa electricidad hasta la ciudad.';
+  flyTo(cajaGeneral.clone());
+}
+document.getElementById('reset').addEventListener('click', vistaGeneral);
+
+/* ── sombras: fuera del vapor, las luces y los pulsos ── */
+model.traverse((o) => {
+  if (o.isMesh && o.userData.sinSombra) { o.castShadow = false; o.receiveShadow = false; }
+});
+
+/* encuadre inicial sobre la central y la ciudad */
+{
+  const esf = cajaGeneral.getBoundingSphere(new THREE.Sphere());
+  const cam = stage._camera;
+  const dist = (esf.radius / Math.tan((cam.fov * Math.PI) / 360)) * 1.25;
+  cam.position.copy(esf.center).add(new THREE.Vector3(0.75, 0.55, 1.15).normalize().multiplyScalar(dist));
+  cam.near = 1;
+  cam.far = 6000;
+  cam.updateProjectionMatrix();
+  stage._controls.target.copy(esf.center);
+  stage._controls.maxDistance = 1400;
+  stage._controls.maxPolarAngle = Math.PI * 0.495;   // no meterse bajo el terreno
+  stage._controls.update();
+}
+
+/* ── bucle de animación ──────────────────────────────── */
+const reloj = new THREE.Clock();
+function tick() {
+  requestAnimationFrame(tick);
+  const dt = Math.min(reloj.getDelta(), 0.1);
+  const t = reloj.elapsedTime;
+
+  /* cámara */
+  if (camAnim.t < 1) {
+    camAnim.t = Math.min(1, camAnim.t + dt * 2.6);
+    const e = 1 - Math.pow(1 - camAnim.t, 3);
+    stage._camera.position.lerpVectors(camAnim.from, camAnim.to, e);
+    stage._controls.target.lerpVectors(camAnim.tFrom, camAnim.tTo, e);
+    stage._controls.update();
+  }
+
+  /* transición día ↔ noche */
+  if (Math.abs(noche - nocheObjetivo) > 0.0005) {
+    noche += (nocheObjetivo - noche) * Math.min(1, dt * 1.6);
+    aplicarCielo(noche);
+  }
+  disco.lookAt(stage._camera.position);
+
+  /* la ciudad se enciende de noche, y solo si hay generación */
+  const gen = enMarcha ? 1 : 0.05;
+  const enc = noche * gen;
+  const parpadeo = 0.94 + 0.06 * Math.sin(t * 2.3);
+  luces.ventanas.forEach((l) => { l.mat.emissiveIntensity = (l.base + enc * l.max) * parpadeo; });
+  luces.farolas.forEach((l, i) => { l.luz.intensity = enc * l.max * (0.92 + 0.08 * Math.sin(t * 1.7 + i)); });
+  luces.balizas.forEach((b) => {
+    const on = (Math.sin(t * 2.4 + b.fase) > 0.55) ? 1 : 0;
+    b.mat.emissiveIntensity = on * (0.6 + noche * 2.4);
+  });
+  luces.focos.forEach((f) => { f.mat.emissiveIntensity = f.base + (enMarcha ? f.marcha : 0) * (0.9 + 0.1 * Math.sin(t * 3.1)); });
+
+  /* penacho de vapor de la torre de refrigeración */
+  if (vapor.matPenacho) vapor.matPenacho.opacity = 0.05 + (enMarcha ? 0.28 : 0) * (1 - noche * 0.45);
+  vapor.forEach((p) => {
+    p.t = (p.t + dt * (enMarcha ? 0.13 : 0.03)) % 1;
+    const s = 9 + p.t * 20;
+    p.obj.position.set(p.dx * p.t * 16, 63 + p.t * 52, p.dz * p.t * 16);
+    p.obj.scale.setScalar(s);
+  });
+
+  /* pulsos de energía viajando hacia la ciudad */
+  if (pulsos.mat) pulsos.mat.opacity = enMarcha ? 0.55 + 0.45 * noche : 0;
+  if (enMarcha) {
+    pulsos.forEach((p) => {
+      p.t = (p.t + dt * p.vel) % 1;
+      p.curva.getPointAt(p.t, p.obj.position);
+      p.obj.scale.setScalar(0.8 + 0.5 * Math.sin(p.t * Math.PI));
+    });
+  }
+}
+tick();
+
+/* clic sobre el modelo */
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let downXY = null;
+stage.addEventListener('pointerdown', (e) => { downXY = [e.clientX, e.clientY]; });
+stage.addEventListener('pointerup', (e) => {
+  if (!downXY || Math.hypot(e.clientX - downXY[0], e.clientY - downXY[1]) > 5) return;
+  const r = stage.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, stage._camera);
+  for (const hit of ray.intersectObject(model, true)) {
+    let o = hit.object;
+    while (o && !o.userData.id) o = o.parent;
+    if (o && INFO.some((rr) => rr[0] === o.userData.id)) { select(o.userData.id); return; }
+  }
+});
+</script>
+</body>
+</html>
