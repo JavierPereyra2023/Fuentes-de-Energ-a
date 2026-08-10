@@ -91,6 +91,31 @@
     pointer-events:none;transition:color .4s,background .4s,border-color .4s;
   }
   .hint.oscuro{color:#c6d2e0;background:rgba(12,20,32,.6);border-color:rgba(160,185,215,.28)}
+  /* reloj del ciclo día / noche */
+  .reloj{padding:12px 24px 4px}
+  .reloj input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:4px;margin:0;
+    background:linear-gradient(90deg,#12213a 0%,#3c5a80 18%,#e2a05f 27%,#bcd7ea 50%,#e08b4e 76%,#2a3d5c 86%,#12213a 100%);
+    cursor:pointer;
+  }
+  .reloj input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+    background:#fff8e6;border:2px solid #6b6b62;cursor:pointer;
+  }
+  .reloj input[type=range]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;background:#fff8e6;border:2px solid #6b6b62;cursor:pointer;
+  }
+  .reloj-fila{
+    display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7d7d73;
+  }
+  .reloj-fila #momento{text-transform:uppercase;letter-spacing:.07em;color:oklch(0.46 0.09 250)}
+  .chips{display:flex;gap:6px;margin-top:9px}
+  .chips button{
+    flex:1;font:inherit;font-size:11.5px;padding:5px 2px;cursor:pointer;
+    border:1px solid #ddd8cc;background:#fff;border-radius:6px;color:#5c5e56;
+  }
+  .chips button:hover{background:#f1eee6}
   @media (max-width:900px){
     body{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
     aside{border-right:0;border-bottom:1px solid #ddd8cc;max-height:48vh}
@@ -106,15 +131,25 @@
 <aside>
   <header>
     <h1>Central nuclear</h1>
-    <p>Modelo 3D para recorrer las partes de una central de agua a presión (PWR). Hacé clic en el modelo o en la lista.</p>
+    <p>Modelo 3D para recorrer las partes de una central de agua a presión (PWR). Hacé clic en el modelo o en la lista, y movés el reloj para ver pasar el día.</p>
   </header>
   <div class="modes">
     <button id="btn-ext" aria-pressed="true">Vista exterior</button>
     <button id="btn-int" aria-pressed="false">Ver interior</button>
   </div>
   <div class="modes escena">
-    <button id="btn-noche" aria-pressed="false">Noche</button>
+    <button id="btn-auto" aria-pressed="true">Ciclo automático</button>
     <button id="btn-marcha" aria-pressed="true">Central en marcha</button>
+  </div>
+  <div class="reloj">
+    <input id="hora" type="range" min="0" max="24" step="0.02" value="9" aria-label="Hora del día">
+    <div class="reloj-fila"><span id="hora-txt">09:00</span><span id="momento">Mañana</span></div>
+    <div class="chips">
+      <button data-h="6.4">Amanecer</button>
+      <button data-h="12">Mediodía</button>
+      <button data-h="18.5">Atardecer</button>
+      <button data-h="22.5">Noche</button>
+    </div>
   </div>
   <div class="list" id="list"></div>
   <div class="info">
@@ -159,6 +194,7 @@ const mats = {
   tronco:    () => M('tronco', 0x6b5947, { roughness: 1 }),
   cable:     () => M('cable', 0x3b3f42, { roughness: 0.6, metalness: 0.3 }),
   ciudad:    () => M('hormigon_urbano', 0xa9a49a, { roughness: 0.9 }),
+  porcelana: () => M('porcelana_aislador', 0xd8d3c6, { roughness: 0.35, metalness: 0.05 }),
   luz:       () => M('luz_ventana', 0xf2c76b, { roughness: 0.4, emissive: 0xf2b455, emissiveIntensity: 0.45 }),
 };
 
@@ -190,6 +226,7 @@ const add = (g) => { parts[g.userData.id] = g; model.add(g); return g; };
 const luces = { ventanas: [], farolas: [], balizas: [], focos: [] };
 const vapor = [];
 const pulsos = [];
+const moviles = [];   // vehículos que recorren la ruta y las avenidas
 
 /* ── árbol reutilizable ──────────────────────────────── */
 const mFollaje = mats.follaje(), mTronco = mats.tronco();
@@ -200,6 +237,96 @@ function arbol(x, z, esc = 1, nombre = 'arbol') {
   g.add(mesh(new THREE.ConeGeometry(3.4 * esc, 9 * esc, 9), rnd() > 0.5 ? mFollaje : mFollaje2, 'copa', [0, 8.2 * esc, 0]));
   g.position.set(x, 0, z);
   return g;
+}
+
+/* árbol de copa redonda: el de vereda, más urbano que el conífero */
+const mCopaUrb = M('follaje_urbano', 0x6d8b4c, { roughness: 1 });
+const mTroncoUrb = M('tronco_urbano', 0x6f5c48, { roughness: 1 });
+function arbolito(x, z, esc = 1, nombre = 'arbol_vereda') {
+  const g = new THREE.Group(); g.name = nombre;
+  g.add(mesh(new THREE.CylinderGeometry(0.22 * esc, 0.34 * esc, 3.4 * esc, 6), mTroncoUrb, 'tronco', [0, 1.7 * esc, 0]));
+  const copa = mesh(new THREE.SphereGeometry(1.9 * esc, 10, 8), mCopaUrb, 'copa', [0, 4.6 * esc, 0]);
+  copa.scale.set(1, 0.86, 1);
+  g.add(copa);
+  g.position.set(x, 0, z);
+  return g;
+}
+
+/* ── helpers de la red eléctrica ─────────────────────────
+   Las torres son de celosía real: patas inclinadas unidas por
+   diagonales en cruz. Los conductores cuelgan de cadenas de
+   aisladores y se tienden con la flecha (curva catenaria) que
+   tiene un cable colgado entre dos apoyos. */
+const _up = new THREE.Vector3(0, 1, 0);
+function tramo(a, b, r, mat, nombre) {
+  const dir = new THREE.Vector3().subVectors(b, a);
+  const len = dir.length();
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 6), mat);
+  m.name = nombre;
+  m.position.copy(a).add(b).multiplyScalar(0.5);
+  m.quaternion.setFromUnitVectors(_up, dir.normalize());
+  return m;
+}
+
+/* torre de alta tensión de doble terna: 6 conductores + hilo de guardia */
+function torreReticulada(x, z, s = 1, nombre = 'torre_alta_tension') {
+  const p = new THREE.Group(); p.name = nombre;
+  const ma = mats.acero(), mAisl = mats.porcelana();
+  const H = 30 * s, ancho = 3.4 * s, punta = 1.15 * s;
+  const hw = (y) => ancho + (punta - ancho) * (y / H);
+  const esq = (y) => {
+    const w = hw(y);
+    return [[-w, -w], [w, -w], [w, w], [-w, w]].map(([a, b]) => new THREE.Vector3(a, y, b));
+  };
+  const N = 3;
+  for (let k = 0; k < N; k++) {
+    const a = esq((k / N) * H), b = esq(((k + 1) / N) * H);
+    for (let i = 0; i < 4; i++) {
+      const j = (i + 1) % 4;
+      p.add(tramo(a[i], b[i], 0.17 * s, ma, `pata_${k + 1}_${i + 1}`));
+      p.add(sinSombra(tramo(a[i], b[j], 0.09 * s, ma, `diagonal_${k + 1}_${i + 1}a`)));
+      p.add(sinSombra(tramo(a[j], b[i], 0.09 * s, ma, `diagonal_${k + 1}_${i + 1}b`)));
+      if (k > 0) p.add(sinSombra(tramo(a[i], a[j], 0.09 * s, ma, `travesano_${k + 1}_${i + 1}`)));
+    }
+  }
+  const enganches = [];
+  [[0.60, 10.5], [0.755, 9], [0.90, 7.5]].forEach(([f, L0], k) => {
+    const y = H * f, L = L0 * s;
+    [-1, 1].forEach((sd) => {
+      const lado = sd > 0 ? 'a' : 'b';
+      const tip = new THREE.Vector3(sd * L, y, 0);
+      p.add(tramo(new THREE.Vector3(0, y, 0), tip, 0.13 * s, ma, `mensula_${k + 1}${lado}`));
+      p.add(sinSombra(tramo(new THREE.Vector3(0, y + 3 * s, 0), tip, 0.08 * s, ma, `tirante_${k + 1}${lado}`)));
+      for (let d = 0; d < 4; d++) {
+        p.add(sinSombra(mesh(new THREE.CylinderGeometry(0.3 * s, 0.3 * s, 0.34 * s, 8), mAisl,
+          `aislador_${k + 1}${lado}_${d + 1}`, [sd * L, y - (0.7 + d * 0.55) * s, 0])));
+      }
+      enganches.push(new THREE.Vector3(sd * L, y - 3.1 * s, 0));
+    });
+  });
+  p.add(tramo(new THREE.Vector3(0, H, 0), new THREE.Vector3(0, H + 3.6 * s, 0), 0.12 * s, ma, 'mastil_guardia'));
+  enganches.push(new THREE.Vector3(0, H + 3.6 * s, 0));
+  p.position.set(x, 0, z);
+  p.userData.enganches = enganches.map((v) => v.add(p.position));
+  return p;
+}
+
+/* flecha del vano: el cable no va recto, cuelga */
+function catenaria(a, b, flecha, div = 12) {
+  const pts = [];
+  for (let i = 0; i <= div; i++) {
+    const t = i / div;
+    const v = new THREE.Vector3().lerpVectors(a, b, t);
+    v.y -= flecha * 4 * t * (1 - t);
+    pts.push(v);
+  }
+  return new THREE.CatmullRomCurve3(pts);
+}
+const matCableAT = mats.cable();
+function tenderCable(grupo, a, b, r, nombre, flecha, mat) {
+  const c = catenaria(a, b, flecha ?? Math.max(1, a.distanceTo(b) * 0.06));
+  grupo.add(sinSombra(mesh(new THREE.TubeGeometry(c, 24, r, 5), mat || matCableAT, nombre)));
+  return c;
 }
 
 /* ── terreno del sitio ───────────────────────────────── */
@@ -424,25 +551,54 @@ model.add(terreno);
 /* ── 11. subestación y transformadores ───────────────── */
 {
   const g = part('subestacion');
+  const ma = mats.acero(), mAisl = mats.porcelana();
+  g.add(mesh(new THREE.BoxGeometry(46, 0.4, 30), mats.asfalto(), 'playa_de_maniobras', [8, 0.2, -6]));
+  /* tres transformadores de potencia con radiadores, cuba y aisladores pasantes */
   for (let i = 0; i < 3; i++) {
-    g.add(mesh(new THREE.BoxGeometry(7, 6, 7), mats.metal(), `transformador_${i + 1}`, [-4 + i * 11, 3, 0]));
-    g.add(mesh(new THREE.CylinderGeometry(0.5, 0.5, 5, 12), mats.metal(), `aislador_${i + 1}`, [-4 + i * 11, 8.4, 0]));
+    const x = -4 + i * 11;
+    g.add(mesh(new THREE.BoxGeometry(7, 6, 7), mats.metal(), `transformador_${i + 1}`, [x, 3.2, 0]));
+    g.add(mesh(new THREE.BoxGeometry(8, 0.8, 8), mats.concreto(), `cuba_transformador_${i + 1}`, [x, 0.4, 0]));
+    for (let r = 0; r < 5; r++) {
+      g.add(mesh(new THREE.BoxGeometry(0.5, 4.4, 2.6), ma, `radiador_${i + 1}_${r + 1}`, [x - 3.9, 3.4, -2.6 + r * 1.3]));
+    }
+    [-2, 0, 2].forEach((dz, f) => {
+      for (let d = 0; d < 3; d++) {
+        g.add(mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.9, 10), mAisl,
+          `pasatapas_${i + 1}_${f + 1}_${d + 1}`, [x + 1.6, 6.6 + d * 0.95, dz]));
+      }
+    });
   }
-  const pylon = (x, z) => {
-    const p = new THREE.Group(); p.name = `torre_alta_tension_${x}`;
-    const mm = mats.acero();
-    [[-1.5, -1.5], [1.5, -1.5], [-1.5, 1.5], [1.5, 1.5]].forEach(([dx, dz], i) => {
-      p.add(mesh(new THREE.CylinderGeometry(0.3, 0.3, 26, 8), mm, `pata_${i + 1}`, [dx, 13, dz]));
+  /* pórtico de barras: de aquí arrancan los conductores de la línea */
+  {
+    const P = new THREE.Group(); P.name = 'portico_de_barras';
+    [-13, 13].forEach((dz, i) => {
+      P.add(tramo(new THREE.Vector3(0, 0, dz), new THREE.Vector3(0, 15, dz), 0.32, ma, `columna_portico_${i + 1}`));
+      for (let k = 0; k < 4; k++) {
+        P.add(sinSombra(tramo(new THREE.Vector3(-0.9, k * 3.75, dz), new THREE.Vector3(0.9, (k + 1) * 3.75, dz), 0.1, ma, `celosia_${i + 1}_${k + 1}`)));
+      }
     });
-    [16, 21, 25].forEach((y, i) => {
-      p.add(mesh(new THREE.BoxGeometry(16 - i * 3.5, 0.6, 0.6), mm, `cruceta_${i + 1}`, [0, y, 0]));
-      p.add(mesh(new THREE.BoxGeometry(0.5, 3.5, 0.5), mm, `montante_${i + 1}`, [0, y - 1.8, 0]));
+    [13, 15].forEach((y, k) => P.add(tramo(new THREE.Vector3(0, y, -13), new THREE.Vector3(0, y, 13), 0.22, ma, `viga_portico_${k + 1}`)));
+    [-9, 0, 9].forEach((dz, f) => {
+      for (let d = 0; d < 3; d++) {
+        P.add(sinSombra(mesh(new THREE.CylinderGeometry(0.34, 0.34, 0.36, 8), mAisl, `aislador_portico_${f + 1}_${d + 1}`, [0, 12.4 - d * 0.6, dz])));
+      }
     });
-    p.position.set(x, 0, z);
-    return p;
-  };
-  g.add(pylon(24, -18));
+    P.position.set(12, 0, -12);
+    g.add(P);
+    g.userData.portico = [-9, 0, 9].map((dz) => new THREE.Vector3(12, 10.6, -12 + dz));
+  }
+  /* seccionadores y pararrayos */
+  [[-6, -14], [4, -14], [14, -14]].forEach(([x, z], i) => {
+    g.add(mesh(new THREE.BoxGeometry(2.4, 0.6, 2.4), ma, `base_seccionador_${i + 1}`, [x, 2.2, z]));
+    [-0.8, 0.8].forEach((dz, k) => g.add(mesh(new THREE.CylinderGeometry(0.3, 0.3, 4.4, 10), mAisl, `seccionador_${i + 1}_${k + 1}`, [x, 4.7, z + dz])));
+    g.add(mesh(new THREE.CylinderGeometry(0.26, 0.26, 7, 10), mAisl, `pararrayos_${i + 1}`, [x + 4, 4, z]));
+  });
+  const torreSalida = torreReticulada(24, -18, 1, 'torre_salida_subestacion');
+  g.add(torreSalida);
   g.position.set(28, 0, -40);
+  /* enganches en coordenadas del modelo, para que la línea se ate acá */
+  g.userData.enganches = torreSalida.userData.enganches.map((v) => v.clone().add(g.position));
+  g.userData.portico = g.userData.portico.map((v) => v.add(g.position));
   add(g);
 }
 
@@ -507,125 +663,411 @@ model.add(terreno);
 {
   const g = part('red_electrica');
   const mm = mats.acero(), mcbl = mats.cable();
-  const pylon = (x, z, s = 1) => {
-    const p = new THREE.Group(); p.name = `torre_transmision_${Math.round(x)}`;
-    [[-1.5, -1.5], [1.5, -1.5], [-1.5, 1.5], [1.5, 1.5]].forEach(([dx, dz], i) => {
-      p.add(mesh(new THREE.CylinderGeometry(0.3, 0.3, 30 * s, 8), mm, `pata_${i + 1}`, [dx, 15 * s, dz]));
-    });
-    [0.55, 0.72, 0.88].forEach((f, i) => {
-      p.add(mesh(new THREE.BoxGeometry(18 - i * 4, 0.6, 0.6), mm, `cruceta_${i + 1}`, [0, 30 * s * f, 0]));
-      p.add(mesh(new THREE.BoxGeometry(0.5, 4 * s, 0.5), mm, `montante_${i + 1}`, [0, 30 * s * f - 2 * s, 0]));
-    });
-    p.position.set(x, 0, z);
-    p.userData.arms = [0.55, 0.72, 0.88].map((f) => 30 * s * f);
-    p.userData.span = [9, 7, 5];
-    return p;
-  };
-  const towers = [pylon(78, -62), pylon(112, -66), pylon(146, -70), pylon(178, -72, 0.8)];
-  towers.forEach((t) => g.add(t));
-  const cable = (a, b, y1, y2, off, name) => {
-    const mid = new THREE.Vector3((a.x + b.x) / 2, (y1 + y2) / 2 - 3.5, (a.z + b.z) / 2);
-    const curve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(a.x, y1, a.z + off), mid.setZ(mid.z + off), new THREE.Vector3(b.x, y2, b.z + off),
-    ]);
-    g.add(mesh(new THREE.TubeGeometry(curve, 24, 0.16, 6), mcbl, name));
-  };
-  const anchor = new THREE.Vector3(52, 0, -58);
-  for (let i = 0; i < towers.length; i++) {
-    const from = i === 0 ? anchor : towers[i - 1].position;
-    const fromArms = i === 0 ? [16, 21, 25] : towers[i - 1].userData.arms;
-    const fromSpan = i === 0 ? [7, 5.5, 4] : towers[i - 1].userData.span;
-    const to = towers[i];
-    to.userData.arms.forEach((y, k) => {
-      [-1, 1].forEach((s) => cable(from, to.position, fromArms[k], y,
-        s * Math.min(fromSpan[k], to.userData.span[k]), `cable_${i + 1}_${k + 1}_${s > 0 ? 'a' : 'b'}`));
-    });
-  }
 
-  /* ── ciudad ──────────────────────────────────────────
-     Barrios de distinta altura sobre una trama de calles.
-     Las ventanas y el alumbrado se encienden de noche, y solo
-     si la central está generando: es el final del recorrido de
-     la energía. */
+  /* ── línea de alta tensión ───────────────────────────
+     Cinco apoyos entre la subestación y la ciudad. Cada vano
+     lleva seis conductores (doble terna) más el hilo de guardia
+     arriba, que protege la línea de los rayos. */
+  const apoyos = [
+    parts.subestacion,                                   // arranca en la torre de salida
+    torreReticulada(78, -62, 1, 'torre_transmision_1'),
+    torreReticulada(112, -66, 1, 'torre_transmision_2'),
+    torreReticulada(146, -70, 0.95, 'torre_transmision_3'),
+    torreReticulada(178, -72, 0.8, 'torre_transmision_4'),
+  ];
+  apoyos.slice(1).forEach((t) => g.add(t));
+
+  /* del pórtico de la subestación a la torre de salida */
+  parts.subestacion.userData.portico.forEach((a, k) => {
+    tenderCable(g, a, parts.subestacion.userData.enganches[k * 2], 0.15, `bajada_portico_${k + 1}`, 0.8);
+  });
+
+  for (let i = 1; i < apoyos.length; i++) {
+    const A = apoyos[i - 1].userData.enganches, B = apoyos[i].userData.enganches;
+    for (let k = 0; k < 7; k++) {
+      const esGuardia = k === 6;
+      tenderCable(g, A[k], B[k], esGuardia ? 0.11 : 0.17,
+        esGuardia ? `hilo_de_guardia_${i}` : `conductor_${i}_${k + 1}`);
+    }
+  }
+  /* bajada del último apoyo a la estación transformadora de la ciudad */
+  const ultimo = apoyos[apoyos.length - 1].userData.enganches;
+  [
+    tenderCable(g, ultimo[0], new THREE.Vector3(194, 11.2, -73.5), 0.16, 'bajada_ciudad_1', 1.6),
+    tenderCable(g, ultimo[2], new THREE.Vector3(194, 11.2, -72), 0.16, 'bajada_ciudad_2', 1.4),
+    tenderCable(g, ultimo[4], new THREE.Vector3(194, 11.2, -70.5), 0.16, 'bajada_ciudad_3', 1.2),
+  ];
+
+  /* ── ciudad y pueblo ─────────────────────────────────
+     Trama de calles con veredas: al centro las torres y los
+     edificios públicos, y hacia afuera el pueblo de casas bajas
+     con techo a dos aguas. Las ventanas, las farolas y los faros
+     de los autos se encienden de noche, y solo si la central está
+     generando: es el final del recorrido de la energía. */
   const ciudad = new THREE.Group(); ciudad.name = 'ciudad';
   const mciu = mats.ciudad();
   const mciu2 = M('hormigon_claro', 0xc0b8ab, { roughness: 0.9 });
   const mciu3 = M('ladrillo_urbano', 0x99705c, { roughness: 0.92 });
   const mtecho = mats.metal();
+  const mvidrioEd = M('vidriado_torre', 0x6d7d88, { roughness: 0.3, metalness: 0.25 });
   const mluz = sinRealce(mats.luz());
   luces.ventanas.push({ mat: mluz, base: 0.04, max: 3.4 });
   const mfar = sinRealce(M('farola_lampara', 0xf7e2b4, { emissive: 0xffcd80, emissiveIntensity: 0, roughness: 0.4 }));
   luces.ventanas.push({ mat: mfar, base: 0.02, max: 3.0 });
+  const mFaro = sinRealce(M('faro_auto', 0xfff3d0, { emissive: 0xfff0c0, emissiveIntensity: 0, roughness: 0.3 }));
+  luces.ventanas.push({ mat: mFaro, base: 0.05, max: 3.6 });
+  const mStop = sinRealce(M('luz_freno', 0x8d2418, { emissive: 0xff3a18, emissiveIntensity: 0, roughness: 0.4 }));
+  luces.ventanas.push({ mat: mStop, base: 0.05, max: 2.2 });
 
-  ciudad.add(mesh(new THREE.BoxGeometry(190, 1.2, 150), mats.asfalto(), 'trama_urbana', [0, -0.2, 0]));
+  /* calzada, veredas y manzanas */
   const mcalle = M('calle', 0x6f6f6a, { roughness: 1 });
-  for (let i = -2; i <= 2; i++) ciudad.add(mesh(new THREE.BoxGeometry(6, 0.3, 150), mcalle, `calle_ns_${i + 3}`, [i * 36, 0.5, 0]));
-  for (let j = -2; j <= 2; j++) ciudad.add(mesh(new THREE.BoxGeometry(190, 0.3, 6), mcalle, `calle_eo_${j + 3}`, [0, 0.5, j * 30]));
+  const mvereda = M('vereda', 0xb9b2a4, { roughness: 1 });
+  const mcesped = mats.cesped();
+  ciudad.add(mesh(new THREE.BoxGeometry(216, 1.2, 176), mcalle, 'trama_urbana', [0, -0.2, 0]));
+  for (let i = -2; i <= 2; i++) ciudad.add(mesh(new THREE.BoxGeometry(7, 0.3, 176), mcalle, `calle_ns_${i + 3}`, [i * 36, 0.5, 0]));
+  for (let j = -2; j <= 2; j++) ciudad.add(mesh(new THREE.BoxGeometry(216, 0.3, 7), mcalle, `calle_eo_${j + 3}`, [0, 0.5, j * 30]));
+  const LINEA = M('linea_calle', 0xdcd6c2, { roughness: 1 });
+  for (let z = -80; z <= 80; z += 10) {
+    ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(0.4, 0.34, 4.5), LINEA, `eje_ns_${z}`, [0, 0.55, z])));
+  }
+  for (let x = -100; x <= 100; x += 10) {
+    ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(4.5, 0.34, 0.4), LINEA, `eje_eo_${x}`, [x, 0.55, 0])));
+  }
 
-  let nEd = 0;
+  /* qué hay en cada manzana */
+  const PLANO = {
+    '0,0': 'plaza', '-1,0': 'iglesia', '1,0': 'escuela',
+    '0,-1': 'torres', '-1,-1': 'torres', '1,-1': 'torres',
+    '0,1': 'cancha', '-1,1': 'medio', '1,1': 'medio',
+    '2,-2': 'galpones', '-2,-2': 'galpones', '2,2': 'galpones', '-2,2': 'galpones',
+  };
+  const tipoDe = (i, j) => PLANO[`${i},${j}`] || 'casas';
+
+  /* ── casa del pueblo: muros, techo a dos aguas, jardín ── */
+  const murosCasa = [
+    M('revoque_crema', 0xd9cbb0, { roughness: 0.95 }),
+    M('revoque_blanco', 0xe4ddd0, { roughness: 0.95 }),
+    M('revoque_ocre', 0xc9a978, { roughness: 0.95 }),
+    M('ladrillo_visto', 0xa9674f, { roughness: 0.95 }),
+    M('revoque_gris', 0xc3bfb5, { roughness: 0.95 }),
+  ];
+  const techosCasa = [
+    M('teja_colonial', 0xa4553a, { roughness: 0.9 }),
+    M('teja_francesa', 0x8d4436, { roughness: 0.9 }),
+    M('chapa_techo', 0x74797c, { roughness: 0.6, metalness: 0.3 }),
+    M('teja_verde', 0x5c6b4c, { roughness: 0.9 }),
+  ];
+  const mPuerta = M('puerta_madera', 0x6a4a33, { roughness: 0.8 });
+  const mCerco = M('cerco_bajo', 0xcfc7b6, { roughness: 0.95 });
+  let nCasa = 0;
+  function casa(px, pz, giro) {
+    nCasa += 1;
+    const n = nCasa;
+    const c = new THREE.Group(); c.name = `casa_${n}`;
+    const w = entre(9, 12), d = entre(7.5, 9.5);
+    const dosPlantas = rnd() < 0.22;
+    const h = dosPlantas ? entre(6.6, 7.4) : entre(3.4, 4.2);
+    const mMuro = murosCasa[Math.floor(rnd() * murosCasa.length)];
+    const mTej = techosCasa[Math.floor(rnd() * techosCasa.length)];
+
+    /* jardín delantero, vereda y cerco */
+    c.add(mesh(new THREE.BoxGeometry(w + 6, 0.4, d + 8), mcesped, 'terreno', [0, 0.4, 0]));
+    c.add(sinSombra(mesh(new THREE.BoxGeometry(w + 6, 0.45, 2.4), mvereda, 'vereda', [0, 0.5, (d + 8) / 2 + 1])));
+    c.add(sinSombra(mesh(new THREE.BoxGeometry(w + 6, 0.9, 0.3), mCerco, 'cerco_frente', [0, 0.9, (d + 8) / 2 - 0.2])));
+    [-1, 1].forEach((s, i) => c.add(sinSombra(mesh(new THREE.BoxGeometry(0.3, 0.9, d + 8), mCerco, `cerco_lateral_${i + 1}`, [s * (w + 6) / 2, 0.9, 0]))));
+
+    /* cuerpo y techo */
+    c.add(mesh(new THREE.BoxGeometry(w, h, d), mMuro, 'muros', [0, h / 2 + 0.6, 0]));
+    const rise = d * 0.289, slope = d * 0.577;
+    [-1, 1].forEach((s, i) => {
+      const faldon = mesh(new THREE.BoxGeometry(w + 1.1, 0.3, slope + 0.4), mTej,
+        `faldon_${i + 1}`, [0, h + 0.6 + rise / 2, s * d / 4]);
+      faldon.rotation.x = s * 0.5236;
+      c.add(faldon);
+    });
+    c.add(mesh(new THREE.BoxGeometry(1.3, rise + 2.6, 1.3), mciu3, 'chimenea', [w / 2 - 2, h + 0.6 + rise / 2 + 0.6, 0]));
+
+    /* puerta y ventanas iluminadas (frente y contrafrente) */
+    c.add(sinSombra(mesh(new THREE.BoxGeometry(1.3, 2.3, 0.2), mPuerta, 'puerta', [-w / 4, 1.75, d / 2 + 0.05])));
+    c.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.4, 1.35, 0.2), mluz, 'ventana_frente', [w / 5, 2.3, d / 2 + 0.05])));
+    c.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.42, 1.35, 0.2), mluz, 'ventana_contrafrente', [0, 2.3, -d / 2 - 0.05])));
+    c.add(sinSombra(mesh(new THREE.BoxGeometry(0.2, 1.2, d * 0.34), mluz, 'ventana_lateral', [-w / 2 - 0.05, 2.3, 0])));
+    if (dosPlantas) {
+      c.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.55, 1.3, 0.2), mluz, 'ventana_alta', [0, 5.4, d / 2 + 0.05])));
+    }
+    /* farol de entrada y un árbol en el jardín */
+    c.add(sinSombra(mesh(new THREE.SphereGeometry(0.32, 8, 6), mfar, 'farol_entrada', [-w / 4 - 1.1, 3.1, d / 2 + 0.15])));
+    if (rnd() < 0.75) c.add(arbolito(entre(-w / 2, w / 2), d / 2 + 2.6, entre(0.55, 0.9), 'arbol_jardin'));
+    c.position.set(px, 0, pz);
+    c.rotation.y = giro;
+    return c;
+  }
+
+  /* ── manzana por manzana ─────────────────────────────── */
+  let nEd = 0, nGal = 0;
   for (let i = -2; i <= 2; i++) {
     for (let j = -2; j <= 2; j++) {
-      const cx = i * 36, cz = j * 30;
-      const centro = Math.abs(i) <= 1 && Math.abs(j) <= 1;
-      if (i === 0 && j === 0) continue;             // plaza
-      const nSub = centro ? 2 : 1;
+      const cx = i * 36, cz = j * 30, tipo = tipoDe(i, j);
+
+      /* vereda perimetral de la manzana */
+      if (tipo !== 'plaza') {
+        ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(31, 0.5, 25), mvereda, `vereda_${i + 3}_${j + 3}`, [cx, 0.55, cz])));
+      }
+
+      if (tipo === 'casas') {
+        /* cuatro casas por manzana, dos de frente a cada calle */
+        [[-8, -6.5, 0], [8, -6.5, 0], [-8, 6.5, Math.PI], [8, 6.5, Math.PI]].forEach(([dx, dz, gy]) => {
+          ciudad.add(casa(cx + dx + entre(-1, 1), cz + dz * 1.1, gy));
+        });
+        continue;
+      }
+
+      if (tipo === 'galpones') {
+        /* borde industrial: galpones de chapa con techo a dos aguas */
+        for (let k = 0; k < 2; k++) {
+          nGal += 1;
+          const w = entre(20, 26), d = entre(12, 15), h = entre(7, 9);
+          const x = cx + (k ? 8 : -8), z = cz + entre(-3, 3);
+          ciudad.add(mesh(new THREE.BoxGeometry(w, h, d), mciu2, `galpon_${nGal}`, [x, h / 2 + 0.6, z]));
+          const rise = d * 0.2, slope = d * 0.53;
+          [-1, 1].forEach((s, q) => {
+            const f = mesh(new THREE.BoxGeometry(w + 0.8, 0.3, slope), mtecho, `galpon_techo_${nGal}_${q + 1}`, [x, h + 0.6 + rise / 2, z + s * d / 4]);
+            f.rotation.x = s * 0.38;
+            ciudad.add(f);
+          });
+          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.5, 1.2, 0.2), mluz, `galpon_ventanal_${nGal}`, [x, h - 1.4, z + d / 2 + 0.05])));
+        }
+        continue;
+      }
+
+      if (tipo === 'plaza') {
+        /* plaza central: césped, senderos, canteros y arboleda */
+        const plaza = new THREE.Group(); plaza.name = 'plaza';
+        plaza.add(mesh(new THREE.BoxGeometry(30, 0.5, 25), mcesped, 'plaza_cesped', [0, 0.7, 0]));
+        plaza.add(sinSombra(mesh(new THREE.BoxGeometry(30, 0.55, 3), mvereda, 'sendero_eo', [0, 0.78, 0])));
+        plaza.add(sinSombra(mesh(new THREE.BoxGeometry(3, 0.55, 25), mvereda, 'sendero_ns', [0, 0.78, 0])));
+        plaza.add(mesh(new THREE.CylinderGeometry(4, 4.4, 0.9, 20), mvereda, 'fuente_borde', [0, 1.1, 0]));
+        plaza.add(mesh(new THREE.CylinderGeometry(3.4, 3.4, 0.8, 20), mats.agua(), 'fuente_agua', [0, 1.25, 0]));
+        [[-10, -8], [10, -8], [-10, 8], [10, 8], [-10, 0], [10, 0]].forEach(([x, z], k) =>
+          plaza.add(arbolito(x, z, 0.95, `plaza_arbol_${k + 1}`)));
+        [[-6, -10], [6, -10], [-6, 10], [6, 10]].forEach(([x, z], k) => {
+          plaza.add(sinSombra(mesh(new THREE.BoxGeometry(2.6, 0.35, 0.9), mvereda, `banco_${k + 1}`, [x, 1.3, z])));
+          plaza.add(mesh(new THREE.CylinderGeometry(0.14, 0.18, 4.6, 6), mats.metal(), `poste_plaza_${k + 1}`, [x + 2.4, 3, z]));
+          plaza.add(sinSombra(mesh(new THREE.SphereGeometry(0.42, 8, 6), mfar, `farol_plaza_${k + 1}`, [x + 2.4, 5.4, z])));
+        });
+        plaza.add(mesh(new THREE.CylinderGeometry(0.35, 0.45, 16, 8), mats.metal(), 'mastil_plaza', [0, 8, 6]));
+        plaza.position.set(cx, 0, cz);
+        ciudad.add(plaza);
+        continue;
+      }
+
+      if (tipo === 'iglesia') {
+        const ig = new THREE.Group(); ig.name = 'iglesia';
+        ig.add(mesh(new THREE.BoxGeometry(14, 11, 18), mciu2, 'nave', [0, 6.1, 1]));
+        const rise = 18 * 0.22, slope = 18 * 0.55;
+        [-1, 1].forEach((s, q) => {
+          const f = mesh(new THREE.BoxGeometry(15, 0.35, slope), techosCasa[0], `nave_techo_${q + 1}`, [0, 11.6 + rise / 2, 1 + s * 4.5]);
+          f.rotation.x = s * 0.4;
+          ig.add(f);
+        });
+        ig.add(mesh(new THREE.BoxGeometry(7, 22, 7), mciu2, 'campanario', [0, 11.6, -10]));
+        ig.add(mesh(new THREE.ConeGeometry(5.2, 8, 4), techosCasa[1], 'aguja', [0, 26.6, -10], [0, Math.PI / 4, 0]));
+        ig.add(sinSombra(mesh(new THREE.BoxGeometry(0.5, 4, 0.5), mtecho, 'cruz_vertical', [0, 32.4, -10])));
+        ig.add(sinSombra(mesh(new THREE.BoxGeometry(2.2, 0.5, 0.5), mtecho, 'cruz_horizontal', [0, 32.8, -10])));
+        ig.add(sinSombra(mesh(new THREE.BoxGeometry(3.2, 4.4, 0.25), mluz, 'roseton', [0, 16.6, -13.6])));
+        ig.add(sinSombra(mesh(new THREE.BoxGeometry(0.25, 3.4, 10), mluz, 'vitrales_1', [-7.1, 8, 1])));
+        ig.add(sinSombra(mesh(new THREE.BoxGeometry(0.25, 3.4, 10), mluz, 'vitrales_2', [7.1, 8, 1])));
+        ig.position.set(cx, 0, cz);
+        ciudad.add(ig);
+        continue;
+      }
+
+      if (tipo === 'escuela') {
+        const es = new THREE.Group(); es.name = 'escuela';
+        [[-8, 20], [8, 20]].forEach(([dx, dz], k) => {
+          es.add(mesh(new THREE.BoxGeometry(12, 9, dz), mciu, `aulas_${k + 1}`, [dx, 5.1, 0]));
+          es.add(mesh(new THREE.BoxGeometry(12.6, 0.6, dz + 0.6), mtecho, `aulas_techo_${k + 1}`, [dx, 9.9, 0]));
+          for (let f = 0; f < 2; f++) {
+            es.add(sinSombra(mesh(new THREE.BoxGeometry(9, 1.5, 0.22), mluz, `aula_ventanal_${k + 1}_${f + 1}`, [dx, 3.4 + f * 4, dz / 2 + 0.05])));
+          }
+        });
+        es.add(mesh(new THREE.BoxGeometry(20, 0.5, 14), mats.asfalto(), 'patio', [0, 0.75, -18]));
+        es.add(mesh(new THREE.CylinderGeometry(0.3, 0.35, 12, 8), mats.metal(), 'mastil_escuela', [0, 6, -12]));
+        es.add(sinSombra(mesh(new THREE.BoxGeometry(6, 1.6, 0.3), mluz, 'cartel_escuela', [0, 10.8, 10.2])));
+        es.position.set(cx, 0, cz);
+        ciudad.add(es);
+        continue;
+      }
+
+      if (tipo === 'cancha') {
+        const ca = new THREE.Group(); ca.name = 'cancha';
+        ca.add(mesh(new THREE.BoxGeometry(28, 0.5, 20), M('cesped_cancha', 0x5f8a4a, { roughness: 1 }), 'campo', [0, 0.75, 0]));
+        [-1, 1].forEach((s, k) => {
+          ca.add(sinSombra(mesh(new THREE.BoxGeometry(0.4, 2.4, 6), mvereda, `arco_${k + 1}`, [s * 13.5, 2, 0])));
+          ca.add(mesh(new THREE.BoxGeometry(26, 1.6, 3), mvereda, `tribuna_${k + 1}`, [0, 1.4, s * 11.5]));
+        });
+        [[-14, -11], [14, -11], [-14, 11], [14, 11]].forEach(([x, z], k) => {
+          ca.add(mesh(new THREE.CylinderGeometry(0.3, 0.4, 18, 8), mats.metal(), `torre_luz_${k + 1}`, [x, 9, z]));
+          ca.add(sinSombra(mesh(new THREE.BoxGeometry(3.4, 1.4, 1), mfar, `reflector_cancha_${k + 1}`, [x, 18.2, z])));
+        });
+        ca.position.set(cx, 0, cz);
+        ciudad.add(ca);
+        continue;
+      }
+
+      /* 'torres' y 'medio': edificios en altura con retiros y detalles */
+      const nSub = tipo === 'torres' ? 2 : 2;
       for (let k = 0; k < nSub; k++) {
-        const w = entre(11, 17), d = entre(11, 16);
-        const h = centro ? entre(16, 42) : entre(7, 18);
-        const x = cx + (nSub === 2 ? (k === 0 ? -7 : 7) : 0) + entre(-2, 2);
+        const w = entre(11, 16), d = entre(11, 15);
+        const h = tipo === 'torres' ? entre(24, 46) : entre(10, 22);
+        const x = cx + (k === 0 ? -8 : 8) + entre(-1.5, 1.5);
         const z = cz + entre(-3, 3);
         nEd += 1;
-        const mBase = rnd() < 0.34 ? mciu2 : (rnd() < 0.25 ? mciu3 : mciu);
+        const mBase = rnd() < 0.34 ? mciu2 : (rnd() < 0.35 ? mciu3 : mciu);
         ciudad.add(mesh(new THREE.BoxGeometry(w, h, d), mBase, `edificio_${nEd}`, [x, h / 2 + 0.6, z]));
-        ciudad.add(mesh(new THREE.BoxGeometry(w + 0.6, 0.5, d + 0.6), mtecho, `azotea_${nEd}`, [x, h + 0.85, z]));
-        const pisos = Math.min(6, Math.floor((h - 3) / 5));
-        for (let f = 1; f <= pisos; f++) {
-          const y = f * 5;
-          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.76, 1.9, 0.25), mluz, `ventanas_${nEd}_${f}_n`, [x, y, z + d / 2 + 0.06])));
-          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.76, 1.9, 0.25), mluz, `ventanas_${nEd}_${f}_s`, [x, y, z - d / 2 - 0.06])));
+        ciudad.add(mesh(new THREE.BoxGeometry(w + 0.8, 0.6, d + 0.8), mtecho, `azotea_${nEd}`, [x, h + 0.9, z]));
+        /* remate en retiro y tanque de agua en la azotea */
+        if (h > 26) {
+          const hr = entre(4, 8);
+          ciudad.add(mesh(new THREE.BoxGeometry(w * 0.62, hr, d * 0.62), mBase, `remate_${nEd}`, [x, h + 1.2 + hr / 2, z]));
+          ciudad.add(mesh(new THREE.CylinderGeometry(1.5, 1.5, 3, 12), mtecho, `tanque_azotea_${nEd}`, [x + w * 0.2, h + 1.2 + hr + 1.5, z]));
+        } else {
+          ciudad.add(mesh(new THREE.CylinderGeometry(1.4, 1.4, 2.6, 12), mtecho, `tanque_azotea_${nEd}`, [x - w * 0.2, h + 2.5, z]));
         }
-        if (h > 30) {
+        /* franjas de ventanas + una banda vidriada continua */
+        const pisos = Math.min(9, Math.floor((h - 3) / 4.4));
+        for (let f = 1; f <= pisos; f++) {
+          const y = f * 4.4;
+          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.78, 1.9, 0.25), mluz, `ventanas_${nEd}_${f}_n`, [x, y, z + d / 2 + 0.06])));
+          ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(w * 0.78, 1.9, 0.25), mluz, `ventanas_${nEd}_${f}_s`, [x, y, z - d / 2 - 0.06])));
+          if (f % 2 === 0) {
+            ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(0.25, 1.9, d * 0.7), mluz, `ventanas_${nEd}_${f}_e`, [x + w / 2 + 0.06, y, z])));
+          }
+        }
+        ciudad.add(mesh(new THREE.BoxGeometry(w * 0.9, 3.4, 0.4), mvidrioEd, `planta_baja_${nEd}`, [x, 2.3, z + d / 2 + 0.2]));
+        if (h > 32) {
           const mb = sinRealce(M(`baliza_edificio_${nEd}`, 0x7a1c14, { emissive: 0xff2a12, emissiveIntensity: 0, roughness: 0.5 }));
-          ciudad.add(sinSombra(mesh(new THREE.SphereGeometry(0.7, 8, 6), mb, `baliza_edificio_${nEd}`, [x, h + 1.8, z])));
+          ciudad.add(sinSombra(mesh(new THREE.SphereGeometry(0.7, 8, 6), mb, `baliza_edificio_${nEd}`, [x, h + 10, z])));
           luces.balizas.push({ mat: mb, fase: nEd * 0.7 });
         }
       }
     }
   }
 
-  /* plaza central: césped, arboleda y un mástil iluminado */
-  const plaza = new THREE.Group(); plaza.name = 'plaza';
-  plaza.add(mesh(new THREE.BoxGeometry(28, 0.5, 24), mats.cesped(), 'plaza_cesped', [0, 0.7, 0]));
-  [[-9, -7], [9, -7], [-9, 7], [9, 7], [0, 9]].forEach(([x, z], i) => plaza.add(arbol(x, z, 0.55, `plaza_arbol_${i + 1}`)));
-  plaza.add(mesh(new THREE.CylinderGeometry(0.35, 0.45, 16, 8), mats.metal(), 'mastil_plaza', [0, 8, 0]));
-  plaza.add(sinSombra(mesh(new THREE.SphereGeometry(0.9, 10, 8), mfar, 'farol_plaza', [0, 16.4, 0])));
-  ciudad.add(plaza);
+  /* tanque de agua elevado del pueblo */
+  {
+    const tq = new THREE.Group(); tq.name = 'tanque_elevado';
+    [[-3, -3], [3, -3], [-3, 3], [3, 3]].forEach(([dx, dz], i) =>
+      tq.add(tramo(new THREE.Vector3(dx * 1.7, 0, dz * 1.7), new THREE.Vector3(dx * 0.8, 20, dz * 0.8), 0.28, mats.metal(), `pata_${i + 1}`)));
+    tq.add(mesh(new THREE.CylinderGeometry(6, 6, 7, 20), mciu2, 'cuba', [0, 23.5, 0]));
+    tq.add(mesh(new THREE.ConeGeometry(6.4, 3, 20), mtecho, 'cupulita', [0, 28.5, 0]));
+    tq.position.set(72, 0, -46);
+    ciudad.add(tq);
+  }
 
-  /* farolas de las avenidas (poste + lámpara emisiva) */
+  /* farolas de las avenidas (poste con brazo + lámpara) */
+  const mPosteAlum = mats.metal();
   let nFarola = 0;
   for (let i = -2; i <= 2; i++) {
-    for (let z = -66; z <= 66; z += 22) {
+    for (let z = -78; z <= 78; z += 20) {
       nFarola += 1;
-      const x = i * 36 + 4;
-      ciudad.add(mesh(new THREE.CylinderGeometry(0.16, 0.22, 7, 6), mats.metal(), `poste_${nFarola}`, [x, 4, z]));
-      ciudad.add(sinSombra(mesh(new THREE.SphereGeometry(0.55, 8, 6), mfar, `farola_${nFarola}`, [x, 7.7, z])));
+      const x = i * 36 + 4.6;
+      ciudad.add(mesh(new THREE.CylinderGeometry(0.16, 0.24, 9, 6), mPosteAlum, `poste_${nFarola}`, [x, 5, z]));
+      ciudad.add(sinSombra(mesh(new THREE.BoxGeometry(2.4, 0.22, 0.22), mPosteAlum, `brazo_${nFarola}`, [x - 1.2, 9.4, z])));
+      ciudad.add(sinSombra(mesh(new THREE.SphereGeometry(0.5, 8, 6), mfar, `farola_${nFarola}`, [x - 2.3, 9.2, z])));
     }
   }
-  /* cuatro luces reales bastan para dar volumen sin castigar el rendimiento */
-  [[-52, -44], [52, -44], [-52, 44], [52, 44]].forEach(([x, z], i) => {
-    const pl = new THREE.PointLight(0xffc98a, 0, 150, 1.6);
+  /* árboles de vereda a lo largo de la avenida central */
+  for (let x = -92; x <= 92; x += 12) {
+    if (Math.abs(x % 36) < 6) continue;
+    ciudad.add(arbolito(x, 5.2, entre(0.8, 1.15), `arbol_avenida_${x + 100}`));
+  }
+
+  /* ── distribución: de la estación transformadora a las casas ──
+     Media tensión sobre postes por la avenida, transformadores de
+     poste cada tres apoyos y bajada de baja tensión a las casas. */
+  const redBaja = new THREE.Group(); redBaja.name = 'red_de_distribucion';
+  const mmad = M('poste_hormigon', 0x9d978a, { roughness: 0.95 });
+  const mHerraje = mats.metal(), mPorc = mats.porcelana(), mCableBT = mats.cable();
+  const engMT = [];
+  const ZMT = 11.2;                 // la línea corre por la banquina de la avenida
+  let nPoste = 0;
+  for (let x = -14; x <= 82; x += 16) {
+    nPoste += 1;
+    redBaja.add(mesh(new THREE.CylinderGeometry(0.24, 0.34, 16, 7), mmad, `poste_mt_${nPoste}`, [x, 8, ZMT]));
+    redBaja.add(sinSombra(mesh(new THREE.BoxGeometry(0.3, 0.3, 4.4), mHerraje, `cruceta_mt_${nPoste}`, [x, 15.4, ZMT])));
+    [-1.8, 0, 1.8].forEach((dz, k) =>
+      redBaja.add(sinSombra(mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.5, 8), mPorc, `aislador_mt_${nPoste}_${k + 1}`, [x, 15.85, ZMT + dz]))));
+    engMT.push([-1.8, 0, 1.8].map((dz) => new THREE.Vector3(x, 15.9, ZMT + dz)));
+    /* transformador de poste con su bajada de baja tensión */
+    if (nPoste % 3 === 2) {
+      redBaja.add(mesh(new THREE.CylinderGeometry(1, 1, 2.4, 12), mHerraje, `transformador_poste_${nPoste}`, [x + 0.9, 12.4, ZMT]));
+      redBaja.add(sinSombra(mesh(new THREE.BoxGeometry(0.24, 0.24, 3.4), mHerraje, `cruceta_bt_${nPoste}`, [x, 9.6, ZMT])));
+      [-11, 11].forEach((dz, s) => {
+        tenderCable(redBaja, new THREE.Vector3(x, 9.6, ZMT + Math.sign(dz) * 1.4),
+          new THREE.Vector3(x + 4, 4.6, ZMT + dz), 0.07, `acometida_${nPoste}_${s + 1}`, 0.6, mCableBT);
+      });
+    }
+  }
+  for (let i = 1; i < engMT.length; i++) {
+    for (let k = 0; k < 3; k++) tenderCable(redBaja, engMT[i - 1][k], engMT[i][k], 0.09, `mt_${i}_${k + 1}`, 0.9, mCableBT);
+  }
+  ciudad.add(redBaja);
+
+  /* ── autos que circulan por la ciudad ──────────────── */
+  const coloresUrb = [0xb63a2c, 0x2f5f8c, 0xd8d2c4, 0x3f4a3f, 0xc9a227, 0x5a5f66];
+  function autoUrbano(nombre, col) {
+    const a = new THREE.Group(); a.name = nombre;
+    const m = M(`chapa_${nombre}`, col, { roughness: 0.45, metalness: 0.25 });
+    a.add(mesh(new THREE.BoxGeometry(4.8, 1.3, 2.2), m, 'carroceria', [0, 1.05, 0]));
+    a.add(mesh(new THREE.BoxGeometry(2.6, 1.1, 2), m, 'cabina', [-0.2, 2.1, 0]));
+    [-0.7, 0.7].forEach((dz, i) => {
+      a.add(sinSombra(mesh(new THREE.SphereGeometry(0.24, 8, 6), mFaro, `faro_${i + 1}`, [2.35, 1.1, dz])));
+      a.add(sinSombra(mesh(new THREE.BoxGeometry(0.16, 0.3, 0.5), mStop, `luz_freno_${i + 1}`, [-2.4, 1.1, dz])));
+    });
+    return a;
+  }
+  const circuitos = [
+    { pts: [[-36, -30], [36, -30], [36, 30], [-36, 30]], vel: 0.055 },
+    { pts: [[-72, -60], [72, -60], [72, 60], [-72, 60]], vel: 0.035 },
+    { pts: [[0, -78], [36, -60], [36, 60], [0, 78], [-36, 60], [-36, -60]], vel: 0.04 },
+  ];
+  circuitos.forEach((c, ci) => {
+    const curva = new THREE.CatmullRomCurve3(c.pts.map(([x, z]) => new THREE.Vector3(x, 1.1, z)), true, 'catmullrom', 0.05);
+    for (let k = 0; k < 3; k++) {
+      const a = autoUrbano(`auto_ciudad_${ci + 1}_${k + 1}`, coloresUrb[(ci * 3 + k) % coloresUrb.length]);
+      ciudad.add(a);
+      moviles.push({ obj: a, curva, t: (k / 3 + ci * 0.11) % 1, vel: c.vel });
+    }
+  });
+
+  /* luces reales: dan volumen sin castigar el rendimiento */
+  [[-52, -44], [52, -44], [-52, 44], [52, 44], [0, 0]].forEach(([x, z], i) => {
+    const pl = new THREE.PointLight(0xffc98a, 0, 160, 1.6);
     pl.position.set(x, 22, z);
     pl.name = `luz_barrio_${i + 1}`;
-    ciudad.add(pl); luces.farolas.push({ luz: pl, max: 1600 });
+    ciudad.add(pl); luces.farolas.push({ luz: pl, max: 1500 });
   });
-  const plazaLuz = new THREE.PointLight(0xffdcab, 0, 110, 1.6);
-  plazaLuz.position.set(0, 18, 0);
-  ciudad.add(plazaLuz); luces.farolas.push({ luz: plazaLuz, max: 900 });
 
+  /* el realce verde marca la red, no la ciudad entera */
+  ciudad.traverse((o) => { if (o.isMesh) o.material.userData.sinRealce = true; });
   ciudad.position.set(216, 0, -72);
   g.add(ciudad);
-  g.add(mesh(new THREE.BoxGeometry(16, 8, 12), mats.metal(), 'estacion_transformadora_ciudad', [196, 4, -72]));
-  g.add(mesh(new THREE.CylinderGeometry(0.45, 0.45, 6, 10), mats.metal(), 'aislador_ciudad', [196, 11, -72]));
+
+  /* estación transformadora de la ciudad: baja la tensión de la línea */
+  {
+    const et = new THREE.Group(); et.name = 'estacion_transformadora_ciudad';
+    et.add(mesh(new THREE.BoxGeometry(22, 0.4, 18), mats.asfalto(), 'plataforma', [0, 0.2, 0]));
+    et.add(mesh(new THREE.BoxGeometry(14, 7, 10), mats.metal(), 'edificio_celdas', [-3, 3.9, 0]));
+    et.add(mesh(new THREE.BoxGeometry(14.4, 0.6, 10.4), mats.concreto(), 'cornisa', [-3, 7.5, 0]));
+    [-3.5, 0, 3.5].forEach((dz, k) => {
+      et.add(mesh(new THREE.CylinderGeometry(0.4, 0.4, 4.4, 10), mats.porcelana(), `aislador_entrada_${k + 1}`, [7, 9.4, dz]));
+      et.add(tramo(new THREE.Vector3(7, 0, dz), new THREE.Vector3(7, 7.2, dz), 0.22, mats.acero(), `columna_${k + 1}`));
+    });
+    et.add(mesh(new THREE.BoxGeometry(5, 4.4, 5), mats.metal(), 'transformador_reductor', [4, 2.6, -6]));
+    et.position.set(194, 0, -72);
+    g.add(et);
+  }
 
   /* ── flujo de energía ────────────────────────────────
      Pulsos que viajan por la línea desde el generador hasta la
@@ -635,28 +1077,43 @@ model.add(terreno);
   pulsos.mat = mPulso;
   const geoPulso = new THREE.SphereGeometry(0.85, 10, 8);
 
-  /* tramo generador → subestación, sobre dos postes cortos */
+  /* tramo generador → subestación, sobre dos postes de celosía cortos */
   const poste = (x, z, h) => {
     const p = new THREE.Group(); p.name = `poste_salida_${Math.round(x)}`;
-    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([dx, dz], i) =>
-      p.add(mesh(new THREE.CylinderGeometry(0.22, 0.22, h, 6), mm, `pata_${i + 1}`, [dx, h / 2, dz])));
+    const esq = (y, w) => [[-w, -w], [w, -w], [w, w], [-w, w]].map(([a, b]) => new THREE.Vector3(a, y, b));
+    const a0 = esq(0, 1.4), a1 = esq(h, 0.8);
+    for (let i = 0; i < 4; i++) {
+      const j = (i + 1) % 4;
+      p.add(tramo(a0[i], a1[i], 0.15, mm, `pata_${i + 1}`));
+      p.add(sinSombra(tramo(a0[i], a1[j], 0.08, mm, `diagonal_${i + 1}`)));
+    }
     p.add(mesh(new THREE.BoxGeometry(8, 0.5, 0.5), mm, 'cruceta', [0, h - 1.5, 0]));
+    [-3.4, 0, 3.4].forEach((dx, k) =>
+      p.add(sinSombra(mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.7, 8), mats.porcelana(), `aislador_${k + 1}`, [dx, h - 2.2, 0]))));
     p.position.set(x, 0, z);
     return p;
   };
   g.add(poste(20, -14, 20), poste(38, -34, 20));
 
+  /* los pulsos siguen el conductor central real, de punta a punta */
+  const portico = parts.subestacion.userData.portico[1];
   const rutaSalida = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(8, 20, 2), new THREE.Vector3(20, 18.5, -14),
-    new THREE.Vector3(38, 18.5, -34), new THREE.Vector3(52, 25, -58),
+    new THREE.Vector3(8, 20, 2), new THREE.Vector3(20, 18, -14),
+    new THREE.Vector3(38, 18, -34), portico.clone(),
   ]);
   const rutaLinea = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(52, 25, -58),
-    new THREE.Vector3(78, 26.4, -62), new THREE.Vector3(112, 26.4, -66),
-    new THREE.Vector3(146, 26.4, -70), new THREE.Vector3(178, 21.1, -72),
-    new THREE.Vector3(196, 10, -72),
+    portico.clone(),
+    ...apoyos.map((t) => t.userData.enganches[2].clone()),
+    new THREE.Vector3(194, 11.2, -72),
   ]);
-  g.add(mesh(new THREE.TubeGeometry(rutaSalida, 40, 0.18, 6), mcbl, 'cable_salida_generador'));
+  /* media tensión dentro de la ciudad: el último tramo hasta las casas */
+  const rutaCiudad = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(194, 10, -72), new THREE.Vector3(202, 15.9, -60.8),
+    new THREE.Vector3(250, 15.9, -60.8), new THREE.Vector3(298, 15.9, -60.8),
+  ]);
+  [rutaSalida, rutaLinea].forEach((r, i) => {
+    if (i === 0) g.add(sinSombra(mesh(new THREE.TubeGeometry(r, 60, 0.18, 6), mcbl, 'cable_salida_generador')));
+  });
 
   const sembrar = (curva, n, vel) => {
     for (let i = 0; i < n; i++) {
@@ -667,7 +1124,8 @@ model.add(terreno);
     }
   };
   sembrar(rutaSalida, 4, 0.14);
-  sembrar(rutaLinea, 10, 0.075);
+  sembrar(rutaLinea, 12, 0.07);
+  sembrar(rutaCiudad, 5, 0.1);
 
   add(g);
 }
@@ -746,18 +1204,41 @@ const paisaje = new THREE.Group(); paisaje.name = 'paisaje';
     paisaje.add(sinSombra(mesh(new THREE.SphereGeometry(0.5, 8, 6), mFarRuta, `farola_ruta_${nR}`, [x, 8.7, 41])));
   }
 
-  /* algunos vehículos para dar escala humana */
-  const coloresAuto = [0xc0392b, 0x2c5f8a, 0xd9d3c6, 0x4a4f45, 0xb98b3a];
-  const autos = [[-40, 36, 1], [30, 36, 1], [118, 36, -1], [200, 36, 1],
-                 [242, -18, 0], [242, -74, 0], [242, 12, 0], [286, -72, 1]];
-  autos.forEach(([x, z, dir], i) => {
-    const m = M(`auto_${i + 1}`, coloresAuto[i % coloresAuto.length], { roughness: 0.5, metalness: 0.25 });
-    const a = new THREE.Group(); a.name = `vehiculo_${i + 1}`;
-    a.add(mesh(new THREE.BoxGeometry(5.4, 1.5, 2.4), m, 'carroceria', [0, 1.1, 0]));
-    a.add(mesh(new THREE.BoxGeometry(2.8, 1.2, 2.2), m, 'cabina', [-0.3, 2.3, 0]));
-    a.position.set(x, 0, z);
-    if (dir === 0) a.rotation.y = Math.PI / 2;
-    paisaje.add(a);
+  /* tránsito en la ruta: dos manos con vehículos en movimiento y faros */
+  const coloresAuto = [0xc0392b, 0x2c5f8a, 0xd9d3c6, 0x4a4f45, 0xb98b3a, 0x7d5a3c];
+  const mFaroRuta = sinRealce(M('faro_ruta', 0xfff3d0, { emissive: 0xfff0c0, emissiveIntensity: 0, roughness: 0.3 }));
+  luces.ventanas.push({ mat: mFaroRuta, base: 0.05, max: 3.6 });
+  const mStopRuta = sinRealce(M('freno_ruta', 0x8d2418, { emissive: 0xff3a18, emissiveIntensity: 0, roughness: 0.4 }));
+  luces.ventanas.push({ mat: mStopRuta, base: 0.05, max: 2.2 });
+  const vehiculo = (nombre, col, camion) => {
+    const a = new THREE.Group(); a.name = nombre;
+    const m = M(`chapa_${nombre}`, col, { roughness: 0.5, metalness: 0.25 });
+    const L = camion ? 9 : 5.4;
+    a.add(mesh(new THREE.BoxGeometry(L, 1.5, 2.4), m, 'carroceria', [0, 1.1, 0]));
+    a.add(mesh(new THREE.BoxGeometry(camion ? 2.4 : 2.8, camion ? 2.2 : 1.2, 2.3), m, 'cabina',
+      [camion ? L / 2 - 1.4 : -0.3, camion ? 2.8 : 2.3, 0]));
+    if (camion) a.add(mesh(new THREE.BoxGeometry(L - 3.4, 2.6, 2.5), mats.metal(), 'caja', [-1.4, 2.9, 0]));
+    [-0.8, 0.8].forEach((dz, i) => {
+      a.add(sinSombra(mesh(new THREE.SphereGeometry(0.26, 8, 6), mFaroRuta, `faro_${i + 1}`, [L / 2 + 0.1, 1.15, dz])));
+      a.add(sinSombra(mesh(new THREE.BoxGeometry(0.18, 0.34, 0.55), mStopRuta, `freno_${i + 1}`, [-L / 2 - 0.1, 1.15, dz])));
+    });
+    return a;
+  };
+  /* la ruta va del predio de la central hasta la ciudad: dos carriles */
+  const traza = (off) => new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-70, 1, 36 + off), new THREE.Vector3(120, 1, 36 + off),
+    new THREE.Vector3(238 - off, 1, 34 + off), new THREE.Vector3(242 - off, 1, -20),
+    new THREE.Vector3(242 - off, 1, -66), new THREE.Vector3(252, 1, -72 - off),
+    new THREE.Vector3(320, 1, -72 - off),
+  ], false, 'catmullrom', 0.1);
+  const carrilIda = traza(-2.2), carrilVuelta = traza(2.2);
+  [[carrilIda, 1, 3], [carrilVuelta, -1, 3]].forEach(([curva, sentido, n], c) => {
+    for (let k = 0; k < n; k++) {
+      const camion = (c + k) % 3 === 1;
+      const a = vehiculo(`vehiculo_ruta_${c + 1}_${k + 1}`, coloresAuto[(c * 3 + k) % coloresAuto.length], camion);
+      paisaje.add(a);
+      moviles.push({ obj: a, curva, t: (k / n + c * 0.17) % 1, vel: (camion ? 0.018 : 0.026) * sentido, abierta: true });
+    }
   });
 }
 model.add(paisaje);
@@ -787,91 +1268,189 @@ key.shadow.camera.updateProjectionMatrix();
 
 scene.fog = new THREE.Fog(0xcfe1ec, 420, 1600);
 
-/* estrellas: solo visibles de noche, sin niebla ni sombras */
-const estrellas = (() => {
-  const N = 700, pos = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) {
-    const th = rnd() * Math.PI * 2, ph = rnd() * 1.25;
-    const r = 1500;
-    pos[i * 3] = centro.x + r * Math.sin(ph) * Math.cos(th);
-    pos[i * 3 + 1] = centro.y + r * Math.cos(ph);
-    pos[i * 3 + 2] = centro.z + r * Math.sin(ph) * Math.sin(th);
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const mat = new THREE.PointsMaterial({
-    color: 0xdfe8f7, size: 2.2, sizeAttenuation: false,
-    transparent: true, opacity: 0, depthWrite: false, fog: false,
-  });
-  const p = new THREE.Points(geo, mat);
-  p.name = 'estrellas';
-  scene.add(p);
-  return p;
+/* ── cielo estrellado ─────────────────────────────────
+   Dos capas de estrellas (finas y brillantes) más una banda
+   densa que insinúa la Vía Láctea. Sin niebla ni sombras. */
+const estrellas = [];
+{
+  const capa = (N, size, color, brillo, banda) => {
+    const pos = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) {
+      const th = rnd() * Math.PI * 2;
+      /* la banda concentra las estrellas cerca de un gran círculo inclinado */
+      const ph = banda ? 0.75 + (rnd() + rnd() - 1) * 0.22 : rnd() * 1.32;
+      const r = 1500;
+      const x = r * Math.sin(ph) * Math.cos(th), y = r * Math.cos(ph), z = r * Math.sin(ph) * Math.sin(th);
+      /* inclinación de la banda respecto del horizonte */
+      const c = Math.cos(0.7), s = Math.sin(0.7);
+      pos[i * 3] = centro.x + (banda ? x * c - y * s : x);
+      pos[i * 3 + 1] = centro.y + (banda ? x * s + y * c : y);
+      pos[i * 3 + 2] = centro.z + z;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const mat = new THREE.PointsMaterial({
+      color, size, sizeAttenuation: false,
+      transparent: true, opacity: 0, depthWrite: false, fog: false,
+    });
+    const p = new THREE.Points(geo, mat);
+    p.name = banda ? 'via_lactea' : `estrellas_${size > 2 ? 'brillantes' : 'finas'}`;
+    scene.add(p);
+    estrellas.push({ mat, brillo, titila: banda ? 0 : (size > 2 ? 1 : 0.45) });
+  };
+  capa(900, 1.5, 0xdfe8f7, 0.75, false);
+  capa(220, 2.8, 0xffffff, 1.0, false);
+  capa(700, 1.2, 0xc9d6f2, 0.5, true);
+}
+
+/* ── sol y luna ───────────────────────────────────────
+   Cada uno es un disco con un halo, siempre de frente a la
+   cámara. El sol se agranda y enrojece cerca del horizonte;
+   la luna lleva sus manchas. */
+const texResplandor = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 128;
+  const ctx = c.getContext('2d');
+  const rg = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  rg.addColorStop(0, 'rgba(255,255,255,1)');
+  rg.addColorStop(0.18, 'rgba(255,255,255,0.62)');
+  rg.addColorStop(0.5, 'rgba(255,255,255,0.18)');
+  rg.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = rg; ctx.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
 })();
-
-/* disco del sol / la luna, siempre de frente a la cámara */
-const disco = new THREE.Mesh(
-  new THREE.CircleGeometry(1, 40),
-  new THREE.MeshBasicMaterial({ color: 0xfff4d6, fog: false, depthWrite: false, transparent: true, opacity: 0.95 })
-);
-disco.name = 'sol_luna';
-disco.renderOrder = -1;
-scene.add(disco);
-
-const DIA = {
-  cielo: ['#5d9bcd', '#a8cee6', '#e6ede4'],
-  fog: '#cfe1ec', fogCerca: 430, fogLejos: 1700,
-  hemiCielo: 0xffffff, hemiSuelo: 0xd8d2c4, hemiInt: 1.0,
-  keyCol: 0xfff5e2, keyInt: 2.3,
-  fillCol: 0xdfe9ff, fillInt: 0.55,
-  disco: 0xfff4d6, discoR: 30,
-  dir: new THREE.Vector3(0.42, 0.82, 0.36).normalize(),
+const astro = (nombre, colorDisco, colorHalo, opHalo) => {
+  const g = new THREE.Group(); g.name = nombre;
+  const disco = new THREE.Mesh(new THREE.CircleGeometry(1, 40),
+    new THREE.MeshBasicMaterial({ color: colorDisco, fog: false, depthWrite: false, transparent: true, opacity: 0.98 }));
+  disco.name = `${nombre}_disco`;
+  const halo = new THREE.Mesh(new THREE.PlaneGeometry(9, 9),
+    new THREE.MeshBasicMaterial({ map: texResplandor, color: colorHalo, fog: false, depthWrite: false, transparent: true, opacity: opHalo, blending: THREE.AdditiveBlending }));
+  halo.name = `${nombre}_halo`;
+  halo.position.z = -0.02;
+  g.add(halo, disco);
+  g.renderOrder = -1;
+  scene.add(g);
+  return { g, disco: disco.material, halo: halo.material };
 };
-const NOCHE = {
-  cielo: ['#05080f', '#0b1425', '#1e2d42'],
-  fog: '#14212f', fogCerca: 240, fogLejos: 1250,
-  hemiCielo: 0x35496b, hemiSuelo: 0x0d1117, hemiInt: 0.40,
-  keyCol: 0x9db6e8, keyInt: 0.40,
-  fillCol: 0x35507e, fillInt: 0.16,
-  disco: 0xe9eef8, discoR: 17,
-  dir: new THREE.Vector3(-0.48, 0.60, -0.44).normalize(),
-};
+const sol = astro('sol', 0xfff6dd, 0xffc989, 0.7);
+const luna = astro('luna', 0xe9eef8, 0x9db6e0, 0.5);
+{
+  /* manchas de la luna */
+  const mm = new THREE.MeshBasicMaterial({ color: 0xc3ccdd, fog: false, depthWrite: false, transparent: true, opacity: 0.75 });
+  [[-0.3, 0.25, 0.3], [0.32, 0.1, 0.22], [0.05, -0.4, 0.18], [-0.15, -0.1, 0.13]].forEach(([x, y, r], i) => {
+    const m = new THREE.Mesh(new THREE.CircleGeometry(r, 16), mm);
+    m.name = `mancha_lunar_${i + 1}`;
+    m.position.set(x, y, 0.01);
+    luna.g.children[1].add(m);
+  });
+}
+
+/* ── paleta del cielo hora por hora ─────────────────── */
+const CIELO = [
+  { h: 0,    cielo: ['#04060d', '#080f1c', '#111d30'], fog: '#0c1522', fogC: 520, fogL: 2400,
+    hemiC: 0x2c3f66, hemiS: 0x0a0e14, hemiI: 0.34, keyC: 0xa8bfe8, keyI: 0.34, fillC: 0x2b4270, fillI: 0.13 },
+  { h: 4.6,  cielo: ['#070d1d', '#132441', '#2c3f5c'], fog: '#16243a', fogC: 500, fogL: 2400,
+    hemiC: 0x3b5480, hemiS: 0x121722, hemiI: 0.44, keyC: 0xb9c9ea, keyI: 0.30, fillC: 0x36507e, fillI: 0.16 },
+  { h: 6.2,  cielo: ['#22375f', '#a8623f', '#eab27a'], fog: '#8a7266', fogC: 480, fogL: 2200,
+    hemiC: 0x93807f, hemiS: 0x4a3f38, hemiI: 0.72, keyC: 0xffab68, keyI: 1.45, fillC: 0x9ab0d8, fillI: 0.30 },
+  { h: 7.8,  cielo: ['#4a86bd', '#a9c9e2', '#f0e0c8'], fog: '#d5dcda', fogC: 700, fogL: 2900,
+    hemiC: 0xf2ecdf, hemiS: 0xcfc8b8, hemiI: 0.94, keyC: 0xffe4bc, keyI: 2.10, fillC: 0xdfe9ff, fillI: 0.50 },
+  { h: 12,   cielo: ['#5d9bcd', '#a8cee6', '#e6ede4'], fog: '#cfe1ec', fogC: 760, fogL: 3100,
+    hemiC: 0xffffff, hemiS: 0xd8d2c4, hemiI: 1.00, keyC: 0xfff5e2, keyI: 2.35, fillC: 0xdfe9ff, fillI: 0.55 },
+  { h: 16.6, cielo: ['#5590c4', '#aecbdd', '#f2e4c8'], fog: '#d6dfe0', fogC: 720, fogL: 3000,
+    hemiC: 0xfff6e8, hemiS: 0xd4ccbb, hemiI: 0.95, keyC: 0xffeccc, keyI: 2.15, fillC: 0xe2e8f6, fillI: 0.50 },
+  { h: 18.5, cielo: ['#26406b', '#c9683c', '#f6c07c'], fog: '#967862', fogC: 480, fogL: 2300,
+    hemiC: 0x9c8177, hemiS: 0x4c3c32, hemiI: 0.70, keyC: 0xff9a52, keyI: 1.30, fillC: 0x93a8d0, fillI: 0.28 },
+  { h: 19.8, cielo: ['#0d1730', '#2c3556', '#6b5a6a'], fog: '#2b3448', fogC: 480, fogL: 2300,
+    hemiC: 0x4a5a80, hemiS: 0x181c26, hemiI: 0.46, keyC: 0xb0bce0, keyI: 0.50, fillC: 0x3b4d7c, fillI: 0.18 },
+  { h: 21.3, cielo: ['#04060d', '#080f1c', '#111d30'], fog: '#0c1522', fogC: 520, fogL: 2400,
+    hemiC: 0x2c3f66, hemiS: 0x0a0e14, hemiI: 0.34, keyC: 0xa8bfe8, keyI: 0.34, fillC: 0x2b4270, fillI: 0.13 },
+  { h: 24,   cielo: ['#04060d', '#080f1c', '#111d30'], fog: '#0c1522', fogC: 520, fogL: 2400,
+    hemiC: 0x2c3f66, hemiS: 0x0a0e14, hemiI: 0.34, keyC: 0xa8bfe8, keyI: 0.34, fillC: 0x2b4270, fillI: 0.13 },
+];
 
 const _cA = new THREE.Color(), _cB = new THREE.Color();
 const mezcla = (a, b, n, dest) => dest.set(a).lerp(_cB.set(b), n);
 const hexMezcla = (a, b, n) => '#' + _cA.set(a).lerp(_cB.set(b), n).getHexString();
 const lerp = (a, b, n) => a + (b - a) * n;
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
 
 const dirLuz = new THREE.Vector3();
+const vSol = new THREE.Vector3(), vLuna = new THREE.Vector3();
 const hint = document.getElementById('hint');
 
-function aplicarCielo(n) {
-  const c0 = hexMezcla(DIA.cielo[0], NOCHE.cielo[0], n);
-  const c1 = hexMezcla(DIA.cielo[1], NOCHE.cielo[1], n);
-  const c2 = hexMezcla(DIA.cielo[2], NOCHE.cielo[2], n);
-  stage.style.setProperty('--stage-bg', `linear-gradient(${c0} 0%, ${c1} 54%, ${c2} 100%)`);
-  mezcla(DIA.fog, NOCHE.fog, n, scene.fog.color);
-  scene.fog.near = lerp(DIA.fogCerca, NOCHE.fogCerca, n);
-  scene.fog.far = lerp(DIA.fogLejos, NOCHE.fogLejos, n);
+/* dirección del sol: sale por el este (+x) a las 6 y se pone a las 18 */
+function direccionAstro(h, out) {
+  const a = ((h - 6) / 12) * Math.PI;
+  return out.set(Math.cos(a), Math.sin(a) * 0.95, -0.34).normalize();
+}
 
-  mezcla(DIA.hemiCielo, NOCHE.hemiCielo, n, hemi.color);
-  mezcla(DIA.hemiSuelo, NOCHE.hemiSuelo, n, hemi.groundColor);
-  hemi.intensity = lerp(DIA.hemiInt, NOCHE.hemiInt, n);
-  mezcla(DIA.keyCol, NOCHE.keyCol, n, key.color);
-  key.intensity = lerp(DIA.keyInt, NOCHE.keyInt, n);
-  mezcla(DIA.fillCol, NOCHE.fillCol, n, fill.color);
-  fill.intensity = lerp(DIA.fillInt, NOCHE.fillInt, n);
+let oscuridad = 0;      // 0 pleno día · 1 noche cerrada — lo usa el alumbrado
+let gradAnterior = -9;
 
-  dirLuz.copy(DIA.dir).lerp(NOCHE.dir, n).normalize();
+function aplicarHora(h) {
+  h = ((h % 24) + 24) % 24;
+  let i = 0;
+  while (i < CIELO.length - 2 && h > CIELO[i + 1].h) i += 1;
+  const a = CIELO[i], b = CIELO[i + 1];
+  const n = clamp01((h - a.h) / (b.h - a.h));
+
+  /* el degradado del cielo es CSS: alcanza con refrescarlo a saltos */
+  if (Math.abs(h - gradAnterior) > 0.04) {
+    gradAnterior = h;
+    stage.style.setProperty('--stage-bg', `linear-gradient(${hexMezcla(a.cielo[0], b.cielo[0], n)} 0%, ` +
+      `${hexMezcla(a.cielo[1], b.cielo[1], n)} 54%, ${hexMezcla(a.cielo[2], b.cielo[2], n)} 100%)`);
+  }
+  mezcla(a.fog, b.fog, n, scene.fog.color);
+  scene.fog.near = lerp(a.fogC, b.fogC, n);
+  scene.fog.far = lerp(a.fogL, b.fogL, n);
+
+  mezcla(a.hemiC, b.hemiC, n, hemi.color);
+  mezcla(a.hemiS, b.hemiS, n, hemi.groundColor);
+  hemi.intensity = lerp(a.hemiI, b.hemiI, n);
+  mezcla(a.keyC, b.keyC, n, key.color);
+  key.intensity = lerp(a.keyI, b.keyI, n);
+  mezcla(a.fillC, b.fillC, n, fill.color);
+  fill.intensity = lerp(a.fillI, b.fillI, n);
+
+  direccionAstro(h, vSol);
+  direccionAstro(h + 12, vLuna);
+  const deDia = vSol.y > 0.015;
+
+  /* la luz principal la da el astro que está sobre el horizonte */
+  dirLuz.copy(deDia ? vSol : vLuna);
   key.position.copy(centro).addScaledVector(dirLuz, 460);
   fill.position.copy(centro).addScaledVector(dirLuz, -380).setY(centro.y + 120);
 
-  mezcla(DIA.disco, NOCHE.disco, n, disco.material.color);
-  disco.scale.setScalar(lerp(DIA.discoR, NOCHE.discoR, n));
-  disco.position.copy(centro).addScaledVector(dirLuz, 1350);
+  /* sol: más grande y rojizo cuando está bajo */
+  const bajo = 1 - clamp01((vSol.y + 0.02) / 0.38);
+  sol.g.visible = vSol.y > -0.14;
+  sol.g.position.copy(centro).addScaledVector(vSol, 1350);
+  sol.g.scale.setScalar(lerp(26, 40, bajo));
+  mezcla(0xfff6dd, 0xff8f45, bajo, sol.disco.color);
+  sol.halo.opacity = lerp(0.6, 0.95, bajo) * clamp01((vSol.y + 0.14) / 0.2);
 
-  estrellas.material.opacity = Math.max(0, (n - 0.35) / 0.65) * 0.9;
-  hint.classList.toggle('oscuro', n > 0.5);
+  luna.g.visible = vLuna.y > -0.14;
+  luna.g.position.copy(centro).addScaledVector(vLuna, 1350);
+  luna.g.scale.setScalar(17);
+  luna.halo.opacity = 0.45 * clamp01((vLuna.y + 0.14) / 0.2);
+
+  /* de noche cerrada las estrellas se ven plenas */
+  oscuridad = 1 - clamp01((vSol.y + 0.10) / 0.26);
+  hint.classList.toggle('oscuro', oscuridad > 0.5);
+  return oscuridad;
+}
+
+/* etiqueta del momento del día para el panel */
+function momentoDelDia(h) {
+  if (h < 5.2) return 'Madrugada';
+  if (h < 6.9) return 'Amanecer';
+  if (h < 11.5) return 'Mañana';
+  if (h < 13) return 'Mediodía';
+  if (h < 17.6) return 'Tarde';
+  if (h < 19.4) return 'Atardecer';
+  if (h < 21) return 'Crepúsculo';
+  return 'Noche';
 }
 
 /* ── contenido educativo ─────────────────────────────── */
@@ -886,11 +1465,11 @@ const INFO = [
   ['condensador', 'Condensador', 'Circuito secundario', 'El vapor que sale de la turbina se enfría y vuelve a estado líquido. El agua condensada se bombea de nuevo al generador de vapor y el ciclo se repite.'],
   ['torre', 'Torre de refrigeración', 'Circuito terciario', 'Evacúa al aire el calor sobrante del condensador. La columna de "humo" es vapor de agua condensado, no contaminante. Algunas centrales, como Atucha, no la usan: refrigeran directamente con agua del río.'],
   ['rio', 'Río y obra de toma', 'Circuito terciario', 'Fuente fría del sistema. El agua tomada del río circula por el condensador, absorbe calor y se devuelve al cauce o va a la torre. Nunca entra en contacto con el circuito primario.'],
-  ['subestacion', 'Subestación y línea de alta tensión', 'Salida eléctrica', 'Los transformadores elevan la tensión del generador a cientos de miles de voltios para transportar la energía con pocas pérdidas hasta la red nacional.'],
+  ['subestacion', 'Subestación y línea de alta tensión', 'Salida eléctrica', 'Los transformadores elevan la tensión del generador a cientos de miles de voltios: a mayor tensión, menos corriente y menos pérdidas por calor en el cable. Desde el pórtico de barras arrancan los conductores hacia la red nacional.'],
   ['sala_control', 'Sala de control y edificios auxiliares', 'Operación', 'Desde aquí se supervisan la potencia, la presión y la temperatura las 24 horas. Alrededor se ubican los servicios auxiliares, la ventilación y el tratamiento de residuos.'],
   ['combustible_gastado', 'Pileta de combustible gastado', 'Gestión del combustible', 'Los elementos combustibles usados se guardan bajo varios metros de agua durante años. El agua enfría el combustible y actúa como blindaje contra la radiación.'],
   ['tanques', 'Tanques de agua de emergencia', 'Seguridad', 'Reservas de agua borada y bombas de respaldo. Si falla la refrigeración normal, estos sistemas inyectan agua al reactor para retirar el calor residual.'],
-  ['red_electrica', 'Línea de transmisión y ciudad', 'Salida eléctrica', 'Las torres de alta tensión llevan la energía decenas o cientos de kilómetros. Al llegar a la ciudad, otra estación transformadora baja la tensión para repartirla a casas, escuelas e industrias. Pasá a vista nocturna: la ciudad se enciende con la electricidad que sale de la central.'],
+  ['red_electrica', 'Línea de transmisión, ciudad y pueblo', 'Salida eléctrica', 'Las torres de celosía llevan seis conductores (doble terna) y, arriba, el hilo de guardia que las protege de los rayos. Al llegar, la estación transformadora baja la tensión: de ahí sale la media tensión por los postes de la avenida, y cada transformador de poste entrega la baja tensión a las casas del pueblo. Llevá el reloj a la noche: la ciudad se enciende con la electricidad que sale de la central.'],
 ];
 
 /* ── UI ──────────────────────────────────────────────── */
@@ -964,22 +1543,52 @@ function setInterior(on) {
 document.getElementById('btn-int').addEventListener('click', () => setInterior(true));
 document.getElementById('btn-ext').addEventListener('click', () => setInterior(false));
 
-/* día / noche y marcha de la central */
-let nocheObjetivo = 0, noche = 0;
+/* ── reloj del día y marcha de la central ────────────── */
+let hora = 9;                 // hora solar del modelo
+let ciclo = true;             // el día corre solo
 let enMarcha = true;
-const btnNoche = document.getElementById('btn-noche');
+const CICLO_SEG = 96;         // un día completo cada 96 segundos
+const inputHora = document.getElementById('hora');
+const horaTxt = document.getElementById('hora-txt');
+const momentoTxt = document.getElementById('momento');
+const btnAuto = document.getElementById('btn-auto');
 const btnMarcha = document.getElementById('btn-marcha');
-btnNoche.addEventListener('click', () => {
-  nocheObjetivo = nocheObjetivo > 0.5 ? 0 : 1;
-  btnNoche.setAttribute('aria-pressed', String(nocheObjetivo > 0.5));
-  btnNoche.textContent = nocheObjetivo > 0.5 ? 'Día' : 'Noche';
+
+function mostrarHora() {
+  const hh = Math.floor(hora) % 24, mm = Math.floor((hora % 1) * 60);
+  horaTxt.textContent = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+  momentoTxt.textContent = momentoDelDia(hora);
+}
+function fijarHora(h, deslizando) {
+  hora = ((h % 24) + 24) % 24;
+  if (!deslizando) inputHora.value = String(hora);
+  mostrarHora();
+  aplicarHora(hora);
+}
+inputHora.addEventListener('input', () => {
+  ciclo = false;
+  btnAuto.setAttribute('aria-pressed', 'false');
+  fijarHora(parseFloat(inputHora.value), true);
+});
+btnAuto.addEventListener('click', () => {
+  ciclo = !ciclo;
+  btnAuto.setAttribute('aria-pressed', String(ciclo));
+  btnAuto.textContent = ciclo ? 'Ciclo automático' : 'Hora fija';
+});
+document.querySelectorAll('.chips button').forEach((b) => {
+  b.addEventListener('click', () => {
+    ciclo = false;
+    btnAuto.setAttribute('aria-pressed', 'false');
+    btnAuto.textContent = 'Hora fija';
+    fijarHora(parseFloat(b.dataset.h));
+  });
 });
 btnMarcha.addEventListener('click', () => {
   enMarcha = !enMarcha;
   btnMarcha.setAttribute('aria-pressed', String(enMarcha));
   btnMarcha.textContent = enMarcha ? 'Central en marcha' : 'Central detenida';
 });
-aplicarCielo(0);
+fijarHora(hora);
 
 /* navegación */
 const idx = () => INFO.findIndex((r) => r[0] === current);
@@ -1006,8 +1615,8 @@ model.traverse((o) => {
 {
   const esf = cajaGeneral.getBoundingSphere(new THREE.Sphere());
   const cam = stage._camera;
-  const dist = (esf.radius / Math.tan((cam.fov * Math.PI) / 360)) * 1.25;
-  cam.position.copy(esf.center).add(new THREE.Vector3(0.75, 0.55, 1.15).normalize().multiplyScalar(dist));
+  const dist = (esf.radius / Math.tan((cam.fov * Math.PI) / 360)) * 1.02;
+  cam.position.copy(esf.center).add(new THREE.Vector3(0.75, 0.42, 1.15).normalize().multiplyScalar(dist));
   cam.near = 1;
   cam.far = 6000;
   cam.updateProjectionMatrix();
@@ -1033,12 +1642,19 @@ function tick() {
     stage._controls.update();
   }
 
-  /* transición día ↔ noche */
-  if (Math.abs(noche - nocheObjetivo) > 0.0005) {
-    noche += (nocheObjetivo - noche) * Math.min(1, dt * 1.6);
-    aplicarCielo(noche);
+  /* el día corre: sol, luna, cielo y estrellas */
+  if (ciclo) {
+    hora = (hora + dt * (24 / CICLO_SEG)) % 24;
+    inputHora.value = String(hora);
+    aplicarHora(hora);
+    if (Math.floor(t * 4) !== Math.floor((t - dt) * 4)) mostrarHora();
   }
-  disco.lookAt(stage._camera.position);
+  const noche = oscuridad;
+  sol.g.lookAt(stage._camera.position);
+  luna.g.lookAt(stage._camera.position);
+  estrellas.forEach((e, i) => {
+    e.mat.opacity = noche * e.brillo * (1 - e.titila * 0.18 * (0.5 + 0.5 * Math.sin(t * (1.3 + i * 0.7))));
+  });
 
   /* la ciudad se enciende de noche, y solo si hay generación */
   const gen = enMarcha ? 1 : 0.05;
@@ -1049,6 +1665,18 @@ function tick() {
   luces.balizas.forEach((b) => {
     const on = (Math.sin(t * 2.4 + b.fase) > 0.55) ? 1 : 0;
     b.mat.emissiveIntensity = on * (0.6 + noche * 2.4);
+  });
+
+  /* tránsito: los vehículos siguen su recorrido y miran hacia adelante */
+  const _tan = new THREE.Vector3(), _obj = new THREE.Vector3();
+  moviles.forEach((m) => {
+    m.t = (m.t + dt * m.vel + 1) % 1;
+    m.curva.getPointAt(m.t, m.obj.position);
+    m.curva.getTangentAt(m.t, _tan);
+    if (m.vel < 0) _tan.negate();
+    _obj.copy(m.obj.position).add(_tan);
+    m.obj.lookAt(_obj);
+    m.obj.rotation.y += Math.PI / 2;   // el largo del vehículo va sobre su eje x
   });
   luces.focos.forEach((f) => { f.mat.emissiveIntensity = f.base + (enMarcha ? f.marcha : 0) * (0.9 + 0.1 * Math.sin(t * 3.1)); });
 
