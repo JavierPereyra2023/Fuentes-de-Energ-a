@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Falcon 9 · 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0a0c11; color: #cbd5e1;
+    font-family: 'JetBrains Mono', monospace; }
+  three-d-stage:not(:defined) { visibility: hidden; }
+  three-d-stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #views { position: fixed; top: 16px; right: 16px; display: grid;
+    grid-template-columns: repeat(3, 30px); gap: 4px; z-index: 5; }
+  #views button { font: 500 10px 'JetBrains Mono', monospace; color: #94a3b8;
+    background: rgba(15,20,30,.72); border: 1px solid rgba(148,163,184,.2); border-radius: 6px;
+    height: 26px; cursor: pointer; backdrop-filter: blur(6px); transition: all .14s; }
+  #views button:hover { color: #e0f2fe; border-color: rgba(125,211,252,.6);
+    background: rgba(56,189,248,.18); }
+  #readout { position: fixed; left: 20px; bottom: 20px; z-index: 5; font-size: 12px;
+    letter-spacing: .04em; color: #7dd3fc; pointer-events: none; }
+  #readout span { color: #475569; }
+  #axis { position: fixed; left: 20px; top: 18px; z-index: 5; font-size: 10.5px;
+    letter-spacing: .16em; color: #3f4a5c; pointer-events: none; }
+</style>
+<link rel="stylesheet" href="../rocket-viewer-theme.css?v=mobile5">
+</head>
+<body>
+<three-d-stage name="falcon9" background="transparent"></three-d-stage>
+<div id="axis">FALCON 9 · 70 M · Y‑UP</div>
+<div id="views">
+  <button data-view="front" title="Frente (1)">FR</button>
+  <button data-view="right" title="Derecha (3)">DE</button>
+  <button data-view="top" title="Arriba (7)">AR</button>
+  <button data-view="back" title="Atrás (Ctrl+1)">AT</button>
+  <button data-view="left" title="Izquierda (Ctrl+3)">IZ</button>
+  <button data-view="bottom" title="Abajo (Ctrl+7)">AB</button>
+  <button data-view="iso" title="Isométrica (0)" style="grid-column: span 3">ISO · 0</button>
+</div>
+<div id="readout">— <span>pasá el cursor sobre una pieza</span></div>
+<script src="../assets/three.min.js"></script>
+<script src="../assets/OrbitControls.js"></script>
+  <script src="three-d-stage.js"></script>
+<script>
+const stage = document.querySelector('three-d-stage');
+const THREE = window.THREE;
+
+const M = {
+  hull: new THREE.MeshStandardMaterial({ name: 'hull_white', color: 0xeef0f3, roughness: 0.42, metalness: 0.12 }),
+  trim: new THREE.MeshStandardMaterial({ name: 'trim_black', color: 0x14171c, roughness: 0.55, metalness: 0.15 }),
+  metal: new THREE.MeshStandardMaterial({ name: 'engine_metal', color: 0xa8aeb6, roughness: 0.38, metalness: 0.35 }),
+  soot: new THREE.MeshStandardMaterial({ name: 'nozzle_soot', color: 0x4a5058, roughness: 0.65, metalness: 0.25 }),
+  titanium: new THREE.MeshStandardMaterial({ name: 'titanium_fin', color: 0x8d949d, roughness: 0.45, metalness: 0.35 })
+};
+
+const R = 1.85, RF = 2.6;
+const rocket = new THREE.Group();
+rocket.name = 'falcon9';
+
+const add = (mesh, name, yCenter, note) => {
+  mesh.name = name; mesh.position.y = yCenter; mesh.userData.note = note;
+  rocket.add(mesh); return mesh;
+};
+const tube = (r1, r2, h, mat, name, yBase, note, seg = 48) =>
+  add(new THREE.Mesh(new THREE.CylinderGeometry(r1, r2, h, seg, 1, false), mat), name, yBase + h / 2, note);
+
+tube(R, R * 0.96, 2.2, M.trim, 'octaweb', 0, 'Octaweb — bancada de los 9 motores');
+tube(R * 0.99, R, 40.4, M.hull, 'stage1_tanks', 2.2, 'Etapa 1 — tanques LOX / RP‑1, Al‑Li 2195');
+
+const nozzleGeo = new THREE.CylinderGeometry(0.32, 0.55, 1.9, 32, 1, true);
+const throatGeo = new THREE.CylinderGeometry(0.2, 0.32, 0.7, 24);
+const placeEngine = (x, z, i) => {
+  const n = new THREE.Mesh(nozzleGeo, M.soot);
+  n.name = 'merlin_nozzle_' + i; n.position.set(x, -0.95, z);
+  n.userData.note = 'Merlin 1D — 845 kN al nivel del mar'; rocket.add(n);
+  const t = new THREE.Mesh(throatGeo, M.metal);
+  t.name = 'merlin_throat_' + i; t.position.set(x, 0.35, z);
+  t.userData.note = 'Merlin 1D — cámara de combustión, ciclo generador de gas'; rocket.add(t);
+};
+placeEngine(0, 0, 0);
+for (let i = 0; i < 8; i++) {
+  const a = (i / 8) * Math.PI * 2;
+  placeEngine(Math.cos(a) * 1.22, Math.sin(a) * 1.22, i + 1);
+}
+
+const legGeo = new THREE.BoxGeometry(0.5, 8.6, 0.34);
+for (let i = 0; i < 4; i++) {
+  const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
+  const leg = new THREE.Mesh(legGeo, M.trim);
+  leg.name = 'landing_leg_' + (i + 1);
+  leg.userData.note = 'Pata de aterrizaje — 4 unidades, fibra de carbono';
+  leg.position.set(Math.cos(a) * (R + 0.14), 4.7, Math.sin(a) * (R + 0.14));
+  leg.rotation.y = -a; leg.rotation.z = Math.cos(a) * 0.035;
+  rocket.add(leg);
+}
+
+const raceway = new THREE.Mesh(new THREE.BoxGeometry(0.42, 38, 0.3), M.hull);
+raceway.name = 'raceway'; raceway.userData.note = 'Raceway — conducto de cableado y presurización';
+raceway.position.set(0, 22, R + 0.1); rocket.add(raceway);
+
+let y = 42.6;
+tube(R, R, 4.5, M.trim, 'interstage', y, 'Interetapa — separación neumática');
+const finGeo = new THREE.BoxGeometry(0.16, 1.5, 2.1);
+for (let i = 0; i < 4; i++) {
+  const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
+  const fin = new THREE.Mesh(finGeo, M.titanium);
+  fin.name = 'grid_fin_' + (i + 1);
+  fin.userData.note = 'Aleta rejilla — titanio fundido, control en reingreso';
+  fin.position.set(Math.cos(a) * (R + 0.6), y + 3.4, Math.sin(a) * (R + 0.6));
+  fin.rotation.y = -a + Math.PI / 2;
+  rocket.add(fin);
+}
+
+y += 4.5;
+tube(R, R, 13.9, M.hull, 'stage2_tanks', y, 'Etapa 2 — inserción orbital');
+const vac = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 1.1, 3.2, 32, 1, true), M.soot);
+vac.name = 'merlin_vacuum_nozzle'; vac.position.y = y - 1.7;
+vac.userData.note = 'Merlin 1D Vacuum — 981 kN, tobera de niobio'; rocket.add(vac);
+tube(R * 1.004, R * 1.004, 0.7, M.trim, 'stage2_band', y + 12.4, 'Banda estructural — etapa 2');
+
+y += 13.9;
+tube(R, RF, 2.0, M.hull, 'fairing_boattail', y, 'Transición de cofia — 3,7 → 5,2 m');
+tube(RF, RF, 5.2, M.hull, 'fairing_barrel', y + 2.0, 'Cofia — 13,1 × 5,2 m, fibra de carbono');
+const ogivePts = [];
+const noseH = 5.9;
+for (let i = 0; i <= 28; i++) {
+  const t = i / 28;
+  ogivePts.push(new THREE.Vector2(RF * Math.cos(t * Math.PI / 2) ** 0.62 || 0.001, t * noseH));
+}
+ogivePts.push(new THREE.Vector2(0.0, noseH + 0.05));
+const nose = new THREE.Mesh(new THREE.LatheGeometry(ogivePts, 48), M.hull);
+nose.name = 'fairing_nose'; nose.position.y = y + 7.2;
+nose.userData.note = 'Ojiva — protección aerodinámica de la carga útil'; rocket.add(nose);
+const seam = new THREE.Mesh(new THREE.BoxGeometry(RF * 2.01, 5.2, 0.05), M.trim);
+seam.name = 'fairing_seam'; seam.position.y = y + 4.6;
+seam.userData.note = 'Junta de valvas — separación en dos mitades'; rocket.add(seam);
+
+// Rótulo "FALCON 9" sobre el fuselaje de la etapa 1
+const labelCv = document.createElement('canvas');
+labelCv.width = 256; labelCv.height = 1024;
+const g = labelCv.getContext('2d');
+g.translate(128, 512); g.rotate(Math.PI / 2);
+g.fillStyle = '#1b2438';
+g.font = '600 120px "JetBrains Mono", monospace';
+g.textAlign = 'center'; g.textBaseline = 'middle';
+g.letterSpacing = '18px';
+g.fillText('FALCON 9', 0, 0);
+const labelTex = new THREE.CanvasTexture(labelCv);
+labelTex.colorSpace = THREE.SRGBColorSpace;
+const wordmark = new THREE.Mesh(
+  new THREE.PlaneGeometry(1.7, 11),
+  new THREE.MeshStandardMaterial({ name: 'wordmark', map: labelTex, transparent: true,
+    alphaTest: 0.35, roughness: 0.42, metalness: 0.1, side: THREE.DoubleSide })
+);
+wordmark.name = 'falcon9_wordmark';
+wordmark.position.set(Math.sin(-0.3) * (R + 0.02), 30, Math.cos(-0.3) * (R + 0.02));
+wordmark.rotation.y = -0.3;
+wordmark.userData.note = 'Falcon 9 — rótulo del fuselaje, etapa 1';
+rocket.add(wordmark);
+
+stage.setObject(rocket);
+
+const box = new THREE.Box3().setFromObject(rocket);
+const sphere = box.getBoundingSphere(new THREE.Sphere());
+const cam = stage._camera, ctl = stage._controls;
+const fit = (radius) => (radius / Math.tan((cam.fov * Math.PI) / 360)) * 1.08;
+const C = sphere.center.clone();
+
+const VIEWS = {
+  front:  { dir: [0, 0, 1],      target: C.clone(),                     radius: sphere.radius },
+  back:   { dir: [0, 0, -1],     target: C.clone(),                     radius: sphere.radius },
+  right:  { dir: [1, 0, 0],      target: C.clone(),                     radius: sphere.radius },
+  left:   { dir: [-1, 0, 0],     target: C.clone(),                     radius: sphere.radius },
+  top:    { dir: [0, 1, 0.001],  target: new THREE.Vector3(0, 64, 0),   radius: 6.5 },
+  bottom: { dir: [0, -1, 0.001], target: new THREE.Vector3(0, 1.4, 0),  radius: 5 },
+  iso:    { dir: [1, 0.5, 1.25], target: C.clone(),                     radius: sphere.radius }
+};
+
+let tween = null;
+function goTo(key) {
+  const v = VIEWS[key]; if (!v) return;
+  const to = new THREE.Vector3(...v.dir).normalize().multiplyScalar(fit(v.radius)).add(v.target);
+  const fromPos = cam.position.clone(), fromTgt = ctl.target.clone();
+  const t0 = performance.now(), dur = 620;
+  cancelAnimationFrame(tween);
+  (function step(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    cam.position.lerpVectors(fromPos, to, e);
+    ctl.target.lerpVectors(fromTgt, v.target, e);
+    ctl.update();
+    if (p < 1) tween = requestAnimationFrame(step);
+  })(t0);
+}
+document.querySelectorAll('[data-view]').forEach(b =>
+  b.addEventListener('click', () => goTo(b.dataset.view)));
+addEventListener('keydown', (e) => {
+  const map = { '1': e.ctrlKey ? 'back' : 'front', '3': e.ctrlKey ? 'left' : 'right',
+    '7': e.ctrlKey ? 'bottom' : 'top', '0': 'iso' };
+  if (map[e.key]) { goTo(map[e.key]); e.preventDefault(); }
+});
+
+// Lectura de una línea: pieza bajo el cursor
+const readout = document.getElementById('readout');
+const ray = new THREE.Raycaster();
+const ndc = new THREE.Vector2();
+let lastNote = '';
+addEventListener('pointermove', (e) => {
+  ndc.x = (e.clientX / innerWidth) * 2 - 1;
+  ndc.y = -(e.clientY / innerHeight) * 2 + 1;
+  ray.setFromCamera(ndc, cam);
+  const hit = ray.intersectObject(rocket, true)[0];
+  const note = hit && hit.object.userData.note ? hit.object.userData.note : '';
+  if (note === lastNote) return;
+  lastNote = note;
+  readout.innerHTML = note
+    ? '— ' + note.replace('—', '<span>·</span>')
+    : '— <span>pasá el cursor sobre una pieza</span>';
+});
+
+goTo('iso');
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starship — modelo 3D</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #05080f;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #e6ecf5;
+    overflow: hidden;
+  }
+  #sky { position: fixed; inset: 0; z-index: 0; display: block; }
+  #glow {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(90% 60% at 50% 30%, rgba(46,84,150,0.32) 0%, rgba(10,18,34,0) 65%),
+      radial-gradient(60% 40% at 20% 90%, rgba(28,52,96,0.28) 0%, rgba(5,8,15,0) 70%);
+  }
+  three-d-stage {
+    position: fixed; inset: 0; z-index: 2;
+    width: 100%; height: 100%;
+  }
+  three-d-stage:not(:defined) { visibility: hidden; }
+  .hud {
+    position: fixed; z-index: 5; pointer-events: none;
+  }
+  .titleblock { top: 28px; left: 32px; }
+  .titleblock h1 {
+    margin: 0; font-size: 15px; letter-spacing: 0.34em; text-transform: uppercase;
+    font-weight: 600; color: #f2f6fc;
+  }
+  .titleblock p {
+    margin: 8px 0 0; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(198,214,238,0.55);
+  }
+  .specs {
+    left: 32px; bottom: 30px;
+    display: grid; gap: 10px; min-width: 232px;
+  }
+  .specs div {
+    display: flex; justify-content: space-between; gap: 24px;
+    padding-bottom: 8px; border-bottom: 1px solid rgba(160,186,220,0.18);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .specs span:first-child { color: rgba(198,214,238,0.5); }
+  .specs span:last-child { color: #eef3fa; }
+  .views {
+    top: 28px; right: 32px; pointer-events: auto;
+    display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+  }
+  .views button {
+    -webkit-appearance: none; appearance: none;
+    padding: 8px 14px; min-width: 132px; text-align: left;
+    border: 1px solid rgba(160,186,220,0.24);
+    background: rgba(12,20,36,0.6); color: #dce6f4;
+    backdrop-filter: blur(6px);
+    font: inherit; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    border-radius: 3px; cursor: pointer; transition: border-color .18s, background .18s, color .18s;
+  }
+  .views button:hover { border-color: rgba(190,214,245,0.6); background: rgba(24,38,64,0.75); }
+  .views button[aria-pressed="true"] { border-color: #cfe0f7; color: #fff; background: rgba(40,62,100,0.8); }
+  .hint {
+    bottom: 30px; right: 32px; text-align: right;
+    font-size: 10.5px; letter-spacing: 0.12em; line-height: 1.9;
+    color: rgba(186,204,232,0.42); text-transform: uppercase;
+  }
+  a { color: #a8c6f0; }
+  a:hover { color: #dbe8fb; }
+  @media (max-width: 720px) {
+    .specs, .hint { display: none; }
+    .views { right: 16px; top: 16px; }
+    .titleblock { left: 18px; top: 18px; }
+  }
+</style>
+<link rel="stylesheet" href="../rocket-viewer-theme.css?v=mobile5">
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div id="glow"></div>
+<three-d-stage name="starship" background="transparent" autorotate></three-d-stage>
+
+<div class="hud titleblock">
+  <h1>Starship</h1>
+  <p>Super Heavy · Configuración completa</p>
+</div>
+<div class="hud specs">
+  <div><span>Altura</span><span>124 m</span></div>
+  <div><span>Diámetro</span><span>9 m</span></div>
+  <div><span>Raptors</span><span>33 + 6</span></div>
+</div>
+<div class="hud views">
+  <button data-view="full" aria-pressed="true">Stack completo</button>
+  <button data-view="ship">Nave</button>
+  <button data-view="booster">Booster</button>
+  <button data-view="engines">Motores</button>
+  <button data-view="top">Superior</button>
+</div>
+<div class="hud hint">
+  Arrastrar · orbitar<br>
+  Rueda · zoom<br>
+  Clic derecho · desplazar
+</div>
+
+<script src="../assets/three.min.js"></script>
+<script src="../assets/OrbitControls.js"></script>
+  <script src="./three-d-stage.js"></script>
+  <script src="./starship-model.js"></script>
+<script>
+  
+
+  // starfield
+  const sky = document.getElementById('sky');
+  const sctx = sky.getContext('2d');
+  function drawSky() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    sky.width = innerWidth * dpr; sky.height = innerHeight * dpr;
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    sctx.clearRect(0, 0, innerWidth, innerHeight);
+    const count = Math.round((innerWidth * innerHeight) / 5200);
+    for (let i = 0; i < count; i++) {
+      const x = Math.random() * innerWidth, y = Math.random() * innerHeight;
+      const r = Math.random() < 0.9 ? Math.random() * 0.9 + 0.25 : Math.random() * 1.6 + 0.9;
+      const a = Math.random() * 0.55 + 0.2;
+      sctx.beginPath();
+      sctx.arc(x, y, r, 0, Math.PI * 2);
+      sctx.fillStyle = `rgba(${210 + Math.random() * 45 | 0},${222 + Math.random() * 33 | 0},255,${a})`;
+      sctx.fill();
+    }
+  }
+  drawSky();
+  let skyT;
+  addEventListener('resize', () => { clearTimeout(skyT); skyT = setTimeout(drawSky, 150); });
+
+  const stage = document.querySelector('three-d-stage');
+  // En UMD, stage.ready puede no estar listo inmediatamente: esperamos al evento ready
+  if (stage._THREE) {
+    const model = buildStarship();
+    stage.setObject(model);
+  } else {
+    stage.ready.then(() => {
+      const model = buildStarship();
+      stage.setObject(model);
+    });
+  }
+
+  // Blender-style view presets: eased camera + target moves
+  const camera = stage._camera, controls = stage._controls;
+  const presets = {
+    full:    { pos: [96, 84, 168], target: [0, 60, 0] },
+    ship:    { pos: [38, 104, 62], target: [0, 98, 0] },
+    booster: { pos: [52, 36, 82], target: [0, 34, 0] },
+    engines: { pos: [16, 4.5, 27], target: [0, 4.0, 0] },
+    top:     { pos: [26, 168, 44], target: [0, 112, 0] },
+  };
+  let anim = null;
+  function goTo(name) {
+    const p = presets[name];
+    if (!p || !camera || !controls) return;
+    controls.autoRotate = false;
+    const from = camera.position.clone();
+    const fromT = controls.target.clone();
+    const to = new THREE.Vector3(...p.pos);
+    const toT = new THREE.Vector3(...p.target);
+    const t0 = performance.now(), dur = 900;
+    cancelAnimationFrame(anim);
+    (function step(now) {
+      const k = Math.min(1, ((now || t0) - t0) / dur);
+      const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      camera.position.lerpVectors(from, to, e);
+      controls.target.lerpVectors(fromT, toT, e);
+      controls.update();
+      if (k < 1) anim = requestAnimationFrame(step);
+    })(t0);
+  }
+  const buttons = [...document.querySelectorAll('.views button')];
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    buttons.forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+    goTo(b.dataset.view);
+  }));
+  goTo('full');
+</script>
+</body>
+</html>

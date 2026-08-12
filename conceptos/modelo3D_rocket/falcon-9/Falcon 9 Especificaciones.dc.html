@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #020617; }
+  * { box-sizing: border-box; }
+  a { color: #7dd3fc; text-decoration: none; }
+  a:hover { color: #e0f2fe; }
+  @keyframes pulseDot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.8); } }
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 700px at 78% -8%, rgba(56,189,248,0.16), transparent 60%), radial-gradient(900px 600px at 5% 20%, rgba(99,102,241,0.12), transparent 62%), #020617; color: #e5e7eb; font-family: 'Space Grotesk', Helvetica, sans-serif; padding: 0 24px 80px">
+
+  <nav style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 10px; height: 10px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 14px rgba(56,189,248,.9); animation: pulseDot 2.4s ease-in-out infinite"></div>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: #9ca3af">Ficha técnica · vehículo orbital</span>
+    </div>
+    <div style="display: flex; gap: 26px; font-size: 14px; color: #cbd5e1">
+      <a href="#general">General</a>
+      <a href="#anatomia">Anatomía</a>
+      <a href="#motores">Motores</a>
+      <a href="#carga">Carga útil</a>
+    </div>
+  </nav>
+
+  <header style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; padding: 48px 0 64px">
+    <div style="display: flex; flex-direction: column; gap: 28px">
+      <div style="display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; padding: 8px 14px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; background: rgba(15,23,42,.7); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .12em; color: #7dd3fc">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 10px rgba(74,222,128,.8)"></span>
+        BLOQUE 5 · PARCIALMENTE REUTILIZABLE
+      </div>
+      <h1 style="margin: 0; font-size: 96px; line-height: .92; font-weight: 700; letter-spacing: -.03em; color: #f8fafc">Falcon<span style="color: #38bdf8">&nbsp;9</span></h1>
+      <p style="margin: 0; max-width: 46ch; font-size: 19px; line-height: 1.65; color: #cbd5e1; text-wrap: pretty">Cohete de dos etapas propulsado por oxígeno líquido y queroseno refinado (RP‑1), diseñado para el transporte confiable de satélites y tripulación a la órbita terrestre. Su primera etapa aterriza y vuelve a volar.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; max-width: 620px">
+        <div style="padding: 18px 16px; border: 1px solid rgba(148,163,184,.25); border-radius: 16px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; white-space: nowrap; color: #38bdf8">70 m</div>
+          <div style="margin-top: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af">Altura</div>
+        </div>
+        <div style="padding: 18px 16px; border: 1px solid rgba(148,163,184,.25); border-radius: 16px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; white-space: nowrap; color: #38bdf8">3,7 m</div>
+          <div style="margin-top: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af">Diámetro</div>
+        </div>
+        <div style="padding: 18px 16px; border: 1px solid rgba(148,163,184,.25); border-radius: 16px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; white-space: nowrap; color: #38bdf8">549 t</div>
+          <div style="margin-top: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af">Masa al despegue</div>
+        </div>
+        <div style="padding: 18px 16px; border: 1px solid rgba(148,163,184,.25); border-radius: 16px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; white-space: nowrap; color: #38bdf8">10</div>
+          <div style="margin-top: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af">Motores Merlin</div>
+        </div>
+      </div>
+    </div>
+    <div style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 620px">
+      <div style="position: absolute; width: 100%; max-width: 420px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(56,189,248,.22), transparent 70%); filter: blur(10px)"></div>
+      <img src="falcon9.png" alt="Falcon 9 en configuración de vuelo" style="position: relative; height: 660px; max-width: 100%; object-fit: contain; mix-blend-mode: screen">
+    </div>
+  </header>
+
+  <section id="general" style="max-width: 1200px; margin: 0 auto; padding: 8px 0 72px">
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 26px">
+      <h2 style="margin: 0; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #9ca3af; font-family: 'JetBrains Mono', monospace">01 — Especificaciones generales</h2>
+      <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(148,163,184,.35), transparent)"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px">
+      <div style="position: relative; overflow: hidden; padding: 26px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.9)">
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(56,189,248,.14), transparent 55%)"></div>
+        <div style="position: relative">
+          <div style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #7dd3fc">Configuración</div>
+          <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; color: #cbd5e1">
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Etapas</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">2</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Propelentes</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">LOX / RP‑1</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Estructura</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">Al‑Li 2195</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Reutilización</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">Etapa 1 + cofia</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="position: relative; overflow: hidden; padding: 26px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.9)">
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(56,189,248,.14), transparent 55%)"></div>
+        <div style="position: relative">
+          <div style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #7dd3fc">Empuje</div>
+          <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; color: #cbd5e1">
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Nivel del mar</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">7 607 kN</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>En vacío</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">8 227 kN</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Etapa 2</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">981 kN</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Relación E/P</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">1,41</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="position: relative; overflow: hidden; padding: 26px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.9)">
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(56,189,248,.14), transparent 55%)"></div>
+        <div style="position: relative">
+          <div style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #7dd3fc">Cofia de carga</div>
+          <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; color: #cbd5e1">
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Altura</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">13,1 m</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Diámetro</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">5,2 m</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Material</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">Fibra de carbono</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px"><span>Separación</span><span style="font-family: 'JetBrains Mono', monospace; color: #f1f5f9">Neumática</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="anatomia" style="max-width: 1200px; margin: 0 auto; padding: 0 0 72px">
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 26px">
+      <h2 style="margin: 0; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #9ca3af; font-family: 'JetBrains Mono', monospace">02 — Anatomía del vehículo</h2>
+      <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(148,163,184,.35), transparent)"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start">
+      <div style="position: relative; display: flex; justify-content: center; padding: 28px 0; border: 1px solid rgba(148,163,184,.18); border-radius: 24px; background: linear-gradient(180deg, rgba(15,23,42,.92), rgba(2,6,23,.6))">
+        <img src="falcon9.png" alt="Falcon 9, vista lateral" style="width: 100%; max-width: 100%; height: auto; object-fit: contain; mix-blend-mode: screen">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div style="display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 24px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 30px; color: rgba(56,189,248,.55)">A</div>
+          <div>
+            <div style="font-size: 22px; color: #f8fafc">Cofia / Dragon</div>
+            <p style="margin: 8px 0 14px; font-size: 15px; line-height: 1.6; color: #9ca3af; max-width: 60ch">Protege la carga útil durante el ascenso atmosférico. Se separa en dos valvas a unos 3 minutos de vuelo y ambas se recuperan del mar para su reutilización.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">13,1 × 5,2 m</span>
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">Volumen útil 145 m³</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 24px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 30px; color: rgba(56,189,248,.55)">B</div>
+          <div>
+            <div style="font-size: 22px; color: #f8fafc">Segunda etapa</div>
+            <p style="margin: 8px 0 14px; font-size: 15px; line-height: 1.6; color: #9ca3af; max-width: 60ch">Un único motor Merlin 1D Vacuum inserta la carga en su órbita final. Puede reencenderse varias veces para desplegar satélites en planos orbitales distintos.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">981 kN</span>
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">Isp 348 s</span>
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">Encendido 397 s</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 24px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.85)">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 30px; color: rgba(56,189,248,.55)">C</div>
+          <div>
+            <div style="font-size: 22px; color: #f8fafc">Interetapa y aletas rejilla</div>
+            <p style="margin: 8px 0 14px; font-size: 15px; line-height: 1.6; color: #9ca3af; max-width: 60ch">Estructura de fibra de carbono que une ambas etapas y aloja el sistema de separación neumática. Cuatro aletas rejilla de titanio controlan el descenso del propulsor.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">4 aletas de titanio</span>
+              <span style="padding: 6px 12px; border: 1px solid rgba(148,163,184,.3); border-radius: 999px; color: #cbd5e1">Separación neumática</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 24px; border: 1px solid rgba(56,189,248,.35); border-radius: 20px; background: linear-gradient(135deg, rgba(15,23,42,.95), rgba(8,47,73,.5))">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 30px; color: #38bdf8">D</div>
+          <div>
+            <div style="font-size: 22px; color: #f8fafc">Primera etapa</div>
+            <p style="margin: 8px 0 14px; font-size: 15px; line-height: 1.6; color: #9ca3af; max-width: 60ch">Nueve motores Merlin 1D en configuración octaweb. Tras la separación, la etapa reingresa, despliega cuatro patas de aterrizaje y toca tierra en plataforma marítima o en el sitio de lanzamiento.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px">
+              <span style="padding: 6px 12px; border: 1px solid rgba(56,189,248,.4); border-radius: 999px; color: #7dd3fc">9 × Merlin 1D</span>
+              <span style="padding: 6px 12px; border: 1px solid rgba(56,189,248,.4); border-radius: 999px; color: #7dd3fc">Encendido 162 s</span>
+              <span style="padding: 6px 12px; border: 1px solid rgba(56,189,248,.4); border-radius: 999px; color: #7dd3fc">4 patas de aterrizaje</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="motores" style="max-width: 1200px; margin: 0 auto; padding: 0 0 72px">
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 26px">
+      <h2 style="margin: 0; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #9ca3af; font-family: 'JetBrains Mono', monospace">03 — Grupo motor Merlin</h2>
+      <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(148,163,184,.35), transparent)"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px">
+      <div style="padding: 30px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.88)">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px">
+          <div style="font-size: 24px; color: #f8fafc">Merlin 1D</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7dd3fc">×9 · ETAPA 1</div>
+        </div>
+        <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px">
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">845 kN</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Empuje unitario</div></div>
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">283 s</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Isp nivel del mar</div></div>
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">Octaweb</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Disposición</div></div>
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">57–100 %</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Rango de empuje</div></div>
+        </div>
+        <p style="margin: 22px 0 0; font-size: 14px; line-height: 1.6; color: #9ca3af">Ciclo generador de gas con turbobomba, encendido por mezcla pirofórica (TEA‑TEB). Tres de los nueve motores se reencienden para frenar el descenso.</p>
+      </div>
+      <div style="padding: 30px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.88)">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px">
+          <div style="font-size: 24px; color: #f8fafc">Merlin 1D Vacuum</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7dd3fc">×1 · ETAPA 2</div>
+        </div>
+        <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px">
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">981 kN</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Empuje en vacío</div></div>
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">348 s</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Isp en vacío</div></div>
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">Niobio</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Tobera extendida</div></div>
+          <div><div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f1f5f9">Múltiple</div><div style="font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #9ca3af; margin-top: 4px">Reencendido</div></div>
+        </div>
+        <p style="margin: 22px 0 0; font-size: 14px; line-height: 1.6; color: #9ca3af">Versión optimizada para vacío con relación de expansión mayor. Sus reencendidos permiten órbitas de transferencia, circularización y desórbita controlada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="carga" style="max-width: 1200px; margin: 0 auto; padding: 0 0 72px">
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 26px">
+      <h2 style="margin: 0; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #9ca3af; font-family: 'JetBrains Mono', monospace">04 — Capacidad de carga útil</h2>
+      <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(148,163,184,.35), transparent)"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <sc-for list="{{ payload }}" as="row" hint-placeholder-count="3">
+        <div style="display: grid; grid-template-columns: 1fr 200px 1fr; gap: 24px; align-items: center; padding: 22px 26px; border: 1px solid rgba(148,163,184,.2); border-radius: 18px; background: rgba(15,23,42,.8)">
+          <div>
+            <div style="font-size: 20px; color: #f8fafc">{{ row.dest }}</div>
+            <div style="margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7dd3fc">{{ row.orbit }}</div>
+          </div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 30px; color: #f1f5f9; text-align: right">{{ row.mass }}</div>
+          <div style="font-size: 14px; line-height: 1.55; color: #9ca3af">{{ row.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-if value="{{ showReuse }}" hint-placeholder-val="{{ true }}">
+  <section style="max-width: 1200px; margin: 0 auto; padding: 0 0 64px">
+    <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 26px">
+      <h2 style="margin: 0; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #9ca3af; font-family: 'JetBrains Mono', monospace">05 — Perfil de recuperación</h2>
+      <div style="flex: 1; height: 1px; background: linear-gradient(90deg, rgba(148,163,184,.35), transparent)"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px">
+      <div style="padding: 26px; border: 1px solid rgba(148,163,184,.2); border-radius: 20px; background: rgba(15,23,42,.8)">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7dd3fc">T+00:02:35</div>
+        <div style="margin-top: 12px; font-size: 18px; color: #f8fafc">Separación de etapas</div>
+        <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #9ca3af">Corte de los nueve Merlin y separación neumática de la interetapa.</p>
+      </div>
+      <div style="padding: 26px; border: 1px solid rgba(148,163,184,.2); border-radius: 20px; background: rgba(15,23,42,.8)">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7dd3fc">T+00:03:00</div>
+        <div style="margin-top: 12px; font-size: 18px; color: #f8fafc">Giro y frenado</div>
+        <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #9ca3af">Encendido de retroceso con tres motores y control por aletas rejilla.</p>
+      </div>
+      <div style="padding: 26px; border: 1px solid rgba(148,163,184,.2); border-radius: 20px; background: rgba(15,23,42,.8)">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7dd3fc">T+00:06:30</div>
+        <div style="margin-top: 12px; font-size: 18px; color: #f8fafc">Reingreso</div>
+        <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #9ca3af">Segundo encendido para reducir cargas térmicas en la atmósfera densa.</p>
+      </div>
+      <div style="padding: 26px; border: 1px solid rgba(56,189,248,.35); border-radius: 20px; background: linear-gradient(135deg, rgba(15,23,42,.95), rgba(8,47,73,.5))">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7dd3fc">T+00:08:45</div>
+        <div style="margin-top: 12px; font-size: 18px; color: #f8fafc">Aterrizaje propulsado</div>
+        <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #9ca3af">Encendido final con un motor y despliegue de las cuatro patas de aterrizaje.</p>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <footer style="max-width: 1200px; margin: 0 auto; padding: 32px 0 0; border-top: 1px solid rgba(148,163,184,.18); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+    <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #64748b; max-width: 70ch">Datos de referencia del Falcon 9 Bloque 5 en configuración estándar; las capacidades reales varían según la misión, la inclinación orbital y el perfil de recuperación.</p>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #475569">FICHA TÉCNICA · V3</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;units&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;métrico&quot;,&quot;imperial&quot;],&quot;default&quot;:&quot;métrico&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Datos&quot;},&quot;showReuse&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Secciones&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const imperial = (this.props.units ?? "métrico") === "imperial";
+    const rows = [
+      { dest: "Órbita terrestre baja", orbit: "LEO · 200 km", kg: 22800, lb: 50265, note: "Máximo teórico en configuración desechable; ~17 t con recuperación del propulsor." },
+      { dest: "Órbita de transferencia geoestacionaria", orbit: "GTO · 35 786 km", kg: 8300, lb: 18300, note: "Suficiente para la mayoría de satélites de comunicaciones comerciales." },
+      { dest: "Trayectoria a Marte", orbit: "Inyección interplanetaria", kg: 4020, lb: 8860, note: "Ventanas de lanzamiento cada 26 meses aproximadamente." }
+    ];
+    const fmt = (n) => n.toLocaleString("es-AR");
+    return {
+      showReuse: this.props.showReuse ?? true,
+      payload: rows.map(r => ({
+        dest: r.dest, orbit: r.orbit, note: r.note,
+        mass: imperial ? fmt(r.lb) + " lb" : fmt(r.kg) + " kg"
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
