@@ -10,7 +10,8 @@ Sitio web educativo estático sobre **energía nuclear** dirigido a estudiantes 
 
 ```
 D:\nucle-ar\
-├── index.html                  # Página principal (cian #00E5FF)
+├── index.html                  # Splash de entrada "Explorando la materia" (cian #00E5FF) — Vercel root
+├── inicio.html                 # Hub principal del sitio (cian #00E5FF) — antes index.html
 ├── revista.html                # Índice de artículos de revista (oro #F59E0B)
 ├── assets/                     # Recursos estáticos
 ├── conceptos\
@@ -79,8 +80,11 @@ D:\nucle-ar\
 No hay comandos de build/test/lint. El proyecto se desarrolla abriendo los `.html` en el navegador:
 
 ```powershell
-# Abrir página principal
+# Abrir splash de entrada
 Start-Process "D:\nucle-ar\index.html"
+
+# Abrir hub principal
+Start-Process "D:\nucle-ar\inicio.html"
 
 # Abrir página de concepto
 Start-Process "D:\nucle-ar\conceptos\fision.html"
@@ -97,7 +101,13 @@ Para validar enlaces locales, anchors y el patrón de secciones, ejecutar el ver
 
 ## Arquitectura del sitio
 
-### `index.html` — Página principal
+### `index.html` — Splash de entrada
+- Portada mínima a pantalla completa: título **Explorando la materia**, subtítulo corto y un solo CTA
+- Botón **Comenzar exploración** → `inicio.html` (hub del sitio)
+- Átomo decorativo animado (órbitas CSS), fondo `#06090C`, acento cian `#00E5FF`
+- Sin nav, sin TOC, sin secciones de contenido — solo la puerta de entrada (Vercel sirve esta raíz)
+
+### `inicio.html` — Hub principal
 - Hero con átomo decorativo animado (órbitas CSS rotando)
 - 5 secciones + marquee + footer: hero, marquee, qué es, fisión vs fusión, Argentina, temas, footer (las secciones `centrales`/`aplicaciones`/`seguridad`/`recursos` ya no existen)
 - Color de acento: cian radioactivo `#00E5FF` (paleta `nucleo` en `tailwind.config`, sin clave `accent`; usa `cyan`/`cyanLight`/`cyanDark`)
@@ -106,6 +116,7 @@ Para validar enlaces locales, anchors y el patrón de secciones, ejecutar el ver
 - Nav incluye: Fundamentos, Conceptos, Argentina, Instituciones, Películas, Temas, Revista
 - Marquee incluye TANDAR. Timeline argentina incluye hito 1985 (TANDAR)
 - Colores adicionales en paleta: `fucsia` (#EC4899), `indigo` (#4F46E5)
+- Los breadcrumbs/footers del resto del sitio apuntan a `inicio.html` (hub), no al splash
 
 ### `revista.html` — Índice de la revista
 - Lista 9 artículos de `conceptos/revista/` como tarjetas + 1 destacado (Einstein)
@@ -150,7 +161,7 @@ Plantilla común (15 páginas con secciones numeradas):
 | Reactores | `#FFB300` ámbar | `lucide:atom` | Atucha I/II, Embalse, CAREM |
 | Residuos | `#EAB308` yellow | `lucide:archive` | Clasificación (MBBA/ABBA/MVA/AVA), gestión, transporte, Onkalo, debate |
 
-Nota: los iconos del footer de cada página pueden diferir de los iconos usados en las tarjetas de `index.html`. Mantener ambos.
+Nota: los iconos del footer de cada página pueden diferir de los iconos usados en las tarjetas de `inicio.html`. Mantener ambos.
 
 ### Artículos de revista (`conceptos/revista/*.html`)
 10 artículos largos sobre personas/eventos clave: Balseiro, Bomba Atómica, Chernobyl, Curie, Einstein, Fermi, Fukushima, Meitner, Oklo, Propulsión nuclear.
@@ -217,9 +228,9 @@ Nota: los iconos del footer de cada página pueden diferir de los iconos usados 
 - sec05 Rol en la transición: COP28 declaración de triplicar capacidad nuclear para 2050, cross-links a `argentina.html`, `reactores.html#sec05`, `energias.html`
 
 **Páginas de fuentes de energía** (`conceptos/energias/`, 9 archivos, plantilla completa de conceptos, 5 secciones 01-05):
-- Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas, `sec05` Modelo 3D interactivo. Hero con chips, TOC, breadcrumb `../../index.html / ../../index.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
+- Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas, `sec05` Modelo 3D interactivo. Hero con chips, TOC, breadcrumb `../../inicio.html / ../../inicio.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
 - **sec05 Modelo 3D**: shell `.energy3d-shell` con iframe embebido a `modelo3D_*/...` para 4 fuentes (hidroeléctrica, eólica, solar, nuclear) y placeholder "Modelo 3D en desarrollo" para las 5 restantes (biomasa, geotermia, gas, petróleo, carbón). El shell se adapta al color `accent` de cada página (sky/cyan/amber/red/orange/amber/dark-amber/gray/teal), botones de pantalla completa con fullscreen API, y `.energy3d-placeholder` centrado. La TOC pasa a tener 5 entradas. Modelos 3D son copias de `D:\naturales_1\modelo3D_*` (origen NO alterado).
-- Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas. Hero con chips, TOC, breadcrumb `../../index.html / ../../index.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
+- Cada página sigue la misma estructura: `sec01` Cómo funciona (paso a paso + ecuación), `sec02` Ubicación en Argentina (imagen en `assets/energias/` + tarjetas), `sec03` Potencia generada (datos de la matriz), `sec04` Ventajas y desventajas. Hero con chips, TOC, breadcrumb `../../inicio.html / ../../inicio.html#temas / ../energias.html`, Conceptos Clave, Temas Relacionados, prev/next encadenado (hidro → eólica → solar → biomasa → geotermia → gas → petróleo → carbón → nuclear → hub) y footer.
 - `hidroelectrica.html` (sky `#38BDF8`): ecuación \(P=\rho g Q h\), Yacyretá, Salto Grande, El Chocón, Piedra del Águila; 9.000–10.000 MW instalados; **sec05 con modelo 3D real** (`modelo3D_represa/`)
 - `eolica.html` (cian `#00E5FF`): Patagonia, Loma Blanca; 71% de lo renovable, 16.200 GWh 2024; **sec05 con modelo 3D real** (`modelo3D_eolico/`)
 - `solar.html` (ámbar `#F59E0B`): efecto fotoeléctrico, Cauchari (Jujuy); 17% de lo renovable, 3.900 GWh 2024; **sec05 con modelo 3D real** (`modelo3D_parque_solar/`)
@@ -292,13 +303,14 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
   - **Conducción eléctrica**: `torreReticulada()` arma torres de celosía reales (patas + diagonales en cruz vía `tramo()`), 6 conductores + hilo de guardia, con cadenas de aisladores; `tenderCable()` tiende cada vano con flecha (`catenaria()`). La subestación aporta pórtico de barras, seccionadores y pararrayos. En la ciudad, la media tensión corre sobre postes a `ZMT = 11.2` (banquina de la avenida) con transformadores de poste y acometidas de baja tensión: **no bajar esa cota ni acercar la traza a la manzana**, porque la iglesia y la escuela llegan casi al cordón y los cables las atravesarían.
   - Los pulsos amarillos de energía siguen el conductor central real (generador → pórtico → línea → estación transformadora → media tensión urbana) y solo se ven con la central en marcha.
 
-- **Anchor `#centrales`**: ~~El footer de varias páginas linkeaba a `../index.html#centrales`, pero index.html no tiene ese id.~~ Corregido en los 6 archivos afectados (aceleradores, fision, fusion, radioisotopos, antimateria, materia-oscura). Cambiado a `#temas`.
+- **Anchor `#centrales`**: ~~El footer de varias páginas linkeaba a `../index.html#centrales`, pero el hub no tiene ese id.~~ Corregido en los 6 archivos afectados (aceleradores, fision, fusion, radioisotopos, antimateria, materia-oscura). Cambiado a `#temas` sobre `inicio.html`.
 
 - **Enlaces de YouTube en `instituciones.html`**: los handles con formato `@NombreCompleto` (CamelCase) suelen dar 404 — los canales oficiales argentinos usan formatos heredados (`/user/invapin`, `/user/nucleoelectricaarg`, IDs de canal `UC...`, o handles con sufijos `@institutobalseiroIB`). UNSAM verificado: `@unsamoficial` funciona.
 
 - **Embedding de YouTube en `peliculas.html`**: los iframes de YouTube producen error 153 (embedding bloqueado por el uploader) en la mayoría de los tráilers. Solución: no usar iframes. Toda la página usa links externos (click → abre YouTube en pestaña nueva). Para verificar IDs de video antes de usarlos, consultar `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=ID&format=json` — si devuelve 404, el video no existe o no está disponible.
 
-- **Paleta accent variable por página**: cada archivo define su propio `accent` en `tailwind.config` — no asumir un único color. El violeta `#7C4DFF` se repite en 3 conceptos (aceleradores, cósmicos, espectro) por coincidencia temática, no por error. `index.html`, `revista.html` y `peliculas.html` no usan la clave `accent`; usan `cyan`/`oro`.
+- **Paleta accent variable por página**: cada archivo define su propio `accent` en `tailwind.config` — no asumir un único color. El violeta `#7C4DFF` se repite en 3 conceptos (aceleradores, cósmicos, espectro) por coincidencia temática, no por error. `index.html` (splash), `inicio.html` (hub), `revista.html` y `peliculas.html` no usan la clave `accent`; usan `cyan`/`oro`.
+- **Splash vs hub**: `index.html` es solo la portada de entrada para Vercel. El contenido del sitio vive en `inicio.html`. Los enlaces "Inicio" / breadcrumbs del resto del sitio apuntan a `inicio.html`, no al splash.
 
 - **`revista/` no lleva `section-num`**: los artículos usan la plantilla reducida sin secciones numeradas — no forzarles el patrón del main `conceptos/`. Tampoco llevan MathJax ni footer.
 
@@ -315,7 +327,7 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
 - `energias.html` ↔ `reactores.html` y `argentina.html` (Temas Relacionados; `energias.html` → `reactores.html` y `argentina.html`); hub ↔ 9 páginas de `energias/` (grid sec02 + nav encadenado)
 - `medicina.html` ↔ `aplicaciones.html` (prev/next nav, Temas Relacionados, cross-links en sec10/sec11 → `aplicaciones.html#sec10`/`#sec05`; `aplicaciones.html` sec02 → `medicina.html`)
 - `medicina.html` ↔ `radioisotopos.html` y `antimateria.html` (Temas Relacionados)
-- Películas linkeada desde nav de `index.html`, footer de `index.html` y `revista.html`
+- Películas linkeada desde nav de `inicio.html`, footer de `inicio.html` y `revista.html`
 
 ## Notas para futuras instancias
 

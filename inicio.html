@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energía Nuclear — Tecnología y Aplicaciones</title>
+  <meta name="description" content="Energía nuclear explicada para el secundario argentino: el átomo, fisión y fusión, radiaciones, reactores, medicina nuclear, tecnología argentina y otras fuentes de energía. 18 páginas de conceptos.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Energía Nuclear">
+  <meta property="og:title" content="Energía Nuclear — Tecnología y Aplicaciones">
+  <meta property="og:description" content="Energía nuclear explicada para el secundario argentino: el átomo, fisión y fusión, radiaciones, reactores, medicina nuclear, tecnología argentina y otras fuentes de energía. 18 páginas de conceptos.">
+  <meta property="og:image" content="assets/generated/hero-laboratorio-nuclear.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nucleo: {
+              black: '#06090C', dark: '#0B1014', gray: '#141A20', mid: '#1C232A',
+              silver: '#A8B5BD', silverLight: '#C8D4DC', silverDark: '#5A6B72',
+              cyan: '#00E5FF', cyanLight: '#5BF2FF', cyanDark: '#00B8D4', glow: '#39FFEE',
+              warning: '#FFB300', warningDark: '#C77F00',
+              alerta: '#DC2626', alertaLight: '#F87171',
+              celeste: '#75AADB',
+              oro: '#F59E0B', oroLight: '#FCD34D',
+              neutron: '#7C4DFF', isotope: '#26A69A', reactor: '#FF6E40', fucsia: '#EC4899', indigo: '#4F46E5'
+            }
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'Georgia', 'serif'],
+            body: ['Cormorant Garamond', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: #00E5FF; color: #06090C; }
+    body { font-family: 'Cormorant Garamond', Georgia, serif; background: #06090C; color: #C8D4DC; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #06090C; }
+    ::-webkit-scrollbar-thumb { background: #00E5FF; border-radius: 3px; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes pulse-glow { 0%,100% { box-shadow: 0 0 20px rgba(0,229,255,0.3); } 50% { box-shadow: 0 0 50px rgba(0,229,255,0.6); } }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes orbit { from { transform: rotate(0deg) translateX(120px) rotate(0deg); } to { transform: rotate(360deg) translateX(120px) rotate(-360deg); } }
+    @keyframes pulse-soft { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+    .animate-fadeInUp { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-fadeIn { animation: fadeIn 0.6s ease forwards; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-400 { animation-delay: 400ms; }
+    .marquee-track { animation: marquee 35s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    .glow-btn { animation: pulse-glow 2.5s ease-in-out infinite; }
+    .hero-img { filter: grayscale(70%) contrast(1.2) brightness(0.55); transition: filter 0.7s ease; }
+    .accent-line { width: 60px; height: 3px; background: linear-gradient(90deg, #00E5FF, #5BF2FF); }
+    .stat-number { background: linear-gradient(135deg, #00E5FF, #5BF2FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .reactor-card { transition: all 0.35s ease; border: 1px solid rgba(255,255,255,0.06); position: relative; overflow: hidden; }
+    .reactor-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 2px var(--card-accent, rgba(0,229,255,0.3)), 0 0 30px var(--card-glow, rgba(0,229,255,0.1)); }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #00E5FF; transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .grid-bg { background-image: linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px); background-size: 40px 40px; }
+    .atom-orbit { position: absolute; width: 240px; height: 240px; border: 1px solid rgba(0,229,255,0.2); border-radius: 50%; animation: spin-slow 12s linear infinite; }
+    .atom-orbit::before { content: ''; position: absolute; width: 14px; height: 14px; background: #00E5FF; border-radius: 50%; top: -7px; left: 50%; transform: translateX(-50%); box-shadow: 0 0 20px #00E5FF; }
+    .atom-orbit-2 { width: 320px; height: 320px; animation-duration: 20s; animation-direction: reverse; }
+    .atom-orbit-2::before { width: 10px; height: 10px; background: #FFB300; top: -5px; box-shadow: 0 0 16px #FFB300; }
+    .atom-orbit-3 { width: 400px; height: 400px; animation-duration: 30s; }
+    .atom-orbit-3::before { width: 8px; height: 8px; background: #7C4DFF; top: -4px; box-shadow: 0 0 12px #7C4DFF; }
+    .atom-nucleus { position: absolute; top: 50%; left: 50%; width: 28px; height: 28px; background: radial-gradient(circle, #FF6E40, #C77F00); border-radius: 50%; transform: translate(-50%,-50%); box-shadow: 0 0 40px rgba(255,110,64,0.7), inset 0 0 10px rgba(0,0,0,0.4); }
+    .spec-table tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .spec-table tr:last-child { border-bottom: none; }
+    .spec-table td, .spec-table th { padding: 10px 0; font-family: 'Inter', sans-serif; font-size: 13px; }
+    .data-pulse { animation: pulse-soft 2s ease-in-out infinite; }
+    @media print { body { background: white; color: black; } }
+    .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,229,255,0.15), transparent); }
+    .comparison-card { transition: all 0.35s ease; border: 1px solid rgba(255,255,255,0.05); position: relative; }
+    .comparison-card:hover { transform: translateY(-6px) scale(1.015); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px var(--card-accent, rgba(255,255,255,0.15)), 0 0 25px var(--card-glow, rgba(255,255,255,0.05)); }
+    .timeline-dot { width: 10px; height: 10px; border-radius: 50%; position: absolute; left: -5px; top: 6px; }
+    .timeline-line { position: relative; padding-left: 24px; border-left: 2px solid rgba(255,255,255,0.08); }
+    .timeline-line::before { content: ''; position: absolute; left: -5px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: #00E5FF; }
+    .inline-stat { display: inline-flex; align-items: baseline; gap: 0.3rem; padding: 0.1em 0.4em; background: rgba(0,229,255,0.1); border-bottom: 2px solid #00E5FF; font-family: 'Inter', sans-serif; font-weight: 600; color: #5BF2FF; }
+    .inline-stat .val { font-size: 1.05em; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation (sin cambios) -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(6,9,12,0.92); backdrop-filter: blur(12px);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="#top" class="flex items-center gap-2 group" aria-label="Inicio">
+          <div class="w-8 h-8 bg-nucleo-cyan flex items-center justify-center rounded-sm">
+            <span class="iconify text-nucleo-black" data-icon="lucide:atom" data-width="18"></span>
+          </div>
+          <span class="font-heading font-bold text-lg tracking-wider text-white uppercase">Energía Nuclear</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-5">
+          <a href="#que-es" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-cyan transition-colors">Fundamentos</a>
+          <a href="#fision-vs-fusion" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-cyan transition-colors">Conceptos</a>
+          <a href="#argentina" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-celeste transition-colors">Argentina</a>
+          <a href="conceptos/instituciones.html" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-celeste transition-colors">Instituciones</a>
+          <a href="conceptos/peliculas.html" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-oro transition-colors">Películas</a>
+          <a href="#temas" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-cyan transition-colors">Temas</a>
+          <a href="revista.html" class="nav-link text-xs font-semibold uppercase tracking-[0.2em] text-nucleo-silver hover:text-nucleo-warning transition-colors">Revista</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="hidden md:inline text-[11px] font-semibold uppercase tracking-wider text-nucleo-silverDark">Secundaria 5°–6°</span>
+          <button id="menuToggle" class="lg:hidden w-10 h-10 flex items-center justify-center text-white hover:text-nucleo-cyan transition-colors">
+            <span class="iconify" data-icon="lucide:menu" data-width="24" id="menuIcon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-80 max-w-full h-screen bg-nucleo-black border-l border-white/5 z-50">
+      <div class="p-6">
+        <div class="flex justify-end mb-10">
+          <button id="menuClose" class="w-10 h-10 flex items-center justify-center text-white hover:text-nucleo-cyan transition-colors">
+            <span class="iconify" data-icon="lucide:x" data-width="24"></span>
+          </button>
+        </div>
+        <div class="flex flex-col gap-5">
+          <a href="#que-es" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-cyan transition-colors">Fundamentos</a>
+          <a href="#fision-vs-fusion" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-cyan transition-colors">Conceptos</a>
+          <a href="#argentina" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-celeste transition-colors">Argentina</a>
+          <a href="conceptos/instituciones.html" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-celeste transition-colors">Instituciones</a>
+          <a href="conceptos/peliculas.html" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-oro transition-colors">Películas</a>
+          <a href="#temas" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-cyan transition-colors">Temas</a>
+          <a href="revista.html" class="mobile-link font-heading text-xl font-bold uppercase tracking-wider text-white hover:text-nucleo-warning transition-colors">Revista</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div id="menuOverlay" class="fixed inset-0 bg-black/60 z-40 hidden" style="backdrop-filter:blur(4px);"></div>
+
+  <!-- HERO COMPACTO -->
+  <section id="top" class="relative min-h-[70vh] flex items-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="assets/generated/hero-laboratorio-nuclear.png" alt="Dos investigadores trabajando con instrumental científico en un laboratorio" class="hero-img w-full h-full object-cover" width="1536" height="1024" fetchpriority="high" decoding="async">
+      <div class="absolute inset-0 bg-gradient-to-r from-nucleo-black via-nucleo-black/90 to-nucleo-black/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-nucleo-black via-transparent to-nucleo-black/40"></div>
+      <div class="absolute inset-0 grid-bg" style="mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 75%);"></div>
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 55% at 18% 40%, rgba(0,229,255,0.22) 0%, transparent 65%); pointer-events: none;"></div>
+      <div class="absolute inset-0" style="background: radial-gradient(ellipse 50% 45% at 80% 25%, rgba(124,77,255,0.10) 0%, transparent 60%); pointer-events: none;"></div>
+    </div>
+
+    <!-- Átomo decorativo -->
+    <div class="hidden md:block absolute right-[8%] top-1/2 -translate-y-1/2 w-[420px] h-[420px]" style="opacity: 0.45;">
+      <div class="atom-orbit" style="position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
+        <div class="atom-nucleus"></div>
+      </div>
+      <div class="atom-orbit atom-orbit-2" style="position:absolute; top:50%; left:50%; transform: translate(-50%,-50%) rotate(60deg);"></div>
+      <div class="atom-orbit atom-orbit-3" style="position:absolute; top:50%; left:50%; transform: translate(-50%,-50%) rotate(120deg);"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-20 md:pt-36 md:pb-24 w-full">
+      <div class="max-w-3xl">
+        <div class="animate-fadeInUp opacity-0 flex items-center gap-3 mb-6">
+          <div class="accent-line"></div>
+          <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-cyan">Energía Nuclear · Tecnología y Sociedad</span>
+        </div>
+        <h1 class="animate-fadeInUp opacity-0 delay-100 font-heading text-5xl sm:text-6xl md:text-7xl lg:text-7xl font-bold uppercase leading-[0.95] tracking-tight text-white mb-6">
+          El átomo<br>
+          <span class="relative inline-block">
+            <span class="bg-gradient-to-r from-nucleo-cyanLight via-nucleo-cyan to-nucleo-glow bg-clip-text text-transparent">al servicio</span>
+            <span class="absolute -bottom-1 left-0 w-full h-1 bg-nucleo-cyan"></span>
+          </span><br>
+          de la vida
+        </h1>
+        <p class="animate-fadeInUp opacity-0 delay-200 text-base md:text-lg text-nucleo-silver max-w-xl leading-relaxed mb-8">
+          Dieciocho temas para entender la energía nuclear: desde la estructura íntima del átomo hasta sus usos en medicina, industria, agricultura y exploración espacial. Ahora con las dieciocho páginas de conceptos, incluida la fusión, el espectro electromagnético, la medicina nuclear y las otras fuentes de energía.
+        </p>
+        <div class="animate-fadeInUp opacity-0 delay-300 flex flex-wrap gap-4">
+          <a href="#temas" class="glow-btn inline-flex items-center gap-2 bg-nucleo-cyan hover:bg-nucleo-cyanLight text-nucleo-black text-xs font-bold uppercase tracking-wider px-8 py-4 transition-all duration-200">
+            <span>Ver Temas</span>
+            <span class="iconify" data-icon="lucide:arrow-down" data-width="16"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
+      <span class="text-[9px] uppercase tracking-[0.3em] text-nucleo-silverDark">Explorar</span>
+      <span class="iconify text-nucleo-cyan" data-icon="lucide:chevron-down" data-width="16"></span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="relative bg-nucleo-cyan py-3 overflow-hidden z-10">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex items-center gap-8">
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Fisión Nuclear</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Atucha I</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Atucha II</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Embalse</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Reactor CAREM</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">INVAP</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Medicina Nuclear</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Cobalto-60</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">TANDAR</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Fisión Nuclear</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Atucha I</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Atucha II</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Embalse</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Reactor CAREM</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">INVAP</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Medicina Nuclear</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+        <span class="font-heading text-sm font-bold uppercase tracking-wider text-nucleo-black">Cobalto-60</span>
+        <span class="text-nucleo-cyanDark">◆</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- ¿QUÉ ES LA ENERGÍA NUCLEAR? -->
+  <!-- ============================================ -->
+  <section id="que-es" class="relative py-20 md:py-28 bg-nucleo-dark">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="accent-line"></div>
+            <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-cyan">Fundamentos</span>
+          </div>
+          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold uppercase leading-[1.1] tracking-tight text-white mb-6">El átomo como fuente de <span class="text-nucleo-cyan">energía</span></h2>
+          <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-5">
+            La energía nuclear no se quema: se <strong class="text-white">libera desde el núcleo</strong> del átomo. Cuando un núcleo se transforma —ya sea dividiéndose o uniéndose— una pequeña fracción de su masa se convierte directamente en energía, según la ecuación <span class="inline-stat"><span class="val">E = mc²</span></span> de Einstein.
+          </p>
+          <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-6">
+            Un solo gramo de uranio libera tanta energía como <strong class="text-nucleo-cyan">2.700 litros de petróleo</strong> o <strong class="text-nucleo-cyan">3.000 kg de carbón</strong>. La diferencia con las reacciones químicas es abismal: la energía química mueve electrones; la energía nuclear reordena el núcleo, donde se concentra prácticamente toda la masa del átomo.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="conceptos/fision.html" class="inline-flex items-center gap-2 bg-nucleo-mid hover:bg-nucleo-gray text-white text-xs font-bold uppercase tracking-wider px-5 py-3 transition-all duration-200 border border-white/5 hover:border-nucleo-alerta/40 hover:scale-[1.03]" style="font-family:'Inter',sans-serif;">
+              <span class="iconify text-nucleo-alerta" data-icon="lucide:split" data-width="16"></span>
+              <span>Fisión</span>
+            </a>
+            <a href="conceptos/fusion.html" class="inline-flex items-center gap-2 bg-nucleo-mid hover:bg-nucleo-gray text-white text-xs font-bold uppercase tracking-wider px-5 py-3 transition-all duration-200 border border-white/5 hover:border-blue-500/40 hover:scale-[1.03]" style="font-family:'Inter',sans-serif;">
+              <span class="iconify text-blue-500" data-icon="lucide:merge" data-width="16"></span>
+              <span>Fusión</span>
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-nucleo-mid p-5 border-l-2 border-nucleo-cyan">
+            <div class="font-heading text-3xl md:text-4xl font-bold stat-number mb-2">200 MeV</div>
+            <div class="text-xs text-nucleo-silverDark uppercase tracking-wider" style="font-family:'Inter',sans-serif;">Energía por fisión de U-235</div>
+          </div>
+          <div class="bg-nucleo-mid p-5 border-l-2 border-nucleo-alerta">
+            <div class="font-heading text-3xl md:text-4xl font-bold text-nucleo-alerta mb-2">×3M</div>
+            <div class="text-xs text-nucleo-silverDark uppercase tracking-wider" style="font-family:'Inter',sans-serif;">Más energía que el carbón por kg</div>
+          </div>
+          <div class="bg-nucleo-mid p-5 border-l-2 border-nucleo-warning">
+            <div class="font-heading text-3xl md:text-4xl font-bold text-nucleo-warning mb-2">10%</div>
+            <div class="text-xs text-nucleo-silverDark uppercase tracking-wider" style="font-family:'Inter',sans-serif;">Electricidad mundial de origen nuclear</div>
+          </div>
+          <div class="bg-nucleo-mid p-5 border-l-2 border-nucleo-isotope">
+            <div class="font-heading text-3xl md:text-4xl font-bold text-nucleo-isotope mb-2">440+</div>
+            <div class="text-xs text-nucleo-silverDark uppercase tracking-wider" style="font-family:'Inter',sans-serif;">Reactores operando en el mundo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FISIÓN VS FUSIÓN -->
+  <!-- ============================================ -->
+  <section id="fision-vs-fusion" class="relative py-20 md:py-24 bg-nucleo-black">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="accent-line"></div>
+          <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-cyan">Dos Procesos Nucleares</span>
+          <div class="accent-line"></div>
+        </div>
+        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white mb-4">Fisión <span class="text-nucleo-alerta">vs</span> Fusión</h2>
+        <p class="text-lg text-nucleo-silver max-w-2xl mx-auto leading-relaxed">Dos caminos opuestos para liberar la energía del núcleo. Uno rompe, el otro une. Ambos transforman masa en energía.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <div class="comparison-card bg-nucleo-dark p-6 md:p-8" style="border-left:3px solid #DC2626;--card-accent:rgba(220,38,38,0.4);--card-glow:rgba(220,38,38,0.12);">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-12 h-12 rounded-sm flex items-center justify-center" style="background:rgba(220,38,38,0.15);">
+              <span class="iconify text-nucleo-alerta" data-icon="lucide:split" data-width="26"></span>
+            </div>
+            <div>
+              <h3 class="font-heading text-xl font-bold text-white uppercase">Fisión</h3>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-alerta" style="font-family:'Inter',sans-serif;">Divide núcleos pesados</span>
+            </div>
+          </div>
+          <ul class="space-y-3 text-base text-nucleo-silver mb-6" style="font-family:'Inter',sans-serif; font-size:13px;">
+            <li class="flex items-start gap-2"><span class="text-nucleo-alerta mt-0.5">•</span> <span><strong class="text-white">Combustible:</strong> Uranio-235, Plutonio-239</span></li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-alerta mt-0.5">•</span> <span><strong class="text-white">Energía:</strong> ~200 MeV por evento</span></li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-alerta mt-0.5">•</span> <span><strong class="text-white">Residuos:</strong> Productos de fisión radiactivos (vida media larga)</span></li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-alerta mt-0.5">•</span> <span><strong class="text-white">Estado:</strong> Tecnología madura, 440+ reactores en el mundo</span></li>
+            <li class="flex items-start gap-2"><span class="text-nucleo-alerta mt-0.5">•</span> <span><strong class="text-white">Temperatura:</strong> ~300 °C (refrigerante)</span></li>
+          </ul>
+          <a href="conceptos/fision.html" class="inline-flex items-center gap-2 text-nucleo-alerta text-[11px] font-bold uppercase tracking-wider hover:text-white transition-all duration-200 hover:bg-nucleo-alerta/10 px-3 py-1.5 -ml-3 rounded-sm" style="font-family:'Inter',sans-serif;">
+            <span>Ver concepto completo</span>
+            <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+          </a>
+        </div>
+        <div class="comparison-card bg-nucleo-dark p-6 md:p-8" style="border-left:3px solid #3B82F6;--card-accent:rgba(59,130,246,0.4);--card-glow:rgba(59,130,246,0.12);">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-12 h-12 rounded-sm flex items-center justify-center" style="background:rgba(59,130,246,0.15);">
+              <span class="iconify" data-icon="lucide:merge" data-width="26" style="color:#3B82F6;"></span>
+            </div>
+            <div>
+              <h3 class="font-heading text-xl font-bold text-white uppercase">Fusión</h3>
+              <span class="text-[10px] font-bold uppercase tracking-wider" style="color:#3B82F6; font-family:'Inter',sans-serif;">Une núcleos livianos</span>
+            </div>
+          </div>
+          <ul class="space-y-3 text-base text-nucleo-silver mb-6" style="font-family:'Inter',sans-serif; font-size:13px;">
+            <li class="flex items-start gap-2"><span class="mt-0.5" style="color:#3B82F6;">•</span> <span><strong class="text-white">Combustible:</strong> Deuterio + Tritio (isótopos de hidrógeno)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5" style="color:#3B82F6;">•</span> <span><strong class="text-white">Energía:</strong> ~17.6 MeV por evento</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5" style="color:#3B82F6;">•</span> <span><strong class="text-white">Residuos:</strong> Helio (inerte) y activación de materiales (vida corta)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5" style="color:#3B82F6;">•</span> <span><strong class="text-white">Estado:</strong> Experimental, ITER prevé plasma en 2035</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5" style="color:#3B82F6;">•</span> <span><strong class="text-white">Temperatura:</strong> ~150 millones °C (plasma)</span></li>
+          </ul>
+          <a href="conceptos/fusion.html" class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider hover:text-white transition-all duration-200 hover:bg-white/5 px-3 py-1.5 -ml-3 rounded-sm" style="font-family:'Inter',sans-serif; color:#3B82F6;">
+            <span>Ver concepto completo</span>
+            <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- ARGENTINA NUCLEAR -->
+  <!-- ============================================ -->
+  <section id="argentina" class="relative py-20 md:py-28 bg-nucleo-dark">
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'2\' cy=\'2\' r=\'1.5\' fill=\'%2375AADB\'/%3E%3C/svg%3E'); background-size: 60px 60px;"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6">
+      <div class="flex items-center gap-3 mb-12">
+        <div class="accent-line"></div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-celeste">Historia y Presente</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold uppercase leading-[1.1] tracking-tight text-white mb-5">Argentina, <span class="text-nucleo-celeste">potencia nuclear</span></h2>
+          <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
+            Argentina fue el <strong class="text-nucleo-celeste">primer país de América Latina</strong> en tener una central nuclear. Desde la creación de la <strong>CNEA en 1950</strong>, el país desarrolló una cadena completa: desde la minería de uranio hasta el diseño de reactores propios que se exportan al mundo.
+          </p>
+          <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed">
+            El <strong class="text-nucleo-celeste">reactor CAREM</strong> es el primer reactor de potencia diseñado íntegramente en Argentina. <strong class="text-nucleo-celeste">INVAP</strong> exporta reactores de investigación a Australia, Arabia Saudita, Países Bajos, Egipto y Brasil.
+          </p>
+        </div>
+        <div class="space-y-5">
+          <div class="timeline-line" style="border-color: rgba(117,170,219,0.25);">
+            <div class="timeline-dot" style="background:#75AADB; left:-5px;"></div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-celeste" style="font-family:'Inter',sans-serif;">1950</span>
+            <p class="text-base text-white font-semibold">Creación de la CNEA</p>
+            <p class="text-sm text-nucleo-silverDark">Comisión Nacional de Energía Atómica, bajo la presidencia de Perón.</p>
+          </div>
+          <div class="timeline-line" style="border-color: rgba(117,170,219,0.25);">
+            <div class="timeline-dot" style="background:#75AADB; left:-5px;"></div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-celeste" style="font-family:'Inter',sans-serif;">1974</span>
+            <p class="text-base text-white font-semibold">Atucha I — primera central nuclear</p>
+            <p class="text-sm text-nucleo-silverDark">Primera central nuclear de América Latina. PHWR con agua pesada. 362 MW.</p>
+          </div>
+          <div class="timeline-line" style="border-color: rgba(117,170,219,0.25);">
+            <div class="timeline-dot" style="background:#75AADB; left:-5px;"></div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-celeste" style="font-family:'Inter',sans-serif;">1984</span>
+            <p class="text-base text-white font-semibold">Central Embalse</p>
+            <p class="text-sm text-nucleo-silverDark">Reactor CANDU de diseño canadiense, operado por argentinos en Córdoba. 656 MW.</p>
+          </div>
+          <div class="timeline-line" style="border-color: rgba(117,170,219,0.25);">
+            <div class="timeline-dot" style="background:#75AADB; left:-5px;"></div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-celeste" style="font-family:'Inter',sans-serif;">1985</span>
+            <p class="text-base text-white font-semibold">TANDAR</p>
+            <p class="text-sm text-nucleo-silverDark">Acelerador electrostático de 20 MV, el más grande de América Latina. Investigación nuclear y médica.</p>
+          </div>
+          <div class="timeline-line" style="border-color: rgba(117,170,219,0.25);">
+            <div class="timeline-dot" style="background:#75AADB; left:-5px;"></div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-celeste" style="font-family:'Inter',sans-serif;">2014</span>
+            <p class="text-base text-white font-semibold">Atucha II</p>
+            <p class="text-sm text-nucleo-silverDark">Segunda unidad en Lima, Zárate. 745 MW. Última gran obra nuclear del país.</p>
+          </div>
+          <div class="timeline-line" style="border-color: rgba(117,170,219,0.25);">
+            <div class="timeline-dot" style="background:#75AADB; left:-5px;"></div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-nucleo-celeste" style="font-family:'Inter',sans-serif;">Futuro</span>
+            <p class="text-base text-white font-semibold">CAREM · INVAP · RA-10</p>
+            <p class="text-sm text-nucleo-silverDark">Primer PWR argentino, exportación de reactores de investigación, nuevo reactor multipropósito.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- EXPLORAR TEMAS · GRID DE 9 CARDS -->
+  <!-- ============================================ -->
+  <section id="temas" class="relative py-20 md:py-28 bg-nucleo-black">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+
+      <!-- Encabezado de la sección -->
+      <div class="text-center mb-14">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="accent-line"></div>
+          <span class="text-[11px] font-bold uppercase tracking-[0.3em] text-nucleo-cyan">Diecinueve Temas Para Empezar</span>
+          <div class="accent-line"></div>
+        </div>
+        <h2 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white mb-5">
+          Explorá la <span class="text-nucleo-cyan">Energía Nuclear</span>
+        </h2>
+        <p class="text-lg md:text-xl text-nucleo-silver max-w-2xl mx-auto leading-relaxed">
+          Elegí un tema para empezar. Cada tarjeta abre el contenido con explicaciones, imágenes y datos sobre Argentina y el mundo.
+        </p>
+      </div>
+
+      <!-- Grid de 15 cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- 01 · Aplicaciones -->
+        <a href="conceptos/aplicaciones.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(220,38,38,0.4);--card-glow:rgba(220,38,38,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-alerta"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(220,38,38,0.12);">
+              <span class="iconify text-nucleo-alerta" data-icon="lucide:heart-pulse" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-alerta">01</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-alerta transition-colors">Aplicaciones</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Energía eléctrica, medicina, industria, agricultura, datación, espacio, propulsión y más.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-alerta text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 02 · Tecnología Nuclear en Argentina -->
+        <a href="conceptos/argentina.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(117,170,219,0.4);--card-glow:rgba(117,170,219,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-celeste"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(117,170,219,0.12);">
+              <span class="iconify text-nucleo-celeste" data-icon="lucide:flag" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-celeste">02</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-celeste transition-colors">Tecnología Nuclear en Argentina</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Más de 70 años de historia nuclear: CNEA, NA-SA, INVAP y la matriz eléctrica nacional.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-celeste text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 03 · Reactores Nucleares -->
+        <a href="conceptos/reactores.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(255,179,0,0.4);--card-glow:rgba(255,179,0,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-warning"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(255,179,0,0.12);">
+              <span class="iconify text-nucleo-warning" data-icon="lucide:building-2" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-warning">03</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-warning transition-colors">Reactores Nucleares</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Atucha I, Atucha II, Embalse y el reactor CAREM: cómo funcionan y qué generan.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-warning text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 04 · Aceleradores de Partículas -->
+        <a href="conceptos/aceleradores.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(124,77,255,0.4);--card-glow:rgba(124,77,255,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-neutron"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(124,77,255,0.12);">
+              <span class="iconify text-nucleo-neutron" data-icon="lucide:zap" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-neutron">04</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-neutron transition-colors">Aceleradores de Partículas</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Ciclotrones, sincrotrones y el TANDAR argentino: la herramienta para estudiar la materia a fondo.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-neutron text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 05 · Radioisótopos -->
+        <a href="conceptos/radioisotopos.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(38,166,154,0.4);--card-glow:rgba(38,166,154,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-isotope"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(38,166,154,0.12);">
+              <span class="iconify text-nucleo-isotope" data-icon="lucide:flask-conical" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-isotope">05</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-isotope transition-colors">Radioisótopos</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Cobalto-60, Tecnecio-99m, Yodo-131: átomos radiactivos que diagnostican y curan.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-isotope text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 06 · Radiaciones -->
+        <a href="conceptos/radiaciones.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(255,110,64,0.4);--card-glow:rgba(255,110,64,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-reactor"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(255,110,64,0.12);">
+              <span class="iconify text-nucleo-reactor" data-icon="lucide:radiation" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-reactor">06</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-reactor transition-colors">Radiaciones</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Alfa, beta, gamma y neutrones: qué son, cómo nos afectan y cómo se miden.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-reactor text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 07 · Fuerzas de la Naturaleza -->
+        <a href="conceptos/fuerzas.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(0,229,255,0.4);--card-glow:rgba(0,229,255,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-cyan"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(0,229,255,0.12);">
+              <span class="iconify text-nucleo-cyan" data-icon="lucide:magnet" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-cyan">07</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-cyan transition-colors">Fuerzas de la Naturaleza</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Gravitatoria, electromagnética, nuclear débil y fuerte: cómo mantienen la materia junta.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-cyan text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 08 · Estructura de los Átomos -->
+        <a href="conceptos/atomos.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(245,158,11,0.4);--card-glow:rgba(245,158,11,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-oro"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(245,158,11,0.12);">
+              <span class="iconify text-nucleo-oro" data-icon="lucide:atom" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-oro">08</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-oro transition-colors">Estructura de los Átomos</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Protones, neutrones, electrones: qué hay adentro del átomo y por qué importa.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-oro text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 09 · Rayos Cósmicos y Detectores -->
+        <a href="conceptos/cosmicos.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(124,77,255,0.4);--card-glow:rgba(124,77,255,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-neutron"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(124,77,255,0.12);">
+              <span class="iconify text-nucleo-neutron" data-icon="lucide:telescope" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-neutron">09</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-neutron transition-colors">Rayos Cósmicos y Detectores</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Partículas que llegan del espacio y los instrumentos que las cazan. Incluye el Pierre Auger.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-neutron text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 10 · Antimateria -->
+        <a href="conceptos/antimateria.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(236,72,153,0.4);--card-glow:rgba(236,72,153,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-fucsia"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(236,72,153,0.12);">
+              <span class="iconify text-nucleo-fucsia" data-icon="lucide:equal-not" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-fucsia">10</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-fucsia transition-colors">Antimateria</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            El reflejo invisible del universo: positrones, antiprotones y la aniquilación según E=mc².
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-fucsia text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 11 · Materia Oscura -->
+        <a href="conceptos/materia-oscura.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(79,70,229,0.4);--card-glow:rgba(79,70,229,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-indigo"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(79,70,229,0.12);">
+              <span class="iconify text-nucleo-indigo" data-icon="lucide:eye-off" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-indigo">11</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-indigo transition-colors">Materia Oscura</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            El 85% de la materia es invisible. Curvas galácticas, lentes gravitacionales y la cacería del WIMP.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-indigo text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 12 · Fusión -->
+        <a href="conceptos/fusion.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(59,130,246,0.4);--card-glow:rgba(59,130,246,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(59,130,246,0.12);">
+              <span class="iconify text-blue-500" data-icon="lucide:merge" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-blue-500">12</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-blue-500 transition-colors">Fusión Nuclear</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Plasma, tokamaks y estrellas: la energía del Sol, reproducida en la Tierra. ITER y el camino al cero emisiones.
+          </p>
+          <div class="flex items-center gap-2 text-blue-500 text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 13 · Espectro Electromagnético -->
+        <a href="conceptos/espectro.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(124,77,255,0.4);--card-glow:rgba(124,77,255,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-neutron"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(124,77,255,0.12);">
+              <span class="iconify text-nucleo-neutron" data-icon="lucide:radio" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-neutron">13</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-neutron transition-colors">Espectro Electromagnético</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            De las ondas de radio a los rayos gamma: el mapa completo de la radiación electromagnética.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-neutron text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 14 · Medicina Nuclear -->
+        <a href="conceptos/medicina.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(220,38,38,0.4);--card-glow:rgba(220,38,38,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-alerta"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(220,38,38,0.12);">
+              <span class="iconify text-nucleo-alerta" data-icon="lucide:stethoscope" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-alerta">14</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-alerta transition-colors">Medicina Nuclear</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Radiología, gammagrafía, PET, radioterapia, protones y BNCT: todas las técnicas que salvan vidas.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-alerta text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 15 · Otras Fuentes de Energía -->
+        <a href="conceptos/energias.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(16,185,129,0.4);--card-glow:rgba(16,185,129,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(16,185,129,0.12);">
+              <span class="iconify text-emerald-500" data-icon="lucide:leaf" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-emerald-500">15</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-emerald-500 transition-colors">Otras Fuentes de Energía</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Nueve fuentes, nueve páginas: hidro, eólica, solar, biomasa, geotermia, gas, petróleo, carbón y nuclear en la matriz argentina.
+          </p>
+          <div class="flex items-center gap-2 text-emerald-500 text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 16 · Dosis y Protección -->
+        <a href="conceptos/dosis.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(20,184,166,0.4);--card-glow:rgba(20,184,166,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-teal-500"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(20,184,166,0.12);">
+              <span class="iconify text-teal-400" data-icon="lucide:shield" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-teal-400">16</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-teal-400 transition-colors">Dosis y Protección</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Sievert, gray y milisievert: cómo se mide la radiación, qué dosis recibimos y las reglas que protegen a trabajadores y público.
+          </p>
+          <div class="flex items-center gap-2 text-teal-400 text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 17 · Residuos Radiactivos -->
+        <a href="conceptos/residuos.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(234,179,8,0.4);--card-glow:rgba(234,179,8,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-yellow-500"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(234,179,8,0.12);">
+              <span class="iconify text-yellow-400" data-icon="lucide:archive" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-yellow-400">17</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-yellow-400 transition-colors">Residuos Radiactivos</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Clasificación, gestión y almacenamiento: qué se hace con los materiales radiactivos y el debate del repositorio final.
+          </p>
+          <div class="flex items-center gap-2 text-yellow-400 text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 18 · La Nuclear en el Mundo -->
+        <a href="conceptos/mundo.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(37,99,235,0.4);--card-glow:rgba(37,99,235,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-600"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(37,99,235,0.12);">
+              <span class="iconify text-blue-500" data-icon="lucide:globe" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-blue-500">18</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-blue-500 transition-colors">La Nuclear en el Mundo</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Flota mundial, países líderes, centrales en construcción y el futuro con SMR y Generación IV. COP28 y la transición.
+          </p>
+          <div class="flex items-center gap-2 text-blue-500 text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+        <!-- 19 · Energía y Propulsión Espacial -->
+        <a href="conceptos/energia-espacial.html" class="topic-card reactor-card bg-nucleo-dark p-6 md:p-8 no-underline group" style="--card-accent:rgba(0,229,255,0.4);--card-glow:rgba(0,229,255,0.15);">
+          <div class="absolute top-0 left-0 w-1.5 h-full bg-nucleo-cyan"></div>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-14 h-14 rounded-sm flex items-center justify-center" style="background: rgba(0,229,255,0.12);">
+              <span class="iconify text-nucleo-cyan" data-icon="lucide:rocket" data-width="30"></span>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-nucleo-cyan">19</span>
+          </div>
+          <h3 class="font-heading text-2xl font-bold uppercase text-white mb-3 group-hover:text-nucleo-cyan transition-colors">Energía y Propulsión Espacial</h3>
+          <p class="text-base text-nucleo-silver leading-relaxed mb-6">
+            Cohetes de SpaceX, satélites, RTGs de plutonio-238, la tecnología argentina y el futuro de la propulsión nuclear.
+          </p>
+          <div class="flex items-center gap-2 text-nucleo-cyan text-[11px] font-bold uppercase tracking-wider">
+            <span>Explorar</span>
+            <span class="iconify" data-icon="lucide:arrow-up-right" data-width="14"></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FOOTER MÍNIMO -->
+  <!-- ============================================ -->
+  <footer class="relative py-10 bg-nucleo-black border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-7 h-7 bg-nucleo-cyan flex items-center justify-center rounded-sm">
+            <span class="iconify text-nucleo-black" data-icon="lucide:atom" data-width="16"></span>
+          </div>
+          <div class="flex items-center gap-2 text-[11px] uppercase tracking-wider text-nucleo-silverDark">
+            <span>Prof. Pereyra, Javier</span>
+            <span class="text-nucleo-cyanDark">·</span>
+            <span>© 2026 — Material Educativo</span>
+          </div>
+        </div>
+        <div class="text-[10px] uppercase tracking-wider text-nucleo-silverDark flex items-center gap-4">
+          <a href="conceptos/peliculas.html" class="hover:text-nucleo-oro transition-colors">Películas</a>
+          <a href="revista.html" class="hover:text-nucleo-oro transition-colors">Revista</a>
+          <span>Sitio pensado para los últimos años de la escuela secundaria argentina.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu
+    const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      menuOverlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 100) {
+        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+      } else {
+        navbar.style.borderBottom = 'none';
+      }
+    });
+
+    // Intersection observer for cards and sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reactor-card, .comparison-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Smooth scroll anchor offset
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const targetPos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
