@@ -91,6 +91,12 @@
     /* Modelo 3D interactivo (sec05) */
     .energy3d-shell { position: relative; overflow: hidden; border: 1px solid rgba(0,229,255,0.3); border-radius: 10px; background: #06090C; box-shadow: 0 24px 70px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.02) inset; }
     .energy3d-frame { display: block; width: 100%; height: 660px; border: 0; background: #06090C; }
+    .energy3d-status { position: absolute; inset: 0; z-index: 9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; background: radial-gradient(circle at center, rgba(0,229,255,.09), rgba(6,9,12,.97) 68%); color: #C8D4DC; font-family: 'Inter', sans-serif; transition: opacity .25s ease, visibility .25s ease; }
+    .energy3d-status.is-ready { opacity: 0; visibility: hidden; pointer-events: none; }
+    .energy3d-status strong { color: #5BF2FF; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+    .energy3d-status p { max-width: 440px; margin: 0; font-size: 13px; line-height: 1.55; }
+    .energy3d-status-actions { display: none; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .energy3d-status.has-error .energy3d-status-actions { display: flex; }
     .energy3d-actions { position: absolute; z-index: 10; top: 18px; right: 18px; display: flex; gap: 7px; font-family: 'Inter', sans-serif; }
     .energy3d-button { display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 8px 11px; border: 1px solid rgba(255,255,255,.22); border-radius: 6px; background: rgba(6,9,12,.85); color: #f3f7f4; backdrop-filter: blur(12px); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: border-color .2s, background .2s; }
     .energy3d-button:hover:not(:disabled) { border-color: rgba(0,229,255,.85); background: rgba(11,16,20,.94); }
@@ -378,6 +384,14 @@
         <p>La escena es representativa del funcionamiento general de un parque eólico y permite relacionar la energía cinética del viento con la generación eléctrica.</p>
       </div>
       <div class="energy3d-shell" id="eolicModelShell">
+        <div class="energy3d-status" id="eolicModelStatus" role="status" aria-live="polite">
+          <strong id="eolicModelStatusTitle">Cargando modelo 3D…</strong>
+          <p id="eolicModelStatusText">Preparando el parque eólico y sus controles interactivos.</p>
+          <div class="energy3d-status-actions">
+            <button type="button" class="energy3d-button" id="eolicModelRetry">Reintentar</button>
+            <a class="energy3d-button" id="eolicModelOpen" href="modelo3D_eolico/parque-eolico-3d.html?v=20260819" target="_blank" rel="noopener">Abrir aparte</a>
+          </div>
+        </div>
         <div class="energy3d-actions">
           <button type="button" class="energy3d-button energy3d-enter" id="eolicModelEnter">
             <span class="iconify" data-icon="lucide:maximize-2" data-width="14"></span>
@@ -389,10 +403,11 @@
           </button>
         </div>
         <iframe
+          id="eolicModelFrame"
           class="energy3d-frame"
-          src="modelo3D_eolico/parque-eolico-3d.html?v=20260808"
+          src="modelo3D_eolico/parque-eolico-3d.html?v=20260819"
           title="Modelo 3D interactivo de un parque eólico"
-          loading="lazy"
+          loading="eager"
           allow="fullscreen"
         ></iframe>
       </div>
@@ -542,9 +557,48 @@
 <script>
 (function(){
   var shell = document.getElementById('eolicModelShell');
+  var frame = document.getElementById('eolicModelFrame');
+  var status = document.getElementById('eolicModelStatus');
+  var statusTitle = document.getElementById('eolicModelStatusTitle');
+  var statusText = document.getElementById('eolicModelStatusText');
+  var retry = document.getElementById('eolicModelRetry');
   var enter = document.getElementById('eolicModelEnter');
   var back  = document.getElementById('eolicModelBack');
-  if (!shell || !enter || !back) return;
+  if (!shell || !frame || !status || !enter || !back) return;
+  var loadTimer;
+  var readyQuery;
+  function askIfReady(){
+    if (frame.contentWindow) frame.contentWindow.postMessage({ type: 'nucleo:model-ready-query', model: 'eolico' }, '*');
+  }
+  function armTimeout(){
+    clearTimeout(loadTimer);
+    clearInterval(readyQuery);
+    status.classList.remove('is-ready', 'has-error');
+    statusTitle.textContent = 'Cargando modelo 3D…';
+    statusText.textContent = 'Preparando el parque eólico y sus controles interactivos.';
+    loadTimer = setTimeout(function(){
+      clearInterval(readyQuery);
+      status.classList.add('has-error');
+      statusTitle.textContent = 'El modelo está tardando demasiado';
+      statusText.textContent = 'Podés reintentar la carga o abrir el parque eólico en una pestaña independiente.';
+    }, 18000);
+    readyQuery = setInterval(askIfReady, 300);
+    askIfReady();
+  }
+  window.addEventListener('message', function(event){
+    if (event.source !== frame.contentWindow || !event.data || event.data.type !== 'nucleo:model-ready' || event.data.model !== 'eolico') return;
+    clearTimeout(loadTimer);
+    clearInterval(readyQuery);
+    status.classList.remove('has-error');
+    status.classList.add('is-ready');
+  });
+  if (retry) retry.addEventListener('click', function(){
+    armTimeout();
+    var clean = frame.src.replace(/([?&])reload=\d+/, '$1').replace(/[?&]$/, '');
+    frame.src = clean + (clean.indexOf('?') === -1 ? '?' : '&') + 'reload=' + Date.now();
+  });
+  frame.addEventListener('load', askIfReady);
+  armTimeout();
   enter.addEventListener('click', function(){
     if (shell.requestFullscreen) shell.requestFullscreen();
     else if (shell.webkitRequestFullscreen) shell.webkitRequestFullscreen();

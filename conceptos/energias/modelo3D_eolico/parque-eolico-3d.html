@@ -23,7 +23,19 @@
   <div id="__bundler_loading">Unpacking...</div>
 
   <script>
-    
+function announceEolicReady() {
+  if (window.__eol && window.parent !== window) {
+    window.parent.postMessage({ type: 'nucleo:model-ready', model: 'eolico' }, '*');
+    return true;
+  }
+  return false;
+}
+window.addEventListener('message', function(event) {
+  if (event.source === window.parent && event.data && event.data.type === 'nucleo:model-ready-query' && event.data.model === 'eolico') {
+    announceEolicReady();
+  }
+});
+
 document.addEventListener('DOMContentLoaded', async function() {
   const loading = document.getElementById('__bundler_loading');
   function setStatus(msg) { if (loading) loading.textContent = msg; }
@@ -431,6 +443,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     // which fired before we swapped the document. Trigger manually if present.
     if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
       window.Babel.transformScriptTags();
+    }
+    // Tell the embedding lesson that the WebGL scene—not merely the HTML
+    // document—finished mounting. This prevents a silent empty frame on slow
+    // devices and lets the parent offer a useful retry when initialization fails.
+    {
+      let attempts = 0;
+      const readyProbe = setInterval(function() {
+        attempts += 1;
+        if (announceEolicReady()) {
+          clearInterval(readyProbe);
+        } else if (attempts >= 180) {
+          clearInterval(readyProbe);
+        }
+      }, 100);
     }
   } catch (err) {
     setStatus('Error unpacking: ' + err.message);
