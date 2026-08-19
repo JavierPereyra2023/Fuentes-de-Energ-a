@@ -58,7 +58,9 @@ D:\nucle-ar\
 │       ├── oklo.html           # Oklo, reactor natural (ámbar #F59E0B)
 │       └── propulsion.html     # Propulsión nuclear (ámbar #F59E0B)
 ├── tools\                      # Scripts de mantenimiento
-│   └── verificar-links.ps1     # Valida href/src locales, anchors #id y wrapper flex de secciones
+│   ├── verificar-links.ps1     # Valida href/src locales, anchors #id y wrapper flex de secciones
+│   ├── optimizar-imagenes.ps1  # Reescala/recomprime assets\ y pasa los PNG opacos a JPG
+│   └── sincronizar-dimensiones.mjs # Escribe width/height reales en cada <img> local
 └── CLAUDE.md
 ```
 
@@ -94,6 +96,24 @@ Para validar enlaces locales, anchors y el patrón de secciones, ejecutar el ver
 # Verificar enlaces, anchors y wrapper flex de todas las páginas
 & "D:\nucle-ar\tools\verificar-links.ps1"
 ```
+
+Al agregar imágenes nuevas hay que optimizarlas y sincronizar sus medidas:
+
+```powershell
+# Reescala a 1600 px de lado mayor, recomprime a JPEG q82 y convierte
+# los PNG opacos a .jpg. Con -DryRun solo informa, no toca nada.
+& "D:\nucle-ar\tools\optimizar-imagenes.ps1" -DryRun
+& "D:\nucle-ar\tools\optimizar-imagenes.ps1"
+```
+
+```powershell
+# Escribe width/height reales en cada <img> local (evita saltos de layout)
+node tools\sincronizar-dimensiones.mjs
+```
+
+Si `optimizar-imagenes.ps1` convierte algún PNG a JPG, hay que actualizar las
+referencias en el HTML (el script lista cuáles). Los originales quedan en git:
+se recuperan con `git checkout -- assets`.
 
 ## Arquitectura del sitio
 
@@ -284,6 +304,19 @@ Definida en `tailwind.config` de cada archivo bajo el namespace `nucleo`:
 - Estados: `warning #FFB300` (alertas), `cyan #00E5FF` (énfasis secundario)
 
 ## Bugs conocidos y corregidos
+
+- **Imágenes que no se veían en el celular (agosto 2026)**: ~~`assets/` pesaba 34,8 MB. Varias páginas cargaban entre 6 y 9 MB de fotos de golpe (`aplicaciones.html` 9,3 MB, `energia-espacial.html` 7,8 MB, `medicina.html` 7,7 MB, `revista/einstein.html` 6,2 MB), con originales de hasta 2888×2166 px mostrados a ~350 px. En escritorio cargaban igual; en un 4G típico tardaban 30–50 s y el celular abandonaba la descarga, así que "algunas imágenes" nunca aparecían.~~ Corregido: `assets/` bajó a 7,6 MB (−78%), ninguna página supera 3 MB. Tres cambios combinados:
+  1. `tools/optimizar-imagenes.ps1` — reescala a 1600 px de lado mayor y recomprime a JPEG q82. Los 7 PNG opacos pasaron a `.jpg` (un PNG de foto pesa 10× lo mismo en JPEG) y se actualizaron sus referencias en el HTML.
+  2. `loading="lazy" decoding="async"` en las 34 imágenes bajo el pliegue. Antes se descargaban todas juntas y competían por el ancho de banda. Las 4 que sí se ven de entrada (hero de `inicio.html`, portadas de `einstein.html` y `bomba-atomica.html`, cohete de la ficha del Falcon 9) llevan `fetchpriority="high"` y **no** deben ser lazy.
+  3. `width`/`height` reales en cada `<img>` local vía `tools/sincronizar-dimensiones.mjs`, para que el navegador reserve el espacio y la foto no "salte" al entrar.
+
+  Al agregar imágenes nuevas hay que repetir los tres pasos. **`ecuacion.jpg` tiene override** en el script (no se reescala, calidad 92): es un recorte de diario de 1935 con texto chico que el lector tiene que poder ampliar.
+
+- **Falta de `<meta name="viewport">`**: ~~`index.html` (el splash que sirve Vercel en la raíz), `Explorando la materia.html` y las dos páginas 3D generadas por bundler (`Parque Solar 3D (descarga).html`, `Represa Hidroelectrica 3D (standalone).html`) no la tenían.~~ Sin esa etiqueta el celular maqueta a ~980 px y muestra todo diminuto. Corregido en los 4 archivos. Las páginas generadas por bundler no la traen: hay que agregarla a mano después de `<meta charset="utf-8">`.
+
+- **`1fr` no baja del min-content (ficha del Falcon 9)**: ~~`Falcon 9 Especificaciones.dc.html` estaba maquetada 100% con estilos inline y sin una sola media query: grilla fija `1.15fr 0.85fr`, `h1` de 96 px, y la foto del cohete con `height: 660px` como ítem flex, que en celular se comprimía hasta 0 px de ancho y desaparecía.~~ Corregido con un bloque `@media` en el `<style>` del `<helmet>`. Dos cosas a recordar:
+  - Como la maqueta es inline, las reglas responsive necesitan `!important` y se seleccionan por `div[style*="..."]` (las grillas están anidadas a distinta profundidad, no siempre como `section > div`).
+  - Colapsar a `1fr` **no alcanza**: `1fr` equivale a `minmax(auto, 1fr)` y la pista nunca baja del min-content, así que un texto con `white-space: nowrap` la estiraba y desbordaba la pantalla. Hay que usar `minmax(0, 1fr)`.
 
 - **Wrapper flex en cada `sec0X`**: toda `<section class="reveal mb-16" id="sec0X">` debe abrir explícitamente `<div class="flex items-center gap-4 mb-6">` + `<span class="section-num">0X</span>` + `<div class="accent-line"></div>` + `<h2>` + `</div>`. Si se omite el wrapper y se deja un `</div>` huérfano, el navegador auto-anida todo el resto del `<main>` (incluyendo el footer) y los botones del pie se ven deformados/anchos. Síntoma visual: footer roto, no SVG. Auditoría rápida: `grep -n 'id="sec0X"' *.html` y revisar las 5 líneas siguientes.
 

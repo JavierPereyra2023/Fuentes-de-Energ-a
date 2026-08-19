@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Explorando la materia — Energía Nuclear</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +22,7 @@
   <meta name="description" content="Explorando la materia: del átomo clásico a la descripción cuántica. Portada del sitio de energía nuclear para el secundario argentino.">
   <meta property="og:title" content="Explorando la materia — Energía Nuclear">
   <meta property="og:description" content="Del átomo clásico a la descripción cuántica.">
-  <meta property="og:image" content="assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="assets/generated/hero-laboratorio-nuclear.jpg">
 </head>
 <body>
   <div id="__bundler_thumbnail">
@@ -372,6 +373,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     // which fired before we swapped the document. Trigger manually if present.
     if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
       window.Babel.transformScriptTags();
+    }
+    document.title = 'Explorando la materia - Energía Nuclear';
+    if (!document.querySelector('link[rel="icon"]')) {
+      const favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      favicon.type = 'image/svg+xml';
+      favicon.href = 'assets/favicon.svg';
+      document.head.appendChild(favicon);
     }
   } catch (err) {
     setStatus('Error unpacking: ' + err.message);

@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="La Energía Nuclear en el Mundo — Flota, países y futuro | Energía Nuclear">
   <meta property="og:description" content="La energía nuclear en el mundo: la flota global de reactores, los países líderes, centrales en construcción, SMRs y Generación IV, y el rol en la transición energética.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -82,6 +82,34 @@
     .glosario::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1C232A; color: #C8D4DC; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; padding: 0.35rem 0.6rem; border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 999; }
     .glosario:hover::after { opacity: 1; }
   </style>
+  <!-- Contención responsive compartida para fórmulas y medios científicos -->
+  <style id="responsive-content-safety">
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"],
+    .equation-block,
+    .dato-box,
+    p:has(mjx-container) {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 767px) {
+      .glosario::after {
+        position: fixed;
+        inset: auto 1rem 4.75rem;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        transform: none;
+      }
+      mjx-container[jax="CHTML"][display="true"] { padding-bottom: .35rem; }
+      table { max-width: 100%; }
+    }
+  </style>
+
 </head>
 <body>
 <div class="reading-bar" id="reading-bar"></div>
@@ -231,7 +259,7 @@
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
         Argentina tiene la flota más grande de América Latina y fue pionera en el hemisferio sur: la primera central de la región, Atucha I, operó desde 1974. <a href="argentina.html" class="text-nucleo-accentLight underline underline-offset-4 hover:text-nucleo-accent">Toda la historia, en la página de Argentina.</a>
       </p>
-      <img src="../assets/generated/central-nuclear-argentina.png" alt="Vista de una central nuclear argentina con sus torres de refrigeración" class="w-full rounded-md my-6" loading="lazy">
+      <img width="1600" height="900" src="../assets/generated/central-nuclear-argentina.jpg" alt="Vista de una central nuclear argentina con sus torres de refrigeración" class="w-full rounded-md my-6" loading="lazy">
       <p class="text-xs text-nucleo-silverDark mb-4" style="font-family:'Inter',sans-serif;">Representación generada de una central argentina. Las instalaciones reales de Atucha y Embalse se ven en <a href="argentina.html" class="text-nucleo-accentLight underline underline-offset-4">argentina.html</a>.</p>
     </section>
 

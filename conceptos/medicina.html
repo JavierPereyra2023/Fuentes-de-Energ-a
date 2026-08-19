@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="Medicina Nuclear y Radiología — Todas las técnicas que salvan vidas | Energía Nuclear">
   <meta property="og:description" content="Medicina nuclear y radiología: gammagrafía, SPECT, PET, radioterapia, protones, braquiterapia, teranóstica y BNCT.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -85,6 +85,34 @@
     .glosario:hover::after { opacity: 1; }
     .credits { font-family: 'Inter', sans-serif; font-size: 10.5px; line-height: 1.5; }
   </style>
+  <!-- Contención responsive compartida para fórmulas y medios científicos -->
+  <style id="responsive-content-safety">
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"],
+    .equation-block,
+    .dato-box,
+    p:has(mjx-container) {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 767px) {
+      .glosario::after {
+        position: fixed;
+        inset: auto 1rem 4.75rem;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        transform: none;
+      }
+      mjx-container[jax="CHTML"][display="true"] { padding-bottom: .35rem; }
+      table { max-width: 100%; }
+    }
+  </style>
+
 </head>
 <body>
 <div class="reading-bar" id="reading-bar"></div>
@@ -242,7 +270,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · La primera radiografía de la historia (1895)</span>
         </div>
-        <img src="../assets/medicina/rontgen-1895.jpg" alt="Radiografía histórica de la mano izquierda de Anna Bertha Ludwig con un anillo, tomada por Wilhelm Röntgen en 1895" class="w-full h-auto block max-w-xl mx-auto" style="display:block;"/>
+        <img width="1112" height="1600" loading="lazy" decoding="async" src="../assets/medicina/rontgen-1895.jpg" alt="Radiografía histórica de la mano izquierda de Anna Bertha Ludwig con un anillo, tomada por Wilhelm Röntgen en 1895" class="w-full h-auto block max-w-xl mx-auto" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Mano de Anna Bertha Ludwig, esposa de Röntgen, con su anillo de bodas (22 de diciembre de 1895). Fuente: Wikimedia Commons · Wilhelm Röntgen — Dominio público.
         </div>
@@ -255,7 +283,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Mamógrafo</span>
         </div>
-        <img src="../assets/medicina/mamografia.jpg" alt="Técnica de mamografía demostrando el uso de un mamógrafo con una paciente" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="890" loading="lazy" decoding="async" src="../assets/medicina/mamografia.jpg" alt="Técnica de mamografía demostrando el uso de un mamógrafo con una paciente" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Mamografía: rayos X de baja energía para la detección temprana del cáncer de mama. Fuente: Wikimedia Commons · U.S. Air Force / Sgt. Teresa Cleveland — Dominio público.
         </div>
@@ -268,7 +296,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Tomógrafo computado (TC)</span>
         </div>
-        <img src="../assets/medicina/tc-scanner.jpg" alt="Paciente acostado entrando a un tomógrafo computado Siemens SOMATOM en una sala hospitalaria" class="w-full h-auto block" style="display:block;"/>
+        <img width="1275" height="1600" loading="lazy" decoding="async" src="../assets/medicina/tc-scanner.jpg" alt="Paciente acostado entrando a un tomógrafo computado Siemens SOMATOM en una sala hospitalaria" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Paciente en un tomógrafo computado Siemens SOMATOM Sensation 64. Fuente: Wikimedia Commons · Ptrump16 — CC BY-SA 4.0.
         </div>
@@ -281,7 +309,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Fluoroscopia / angiografía con arco en C</span>
         </div>
-        <img src="../assets/medicina/fluoroscopia-carm.jpg" alt="Cardiólogos realizando un cateterismo cardíaco guiado por una máquina de rayos X con arco en C (fluoroscopia)" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="914" loading="lazy" decoding="async" src="../assets/medicina/fluoroscopia-carm.jpg" alt="Cardiólogos realizando un cateterismo cardíaco guiado por una máquina de rayos X con arco en C (fluoroscopia)" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Cateterismo cardíaco guiado por fluoroscopia: imagen de rayos X en tiempo real. Fuente: Wikimedia Commons · U.S. Navy / MC3 Jake Greenberg — Dominio público.
         </div>
@@ -313,7 +341,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Cámara gamma</span>
         </div>
-        <img src="../assets/medicina/camara-gamma.jpg" alt="Cámara gamma de doble cabezal de Siemens, el detector clásico de la medicina nuclear" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
+        <img width="300" height="400" loading="lazy" decoding="async" src="../assets/medicina/camara-gamma.jpg" alt="Cámara gamma de doble cabezal de Siemens, el detector clásico de la medicina nuclear" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Cámara gamma de doble cabezal (Siemens) en un servicio de medicina nuclear. Fuente: Wikimedia Commons · Ideastoday — CC BY-SA 3.0.
         </div>
@@ -326,7 +354,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Gammagrafía ósea de cuerpo entero</span>
         </div>
-        <img src="../assets/medicina/gammagrafia-osea.jpg" alt="Gammagrafía ósea de cuerpo entero donde se ven metástasis en la columna vertebral como zonas de mayor captación" class="w-full h-auto block max-w-xs mx-auto" style="display:block;"/>
+        <img width="501" height="845" loading="lazy" decoding="async" src="../assets/medicina/gammagrafia-osea.jpg" alt="Gammagrafía ósea de cuerpo entero donde se ven metástasis en la columna vertebral como zonas de mayor captación" class="w-full h-auto block max-w-xs mx-auto" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Gammagrafía ósea con Tc-99m-HDP: el paciente presenta metástasis en la columna vertebral (puntos de mayor captación). Fuente: Wikimedia Commons · Hg6996 — CC BY-SA 3.0.
         </div>
@@ -378,7 +406,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Tomógrafo SPECT/CT</span>
         </div>
-        <img src="../assets/medicina/spect-ct.jpg" alt="Tomógrafo SPECT/CT Siemens Symbia en operación realizando una gammagrafía de cuerpo entero" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="956" loading="lazy" decoding="async" src="../assets/medicina/spect-ct.jpg" alt="Tomógrafo SPECT/CT Siemens Symbia en operación realizando una gammagrafía de cuerpo entero" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Tomógrafo SPECT/CT (Siemens Symbia) realizando una gammagrafía de cuerpo entero. Fuente: Wikimedia Commons · Ytrottier — CC BY-SA 3.0.
         </div>
@@ -410,7 +438,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Tomógrafo PET/CT</span>
         </div>
-        <img src="../assets/medicina/pet-ct-scanner.jpg" alt="Tomógrafo PET/CT Philips en una sala de medicina nuclear con iluminación azul" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="960" loading="lazy" decoding="async" src="../assets/medicina/pet-ct-scanner.jpg" alt="Tomógrafo PET/CT Philips en una sala de medicina nuclear con iluminación azul" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Tomógrafo PET/CT (Philips) en una sala de medicina nuclear. Fuente: Wikimedia Commons · Partynia — CC BY-SA 4.0.
         </div>
@@ -423,7 +451,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · PET cerebral con F-18 FDG</span>
         </div>
-        <img src="../assets/aplicaciones/pet-cerebral.jpg" alt="Imagen PET cerebral con F-18 FDG mostrando el metabolismo de glucosa: zonas activas en rojo y amarillo" class="w-full h-auto block" style="display:block;"/>
+        <img width="1600" height="1600" loading="lazy" decoding="async" src="../assets/aplicaciones/pet-cerebral.jpg" alt="Imagen PET cerebral con F-18 FDG mostrando el metabolismo de glucosa: zonas activas en rojo y amarillo" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           PET cerebral con F-18 FDG: las zonas en rojo/amarillo muestran la actividad metabólica del cerebro. Fuente: proyecto nucle-ar.
         </div>
@@ -448,7 +476,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Acelerador lineal de radioterapia</span>
         </div>
-        <img src="../assets/medicina/acelerador-lineal.jpg" alt="Acelerador lineal de radioterapia Elekta Compact con el cabezal giratorio y la camilla" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="850" loading="lazy" decoding="async" src="../assets/medicina/acelerador-lineal.jpg" alt="Acelerador lineal de radioterapia Elekta Compact con el cabezal giratorio y la camilla" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Acelerador lineal de radioterapia (Elekta Compact). Fuente: Wikimedia Commons · Narenfox — CC BY-SA 4.0.
         </div>
@@ -482,7 +510,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Gamma Knife</span>
         </div>
-        <img src="../assets/medicina/gamma-knife.jpg" alt="Sistema de radiocirugía Leksell Gamma Knife Perfexion en un quirófano" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="960" loading="lazy" decoding="async" src="../assets/medicina/gamma-knife.jpg" alt="Sistema de radiocirugía Leksell Gamma Knife Perfexion en un quirófano" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Sistema de radiocirugía Leksell Gamma Knife Perfexion. Fuente: Wikimedia Commons · Mos.ru — CC BY 4.0.
         </div>
@@ -511,7 +539,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Sala de protonterapia</span>
         </div>
-        <img src="../assets/aplicaciones/protonterapia-sala.jpg" alt="Sala moderna de protonterapia con gantry rotacional de gran tamaño y paciente sobre la camilla" class="w-full h-auto block" style="display:block;"/>
+        <img width="1600" height="893" loading="lazy" decoding="async" src="../assets/aplicaciones/protonterapia-sala.jpg" alt="Sala moderna de protonterapia con gantry rotacional de gran tamaño y paciente sobre la camilla" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Sala de tratamiento con protonterapia: el gantry rota 360° para dirigir el haz de protones desde el mejor ángulo. Fuente: proyecto nucle-ar.
         </div>
@@ -536,7 +564,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Semillas radiactivas de braquiterapia</span>
         </div>
-        <img src="../assets/medicina/braquiterapia-semillas.jpg" alt="Pequeñas semillas radiactivas de braquiterapia para el tratamiento del cáncer de próstata" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
+        <img width="400" height="437" loading="lazy" decoding="async" src="../assets/medicina/braquiterapia-semillas.jpg" alt="Pequeñas semillas radiactivas de braquiterapia para el tratamiento del cáncer de próstata" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Semillas radiactivas de braquiterapia (implantadas en la próstata). Fuente: Wikimedia Commons · Nuclear Regulatory Commission — Dominio público.
         </div>
@@ -565,7 +593,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Isótopo radiactivo en vial</span>
         </div>
-        <img src="../assets/medicina/radiofarmaco-vial.jpg" alt="Vial de laboratorio con una solución radiactiva de color rosa, similar a un radiofármaco listo para administrar" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
+        <img width="792" height="1600" loading="lazy" decoding="async" src="../assets/medicina/radiofarmaco-vial.jpg" alt="Vial de laboratorio con una solución radiactiva de color rosa, similar a un radiofármaco listo para administrar" class="w-full h-auto block max-w-md mx-auto" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Los radiofármacos se preparan por paciente en la radiofarmacia, a partir de soluciones de isótopos como esta. Fuente: Wikimedia Commons · Oak Ridge National Laboratory — Dominio público.
         </div>
@@ -619,7 +647,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Ilustración de la BNCT</span>
         </div>
-        <img src="../assets/medicina/bnct.jpg" alt="Ilustración de la terapia por captura neutrónica de boro: el boro se acumula en la célula cancerosa y los neutrones disparan la destrucción" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="919" loading="lazy" decoding="async" src="../assets/medicina/bnct.jpg" alt="Ilustración de la terapia por captura neutrónica de boro: el boro se acumula en la célula cancerosa y los neutrones disparan la destrucción" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Ilustración de la BNCT del National Cancer Institute: 1) el boro se acumula en la célula tumoral; 2) el haz de neutrones la destruye desde adentro. Fuente: Wikimedia Commons · NCI — Dominio público.
         </div>
@@ -644,7 +672,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Instalación de irradiación con Co-60</span>
         </div>
-        <img src="../assets/medicina/irradiador-cobalto.jpg" alt="Instalación multipropósito de irradiación con cobalto-60 en los terrenos de un instituto nuclear" class="w-full h-auto block" style="display:block;"/>
+        <img width="1280" height="853" loading="lazy" decoding="async" src="../assets/medicina/irradiador-cobalto.jpg" alt="Instalación multipropósito de irradiación con cobalto-60 en los terrenos de un instituto nuclear" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Instalación multipropósito de irradiación con Cobalto-60 (PNRI, Filipinas). Fuente: Wikimedia Commons · Philippine Nuclear Research Institute — CC BY-SA 3.0.
         </div>

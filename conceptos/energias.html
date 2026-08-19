@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="Otras Fuentes de Energía — La matriz argentina | Energía Nuclear">
   <meta property="og:description" content="La matriz energética argentina: hidro, eólica, solar, biomasa, geotermia, gas, petróleo, carbón y nuclear, con emisiones de CO₂.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -86,6 +86,34 @@
     .glosario:hover::after { opacity: 1; }
     .credits { font-family: 'Inter', sans-serif; font-size: 10.5px; line-height: 1.5; }
   </style>
+  <!-- Contención responsive compartida para fórmulas y medios científicos -->
+  <style id="responsive-content-safety">
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"],
+    .equation-block,
+    .dato-box,
+    p:has(mjx-container) {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 767px) {
+      .glosario::after {
+        position: fixed;
+        inset: auto 1rem 4.75rem;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        transform: none;
+      }
+      mjx-container[jax="CHTML"][display="true"] { padding-bottom: .35rem; }
+      table { max-width: 100%; }
+    }
+  </style>
+
 </head>
 <body>
 <div class="reading-bar" id="reading-bar"></div>

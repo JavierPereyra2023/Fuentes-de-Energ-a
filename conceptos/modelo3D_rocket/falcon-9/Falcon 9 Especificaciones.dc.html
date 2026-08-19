@@ -17,6 +17,37 @@
   a { color: #7dd3fc; text-decoration: none; }
   a:hover { color: #e0f2fe; }
   @keyframes pulseDot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.8); } }
+
+  /* La pagina esta maquetada con estilos inline, por eso las reglas responsive
+     necesitan !important para poder pisarlos. Sin esto, en celular el header
+     queda en 2 columnas y la foto del cohete se comprime hasta desaparecer. */
+  img { max-width: 100%; }
+
+  /* En una grilla, "1fr" equivale a minmax(auto, 1fr): la pista nunca baja del
+     min-content de su contenido, asi que un texto con white-space: nowrap la
+     estira y desborda la pantalla. minmax(0, 1fr) le saca ese piso. */
+  @media (max-width: 860px) {
+    header { grid-template-columns: minmax(0, 1fr) !important; gap: 28px !important; padding: 28px 0 40px !important; }
+    header h1 { font-size: 56px !important; }
+    header > div:last-child { min-height: auto !important; order: -1; }
+    header img { max-height: 380px !important; }
+    nav { flex-wrap: wrap !important; row-gap: 12px !important; }
+    nav > div:last-child { gap: 16px !important; flex-wrap: wrap !important; font-size: 13px !important; }
+    /* Las grillas fijas estan anidadas a distinta profundidad, por eso se
+       seleccionan por el atributo style y no por la posicion en el arbol. */
+    div[style*="repeat(3, 1fr)"],
+    div[style*="repeat(4, 1fr)"],
+    div[style*="repeat(2, 1fr)"],
+    div[style*="300px 1fr"],
+    div[style*="1fr 200px 1fr"] { grid-template-columns: minmax(0, 1fr) !important; }
+    div[style*="minmax(130px, 1fr)"] { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important; }
+    div[style*="60px 1fr"] { grid-template-columns: 44px minmax(0, 1fr) !important; gap: 14px !important; padding: 18px !important; }
+  }
+
+  @media (max-width: 520px) {
+    header h1 { font-size: 44px !important; }
+    header img { max-height: 300px !important; }
+  }
 </style>
 </helmet>
 <div style="min-height: 100vh; background: radial-gradient(1200px 700px at 78% -8%, rgba(56,189,248,0.16), transparent 60%), radial-gradient(900px 600px at 5% 20%, rgba(99,102,241,0.12), transparent 62%), #020617; color: #e5e7eb; font-family: 'Space Grotesk', Helvetica, sans-serif; padding: 0 24px 80px">
@@ -63,7 +94,7 @@
     </div>
     <div style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 620px">
       <div style="position: absolute; width: 100%; max-width: 420px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(56,189,248,.22), transparent 70%); filter: blur(10px)"></div>
-      <img src="falcon9.png" alt="Falcon 9 en configuración de vuelo" style="position: relative; height: 660px; max-width: 100%; object-fit: contain; mix-blend-mode: screen">
+      <img width="443" height="825" decoding="async" fetchpriority="high" src="falcon9.png" alt="Falcon 9 en configuración de vuelo" style="position: relative; width: auto; height: auto; max-width: 100%; max-height: 660px; object-fit: contain; mix-blend-mode: screen">
     </div>
   </header>
 
@@ -119,7 +150,7 @@
     </div>
     <div style="display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start">
       <div style="position: relative; display: flex; justify-content: center; padding: 28px 0; border: 1px solid rgba(148,163,184,.18); border-radius: 24px; background: linear-gradient(180deg, rgba(15,23,42,.92), rgba(2,6,23,.6))">
-        <img src="falcon9.png" alt="Falcon 9, vista lateral" style="width: 100%; max-width: 100%; height: auto; object-fit: contain; mix-blend-mode: screen">
+        <img width="443" height="825" loading="lazy" decoding="async" src="falcon9.png" alt="Falcon 9, vista lateral" style="width: 100%; max-width: 100%; height: auto; object-fit: contain; mix-blend-mode: screen">
       </div>
       <div style="display: flex; flex-direction: column; gap: 16px">
         <div style="display: grid; grid-template-columns: 60px 1fr; gap: 22px; padding: 24px; border: 1px solid rgba(148,163,184,.22); border-radius: 20px; background: rgba(15,23,42,.85)">

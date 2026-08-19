@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="Biomasa y Bioenergía — Otras Fuentes de Energía | Energía Nuclear">
   <meta property="og:description" content="Biomasa y bioenergía: biogás, biocombustibles y el carbono neutro en la matriz energética argentina.">
-  <meta property="og:image" content="../../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -110,6 +110,34 @@
     @media (orientation: landscape) and (max-height: 620px) { .energy3d-frame { height: 560px; } .energy3d-placeholder { min-height: 560px; } }
     @media (min-width: 1024px) { .energy3d-frame { height: clamp(500px, 56vh, 600px); } .energy3d-placeholder { min-height: clamp(500px, 56vh, 600px); } }
   </style>
+  <!-- Contención responsive compartida para fórmulas y medios científicos -->
+  <style id="responsive-content-safety">
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"],
+    .equation-block,
+    .dato-box,
+    p:has(mjx-container) {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 767px) {
+      .glosario::after {
+        position: fixed;
+        inset: auto 1rem 4.75rem;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        transform: none;
+      }
+      mjx-container[jax="CHTML"][display="true"] { padding-bottom: .35rem; }
+      table { max-width: 100%; }
+    }
+  </style>
+
 </head>
 <body>
 <div class="reading-bar" id="reading-bar"></div>
@@ -248,7 +276,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:image" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Planta de biogás</span>
         </div>
-        <img src="../../assets/energias/biogas.jpg" alt="Planta de biogás San Pedro Verde, que aprovecha residuos orgánicos para generar energía" class="w-full h-auto block" style="display:block;"/>
+        <img width="1600" height="801" loading="lazy" decoding="async" src="../../assets/energias/biogas.jpg" alt="Planta de biogás San Pedro Verde, que aprovecha residuos orgánicos para generar energía" class="w-full h-auto block" style="display:block;"/>
         <div class="px-5 py-3 credits text-nucleo-silverDark">
           Planta de biogás San Pedro Verde (provincia de Buenos Aires). Fuente: Wikimedia Commons · Casa Rosada — CC BY 2.5 ar.
         </div>

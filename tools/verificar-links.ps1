@@ -19,11 +19,17 @@
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 
-$files = Get-ChildItem "$root" -Filter *.html -Recurse
+$files = Get-ChildItem "$root" -Filter *.html -Recurse | Where-Object {
+  $_.FullName -notlike (Join-Path $root 'output\*')
+}
 $issues = New-Object System.Collections.Generic.List[object]
 
 $extRe = '^(https?:|mailto:|tel:|data:|javascript:|file:)'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
+
+function LineOf($content, $index) {
+  return (($content.Substring(0, $index).Split("`n").Count))
+}
 
 foreach ($f in $files) {
   $rel = $f.FullName.Substring($root.Length + 1)
@@ -42,15 +48,15 @@ foreach ($f in $files) {
     if ($href.StartsWith('#')) {
       $id = $href.Substring(1)
       if (-not $idSet.Contains($id)) {
-        $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'anchor sin id'; Ref = $href; Linea = LineOf($content, $mm.Index) })
+        $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'anchor sin id'; Ref = $href; Linea = (LineOf $content $mm.Index) })
       }
       continue
     }
     $parts = $href.Split('#', 2)
-    $path = $parts[0]; $id = if ($parts.Length -gt 1) { $parts[1] } else { '' }
+    $path = [Uri]::UnescapeDataString(($parts[0] -split '\?')[0]); $id = if ($parts.Length -gt 1) { $parts[1] } else { '' }
     $target = if ([System.IO.Path]::IsPathRooted($path)) { $path } else { [System.IO.Path]::GetFullPath((Join-Path $dir $path)) }
     if (-not (Test-Path -LiteralPath $target)) {
-      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'archivo no existe'; Ref = $href; Linea = LineOf($content, $mm.Index) })
+      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'archivo no existe'; Ref = $href; Linea = (LineOf $content $mm.Index) })
     } elseif ($id) {
       $tContent = [System.IO.File]::ReadAllText($target, $utf8)
       if ($tContent -notmatch ('id="' + [regex]::Escape($id) + '"')) {
@@ -64,10 +70,10 @@ foreach ($f in $files) {
     $src = $mm.Groups[1].Value
     if ($src -match $extRe) { continue }
     if ($src.StartsWith('#')) { continue }
-    $path = $src.Split('#', 2)[0]
+    $path = [Uri]::UnescapeDataString((($src.Split('#', 2)[0]) -split '\?')[0])
     $target = if ([System.IO.Path]::IsPathRooted($path)) { $path } else { [System.IO.Path]::GetFullPath((Join-Path $dir $path)) }
     if (-not (Test-Path -LiteralPath $target)) {
-      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'src no existe'; Ref = $src; Linea = LineOf($content, $mm.Index) })
+      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'src no existe'; Ref = $src; Linea = (LineOf $content $mm.Index) })
     }
   }
 
@@ -76,22 +82,21 @@ foreach ($f in $files) {
     $idx = $sec.Index + $sec.Length
     $tail = $content.Substring($idx, [Math]::Min(300, $content.Length - $idx))
     if ($tail -notmatch 'class="flex items-center gap-4 mb-6"') {
-      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = "sec$($sec.Groups[1].Value) sin wrapper flex"; Ref = $sec.Value; Linea = LineOf($content, $sec.Index) })
+      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = "sec$($sec.Groups[1].Value) sin wrapper flex"; Ref = $sec.Value; Linea = (LineOf $content $sec.Index) })
     }
   }
 
   # --- meta en head ---
-  $head = if ($content -match '(?s)<head>(.*?)</head>') { $Matches[1] } else { '' }
-  if ($head -notmatch '<meta name="description"') {
-    $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'falta meta description'; Ref = ''; Linea = 0 })
+  $isEmbeddedModel = $rel -match '(^|\\)modelo3D(?:_|-)' -or $rel -eq 'Explorando la materia.html'
+  if (-not $isEmbeddedModel) {
+    $head = if ($content -match '(?s)<head>(.*?)</head>') { $Matches[1] } else { '' }
+    if ($head -notmatch '<meta name="description"') {
+      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'falta meta description'; Ref = ''; Linea = 0 })
+    }
+    if ($head -notmatch '<link rel="icon"') {
+      $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'falta favicon'; Ref = ''; Linea = 0 })
+    }
   }
-  if ($head -notmatch '<link rel="icon"') {
-    $issues.Add([PSCustomObject]@{ Archivo = $rel; Tipo = 'falta favicon'; Ref = ''; Linea = 0 })
-  }
-}
-
-function LineOf($content, $index) {
-  return (($content.Substring(0, $index).Split("`n").Count))
 }
 
 Write-Host "Analizados: $($files.Count) archivos" -ForegroundColor Cyan

@@ -10,7 +10,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="Espectro Electromagnético — De las Ondas de Radio a los Rayos Gamma | Energía Nuclear">
   <meta property="og:description" content="Espectro electromagnético: de las ondas de radio a los rayos gamma, la radiación ionizante y la no ionizante.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -83,6 +83,34 @@
     .spectrum-svg text { font-family: 'Inter', sans-serif; }
     .barrier-svg .barrier-label { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; }
   </style>
+  <!-- Contención responsive compartida para fórmulas y medios científicos -->
+  <style id="responsive-content-safety">
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"],
+    .equation-block,
+    .dato-box,
+    p:has(mjx-container) {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 767px) {
+      .glosario::after {
+        position: fixed;
+        inset: auto 1rem 4.75rem;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        transform: none;
+      }
+      mjx-container[jax="CHTML"][display="true"] { padding-bottom: .35rem; }
+      table { max-width: 100%; }
+    }
+  </style>
+
 </head>
 <body>
 <div class="reading-bar" id="reading-bar"></div>
@@ -198,7 +226,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="Espectro Electromagnético — De las Ondas de Radio a los Rayos Gamma | Energía Nuclear">
   <meta property="og:description" content="Espectro electromagnético: de las ondas de radio a los rayos gamma, la radiación ionizante y la no ionizante.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="description" content="Espectro electromagnÃ©tico: de las ondas de radio a los rayos gamma, la radiaciÃ³n ionizante y la no ionizante.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
@@ -206,7 +234,7 @@
   <meta property="og:site_name" content="EnergÃ­a Nuclear">
   <meta property="og:title" content="Espectro Electromagnético — De las Ondas de Radio a los Rayos Gamma | Energía Nuclear">
   <meta property="og:description" content="Espectro electromagnÃ©tico: de las ondas de radio a los rayos gamma, la radiaciÃ³n ionizante y la no ionizante.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image"><desc>Comparación de las regiones del espectro, desde ondas de radio hasta rayos gamma.</desc>
           <defs>
             <linearGradient id="spectrumGrad" x1="0" y1="0" x2="1" y2="0">
@@ -464,7 +492,7 @@
   <meta property="og:site_name" content="Energía Nuclear">
   <meta property="og:title" content="Espectro Electromagnético — De las Ondas de Radio a los Rayos Gamma | Energía Nuclear">
   <meta property="og:description" content="Espectro electromagnético: de las ondas de radio a los rayos gamma, la radiación ionizante y la no ionizante.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="description" content="Espectro electromagnÃ©tico: de las ondas de radio a los rayos gamma, la radiaciÃ³n ionizante y la no ionizante.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
@@ -472,7 +500,7 @@
   <meta property="og:site_name" content="EnergÃ­a Nuclear">
   <meta property="og:title" content="Espectro Electromagnético — De las Ondas de Radio a los Rayos Gamma | Energía Nuclear">
   <meta property="og:description" content="Espectro electromagnÃ©tico: de las ondas de radio a los rayos gamma, la radiaciÃ³n ionizante y la no ionizante.">
-  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.png">
+  <meta property="og:image" content="../assets/generated/hero-laboratorio-nuclear.jpg">
   <meta name="twitter:card" content="summary_large_image"><desc>Relación entre tipos de radiación y materiales usados para atenuarlas o absorberlas.</desc>
           <defs>
             <radialGradient id="srcGlow" cx="50%" cy="50%" r="50%">

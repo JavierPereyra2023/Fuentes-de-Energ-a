@@ -118,6 +118,34 @@
     @media (min-width: 640px) { .rocket-mobile-specs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     @media (max-width: 480px) { .rocket-model-viewport { height: 420px; min-height: 420px; } }
   </style>
+  <!-- Contención responsive compartida para fórmulas y medios científicos -->
+  <style id="responsive-content-safety">
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg, video, canvas, iframe { max-width: 100%; }
+    mjx-container[jax="CHTML"][display="true"],
+    .equation-block,
+    .dato-box,
+    p:has(mjx-container) {
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 767px) {
+      .glosario::after {
+        position: fixed;
+        inset: auto 1rem 4.75rem;
+        width: auto;
+        max-width: none;
+        white-space: normal;
+        transform: none;
+      }
+      mjx-container[jax="CHTML"][display="true"] { padding-bottom: .35rem; }
+      table { max-width: 100%; }
+    }
+  </style>
+
 </head>
 <body>
 <div class="reading-bar" id="reading-bar"></div>
@@ -300,7 +328,7 @@
           <span class="iconify text-nucleo-accent" data-icon="lucide:atom" data-width="16"></span>
           <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-nucleo-accent" style="font-family:'Inter',sans-serif;">Imagen · Voyager 1 con su RTG</span>
         </div>
-        <img src="../assets/aplicaciones/voyager-rtg.jpg" alt="Sonda espacial Voyager con su generador termoeléctrico de radioisótopos (RTG) claramente visible al final del boom, antenas parabólicas de alta ganancia, mantas térmicas doradas, fondo de espacio profundo con estrellas y galaxias lejanas" class="w-full h-auto block" style="display:block;" loading="lazy">
+        <img width="1600" height="893" src="../assets/aplicaciones/voyager-rtg.jpg" alt="Sonda espacial Voyager con su generador termoeléctrico de radioisótopos (RTG) claramente visible al final del boom, antenas parabólicas de alta ganancia, mantas térmicas doradas, fondo de espacio profundo con estrellas y galaxias lejanas" class="w-full h-auto block" style="display:block;" loading="lazy">
       </div>
 
       <p class="text-lg md:text-xl text-nucleo-silver leading-relaxed mb-4">
@@ -368,7 +396,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)]">
           <div class="flex flex-col">
             <div class="relative aspect-video overflow-hidden">
-              <img src="../assets/aplicaciones/spacex/falcon-9-hero-night.png" alt="Cohete Falcon 9 en la plataforma de lanzamiento durante la noche" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="filter: saturate(.92) brightness(.82) contrast(1.05);">
+              <img width="1600" height="900" loading="lazy" decoding="async" src="../assets/aplicaciones/spacex/falcon-9-hero-night.jpg" alt="Cohete Falcon 9 en la plataforma de lanzamiento durante la noche" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="filter: saturate(.92) brightness(.82) contrast(1.05);">
               <div class="absolute inset-0 bg-gradient-to-t from-nucleo-gray via-transparent to-transparent"></div>
               <span class="absolute top-3 right-3 text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/20 text-nucleo-accent px-2.5 py-1" style="font-family:'Inter',sans-serif;">Falcon 9</span>
             </div>
@@ -416,7 +444,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)]">
           <div class="flex flex-col">
             <div class="relative h-48 sm:h-60 lg:h-56 overflow-hidden">
-              <img src="../assets/aplicaciones/spacex/falcon-heavy-hero.png" alt="Cohete Falcon Heavy en la plataforma de lanzamiento" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="filter: saturate(.92) brightness(.82) contrast(1.05);">
+              <img width="1600" height="900" loading="lazy" decoding="async" src="../assets/aplicaciones/spacex/falcon-heavy-hero.jpg" alt="Cohete Falcon Heavy en la plataforma de lanzamiento" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="filter: saturate(.92) brightness(.82) contrast(1.05);">
               <div class="absolute inset-0 bg-gradient-to-t from-nucleo-gray via-transparent to-transparent"></div>
               <span class="absolute top-3 right-3 text-[9px] font-bold uppercase tracking-wider bg-nucleo-accent/20 text-nucleo-accent px-2.5 py-1" style="font-family:'Inter',sans-serif;">Falcon Heavy</span>
             </div>
@@ -464,7 +492,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)]">
           <div class="flex flex-col">
             <div class="relative h-48 sm:h-60 lg:h-56 overflow-hidden">
-              <img src="../assets/aplicaciones/spacex/starship-hero.png" alt="Sistema Starship y Super Heavy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="filter: saturate(.92) brightness(.82) contrast(1.05);">
+              <img width="1600" height="800" loading="lazy" decoding="async" src="../assets/aplicaciones/spacex/starship-hero.jpg" alt="Sistema Starship y Super Heavy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style="filter: saturate(.92) brightness(.82) contrast(1.05);">
               <div class="absolute inset-0 bg-gradient-to-t from-nucleo-gray via-transparent to-transparent"></div>
               <span class="absolute top-3 right-3 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1" style="font-family:'Inter',sans-serif; background: rgba(0,229,255,0.18); color: #5BF2FF;">Starship + Super Heavy</span>
             </div>

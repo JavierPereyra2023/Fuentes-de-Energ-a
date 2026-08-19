@@ -1,0 +1,51 @@
+/* Ajustes compartidos de los visores de cohetes para pantallas táctiles. */
+html, body {
+  max-width: 100%;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+@media (max-width: 720px) {
+  #axis {
+    top: 12px;
+    left: 12px;
+    max-width: calc(100vw - 180px);
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  #views {
+    top: 12px;
+    right: 12px;
+  }
+
+  #readout {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    font-size: 10px;
+    line-height: 1.45;
+  }
+
+  .titleblock {
+    top: 16px;
+    left: 16px;
+    max-width: calc(100vw - 172px);
+  }
+
+  .views {
+    top: 16px;
+    right: 16px;
+  }
+
+  .views button {
+    min-width: 112px;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+}
+

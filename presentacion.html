@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#06090C">
+  <meta name="description" content="Presentación del proyecto educativo Explorando la materia: energía nuclear, ciencia argentina y recursos interactivos para la escuela secundaria.">
+  <title>Presentación del proyecto | Explorando la materia</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #06090c;
+      --panel: #0b1014;
+      --line: rgba(200, 212, 220, .16);
+      --muted: #a8b5bd;
+      --soft: #c8d4dc;
+      --paper: #eef8fb;
+      --cyan: #00e5ff;
+      --cyan-soft: #8beeff;
+      --safe-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; background: var(--ink); }
+    body { margin: 0; min-width: 320px; background: var(--ink); color: var(--paper); font-family: Inter, Arial, sans-serif; overflow-x: hidden; }
+    button, a { font: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+
+    .progress { position: fixed; inset: 0 auto auto 0; z-index: 30; width: 100%; height: 3px; background: rgba(255,255,255,.06); }
+    .progress span { display: block; width: 12.5%; height: 100%; background: var(--cyan); transform-origin: left; transition: width .35s ease; }
+
+    .topbar { position: fixed; z-index: 20; inset: 0 0 auto 0; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 4vw, 4rem); background: linear-gradient(180deg, rgba(6,9,12,.94), rgba(6,9,12,0)); pointer-events: none; }
+    .brand, .exit { pointer-events: auto; }
+    .brand { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; font-size: .72rem; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+    .brand-mark { width: 26px; height: 26px; display: grid; place-items: center; color: var(--ink); background: var(--cyan); }
+    .brand-mark::before { content: "✦"; font-size: .8rem; }
+    .exit { padding: .65rem .85rem; color: var(--soft); border: 1px solid var(--line); text-decoration: none; font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; background: rgba(6,9,12,.62); }
+    .exit:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    main { position: relative; }
+    .slide { position: relative; min-height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; display: grid; place-items: center; isolation: isolate; overflow: hidden; padding: clamp(5rem, 9vh, 7rem) clamp(1.1rem, 5vw, 5rem) clamp(5.8rem, 10vh, 7rem); }
+    .slide::after { content: ""; position: absolute; inset: 3.2rem clamp(.8rem, 2vw, 2.25rem) 2.25rem; z-index: -1; border: 1px solid rgba(200,212,220,.11); pointer-events: none; }
+    .slide-inner { width: min(100%, 1320px); margin: auto; }
+    .eyebrow { margin: 0 0 1rem; color: var(--cyan-soft); font-size: .68rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+    .display { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(3.35rem, 8vw, 8.7rem); line-height: .84; letter-spacing: -.045em; }
+    .display em { display: block; padding-bottom: .08em; color: var(--paper); font-weight: 500; line-height: 1.05; }
+    .title { max-width: 900px; margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2.6rem, 6vw, 6.4rem); font-weight: 500; line-height: .95; letter-spacing: -.035em; }
+    .lead { max-width: 650px; margin: 1.3rem 0 0; color: var(--soft); font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.38; }
+    .micro { color: var(--muted); font-size: clamp(.9rem, 1.3vw, 1.05rem); line-height: 1.7; }
+    .accent { color: var(--cyan); }
+    .rule { width: 72px; height: 2px; margin: 1.5rem 0; background: var(--cyan); }
+
+    .cover { background: radial-gradient(circle at 52% 33%, rgba(0,229,255,.12), transparent 34%), var(--ink); }
+    #probabilityField { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; opacity: .82; }
+    .cover-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .7fr); align-items: end; gap: clamp(2rem, 8vw, 9rem); padding-top: 12vh; }
+    .cover-copy { align-self: end; }
+    .cover-note { max-width: 420px; padding-bottom: .7rem; }
+    .cover .lead { max-width: 470px; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.7rem; }
+    .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: .85rem 1.2rem; border: 1px solid var(--cyan); background: var(--cyan); color: #041014; text-decoration: none; font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; transition: transform .2s ease, background .2s ease, color .2s ease; }
+    .button.secondary { background: transparent; color: var(--paper); border-color: rgba(200,212,220,.32); }
+    .button:hover { transform: translateY(-2px); background: var(--cyan-soft); }
+    .button.secondary:hover { color: var(--cyan); background: rgba(0,229,255,.06); border-color: var(--cyan); }
+    .button:active { transform: translateY(1px); }
+
+    .manifesto-grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(3rem, 9vw, 10rem); align-items: center; }
+    .manifesto-quote { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2.1rem, 4.5vw, 4.8rem); line-height: 1.02; }
+    .manifesto-quote strong { color: var(--cyan); font-weight: 500; }
+    .principles { display: grid; gap: 1.2rem; }
+    .principle { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+    .principle b { color: var(--cyan); font-family: "Cormorant Garamond", Georgia, serif; font-size: 2rem; font-weight: 500; }
+    .principle h3 { margin: .15rem 0 .35rem; font-size: 1rem; }
+    .principle p { margin: 0; }
+
+    .numbers { background: linear-gradient(135deg, rgba(0,229,255,.035), transparent 42%), var(--ink); }
+    .number-layout { display: grid; grid-template-columns: minmax(240px, .62fr) minmax(0, 1.38fr); gap: clamp(3rem, 8vw, 8rem); align-items: center; }
+    .metric-field { display: grid; grid-template-columns: 1.25fr .75fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .metric { min-height: 180px; padding: clamp(1.4rem, 3vw, 2.6rem); background: var(--panel); display: flex; flex-direction: column; justify-content: space-between; }
+    .metric.wide { grid-row: span 2; min-height: 361px; background: linear-gradient(145deg, rgba(0,229,255,.12), rgba(11,16,20,.92)); }
+    .metric strong { color: var(--paper); font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(3.4rem, 7vw, 7.8rem); font-weight: 500; line-height: .8; }
+    .metric.wide strong { color: var(--cyan); }
+    .metric span { max-width: 20ch; color: var(--muted); font-size: .76rem; line-height: 1.45; text-transform: uppercase; letter-spacing: .1em; }
+
+    .photo-slide { padding-left: 0; padding-right: 0; }
+    .photo-slide::after { left: clamp(.8rem,2vw,2.25rem); right: clamp(.8rem,2vw,2.25rem); }
+    .photo-layout { width: min(100%, 1440px); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr); min-height: min(72dvh, 760px); }
+    .photo { position: relative; overflow: hidden; min-height: 420px; }
+    .photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.06); }
+    .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 50%, var(--ink)); }
+    .photo-copy { align-self: center; padding: clamp(2rem, 5vw, 5rem); margin-left: -5vw; z-index: 2; background: rgba(6,9,12,.9); border-left: 2px solid var(--cyan); }
+
+    .pathway { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: clamp(2.2rem, 5vw, 4.5rem); background: var(--line); border: 1px solid var(--line); }
+    .path-step { position: relative; min-height: 260px; padding: clamp(1.3rem, 2.4vw, 2.2rem); background: var(--panel); }
+    .path-step:nth-child(2), .path-step:nth-child(4) { background: rgba(0,229,255,.055); }
+    .path-step .verb { color: var(--cyan); font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.8rem, 3vw, 3rem); }
+    .path-step p { margin: 3rem 0 0; color: var(--muted); line-height: 1.6; }
+
+    .lab-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 6vw, 7rem); align-items: center; }
+    .lab-photo { position: relative; min-height: min(65dvh, 680px); overflow: hidden; border: 1px solid var(--line); }
+    .lab-photo img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+    .lab-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,9,12,.9)); }
+    .lab-caption { position: absolute; z-index: 2; left: 1.5rem; bottom: 1.5rem; width: min(85%, 380px); color: var(--paper); font-size: .85rem; line-height: 1.55; }
+    .experience-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 2rem; background: var(--line); }
+    .experience { padding: 1.25rem; background: var(--ink); }
+    .experience strong { display: block; color: var(--paper); font-size: .92rem; }
+    .experience span { display: block; margin-top: .35rem; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+
+    .classroom-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap: clamp(2.5rem, 8vw, 8rem); align-items: center; }
+    .sequence { display: grid; gap: 0; margin-top: 2rem; }
+    .sequence-item { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+    .sequence-item span { color: var(--cyan); font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.5rem; }
+    .sequence-item p { margin: .2rem 0 0; color: var(--muted); }
+    .teacher-note { padding: clamp(1.8rem, 4vw, 3.5rem); background: rgba(0,229,255,.07); border-left: 2px solid var(--cyan); }
+    .teacher-note blockquote { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.7rem); line-height: 1.16; }
+    .teacher-note p { margin: 1.5rem 0 0; color: var(--muted); }
+
+    .tech-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(2rem, 7vw, 7rem); align-items: end; }
+    .tech-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+    .tech-spec { min-height: 150px; padding: 1.4rem; background: var(--panel); }
+    .tech-spec strong { display: block; color: var(--cyan); font-family: "Cormorant Garamond", Georgia, serif; font-size: 2.2rem; font-weight: 500; }
+    .tech-spec span { color: var(--muted); font-size: .8rem; line-height: 1.5; }
+    .device-outline { position: relative; aspect-ratio: 4 / 3; border: 1px solid rgba(0,229,255,.38); background: linear-gradient(145deg, rgba(0,229,255,.08), transparent); }
+    .device-outline::before { content: ""; position: absolute; inset: 7%; border: 1px solid var(--line); background: url("assets/generated/hero-laboratorio-nuclear.jpg") center/cover; filter: grayscale(.65) contrast(1.08); }
+    .device-outline::after { content: "Celular / Tablet / Aula"; position: absolute; right: 1rem; bottom: 1rem; padding: .55rem .7rem; color: var(--ink); background: var(--cyan); font-size: .62rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+
+    .closing { background: radial-gradient(circle at 70% 35%, rgba(0,229,255,.13), transparent 32%), var(--ink); }
+    .closing-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: clamp(2rem, 8vw, 9rem); align-items: end; }
+    .closing .title { font-size: clamp(3.2rem, 8vw, 8rem); }
+    .signature { color: var(--muted); font-size: .76rem; line-height: 1.7; }
+
+    .controls { position: fixed; z-index: 25; left: 50%; bottom: var(--safe-bottom); transform: translateX(-50%); display: flex; align-items: center; gap: .7rem; padding: .45rem; border: 1px solid var(--line); background: rgba(6,9,12,.88); backdrop-filter: blur(12px); }
+    .control { width: 40px; height: 40px; border: 0; color: var(--paper); background: transparent; cursor: pointer; font-size: 1.15rem; }
+    .control:hover:not(:disabled) { color: var(--cyan); background: rgba(0,229,255,.08); }
+    .control:disabled { opacity: .25; cursor: default; }
+    .counter { min-width: 58px; color: var(--muted); text-align: center; font-size: .68rem; font-variant-numeric: tabular-nums; letter-spacing: .12em; }
+
+    .dots { position: fixed; z-index: 20; right: max(1rem, 2.4vw); top: 50%; transform: translateY(-50%); display: grid; gap: .55rem; }
+    .dot { width: 9px; height: 9px; padding: 0; border: 1px solid rgba(200,212,220,.38); background: transparent; cursor: pointer; }
+    .dot.active { border-color: var(--cyan); background: var(--cyan); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+    .slide.active .reveal { opacity: 1; transform: none; }
+    .slide.active .reveal:nth-child(2) { transition-delay: .08s; }
+    .slide.active .reveal:nth-child(3) { transition-delay: .14s; }
+
+    @media (max-width: 900px) {
+      .cover-grid, .manifesto-grid, .number-layout, .photo-layout, .lab-layout, .classroom-layout, .tech-grid, .closing-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .cover-grid { align-items: center; padding-top: 7vh; }
+      .cover-note { padding-bottom: 0; }
+      .manifesto-grid { align-items: start; }
+      .photo-layout { min-height: auto; }
+      .photo { min-height: 38vh; }
+      .photo::after { background: linear-gradient(180deg, transparent 55%, var(--ink)); }
+      .photo-copy { width: calc(100% - 2rem); margin: -3rem 1rem 0; }
+      .pathway { grid-template-columns: 1fr 1fr; }
+      .path-step { min-height: 200px; }
+      .path-step p { margin-top: 1.5rem; }
+      .lab-photo { min-height: 38vh; order: -1; }
+      .device-outline { width: min(100%, 560px); }
+    }
+
+    @media (max-width: 640px) {
+      html { scroll-snap-type: y proximity; }
+      .topbar { height: 56px; }
+      .brand { font-size: .58rem; letter-spacing: .1em; }
+      .exit { padding: .55rem .65rem; font-size: .58rem; }
+      .slide { min-height: 100svh; place-items: start; padding: 5.1rem 1.15rem 6rem; }
+      .slide::after { inset: 3.5rem .55rem 4.7rem; }
+      .slide-inner { margin: auto 0; }
+      .display { font-size: clamp(3.1rem, 17vw, 5.2rem); line-height: .86; }
+      .title { font-size: clamp(2.5rem, 13vw, 4.2rem); }
+      .lead { font-size: 1.17rem; }
+      .cover-grid { padding-top: 4vh; }
+      .cover-note .micro { display: none; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .button { width: 100%; }
+      .principle { grid-template-columns: 3.4rem 1fr; gap: .8rem; }
+      .metric-field { grid-template-columns: 1fr 1fr; }
+      .metric, .metric.wide { min-height: 145px; }
+      .metric.wide { grid-column: span 2; grid-row: auto; }
+      .metric strong { font-size: 3.6rem; }
+      .photo { min-height: 34vh; }
+      .photo-copy { padding: 1.5rem; }
+      .pathway { grid-template-columns: 1fr; }
+      .path-step { min-height: auto; }
+      .path-step p { margin-top: .7rem; }
+      .experience-list, .tech-specs { grid-template-columns: 1fr 1fr; }
+      .experience, .tech-spec { min-height: 120px; padding: 1rem; }
+      .teacher-note { padding: 1.4rem; }
+      .dots { display: none; }
+      .controls { bottom: var(--safe-bottom); }
+      .device-outline::after { content: "Responsive"; }
+    }
+
+    @media (max-height: 720px) and (min-width: 641px) {
+      .slide { padding-top: 4.5rem; padding-bottom: 4.8rem; }
+      .display { font-size: clamp(3.2rem, 7vw, 6.2rem); }
+      .title { font-size: clamp(2.6rem, 5vw, 4.7rem); }
+      .lead { font-size: 1.12rem; margin-top: .8rem; }
+      .path-step { min-height: 205px; }
+      .metric, .metric.wide { min-height: 145px; }
+      .metric.wide { min-height: 291px; }
+      .lab-photo { min-height: 52vh; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <header class="topbar">
+    <a class="brand" href="inicio.html" aria-label="Ir al inicio del sitio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Explorando la materia</span>
+    </a>
+    <a class="exit" href="inicio.html">Abrir sitio</a>
+  </header>
+
+  <main id="presentation">
+    <section class="slide cover active" id="portada" data-label="Portada">
+      <canvas id="probabilityField" aria-hidden="true"></canvas>
+      <div class="slide-inner cover-grid">
+        <div class="cover-copy">
+          <p class="eyebrow reveal">Proyecto educativo de ciencias</p>
+          <h1 class="display reveal">Explorando <em>la materia</em></h1>
+          <p class="lead reveal">Energía nuclear, ciencia argentina y pensamiento crítico para los últimos años de la secundaria.</p>
+        </div>
+        <div class="cover-note reveal">
+          <p class="micro">Una experiencia web que conecta conceptos, evidencias, modelos interactivos y problemas reales del país.</p>
+          <div class="actions">
+            <button class="button" type="button" data-next>Comenzar presentación</button>
+            <a class="button secondary" href="inicio.html">Explorar el sitio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="proposito" data-label="Propósito">
+      <div class="slide-inner manifesto-grid">
+        <div>
+          <p class="eyebrow reveal">El propósito</p>
+          <blockquote class="manifesto-quote reveal">Comprender la energía nuclear sin <strong>miedo</strong>, sin propaganda y sin simplificaciones.</blockquote>
+        </div>
+        <div class="principles reveal">
+          <article class="principle"><b>01</b><div><h3>Rigor accesible</h3><p class="micro">Conceptos científicamente correctos, explicados con ejemplos cercanos y lenguaje claro.</p></div></article>
+          <article class="principle"><b>02</b><div><h3>Contexto argentino</h3><p class="micro">Atucha, Embalse, CAREM, TANDAR, INVAP y las instituciones que hacen ciencia en el país.</p></div></article>
+          <article class="principle"><b>03</b><div><h3>Debate informado</h3><p class="micro">Beneficios, riesgos, residuos y transición energética tratados con evidencia y preguntas abiertas.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide numbers" id="alcance" data-label="Alcance">
+      <div class="slide-inner number-layout">
+        <div>
+          <h2 class="title reveal">Un mapa amplio para entrar por distintas puertas.</h2>
+          <div class="rule reveal"></div>
+          <p class="lead reveal">Cada recorrido vuelve sobre una misma idea: la ciencia se comprende mejor cuando se conectan escalas, tecnologías y decisiones sociales.</p>
+        </div>
+        <div class="metric-field reveal" aria-label="Alcance del proyecto">
+          <div class="metric wide"><strong>19</strong><span>temas científicos conectados</span></div>
+          <div class="metric"><strong>9</strong><span>fuentes de energía comparadas</span></div>
+          <div class="metric"><strong>10</strong><span>artículos de revista científica</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide photo-slide" id="argentina" data-label="Argentina">
+      <div class="slide-inner photo-layout">
+        <div class="photo reveal"><img src="assets/generated/central-nuclear-argentina.jpg" alt="Central nuclear argentina junto a su entorno natural" width="1600" height="900" loading="lazy" decoding="async"></div>
+        <div class="photo-copy reveal">
+          <h2 class="title">La ciencia también tiene domicilio argentino.</h2>
+          <p class="lead">El proyecto enlaza física con soberanía tecnológica, salud, industria y producción de conocimiento.</p>
+          <p class="micro">CNEA, ARN, NA-SA, INVAP, Instituto Balseiro, UNSAM y los desarrollos que forman parte de nuestra historia científica.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="recorrido" data-label="Recorrido">
+      <div class="slide-inner">
+        <h2 class="title reveal">Una secuencia que convierte información en comprensión.</h2>
+        <div class="pathway reveal">
+          <article class="path-step"><span class="verb">Observar</span><p>Una imagen, una simulación o una pregunta concreta abre el problema.</p></article>
+          <article class="path-step"><span class="verb">Modelizar</span><p>Ecuaciones, diagramas y analogías permiten representar lo que no vemos.</p></article>
+          <article class="path-step"><span class="verb">Relacionar</span><p>El concepto se conecta con medicina, energía, ambiente e investigación.</p></article>
+          <article class="path-step"><span class="verb">Argumentar</span><p>La evidencia se usa para comparar opciones y sostener una posición.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="experiencias" data-label="Experiencias">
+      <div class="slide-inner lab-layout">
+        <div>
+          <h2 class="title reveal">No es un apunte trasladado a una pantalla.</h2>
+          <p class="lead reveal">La web deja explorar procesos, escalas y sistemas que en el aula suelen quedar quietos.</p>
+          <div class="experience-list reveal">
+            <div class="experience"><strong>Modelos 3D</strong><span>Centrales y fuentes de energía observadas desde distintos ángulos.</span></div>
+            <div class="experience"><strong>SVG científicos</strong><span>Fisión, radiaciones y ciclos físicos con animación explicativa.</span></div>
+            <div class="experience"><strong>Casos reales</strong><span>BNCT, PET, TANDAR, radioisótopos y tecnología espacial.</span></div>
+            <div class="experience"><strong>Cultura científica</strong><span>Revista, películas y biografías para ampliar el contexto.</span></div>
+          </div>
+        </div>
+        <figure class="lab-photo reveal">
+          <img src="assets/generated/hero-laboratorio-nuclear.jpg" alt="Estudiantes e investigadores usando instrumental en un laboratorio" width="1600" height="711" loading="lazy" decoding="async">
+          <figcaption class="lab-caption">La interacción no reemplaza la explicación: la vuelve visible, discutible y memorable.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" id="aula" data-label="Aula">
+      <div class="slide-inner classroom-layout">
+        <div>
+          <h2 class="title reveal">Pensado para una clase real.</h2>
+          <div class="sequence reveal">
+            <div class="sequence-item"><span>1</span><p>Proyectar una visualización y recuperar ideas previas.</p></div>
+            <div class="sequence-item"><span>2</span><p>Explorar en grupos desde celulares o computadoras.</p></div>
+            <div class="sequence-item"><span>3</span><p>Registrar evidencias, comparar fuentes y resolver consignas.</p></div>
+            <div class="sequence-item"><span>4</span><p>Cerrar con una explicación, una producción o un debate.</p></div>
+          </div>
+        </div>
+        <aside class="teacher-note reveal">
+          <blockquote>El recurso acompaña al docente. La pregunta, la mediación y la conversación siguen en el centro.</blockquote>
+          <p>Aplicable en Física, Físico-química, Ciencias Naturales y proyectos interdisciplinarios.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" id="tecnologia" data-label="Tecnología">
+      <div class="slide-inner tech-grid">
+        <div>
+          <h2 class="title reveal">Tecnología simple para llegar a más aulas.</h2>
+          <p class="lead reveal">Un sitio estático, rápido de publicar y fácil de abrir, sin cuentas ni instalación.</p>
+          <div class="tech-specs reveal">
+            <div class="tech-spec"><strong>HTML</strong><span>Páginas independientes y rutas directas.</span></div>
+            <div class="tech-spec"><strong>CSS</strong><span>Diseño adaptable a celular, tablet y escritorio.</span></div>
+            <div class="tech-spec"><strong>JS</strong><span>Interacciones ligeras sin backend.</span></div>
+            <div class="tech-spec"><strong>CDN</strong><span>Tipografías, iconos y fórmulas bajo demanda.</span></div>
+          </div>
+        </div>
+        <div class="device-outline reveal" role="img" aria-label="Vista adaptable del sitio en distintos dispositivos"></div>
+      </div>
+    </section>
+
+    <section class="slide closing" id="cierre" data-label="Cierre">
+      <div class="slide-inner closing-layout">
+        <div>
+          <h2 class="title reveal">Explorar para comprender. Comprender para decidir.</h2>
+          <p class="lead reveal">Una invitación a mirar la materia, la energía y la ciencia argentina con curiosidad y evidencia.</p>
+        </div>
+        <div class="reveal">
+          <p class="signature">Proyecto educativo<br>Prof. Pereyra, Javier<br>Escuela secundaria argentina</p>
+          <div class="actions">
+            <a class="button" href="inicio.html">Abrir el proyecto</a>
+            <a class="button secondary" href="inicio.html#temas">Ver los 19 temas</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="dots" id="dots" aria-label="Diapositivas"></nav>
+  <div class="controls" aria-label="Controles de la presentación">
+    <button class="control" id="previous" type="button" aria-label="Diapositiva anterior">←</button>
+    <span class="counter" id="counter" aria-live="polite">01 / 09</span>
+    <button class="control" id="next" type="button" aria-label="Diapositiva siguiente">→</button>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const progressBar = document.getElementById('progressBar');
+    const counter = document.getElementById('counter');
+    const previous = document.getElementById('previous');
+    const next = document.getElementById('next');
+    const dots = document.getElementById('dots');
+    let current = 0;
+
+    const twoDigits = value => String(value).padStart(2, '0');
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Ir a ${slide.dataset.label}`);
+      dot.addEventListener('click', () => goTo(index));
+      dots.appendChild(dot);
+    });
+
+    const dotButtons = [...dots.children];
+    function update(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      dotButtons.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+        dot.setAttribute('aria-current', i === current ? 'step' : 'false');
+      });
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      counter.textContent = `${twoDigits(current + 1)} / ${twoDigits(slides.length)}`;
+      previous.disabled = current === 0;
+      next.disabled = current === slides.length - 1;
+    }
+
+    function goTo(index) {
+      const target = Math.max(0, Math.min(slides.length - 1, index));
+      slides[target].scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+
+    previous.addEventListener('click', () => goTo(current - 1));
+    next.addEventListener('click', () => goTo(current + 1));
+    document.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => goTo(current + 1)));
+    document.addEventListener('keydown', event => {
+      if (['ArrowDown', 'ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); goTo(current + 1); }
+      if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); goTo(current - 1); }
+      if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+      if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) update(slides.indexOf(visible.target));
+    }, { threshold: [.45, .6, .75] });
+    slides.forEach(slide => observer.observe(slide));
+    update(0);
+
+    const canvas = document.getElementById('probabilityField');
+    const ctx = canvas.getContext('2d');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let particles = [];
+    let animationFrame;
+
+    function seedParticles() {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = Math.min(devicePixelRatio || 1, 1.5);
+      canvas.width = Math.round(rect.width * ratio);
+      canvas.height = Math.round(rect.height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      const amount = Math.min(850, Math.max(260, Math.round(rect.width * rect.height / 2300)));
+      particles = Array.from({ length: amount }, (_, index) => {
+        const angle = index * 2.39996;
+        const radius = Math.pow((index + 1) / amount, .58) * Math.min(rect.width, rect.height) * .38;
+        return { angle, radius, speed: .00012 + (index % 9) * .000012, alpha: .1 + (index % 7) * .045, glyph: index % 2 };
+      });
+    }
+
+    function draw(time = 0) {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      const cx = rect.width * (rect.width < 700 ? .58 : .55);
+      const cy = rect.height * .35;
+      ctx.font = `${rect.width < 700 ? 8 : 10}px ui-monospace, monospace`;
+      particles.forEach((particle, index) => {
+        const angle = particle.angle + (reduceMotion ? 0 : time * particle.speed);
+        const squash = .66 + .12 * Math.sin(index * .7);
+        const x = cx + Math.cos(angle) * particle.radius;
+        const y = cy + Math.sin(angle) * particle.radius * squash;
+        ctx.fillStyle = `rgba(91, 242, 255, ${particle.alpha})`;
+        ctx.fillText(particle.glyph, x, y);
+      });
+      const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+      glow.addColorStop(0, 'rgba(245, 158, 11, .9)');
+      glow.addColorStop(.24, 'rgba(200, 212, 220, .42)');
+      glow.addColorStop(1, 'rgba(0, 229, 255, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(cx, cy, 80, 0, Math.PI * 2); ctx.fill();
+      if (!reduceMotion) animationFrame = requestAnimationFrame(draw);
+    }
+
+    let resizeTimer;
+    addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { seedParticles(); if (reduceMotion) draw(); }, 120);
+    }, { passive: true });
+    seedParticles();
+    draw();
+  </script>
+</body>
+</html>
