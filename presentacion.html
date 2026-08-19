@@ -124,7 +124,7 @@
     .tech-spec strong { display: block; color: var(--cyan); font-family: "Cormorant Garamond", Georgia, serif; font-size: 2.2rem; font-weight: 500; }
     .tech-spec span { color: var(--muted); font-size: .8rem; line-height: 1.5; }
     .device-outline { position: relative; aspect-ratio: 4 / 3; border: 1px solid rgba(0,229,255,.38); background: linear-gradient(145deg, rgba(0,229,255,.08), transparent); }
-    .device-outline::before { content: ""; position: absolute; inset: 7%; border: 1px solid var(--line); background: url("assets/generated/hero-laboratorio-nuclear.jpg") center/cover; filter: grayscale(.65) contrast(1.08); }
+    .device-outline::before { content: ""; position: absolute; inset: 7%; border: 1px solid var(--line); background: url("assets/generated/hero-laboratorio-nuclear.webp") center/cover; filter: grayscale(.65) contrast(1.08); }
     .device-outline::after { content: "Celular / Tablet / Aula"; position: absolute; right: 1rem; bottom: 1rem; padding: .55rem .7rem; color: var(--ink); background: var(--cyan); font-size: .62rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 
     .closing { background: radial-gradient(circle at 70% 35%, rgba(0,229,255,.13), transparent 32%), var(--ink); }
@@ -143,11 +143,21 @@
     .dot.active { border-color: var(--cyan); background: var(--cyan); }
 
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal-all .reveal { opacity: 1; transform: none; }
     .slide.active .reveal { opacity: 1; transform: none; }
     .slide.active .reveal:nth-child(2) { transition-delay: .08s; }
     .slide.active .reveal:nth-child(3) { transition-delay: .14s; }
 
     @media (max-width: 900px) {
+      /* En celular/tablet la presentación se lee como una página normal:
+         sin scroll-snap (que dejaba contenido inalcanzable cuando la
+         diapositiva es más alta que la pantalla) y sin animación de
+         entrada (si el observer no activaba la diapositiva, el texto
+         quedaba en opacity 0 y la presentación se veía vacía). */
+      html { scroll-snap-type: none; }
+      .slide { min-height: auto; scroll-snap-align: none; scroll-snap-stop: normal; }
+      .slide.cover { min-height: 100svh; }
+      .reveal { opacity: 1; transform: none; transition: none; }
       .cover-grid, .manifesto-grid, .number-layout, .photo-layout, .lab-layout, .classroom-layout, .tech-grid, .closing-layout { grid-template-columns: 1fr; gap: 2rem; }
       .cover-grid { align-items: center; padding-top: 7vh; }
       .cover-note { padding-bottom: 0; }
@@ -164,12 +174,13 @@
     }
 
     @media (max-width: 640px) {
-      html { scroll-snap-type: y proximity; }
       .topbar { height: 56px; }
       .brand { font-size: .58rem; letter-spacing: .1em; }
       .exit { padding: .55rem .65rem; font-size: .58rem; }
-      .slide { min-height: 100svh; place-items: start; padding: 5.1rem 1.15rem 6rem; }
-      .slide::after { inset: 3.5rem .55rem 4.7rem; }
+      .slide { place-items: start; padding: 4.6rem 1.15rem 3.4rem; }
+      .slide.cover, .slide.closing { padding-bottom: 6rem; }
+      .slide::after { inset: 2.9rem .55rem 1.6rem; }
+      .slide.cover::after { inset: 3.5rem .55rem 4.7rem; }
       .slide-inner { margin: auto 0; }
       .display { font-size: clamp(3.1rem, 17vw, 5.2rem); line-height: .86; }
       .title { font-size: clamp(2.5rem, 13vw, 4.2rem); }
@@ -274,7 +285,7 @@
 
     <section class="slide photo-slide" id="argentina" data-label="Argentina">
       <div class="slide-inner photo-layout">
-        <div class="photo reveal"><img src="assets/generated/central-nuclear-argentina.jpg" alt="Central nuclear argentina junto a su entorno natural" width="1600" height="900" loading="lazy" decoding="async"></div>
+        <div class="photo reveal"><img src="assets/generated/central-nuclear-argentina.webp" alt="Central nuclear argentina junto a su entorno natural" width="1600" height="900" loading="lazy" decoding="async"></div>
         <div class="photo-copy reveal">
           <h2 class="title">La ciencia también tiene domicilio argentino.</h2>
           <p class="lead">El proyecto enlaza física con soberanía tecnológica, salud, industria y producción de conocimiento.</p>
@@ -308,7 +319,7 @@
           </div>
         </div>
         <figure class="lab-photo reveal">
-          <img src="assets/generated/hero-laboratorio-nuclear.jpg" alt="Estudiantes e investigadores usando instrumental en un laboratorio" width="1600" height="711" loading="lazy" decoding="async">
+          <img src="assets/generated/hero-laboratorio-nuclear.webp" alt="Estudiantes e investigadores usando instrumental en un laboratorio" width="1600" height="711" loading="lazy" decoding="async">
           <figcaption class="lab-caption">La interacción no reemplaza la explicación: la vuelve visible, discutible y memorable.</figcaption>
         </figure>
       </div>
@@ -420,15 +431,32 @@
       if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
     });
 
-    const observer = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) update(slides.indexOf(visible.target));
-    }, { threshold: [.45, .6, .75] });
-    slides.forEach(slide => observer.observe(slide));
+    // La diapositiva activa se decide por la que cruza el centro de la
+    // pantalla: no depende de qué porcentaje de la diapositiva entra en el
+    // viewport (en celular varias son más altas que la pantalla y con
+    // umbrales de área nunca llegaban a activarse).
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        const middle = innerHeight / 2;
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => {
+            const da = Math.abs(a.boundingClientRect.top + a.boundingClientRect.height / 2 - middle);
+            const db = Math.abs(b.boundingClientRect.top + b.boundingClientRect.height / 2 - middle);
+            return da - db;
+          })[0];
+        if (visible) update(slides.indexOf(visible.target));
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      slides.forEach(slide => observer.observe(slide));
+    } else {
+      document.documentElement.classList.add('reveal-all');
+    }
     update(0);
 
     const canvas = document.getElementById('probabilityField');
-    const ctx = canvas.getContext('2d');
+    // En celulares con poca memoria el contexto 2D puede no crearse: el fondo
+    // decorativo es opcional, la presentación tiene que verse igual.
+    const ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let particles = [];
     let animationFrame;
@@ -471,12 +499,14 @@
     }
 
     let resizeTimer;
-    addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => { seedParticles(); if (reduceMotion) draw(); }, 120);
-    }, { passive: true });
-    seedParticles();
-    draw();
+    if (ctx) {
+      addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { seedParticles(); if (reduceMotion) draw(); }, 120);
+      }, { passive: true });
+      seedParticles();
+      draw();
+    }
   </script>
 </body>
 </html>

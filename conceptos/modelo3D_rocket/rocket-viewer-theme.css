@@ -49,3 +49,76 @@ button {
   }
 }
 
+/* === Falcon Heavy (visor generado por bundler) ===================
+   El overlay está maquetado con estilos inline de React: toda regla
+   necesita !important y se selecciona por data-dc-tpl, acotado al host
+   del componente. En pantallas angostas el bloque de título y la tabla
+   de especificaciones se superponían al cohete 3D, así que se achican
+   y se recorta el texto accesorio. Mapa de los nodos:
+     7 título (contenedor)  8 volanta  9 "Falcon Heavy"  10 descripción
+     11 panel de specs      12 rótulo  14 fila  15 etiqueta  16 valor
+     28 "Arrastra para rotar"                                     */
+@media (max-width: 900px) {
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="7"] {
+    top: 18px !important;
+    left: 18px !important;
+    right: 18px !important;
+    gap: 2px !important;
+  }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="8"] {
+    font-size: 9px !important;
+    letter-spacing: .18em !important;
+  }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="9"] {
+    font-size: 32px !important;
+  }
+
+  /* "Pasa el cursor sobre cada sección…": no aplica en pantalla táctil
+     y era el bloque que más tapaba la cofia del cohete. */
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="10"] {
+    display: none !important;
+  }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="11"] {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 26px !important;
+    width: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 18px !important;
+  }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="12"] {
+    grid-column: 1 / -1 !important;
+    margin-bottom: 4px !important;
+    font-size: 9px !important;
+  }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="14"] {
+    padding: 6px 0 !important;
+    gap: 10px !important;
+  }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="15"] { font-size: 11px !important; }
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="16"] { font-size: 11px !important; }
+
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="28"] {
+    right: 18px !important;
+    bottom: 8px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="9"] { font-size: 26px !important; }
+
+  /* En celular la tabla se saca del visor: son los mismos datos que
+     energia-espacial.html ya muestra en la ficha debajo del modelo, y
+     ocupaban el tercio inferior del cohete. */
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="11"] { display: none !important; }
+  [data-sc-name="falcon-heavy-3d"] [data-dc-tpl="28"] { bottom: 12px !important; }
+}
+
